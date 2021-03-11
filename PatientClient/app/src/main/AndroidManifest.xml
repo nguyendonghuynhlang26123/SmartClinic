@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".PharmacyActivity" />
+        <activity android:name=".LocationActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data
