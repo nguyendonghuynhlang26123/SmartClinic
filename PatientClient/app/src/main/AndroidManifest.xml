@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".DepartmentActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".DepartmentActivity" />
         <activity android:name=".Cart" />
         <activity android:name=".PharmacyActivity" />
         <activity android:name=".LocationActivity" />

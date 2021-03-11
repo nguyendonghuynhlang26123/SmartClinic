@@ -30,10 +30,10 @@ public class AppointmentItemAdapter extends RecyclerView.Adapter<AppointmentItem
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-//        view.findViewById(R.id.appointment_chat).setOnClickListener(v->{
-//            Intent i = new Intent(context, ChatActivity.class);
-//            context.startActivity(i);
-//        });
+        view.findViewById(R.id.appointment_chat).setOnClickListener(v->{
+            Intent i = new Intent(context, ChatActivity.class);
+            context.startActivity(i);
+        });
     }
 
     @Override
