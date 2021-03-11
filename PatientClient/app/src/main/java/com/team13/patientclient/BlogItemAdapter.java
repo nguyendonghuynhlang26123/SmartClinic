@@ -25,10 +25,10 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-//        view.findViewById(R.id.blog_dr).setOnClickListener(v->{
-//            Intent i = new Intent(context, DoctorDetailActivity.class);
-//            context.startActivity(i);
-//        });
+        view.findViewById(R.id.blog_dr).setOnClickListener(v->{
+            Intent i = new Intent(context, DoctorDetailActivity.class);
+            context.startActivity(i);
+        });
     }
 
     @Override
