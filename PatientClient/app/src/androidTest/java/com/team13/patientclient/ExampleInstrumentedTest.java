@@ -1,4 +1,4 @@
-package com.example.patientclient;
+package com.team13.patientclient;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.patientclient", appContext.getPackageName());
+        assertEquals("com.team13.patientclient", appContext.getPackageName());
     }
 }

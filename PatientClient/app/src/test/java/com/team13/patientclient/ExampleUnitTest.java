@@ -1,4 +1,4 @@
-package com.example.patientclient;
+package com.team13.patientclient;
 
 import org.junit.Test;
 
