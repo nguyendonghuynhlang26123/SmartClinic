@@ -89,18 +89,18 @@ public class HomeFragment extends Fragment {
         DepartmentItemAdapter departmentItemAdapter1 = new DepartmentItemAdapter(view.getContext(), getDepartments());
         pharmacyList.setAdapter(departmentItemAdapter1);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        view.findViewById(R.id.detail_department).setOnClickListener(v -> {
-//            Intent i = new Intent(view.getContext(), DepartmentActivity.class);
-//            startActivity(i);
-//        });
-//        view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
-//            Intent i = new Intent(view.getContext(), PharmacyActivity.class);
-//            startActivity(i);
-//        });
-//        view.findViewById(R.id.location_button).setOnClickListener(v -> {
-//            Intent i = new Intent(view.getContext(), LocationActivity.class);
-//            startActivity(i);
-//        });
+        view.findViewById(R.id.detail_department).setOnClickListener(v -> {
+            Intent i = new Intent(view.getContext(), DepartmentActivity.class);
+            startActivity(i);
+        });
+        view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
+            Intent i = new Intent(view.getContext(), PharmacyActivity.class);
+            startActivity(i);
+        });
+        view.findViewById(R.id.location_button).setOnClickListener(v -> {
+            Intent i = new Intent(view.getContext(), LocationActivity.class);
+            startActivity(i);
+        });
         return view;
     }
     ArrayList<Department> getDepartments(){
