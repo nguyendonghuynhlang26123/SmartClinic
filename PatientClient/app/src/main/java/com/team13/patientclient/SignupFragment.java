@@ -71,7 +71,7 @@ public class SignupFragment extends Fragment {
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         loginButton = view.findViewById(R.id.login_text_button);
         loginButton.setOnClickListener(v -> {
-//            ((LoginActivity)getActivity()).setLoginFragment();
+            ((LoginActivity)getActivity()).setLoginFragment();
         });
         return view;
     }
