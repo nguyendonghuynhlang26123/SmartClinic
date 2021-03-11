@@ -34,12 +34,12 @@ public class BannerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.banner_item, container, false);
         itemView.setOnClickListener(v->{
-//            switch (position){
-//                case 1:
-//                    Intent i = new Intent(context, CommonServiceActivity.class);
-//                    context.startActivity(i);
-//                    break;
-//            }
+            switch (position){
+                case 1:
+                    Intent i = new Intent(context, CommonServiceActivity.class);
+                    context.startActivity(i);
+                    break;
+            }
         });
         Objects.requireNonNull(container).addView(itemView);
         return itemView;
