@@ -57,7 +57,7 @@
                             android:layout_height="96dp"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
-                            android:src="@mipmap/avatar"
+                            android:src="@drawable/avatar"
                             android:scaleType="fitXY"
                             android:id="@+id/profile_avatar"/>
                         <LinearLayout

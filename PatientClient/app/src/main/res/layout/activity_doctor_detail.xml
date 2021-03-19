@@ -39,7 +39,7 @@
                 <com.team13.patientclient.CircularImageView
                     android:layout_width="81dp"
                     android:layout_height="81dp"
-                    android:src="@mipmap/avatar"
+                    android:src="@drawable/avatar"
                     android:scaleType="fitXY"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
