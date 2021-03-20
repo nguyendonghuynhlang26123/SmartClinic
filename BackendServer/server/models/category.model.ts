@@ -10,4 +10,4 @@ const CategorySchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const category = mongoose.model("categorys", CategorySchema);
+export const category = mongoose.model("categories", CategorySchema);
