@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const HospitalSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     location: { type: String, enum: ["cor_x", "cor_y"], required: true },
     attribute: { type: String, default: null },
     created_at: { type: Number },

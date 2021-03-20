@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const DoctorSchema = new Schema(
   {
     avatar: { type: String, default: null },
-    bio: { type: String, required: true },
+    bio: { type: String, required: true, unique: true },
     department: { type: String, required: true },
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
