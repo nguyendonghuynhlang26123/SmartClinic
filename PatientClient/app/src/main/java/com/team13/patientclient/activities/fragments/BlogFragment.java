@@ -1,29 +1,24 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
-import com.google.android.material.appbar.MaterialToolbar;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-
-import java.util.ArrayList;
+import com.team13.patientclient.R;
+import com.team13.patientclient.adapters.BlogItemAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link BlogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class BlogFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,10 +28,8 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ImageButton cartButton;
 
-
-    public ProfileFragment() {
+    public BlogFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +39,11 @@ public class ProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
+     * @return A new instance of fragment BlogFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static BlogFragment newInstance(String param1, String param2) {
+        BlogFragment fragment = new BlogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,18 +64,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        cartButton = view.findViewById(R.id.service_cart);
-        cartButton.setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), Cart.class);
-            startActivity(i);
-        });
-        view.findViewById(R.id.profile_edit_button).setOnClickListener(v->{
-            ProfileEditFragment profileEditFragment = new ProfileEditFragment();
-            assert getFragmentManager() != null;
-            profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
-        });
+        View view = inflater.inflate(R.layout.fragment_blog, container, false);
+        BlogItemAdapter blogItemAdapter = new BlogItemAdapter(view.getContext());
+        RecyclerView recyclerView = view.findViewById(R.id.blog_list);
+        recyclerView.setAdapter(blogItemAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         return view;
     }
-
 }

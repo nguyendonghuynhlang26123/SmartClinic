@@ -1,8 +1,10 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.team13.patientclient.R;
 
 public class DepartmentActivity extends AppCompatActivity {
 

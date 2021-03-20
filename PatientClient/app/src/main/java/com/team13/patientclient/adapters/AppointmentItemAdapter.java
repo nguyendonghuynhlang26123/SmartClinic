@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.team13.patientclient.R;
+import com.team13.patientclient.activities.ChatActivity;
+import com.team13.patientclient.models.Appointment;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.team13.patientclient.R;
+import com.team13.patientclient.models.Department;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class DepartmentItemAdapter extends RecyclerView.Adapter<DepartmentItemAdapter.ViewHolder> {
     private final Context context;

@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-import com.team13.patientclient.BannerAdapter;
-import com.team13.patientclient.DepartmentItemAdapter;
+import com.team13.patientclient.activities.LocationActivity;
+import com.team13.patientclient.activities.PharmacyActivity;
+import com.team13.patientclient.R;
+import com.team13.patientclient.activities.DepartmentActivity;
+import com.team13.patientclient.adapters.BannerAdapter;
+import com.team13.patientclient.adapters.DepartmentItemAdapter;
+import com.team13.patientclient.models.Department;
 
 import java.util.ArrayList;
 
