@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.team13.patientclient.activities.fragments.LoginFragment;
+import com.team13.patientclient.NetworkUtils;
+import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.SignupFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.team13.patientclient.activities.DoctorDetailActivity;
+import com.team13.patientclient.R;
 
 public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHolder> {
     private final Context context;

@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.team13.patientclient.activities.CommonServiceActivity;
+import com.team13.patientclient.R;
 
 import java.util.Objects;
 

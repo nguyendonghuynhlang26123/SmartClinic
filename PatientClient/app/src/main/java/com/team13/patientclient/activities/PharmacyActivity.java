@@ -1,17 +1,18 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.team13.patientclient.R;
+import com.team13.patientclient.adapters.DepartmentItemAdapter;
+import com.team13.patientclient.models.Cart;
+import com.team13.patientclient.models.Department;
 
 import java.util.ArrayList;
 

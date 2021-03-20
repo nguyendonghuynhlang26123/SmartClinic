@@ -1,23 +1,24 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
-import java.util.ArrayList;
+import com.team13.patientclient.R;
+import com.team13.patientclient.models.Cart;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AppointmentFragment#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AppointmentFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,9 +28,10 @@ public class AppointmentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    RecyclerView appointmentList;
+    ImageButton cartButton;
 
-    public AppointmentFragment() {
+
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class AppointmentFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AppointmentFragment.
+     * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AppointmentFragment newInstance(String param1, String param2) {
-        AppointmentFragment fragment = new AppointmentFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,19 +66,18 @@ public class AppointmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_appointment, container, false);
-        appointmentList = view.findViewById(R.id.appointment_list);
-        AppointmentItemAdapter appointmentItemAdapter = new AppointmentItemAdapter(view.getContext(), getAppointments());
-        appointmentList.setAdapter(appointmentItemAdapter);
-        appointmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        cartButton = view.findViewById(R.id.service_cart);
+        cartButton.setOnClickListener(v -> {
+            Intent i = new Intent(view.getContext(), Cart.class);
+            startActivity(i);
+        });
+        view.findViewById(R.id.profile_edit_button).setOnClickListener(v->{
+            ProfileEditFragment profileEditFragment = new ProfileEditFragment();
+            assert getFragmentManager() != null;
+            profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
+        });
         return view;
     }
 
-    ArrayList<Appointment> getAppointments(){
-        ArrayList<Appointment> appointments = new ArrayList<>(3);
-        for(int i=0;i<3;++i){
-            appointments.add(new Appointment("P01","D01","12 February 2021", "6:00AM - 9:00AM"));
-        }
-        return appointments;
-    }
 }

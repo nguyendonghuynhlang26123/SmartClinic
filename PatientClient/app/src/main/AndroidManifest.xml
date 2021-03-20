@@ -13,20 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".CommonServiceActivity"></activity>
-        <activity android:name=".DoctorDetailActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".DepartmentActivity" />
-        <activity android:name=".Cart" />
-        <activity android:name=".PharmacyActivity" />
-        <activity android:name=".LocationActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.CommonServiceActivity"></activity>
+        <activity android:name=".activities.DoctorDetailActivity" />
+        <activity android:name=".activities.ChatActivity" />
+        <activity android:name=".activities.DepartmentActivity" />
+        <activity android:name=".models.Cart" />
+        <activity android:name=".activities.PharmacyActivity" />
+        <activity android:name=".activities.LocationActivity" />
+        <activity android:name=".activities.MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAhAxDRVBfpLF48CUSg_5aMMelEOMvJEtk" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities.fragments;
 
 import androidx.fragment.app.Fragment;
 
