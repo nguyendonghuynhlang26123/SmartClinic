@@ -9,8 +9,8 @@ export class DoctorService {
         throw new Error("Not Found Doctor.");
       }
       return doctor;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       throw new Error("Get Doctor Error.");
     }
   }
@@ -20,8 +20,8 @@ export class DoctorService {
     try {
       const doctors = await doctorModel.find();
       return doctors;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       throw new Error("Get All Doctor Error.");
     }
   }
