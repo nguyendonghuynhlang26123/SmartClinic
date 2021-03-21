@@ -2,6 +2,16 @@ import { HospitalInterface } from "../../interfaces";
 import { hospitalModel } from "../../models";
 
 export class HospitalService {
+  async createHospital(data: HospitalInterface) {
+    try {
+      const hospital = await hospitalModel.create(data);
+      return hospital;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Create Hospital Error.");
+    }
+  }
+
   async getHospitalById(hospitalId: string): Promise<HospitalInterface> {
     try {
       const hospital = await hospitalModel.findOne({ _id: hospitalId });

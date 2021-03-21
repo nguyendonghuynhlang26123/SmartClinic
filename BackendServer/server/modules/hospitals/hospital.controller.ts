@@ -10,6 +10,15 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:hospital_id", async (req, res) => {
-  const hospital = await hospitalService.getHospitalById(req.params.hospital_id);
+  const hospital = await hospitalService.getHospitalById(
+    req.params.hospital_id
+  );
   res.json(hospital);
 });
+
+router.post("/", async (req, res) => {
+  const hospital = await hospitalService.createHospital(req.body);
+  res.json({ _id: hospital.id });
+});
+
+export const HospitalController = router;

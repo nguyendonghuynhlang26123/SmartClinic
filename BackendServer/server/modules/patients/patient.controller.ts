@@ -13,3 +13,5 @@ router.get("/:patient_id", async (req, res) => {
   const patient = await patientService.getPatientById(req.params.patient_id);
   res.json(patient);
 });
+
+export const PatientController = router;

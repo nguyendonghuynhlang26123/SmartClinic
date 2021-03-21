@@ -15,3 +15,5 @@ router.get("/:appointment_id", async (req, res) => {
   );
   res.json(appointment);
 });
+
+export const AppointmentController = router;

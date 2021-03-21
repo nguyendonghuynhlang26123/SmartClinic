@@ -13,3 +13,5 @@ router.get("/:user_id", async (req, res) => {
   const user = await userService.getUserById(req.params.user_id);
   res.json(user);
 });
+
+export const UserController = router;

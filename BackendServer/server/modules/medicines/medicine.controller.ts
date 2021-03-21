@@ -15,3 +15,5 @@ router.get("/:medicine_id", async (req, res) => {
   );
   res.json(medicine);
 });
+
+export const MedicineController = router;

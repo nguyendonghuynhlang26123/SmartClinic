@@ -15,3 +15,5 @@ router.get("/:prescription_id", async (req, res) => {
   );
   res.json(prescription);
 });
+
+export const PrescriptionController = router;

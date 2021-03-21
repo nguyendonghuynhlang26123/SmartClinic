@@ -15,3 +15,5 @@ router.get("/:category_id", async (req, res) => {
   );
   res.json(category);
 });
+
+export const CategoryController = router;
