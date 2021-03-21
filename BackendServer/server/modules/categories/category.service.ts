@@ -2,7 +2,6 @@ import { categoryModel } from "../../models";
 
 export class CategoryService {
   async getCategoryById(categoryId: string) {
-    //: Promise<CategoryInterface>
     try {
       const category = await categoryModel.findOne({ _id: categoryId });
       if (!category) {
@@ -16,7 +15,6 @@ export class CategoryService {
   }
 
   async getAllCategory() {
-    //: Promise<CategoryInterface[]>
     try {
       const categories = await categoryModel.find();
       return categories;

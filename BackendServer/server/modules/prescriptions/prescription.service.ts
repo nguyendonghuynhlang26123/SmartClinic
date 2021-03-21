@@ -2,7 +2,6 @@ import { prescriptionModel } from "../../models";
 
 export class PrescriptionService {
   async getPrescriptionById(prescriptionId: string) {
-    //: Promise<PrescriptionInterface>
     try {
       const prescription = await prescriptionModel.findOne({ _id: prescriptionId });
       if (!prescription) {
@@ -16,7 +15,6 @@ export class PrescriptionService {
   }
 
   async getAllPrescription() {
-    //: Promise<PrescriptionInterface[]>
     try {
       const prescriptions = await prescriptionModel.find();
       return prescriptions;

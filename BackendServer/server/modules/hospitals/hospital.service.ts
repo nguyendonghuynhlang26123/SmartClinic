@@ -12,7 +12,7 @@ export class HospitalService {
     }
   }
 
-  async getHospitalById(hospitalId: string): Promise<HospitalInterface> {
+  async getHospitalById(hospitalId: string) {
     try {
       const hospital = await hospitalModel.findOne({ _id: hospitalId });
       if (!hospital) {
@@ -25,7 +25,7 @@ export class HospitalService {
     }
   }
 
-  async getAllHospital(): Promise<HospitalInterface[]> {
+  async getAllHospital() {
     try {
       const hospitals = await hospitalModel.find();
       return hospitals;

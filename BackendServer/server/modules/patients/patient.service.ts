@@ -2,7 +2,6 @@ import { patientModel } from "../../models";
 
 export class PatientService {
   async getPatientById(patientId: string) {
-    //: Promise<PatientInterface>
     try {
       const patient = await patientModel.findOne({ _id: patientId });
       if (!patient) {
@@ -16,7 +15,6 @@ export class PatientService {
   }
 
   async getAllPatient() {
-    //: Promise<PatientInterface[]>
     try {
       const patients = await patientModel.find();
       return patients;

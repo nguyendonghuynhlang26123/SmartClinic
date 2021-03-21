@@ -2,7 +2,6 @@ import { userModel } from "../../models";
 
 export class UserService {
   async getUserById(userId: string) {
-    //: Promise<UserInterface>
     try {
       const user = await userModel.findOne({ _id: userId });
       if (!user) {
@@ -16,7 +15,6 @@ export class UserService {
   }
 
   async getAllUser() {
-    //: Promise<UserInterface[]>
     try {
       const users = await userModel.find();
       return users;

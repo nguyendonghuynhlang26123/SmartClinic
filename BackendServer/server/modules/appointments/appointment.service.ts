@@ -2,7 +2,6 @@ import { appointmentModel } from "../../models";
 
 export class AppointmentService {
   async getAppointmentById(appointmentId: string) {
-    //: Promise<AppointmentInterface>
     try {
       const appointment = await appointmentModel.findOne({
         _id: appointmentId,
@@ -18,7 +17,6 @@ export class AppointmentService {
   }
 
   async getAllAppointment() {
-    //: Promise<AppointmentInterface[]>
     try {
       const appointments = await appointmentModel.find();
       return appointments;
