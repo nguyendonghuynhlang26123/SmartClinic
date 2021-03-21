@@ -3,7 +3,7 @@ import { connectMongodb } from "./connectMongo";
 
 async function initServer() {
   const app = express();
-  const port = process.env.PORT || 8002;
+  const port = process.env.PORT || 3669;
 
   connectMongodb();
 
