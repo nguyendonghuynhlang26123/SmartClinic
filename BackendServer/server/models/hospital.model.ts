@@ -12,4 +12,4 @@ const HospitalSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const hospital = mongoose.model("hospitals", HospitalSchema);
+export const hospitalModel = mongoose.model("hospitals", HospitalSchema);

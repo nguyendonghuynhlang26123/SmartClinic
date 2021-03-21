@@ -33,4 +33,4 @@ const PrescriptionSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const prescription = mongoose.model("prescriptions", PrescriptionSchema);
+export const prescriptionModel = mongoose.model("prescriptions", PrescriptionSchema);

@@ -16,4 +16,4 @@ const PatientSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const patient = mongoose.model("patients", PatientSchema);
+export const patientModel = mongoose.model("patients", PatientSchema);

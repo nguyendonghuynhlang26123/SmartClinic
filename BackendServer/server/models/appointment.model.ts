@@ -24,4 +24,4 @@ const AppointmentSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const appointment = mongoose.model("appointments", AppointmentSchema);
+export const appointmentModel = mongoose.model("appointments", AppointmentSchema);
