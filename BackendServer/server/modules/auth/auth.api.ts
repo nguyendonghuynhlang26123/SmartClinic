@@ -44,4 +44,4 @@ router.get("/logout", (req, res) => {
   });
 });
 
-module.exports = router;
+export const AuthController = router;

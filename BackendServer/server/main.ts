@@ -10,6 +10,7 @@ import { HospitalController } from "./modules/hospitals/hospital.controller";
 import { MedicineController } from "./modules/medicines/medicine.controller";
 import { PatientController } from "./modules/patients/patient.controller";
 import { PrescriptionController } from "./modules/prescriptions/prescription.controller";
+import { AuthController } from "./modules/auth/auth.api";
 
 async function initServer() {
   const app = express();
@@ -29,6 +30,7 @@ async function initServer() {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use("/users", UserController);
+  app.use("/auth", AuthController);
   app.use("/appointments", AppointmentController);
   app.use("/categories", CategoryController);
   app.use("/doctors", DoctorController);
