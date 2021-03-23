@@ -1,4 +1,5 @@
-import * as mongoose from "mongoose";
+import { UserInterface } from "../interfaces";
+import mongoose, { Document } from "mongoose";
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema(
@@ -16,4 +17,7 @@ const UserSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-export const userModel = mongoose.model("users", UserSchema);
+export const userModel = mongoose.model<UserInterface & Document>(
+  "users",
+  UserSchema
+);
