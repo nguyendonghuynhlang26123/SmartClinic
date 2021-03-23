@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -22,8 +23,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener {
     BottomNavigationView bottomNavigationView;
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -69,4 +69,15 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void goToAppoinment() {
+        loadFragment(new AppointmentFragment());
+        bottomNavigationView.setSelectedItemId(R.id.appointment);
+    }
+
+    @Override
+    public void gotoBlog() {
+        loadFragment(new BlogFragment());
+        bottomNavigationView.setSelectedItemId(R.id.blog);
+    }
 }

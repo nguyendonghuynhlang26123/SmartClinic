@@ -1,9 +1,13 @@
 package com.team13.patientclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -34,6 +38,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    HomeFragmentListener listener;
     ViewPager viewPager;
     BannerAdapter bannerAdapter;
     DotsIndicator dotsIndicator;
@@ -97,8 +102,36 @@ public class HomeFragment extends Fragment {
             Intent i = new Intent(view.getContext(), LocationActivity.class);
             startActivity(i);
         });
+        view.findViewById(R.id.appointment_shortcut).setOnClickListener(v->{
+            listener.goToAppoinment();
+        });
+        view.findViewById(R.id.blog_shortcut).setOnClickListener(v->{
+            listener.gotoBlog();
+        });
         return view;
     }
+
+   public interface HomeFragmentListener{
+        void goToAppoinment();
+        void gotoBlog();
+   }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof HomeFragmentListener) {
+            listener = (HomeFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement HomeFragmentListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
     ArrayList<Department> getDepartments(){
         ArrayList<Department> departments = new ArrayList<>(7);
         for(int i=0;i<7;++i){
