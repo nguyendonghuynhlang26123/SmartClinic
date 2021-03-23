@@ -24,4 +24,24 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+
+    <style name="LeftCornerButton" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.RoundedLeft</item>
+    </style>
+    
+    <style name="ShapeAppearanceOverlay.App.RoundedLeft" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">18dp</item>
+        <item name="cornerSizeBottomLeft">18dp</item>
+    </style>
+
+    <style name="RightCornerButton" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.RoundedRight</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.RoundedRight" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">18dp</item>
+        <item name="cornerSizeBottomRight">18dp</item>
+    </style>
 </resources>

@@ -81,18 +81,14 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(bannerAdapter);
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);
-        departmentList = view.findViewById(R.id.department_list);
-        DepartmentItemAdapter departmentItemAdapter = new DepartmentItemAdapter(view.getContext(), getDepartments());
-        departmentList.setAdapter(departmentItemAdapter);
-        departmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
+//        departmentList = view.findViewById(R.id.department_list);
+//        DepartmentItemAdapter departmentItemAdapter = new DepartmentItemAdapter(view.getContext(), getDepartments());
+//        departmentList.setAdapter(departmentItemAdapter);
+//        departmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
         pharmacyList = view.findViewById(R.id.pharmacy_list);
         DepartmentItemAdapter departmentItemAdapter1 = new DepartmentItemAdapter(view.getContext(), getDepartments());
         pharmacyList.setAdapter(departmentItemAdapter1);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        view.findViewById(R.id.detail_department).setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), DepartmentActivity.class);
-            startActivity(i);
-        });
         view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);
             startActivity(i);
