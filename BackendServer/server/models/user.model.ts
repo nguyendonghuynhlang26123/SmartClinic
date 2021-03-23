@@ -1,5 +1,6 @@
 import { UserInterface } from "../interfaces";
-import mongoose, { Document } from "mongoose";
+import { Document } from "mongoose";
+import * as mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema(
