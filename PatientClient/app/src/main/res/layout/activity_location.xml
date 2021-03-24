@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LocationActivity">
+    tools:context=".activities.LocationActivity">
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:name="com.team13.patientclient.HospitalMapFragment"
+        android:layout_height="match_parent"
+        android:name="com.team13.patientclient.activities.fragments.HospitalMapFragment"
         android:id="@+id/fragment_map"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginHorizontal="16dp"
