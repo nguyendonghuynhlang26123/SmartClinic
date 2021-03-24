@@ -16,4 +16,14 @@ router.get("/:category_id", async (req, res) => {
   res.json(category);
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const category = await categoryService.createCategory(req.body);
+    res.json(category);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+});
+
 export const CategoryController = router;
