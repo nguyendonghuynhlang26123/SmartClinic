@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:id="@+id/input_name"/>
+                android:id="@+id/sign_up_name"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:id="@+id/input_phone"/>
+                android:id="@+id/sign_up_phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:id="@+id/input_password"/>
+                android:id="@+id/sign_up_password"/>
         </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +72,8 @@
                 android:textSize="20sp"
                 android:paddingHorizontal="54dp"
                 android:paddingVertical="12dp"
-                style="@style/CornerButton"/>
+                style="@style/CornerButton"
+                android:id="@+id/sign_up_button"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

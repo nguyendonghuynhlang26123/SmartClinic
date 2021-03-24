@@ -1,5 +1,6 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,10 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.LoginActivity;
+import com.team13.patientclient.activities.MainActivity;
+import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.AuthService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,11 +76,28 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
-        phoneInput = view.findViewById(R.id.input_phone);
+        phoneInput = view.findViewById(R.id.sign_up_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         loginButton = view.findViewById(R.id.login_text_button);
         loginButton.setOnClickListener(v -> {
             ((LoginActivity)getActivity()).setLoginFragment();
+        });
+
+        view.findViewById(R.id.sign_up_button).setOnClickListener(v ->{
+            String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
+            String name = ((TextView) view.findViewById(R.id.sign_up_name)).getText().toString();
+            String password = ((TextView) view.findViewById(R.id.sign_up_password)).getText().toString();
+
+            AuthService authService = new AuthService();
+            authService.register(phone, password, name, new OnResponse<AccountModel>(getContext()) {
+                @Override
+                public void onRequestSuccess(AccountModel account) {
+                    Store.get_instance().setUserAccount(account);
+
+                    Intent i = new Intent(view.getContext(), MainActivity.class);
+                    startActivity(i);
+                }
+            });
         });
         return view;
     }

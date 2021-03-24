@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
 import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AuthService;
 
 import org.json.JSONObject;
@@ -93,7 +95,7 @@ public class LoginFragment extends Fragment {
         });
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            String phone = phoneInput.getText().toString().replaceAll("[^\\d]","");
+            String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
             String password = passwordInput.getText().toString();
             if (phone.isEmpty() || password.isEmpty())
                 Toast.makeText(getContext(), "Empty Input! Please try again", Toast.LENGTH_SHORT).show();
@@ -105,30 +107,13 @@ public class LoginFragment extends Fragment {
 
     private void verifyAndProcess(String phone, String password, View view) {
         AuthService auth = new AuthService();
-        auth.login("+84" + phone, password).enqueue(new Callback<AccountModel>() {
+        auth.login("+84" + phone, password, new OnResponse<AccountModel>(getContext()) {
             @Override
-            public void onResponse(Call<AccountModel> call, Response<AccountModel> response) {
-                if (response.isSuccessful()){
-                    AccountModel account = response.body();
-                    Store.get_instance().setUserAccount(account);
-                    Log.d("LONG", new Gson().toJson(account));
+            public void onRequestSuccess(AccountModel account) {
+                Store.get_instance().setUserAccount(account);
 
-                    Intent i = new Intent(view.getContext(), MainActivity.class);
-                    startActivity(i);
-                }
-                else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getContext(), jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AccountModel> call, Throwable t) {
-
+                Intent i = new Intent(view.getContext(), MainActivity.class);
+                startActivity(i);
             }
         });
     }
