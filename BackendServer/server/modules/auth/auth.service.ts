@@ -20,6 +20,15 @@ export class AuthService {
     }
   }
 
+  async restrictDoctor(req, res, next) {
+    if (req.session.auth && req.session.user_type == 'DOCTOR') {
+      next();
+    } else {
+      req.session.error = 'Access denied! Please login.';
+      res.redirect('/login');
+    }
+  }
+
   async restrict(req, res, next) {
     if (req.session.auth) {
       next();
