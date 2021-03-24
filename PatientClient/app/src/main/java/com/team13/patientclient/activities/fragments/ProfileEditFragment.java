@@ -7,9 +7,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.squareup.picasso.Picasso;
+import com.team13.patientclient.CircularImageView;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
+import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.models.PatientModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +70,28 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        EditText dobInput = view.findViewById(R.id.profile_edit_dob);
+        EditText nameInput = view.findViewById(R.id.profile_edit_name);
+        CircularImageView avatarView = view.findViewById(R.id.profile_edit_avatar);
+        RadioGroup genderRadioGroup = view.findViewById(R.id.profile_edit_gender);
+
+        AccountModel accountData = Store.get_instance().getUserAccount();
+        PatientModel userProfile = accountData.getUserInfor();
+
+        nameInput.setText(userProfile.getName());
+
+        //if (accountData.getUserInfor().getWeight() != 0) ((EditText) view.findViewById(R.id.profile_edit_name)).setText(accountData.getUserInfor().getWeight() + "kg");
+        if (accountData.getUserInfor().getDateOfBirth() != 0) dobInput.setText(userProfile.getDateOfBirth() + "");
+        if (accountData.equals("Male")) genderRadioGroup.check(R.id.profile_edit_gender_male);
+        else if (accountData.equals("FeMale")) genderRadioGroup.check(R.id.profile_edit_gender_female);
+        Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_edit_avatar));
+
+        view.findViewById(R.id.profile_edit_save_button).setOnClickListener(v -> {
+            //TODO: GET LOCAL DATA AND CALL PUT REQUEST
+        });
+        return view;
     }
 }

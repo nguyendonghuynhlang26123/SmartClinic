@@ -111,7 +111,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="20"
+                                android:text="-"
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:id="@+id/profile_age"/>
@@ -130,7 +130,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Male"
+                                android:text="-"
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:id="@+id/profile_gender"/>
@@ -149,7 +149,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="70 kg"
+                                android:text="-"
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:id="@+id/profile_weight"/>

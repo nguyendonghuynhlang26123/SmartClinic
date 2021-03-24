@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment {
         ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getName());
         if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getWeight() + "kg");
         if (accountData.getUserInfor().getDateOfBirth() != 0) ((TextView) view.findViewById(R.id.profile_age)).setText(accountData.getUserInfor().getDateOfBirth() + "");
+        if (!accountData.getUserInfor().getGender().isEmpty()) ((TextView) view.findViewById(R.id.profile_gender)).setText(accountData.getUserInfor().getGender());
         Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_avatar));
 
         return view;
