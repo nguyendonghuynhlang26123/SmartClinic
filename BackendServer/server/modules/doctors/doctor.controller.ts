@@ -14,4 +14,14 @@ router.get("/:doctor_id", async (req, res) => {
   res.json(doctor);
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const doctor = await doctorService.createDoctor(req.body);
+    res.json(doctor);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+});
+
 export const DoctorController = router;

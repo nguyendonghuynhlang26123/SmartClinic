@@ -5,3 +5,4 @@ export * from "./patient.interface";
 export * from "./category.interface";
 export * from "./doctor.interface";
 export * from "./medicine.interface";
+export * from "./prescription.interface";
