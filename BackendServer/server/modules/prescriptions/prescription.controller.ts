@@ -16,4 +16,14 @@ router.get("/:prescription_id", async (req, res) => {
   res.json(prescription);
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const prescription = await prescriptionService.createPrescription(req.body);
+    res.json(prescription);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+});
+
 export const PrescriptionController = router;
