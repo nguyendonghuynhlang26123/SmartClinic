@@ -1,6 +1,6 @@
 import { BaseInterface } from "./base/base.interface";
 
-export class MedicineInterface extends BaseInterface {
+export class PrescriptionInterface extends BaseInterface {
   medicine_list: { medicine: string; note: string };
   reexam_date: number;
   doctor: string;
