@@ -5,14 +5,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
+import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.models.Cart;
 
 /**
@@ -79,7 +83,15 @@ public class ProfileFragment extends Fragment {
             assert getFragmentManager() != null;
             profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
         });
-        Picasso.get().load("https://ui-avatars.com/api/?name=Hai+Dang&rounded=true&background=random").into((ImageView) view.findViewById(R.id.profile_avatar));
+
+        //Render view data
+        AccountModel accountData = Store.get_instance().getUserAccount();
+
+        ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getName());
+        if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getWeight() + "kg");
+        if (accountData.getUserInfor().getDateOfBirth() != 0) ((TextView) view.findViewById(R.id.profile_age)).setText(accountData.getUserInfor().getDateOfBirth() + "");
+        Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_avatar));
+
         return view;
     }
 

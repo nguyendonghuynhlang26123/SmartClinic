@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
@@ -109,6 +110,7 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<AccountModel> call, Response<AccountModel> response) {
                 if (response.isSuccessful()){
                     AccountModel account = response.body();
+                    Store.get_instance().setUserAccount(account);
                     Log.d("LONG", new Gson().toJson(account));
 
                     Intent i = new Intent(view.getContext(), MainActivity.class);

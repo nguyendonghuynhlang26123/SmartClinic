@@ -18,7 +18,7 @@ public class PatientModel {
     String gender;
 
     @SerializedName("patient_dob")
-    String dateOfBirth;
+    double dateOfBirth;
 
     @SerializedName("patient_weight")
     double weight;
@@ -26,7 +26,7 @@ public class PatientModel {
     @SerializedName("token")
     String token;
 
-    public PatientModel(String name, String avatarUrl, String gender, String dateOfBirth, double weight, String token) {
+    public PatientModel(String name, String avatarUrl, String gender, double dateOfBirth, double weight, String token) {
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.gender = gender;
@@ -59,11 +59,11 @@ public class PatientModel {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
+    public double getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(double dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
