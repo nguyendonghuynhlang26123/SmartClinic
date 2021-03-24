@@ -1,14 +1,8 @@
-package com.team13.patientclient;
+package com.team13.patientclient.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,10 +10,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.AppointmentFragment;
+import com.team13.patientclient.activities.fragments.BlogFragment;
+import com.team13.patientclient.activities.fragments.HomeFragment;
+import com.team13.patientclient.activities.fragments.ProfileFragment;
 
 import java.util.ArrayList;
 

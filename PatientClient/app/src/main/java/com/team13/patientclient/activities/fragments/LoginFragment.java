@@ -6,15 +6,23 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
+import com.team13.patientclient.models.Hospital;
+import com.team13.patientclient.repository.services.HospitalService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +90,31 @@ public class LoginFragment extends Fragment {
             Intent i = new Intent(view.getContext(), MainActivity.class);
             startActivity(i);
         });
+
+        test();
         return view;
     }
+
+    private void test() {
+        final HospitalService hospitalService = new HospitalService();
+
+        hospitalService.getHospital("6056b843cefabf3368f043cf").enqueue(new Callback<Hospital>() {
+            @Override
+            public void onResponse(Call<Hospital> call, Response<Hospital> response) {
+                if(!response.isSuccessful()){
+                    Log.d("LONG","ERROR");
+                    return;
+                }
+
+                Hospital data = response.body();
+                Log.d("LONG", new Gson().toJson(data));
+            }
+
+            @Override
+            public void onFailure(Call<Hospital> call, Throwable t) {
+                Log.d("LONG","ERROR " + t.getMessage());
+            }
+        });
+    }
+
 }
