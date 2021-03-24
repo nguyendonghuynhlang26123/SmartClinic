@@ -43,4 +43,9 @@ export class PatientService {
       throw new Error('Cannot create patient! ');
     }
   }
+
+  async updatePatient(id: String, data: PatientInterface) {
+    const patient = patientModel.findOne({ _id: id });
+    if (!patient) throw new Error('Not found user');
+  }
 }

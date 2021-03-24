@@ -4,14 +4,14 @@ const Schema = mongoose.Schema;
 const PatientSchema = new Schema(
   {
     patient_name: { type: String, required: true },
-    patient_avatar: { type: String, default: null },
-    patient_gender: { type: String, default: null },
-    patient_dob: { type: Number, default: null },
-    patient_weight: { type: Number, default: null },
+    patient_avatar: { type: String, default: '' },
+    patient_gender: { type: String, default: '' },
+    patient_dob: { type: Number, default: 0 },
+    patient_weight: { type: Number, default: 0 },
     appointment_list: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'appointments' },
     ],
-    medical_history: { type: [String], default: null },
+    medical_history: { type: [String], default: [] },
     token: { type: String, required: true },
     created_at: { type: Number },
     updated_at: { type: Number },

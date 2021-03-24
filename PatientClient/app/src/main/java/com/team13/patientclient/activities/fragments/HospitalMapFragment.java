@@ -9,6 +9,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.team13.patientclient.models.HospitalModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.HospitalService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HospitalMapFragment extends SupportMapFragment implements OnMapReadyCallback {
 
@@ -22,9 +29,16 @@ public class HospitalMapFragment extends SupportMapFragment implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        LatLng position = new LatLng(10.864671,106.745629);
-        this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        this.googleMap.addMarker(new MarkerOptions().position(position).title("Marker at hospital"));
-        this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, this.googleMap.getMaxZoomLevel()-5));
+        HospitalService service = new HospitalService();
+        service.getHospital("6056b843cefabf3368f043cf", new OnResponse<HospitalModel>() {
+            @Override
+            public void onRequestSuccess(HospitalModel hospital) {
+                //LatLng position = new LatLng(10.864671,106.745629);
+                LatLng position = new LatLng(hospital.getCorX(),hospital.getCorY());
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                googleMap.addMarker(new MarkerOptions().position(position).title("Marker at hospital"));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, googleMap.getMaxZoomLevel()-5));
+            }
+        });
     }
 }

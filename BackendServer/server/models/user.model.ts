@@ -9,7 +9,7 @@ const UserSchema = new Schema(
     password: { type: String, required: true },
     user_type: { type: String, required: true, enum: ['DOCTOR', 'PATIENT'] },
     user_infor: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: true,
     },
