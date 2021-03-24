@@ -4,10 +4,12 @@ import { hospitalModel } from "../../models";
 export class HospitalService {
   async createHospital(data: HospitalInterface) {
     try {
+      delete data._id;
+      delete data.created_at;
+      delete data.updated_at;
       const hospital = await hospitalModel.create(data);
       return hospital;
     } catch (error) {
-      console.log(error);
       throw new Error("Create Hospital Error.");
     }
   }

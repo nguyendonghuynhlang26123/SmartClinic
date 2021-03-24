@@ -17,8 +17,13 @@ router.get("/:hospital_id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const hospital = await hospitalService.createHospital(req.body);
-  res.json({ _id: hospital.id });
+  try {
+    const hospital = await hospitalService.createHospital(req.body);
+    res.json(hospital);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
 });
 
 export const HospitalController = router;
