@@ -35,6 +35,14 @@ public class Hospital {
         return location;
     }
 
+    public double getCorX() {
+        return location.cor_x;
+    }
+
+    public  double getCorY(){
+        return  location.cor_y;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }

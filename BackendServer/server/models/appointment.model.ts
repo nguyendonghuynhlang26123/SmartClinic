@@ -1,16 +1,16 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 const AppointmentSchema = new Schema(
   {
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "doctors",
+      ref: 'doctors',
       required: true,
     },
     patient: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "patients",
+      ref: 'patients',
       required: true,
     },
     time: { type: Number, required: true },
@@ -21,7 +21,10 @@ const AppointmentSchema = new Schema(
     created_at: { type: Number },
     updated_at: { type: Number },
   },
-  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
+  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-export const appointmentModel = mongoose.model("appointments", AppointmentSchema);
+export const appointmentModel = mongoose.model(
+  'appointments',
+  AppointmentSchema
+);

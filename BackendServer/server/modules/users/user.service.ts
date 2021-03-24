@@ -1,6 +1,7 @@
 import { UserInterface } from '../../interfaces';
 import { userModel } from '../../models';
 import * as bcrypt from 'bcrypt';
+import { PatientService } from '../patients/patient.service';
 
 async function hashPassword(password) {
   const saltRounds = 10;
@@ -31,15 +32,30 @@ export class UserService {
     }
   }
 
+  //Return true if phone number is registered
+  async checkExisted(phone: string) {
+    let user = await userModel.findOne({ phone: phone });
+    return user !== null;
+  }
+
   async findUserByPhone(userPhone: string) {
-    const user = await userModel.findOne({ phone: userPhone });
-    return user;
+    let user = await userModel.findOne({ phone: userPhone });
+    if (!user) throw new Error('Not found user');
+    const data = await user.toObject();
+    const patientService = new PatientService();
+    const patient = await patientService.getPatientById(user.user_infor);
+    if (!patient) throw new Error('Not found patient information');
+
+    return {
+      ...data,
+      user_infor: patient,
+    };
   }
 
   async createUser(data: UserInterface) {
     if (!data?.phone || !data?.password) throw new Error('Empty data');
 
-    const user = await this.findUserByPhone(data.phone);
+    const user = await userModel.findOne({ phone: data.phone });
     if (user) throw new Error('Registed Phone number');
 
     let password = await hashPassword(data.password);
