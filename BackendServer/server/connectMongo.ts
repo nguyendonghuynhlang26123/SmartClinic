@@ -1,5 +1,5 @@
-import * as mongoose from "mongoose";
-import * as dotenv from "dotenv";
+import * as mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
 
 export function connectMongodb() {
   dotenv.config();
@@ -20,12 +20,12 @@ export function connectMongodb() {
       useUnifiedTopology: true,
     })
     .then(() => {
-      console.log("Database connection successfully!");
+      console.log('Database connection successfully!', MONGO_URL);
     })
     .catch((err) => {
       console.log(err);
-      console.log("Database connection error!");
+      console.log('Database connection error!');
     });
 
-  require("mongoose").Promise = global.Promise;
+  require('mongoose').Promise = global.Promise;
 }
