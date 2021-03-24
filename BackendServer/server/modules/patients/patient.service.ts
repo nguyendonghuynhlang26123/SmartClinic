@@ -1,4 +1,6 @@
+import { PatientInterface } from '../../interfaces/patient.interface';
 import { patientModel } from '../../models';
+import { UserService } from '../users/user.service';
 
 export class PatientService {
   async getPatientById(patientId: string) {
@@ -21,6 +23,24 @@ export class PatientService {
     } catch (error) {
       console.log(error);
       throw new Error('Get All Patient Error.');
+    }
+  }
+
+  async createPatient({ patient_name, token }) {
+    try {
+      const patientData: PatientInterface = {
+        patient_name: patient_name,
+        patient_avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          patient_name
+        )}&rounded=true&background=random`,
+        appointment_list: [],
+        medical_history: [],
+        token: token,
+      };
+      return await patientModel.create(patientData);
+    } catch (error) {
+      console.log(error);
+      throw new Error('Cannot create patient! ');
     }
   }
 }

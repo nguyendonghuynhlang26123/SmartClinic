@@ -1,4 +1,4 @@
-import { BaseInterface } from "./base/base.interface";
+import { BaseInterface } from './base/base.interface';
 
 export class UserInterface extends BaseInterface {
   phone: string;

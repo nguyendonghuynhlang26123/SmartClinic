@@ -6,7 +6,7 @@ const PatientSchema = new Schema(
     patient_name: { type: String, required: true },
     patient_avatar: { type: String, default: null },
     patient_gender: { type: String, default: null },
-    patient_dob: { type: String, default: null },
+    patient_dob: { type: Number, default: null },
     patient_weight: { type: Number, default: null },
     appointment_list: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'appointments' },
