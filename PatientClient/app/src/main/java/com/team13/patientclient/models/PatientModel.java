@@ -1,8 +1,12 @@
 package com.team13.patientclient.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Patient {
+public class PatientModel {
+    @SerializedName("_id")
+    @Expose(serialize =  false)
+    String id;
 
     @SerializedName("patient_name")
     String name;
@@ -22,7 +26,7 @@ public class Patient {
     @SerializedName("token")
     String token;
 
-    public Patient(String name, String avatarUrl, String gender, String dateOfBirth, double weight, String token) {
+    public PatientModel(String name, String avatarUrl, String gender, String dateOfBirth, double weight, String token) {
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.gender = gender;
@@ -77,5 +81,13 @@ public class Patient {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

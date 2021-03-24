@@ -6,12 +6,6 @@ const router = express.Router();
 
 const authService: AuthService = new AuthService();
 
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => {
-    //res.redirect('/login');
-  });
-});
-
 router.post('/patients/login', (req, res) => {
   authService.authenticate(req.body.phone, req.body.password, (err, user) => {
     if (user) {

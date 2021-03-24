@@ -7,7 +7,7 @@ class Location {
     public double cor_y;
 }
 
-public class Hospital {
+public class HospitalModel {
     @SerializedName("name")
     private String name;
 
@@ -17,7 +17,7 @@ public class Hospital {
     @SerializedName("_id")
     private String id;
 
-    public Hospital(String name, Location location, String id) {
+    public HospitalModel(String name, Location location, String id) {
         this.name = name;
         this.location = location;
         this.id = id;

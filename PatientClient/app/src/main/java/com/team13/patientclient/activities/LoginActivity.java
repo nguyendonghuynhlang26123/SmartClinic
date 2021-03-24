@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.team13.patientclient.activities.fragments.LoginFragment;
-import com.team13.patientclient.NetworkUtils;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.SignupFragment;
 
@@ -62,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         loadFragment(new LoginFragment());
-        Test();
     }
     private void loadFragment(Fragment fragment) {
         // load fragment
@@ -79,45 +77,5 @@ public class LoginActivity extends AppCompatActivity {
         loadFragment(new SignupFragment());
         tabLayout.selectTab(tabLayout.getTabAt(1));
     }
-    private void Test(){
-        URL api_path = NetworkUtils.buildUrlTest();
-        new ConnectServer().execute(api_path);
-    }
-    public class ConnectServer extends AsyncTask<URL, Void, String>{
 
-        @Override
-        protected String doInBackground(URL... urls) {
-            URL api_path = urls[0];
-            String result = null;
-            try {
-                result = NetworkUtils.getResponseFromHttpUrl(api_path);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            progressBar.setVisibility(View.INVISIBLE);
-            if(s!=null && !s.equals("")){
-                try {
-                    JSONObject result = new JSONObject(s);
-                    String data = result.getString("name");
-                    welcomeData.setText(data);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                welcomeData.setVisibility(View.VISIBLE);
-            }
-        }
-    }
 }

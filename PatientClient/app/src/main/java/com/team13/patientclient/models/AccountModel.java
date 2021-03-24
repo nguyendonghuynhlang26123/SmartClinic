@@ -2,19 +2,15 @@ package com.team13.patientclient.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Account {
+public class AccountModel {
     @SerializedName("phone")
     String phoneNumber;
 
-    @SerializedName("password")
-    String password;
-
     @SerializedName("user_infor")
-    Patient userInfor;
+    PatientModel userInfor;
 
-    public Account(String phoneNumber, String password, Patient userInfor) {
+    public AccountModel(String phoneNumber, PatientModel userInfor) {
         this.phoneNumber = phoneNumber;
-        this.password = password;
         this.userInfor = userInfor;
     }
 
@@ -26,19 +22,11 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Patient getUserInfor() {
+    public PatientModel getUserInfor() {
         return userInfor;
     }
 
-    public void setUserInfor(Patient userInfor) {
+    public void setUserInfor(PatientModel userInfor) {
         this.userInfor = userInfor;
     }
 }

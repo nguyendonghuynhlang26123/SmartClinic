@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.models.Cart;
 
@@ -77,6 +79,7 @@ public class ProfileFragment extends Fragment {
             assert getFragmentManager() != null;
             profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
         });
+        Picasso.get().load("https://ui-avatars.com/api/?name=Hai+Dang&rounded=true&background=random").into((ImageView) view.findViewById(R.id.profile_avatar));
         return view;
     }
 

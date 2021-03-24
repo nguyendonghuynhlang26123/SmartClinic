@@ -11,14 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
-import com.team13.patientclient.models.Hospital;
-import com.team13.patientclient.repository.services.HospitalService;
+import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.repository.services.AuthService;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +43,7 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     TextInputEditText phoneInput;
+    TextInputEditText passwordInput;
     Button loginButton;
     Button signUpButton;
 
@@ -79,6 +83,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        passwordInput = view.findViewById(R.id.input_password);
         phoneInput = view.findViewById(R.id.input_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         signUpButton = view.findViewById(R.id.sign_up_text_button);
@@ -87,32 +92,41 @@ public class LoginFragment extends Fragment {
         });
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), MainActivity.class);
-            startActivity(i);
+            String phone = phoneInput.getText().toString().replaceAll("[^\\d]","");
+            String password = passwordInput.getText().toString();
+            if (phone.isEmpty() || password.isEmpty())
+                Toast.makeText(getContext(), "Empty Input! Please try again", Toast.LENGTH_SHORT).show();
+            verifyAndProcess(phone, password, view);
         });
 
-        test();
         return view;
     }
 
-    private void test() {
-        final HospitalService hospitalService = new HospitalService();
-
-        hospitalService.getHospital("6056b843cefabf3368f043cf").enqueue(new Callback<Hospital>() {
+    private void verifyAndProcess(String phone, String password, View view) {
+        AuthService auth = new AuthService();
+        auth.login("+84" + phone, password).enqueue(new Callback<AccountModel>() {
             @Override
-            public void onResponse(Call<Hospital> call, Response<Hospital> response) {
-                if(!response.isSuccessful()){
-                    Log.d("LONG","ERROR");
-                    return;
-                }
+            public void onResponse(Call<AccountModel> call, Response<AccountModel> response) {
+                if (response.isSuccessful()){
+                    AccountModel account = response.body();
+                    Log.d("LONG", new Gson().toJson(account));
 
-                Hospital data = response.body();
-                Log.d("LONG", new Gson().toJson(data));
+                    Intent i = new Intent(view.getContext(), MainActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getContext(), jObjError.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<Hospital> call, Throwable t) {
-                Log.d("LONG","ERROR " + t.getMessage());
+            public void onFailure(Call<AccountModel> call, Throwable t) {
+
             }
         });
     }
