@@ -26,4 +26,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:category_id", async (req, res) => {
+  try {
+    const result = await categoryService.updateCategoryById(
+      req.params.category_id,
+      req.body
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
+router.delete("/:category_id", async (req, res) => {
+  try {
+    const result = await categoryService.deleteCategory(
+      req.params.category_id
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export const CategoryController = router;
