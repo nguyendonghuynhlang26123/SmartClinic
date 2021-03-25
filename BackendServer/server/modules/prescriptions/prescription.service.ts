@@ -30,14 +30,29 @@ export class PrescriptionService {
   }
 
   async createPrescription(data: PrescriptionInterface) {
-    try {
-      delete data._id;
-      delete data.created_at;
-      delete data.updated_at;
-      const prescription = await prescriptionModel.create(data);
-      return prescription;
-    } catch (error) {
-      throw new Error("Create Prescription Error.");
-    }
+    delete data._id;
+    delete data.created_at;
+    delete data.updated_at;
+    const prescription = await prescriptionModel.create(data);
+    return prescription;
+  }
+
+  async updatePrescriptionById(prescriptionId: string, dataUpdate) {
+    const prescription = await prescriptionModel.findOne({ _id: prescriptionId });
+    if (!prescription) throw new Error("Not Found Prescription.");
+    const result = await prescriptionModel.updateOne(
+      { _id: prescription._id },
+      dataUpdate
+    );
+    return result;
+  }
+
+  async deletePrescription(prescriptionId: string) {
+    const prescription = await prescriptionModel.findOne({ _id: prescriptionId });
+    if (!prescription) throw new Error("Not Found Prescription.");
+    const result = await prescriptionModel
+      .deleteOne({ _id: prescription._id })
+      .exec();
+    return result;
   }
 }

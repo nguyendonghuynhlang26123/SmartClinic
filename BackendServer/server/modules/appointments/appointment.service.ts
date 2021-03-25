@@ -39,22 +39,5 @@ export class AppointmentService {
     return appointment;
   }
 
-  async updateAppointmentById(appointmentId: string, dataUpdate) {
-    const appointment = await appointmentModel.findOne({ _id: appointmentId });
-    if (!appointment) throw new Error("Not Found Appointment.");
-    const result = await appointmentModel.updateOne(
-      { _id: appointment._id },
-      dataUpdate
-    );
-    return result;
-  }
-
-  async deleteAppointment(appointmentId: string) {
-    const appointment = await appointmentModel.findOne({ _id: appointmentId });
-    if (!appointment) throw new Error("Not Found Appointment.");
-    const result = await appointmentModel
-      .deleteOne({ _id: appointment._id })
-      .exec();
-    return result;
-  }
+  
 }
