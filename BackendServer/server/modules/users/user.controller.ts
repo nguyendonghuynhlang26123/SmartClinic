@@ -23,4 +23,29 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put("/:user_id", async (req, res) => {
+  try {
+    const result = await userService.updateUserById(
+      req.params.user_id,
+      req.body
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
+router.delete("/:user_id", async (req, res) => {
+  try {
+    const result = await userService.deleteUser(
+      req.params.user_id
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export const UserController = router;

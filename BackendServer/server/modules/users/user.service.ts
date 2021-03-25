@@ -72,4 +72,23 @@ export class UserService {
     };
     return await userModel.create(userData);
   }
+
+  async updateUserById(userId: string, dataUpdate) {
+    const user = await userModel.findOne({ _id: userId });
+    if (!user) throw new Error("Not Found User.");
+    const result = await userModel.updateOne(
+      { _id: user._id },
+      dataUpdate
+    );
+    return result;
+  }
+
+  async deleteUser(userId: string) {
+    const user = await userModel.findOne({ _id: userId });
+    if (!user) throw new Error("Not Found User.");
+    const result = await userModel
+      .deleteOne({ _id: user._id })
+      .exec();
+    return result;
+  }
 }
