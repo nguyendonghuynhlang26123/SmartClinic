@@ -24,4 +24,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:doctor_id", async (req, res) => {
+  try {
+    const result = await doctorService.updateDoctorById(
+      req.params.doctor_id,
+      req.body
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
+router.delete("/:doctor_id", async (req, res) => {
+  try {
+    const result = await doctorService.deleteDoctor(
+      req.params.doctor_id
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export const DoctorController = router;

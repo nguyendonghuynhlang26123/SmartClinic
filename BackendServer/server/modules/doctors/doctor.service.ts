@@ -28,14 +28,29 @@ export class DoctorService {
   }
 
   async createDoctor(data: DoctorInterface) {
-    try {
-      delete data._id;
-      delete data.created_at;
-      delete data.updated_at;
-      const doctor = await doctorModel.create(data);
-      return doctor;
-    } catch (error) {
-      throw new Error("Create Doctor Error.");
-    }
+    delete data._id;
+    delete data.created_at;
+    delete data.updated_at;
+    const doctor = await doctorModel.create(data);
+    return doctor;
+  }
+
+  async updateDoctorById(doctorId: string, dataUpdate) {
+    const doctor = await doctorModel.findOne({ _id: doctorId });
+    if (!doctor) throw new Error("Not Found Doctor.");
+    const result = await doctorModel.updateOne(
+      { _id: doctor._id },
+      dataUpdate
+    );
+    return result;
+  }
+
+  async deleteDoctor(doctorId: string) {
+    const doctor = await doctorModel.findOne({ _id: doctorId });
+    if (!doctor) throw new Error("Not Found Doctor.");
+    const result = await doctorModel
+      .deleteOne({ _id: doctor._id })
+      .exec();
+    return result;
   }
 }
