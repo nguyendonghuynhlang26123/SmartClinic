@@ -1,8 +1,8 @@
 package com.team13.patientclient.models;
 
-public class Department {
+public class Drug {
     String title;
-    public Department(String title){
+    public Drug(String title){
         this.title = title;
     }
 }
