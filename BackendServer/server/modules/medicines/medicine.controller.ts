@@ -26,4 +26,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:medicine_id", async (req, res) => {
+  try {
+    const result = await medicineService.updateMedicineById(
+      req.params.medicine_id,
+      req.body
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
+router.delete("/:medicine_id", async (req, res) => {
+  try {
+    const result = await medicineService.deleteMedicine(
+      req.params.medicine_id
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export const MedicineController = router;

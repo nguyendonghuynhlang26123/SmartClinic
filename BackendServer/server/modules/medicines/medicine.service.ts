@@ -28,14 +28,29 @@ export class MedicineService {
   }
 
   async createMedicine(data: MedicineInterface) {
-    try {
-      delete data._id;
-      delete data.created_at;
-      delete data.updated_at;
-      const medicine = await medicineModel.create(data);
-      return medicine;
-    } catch (error) {
-      throw new Error("Create Medicine Error.");
-    }
+    delete data._id;
+    delete data.created_at;
+    delete data.updated_at;
+    const medicine = await medicineModel.create(data);
+    return medicine;
+  }
+
+  async updateMedicineById(medicineId: string, dataUpdate) {
+    const medicine = await medicineModel.findOne({ _id: medicineId });
+    if (!medicine) throw new Error("Not Found Medicine.");
+    const result = await medicineModel.updateOne(
+      { _id: medicine._id },
+      dataUpdate
+    );
+    return result;
+  }
+
+  async deleteMedicine(medicineId: string) {
+    const medicine = await medicineModel.findOne({ _id: medicineId });
+    if (!medicine) throw new Error("Not Found Medicine.");
+    const result = await medicineModel
+      .deleteOne({ _id: medicine._id })
+      .exec();
+    return result;
   }
 }
