@@ -6,7 +6,7 @@ export class PrescriptionService {
     try {
       const prescription = await prescriptionModel
         .findOne({ _id: prescriptionId })
-        .populate("medicine_list.medicine");
+        .populate("medicine_list.medicine doctor patient");
       if (!prescription) {
         throw new Error("Not Found Prescription.");
       }
@@ -21,7 +21,7 @@ export class PrescriptionService {
     try {
       const prescriptions = await prescriptionModel
         .find()
-        .populate("medicine_list.medicine");
+        .populate("medicine_list.medicine doctor patient");
       return prescriptions;
     } catch (error) {
       console.log(error);

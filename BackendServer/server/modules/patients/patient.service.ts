@@ -5,7 +5,7 @@ import { UserService } from '../users/user.service';
 export class PatientService {
   async getPatientById(patientId: string) {
     try {
-      const patient = await patientModel.findOne({ _id: patientId });
+      const patient = await patientModel.findOne({ _id: patientId }).populate("appointment_list");
       if (!patient) {
         throw new Error('Not Found Patient.');
       }
@@ -18,7 +18,7 @@ export class PatientService {
 
   async getAllPatient() {
     try {
-      const patients = await patientModel.find();
+      const patients = await patientModel.find().populate("appointment_list");
       return patients;
     } catch (error) {
       console.log(error);

@@ -32,14 +32,29 @@ export class AppointmentService {
   }
 
   async createAppointment(data: AppointmentInterface) {
-    try {
-      delete data._id;
-      delete data.created_at;
-      delete data.updated_at;
-      const appointment = await appointmentModel.create(data);
-      return appointment;
-    } catch (error) {
-      throw new Error("Create Appointment Error.");
-    }
+    delete data._id;
+    delete data.created_at;
+    delete data.updated_at;
+    const appointment = await appointmentModel.create(data);
+    return appointment;
+  }
+
+  async updateAppointmentById(appointmentId: string, dataUpdate) {
+    const appointment = await appointmentModel.findOne({ _id: appointmentId });
+    if (!appointment) throw new Error("Not Found Appointment.");
+    const result = await appointmentModel.updateOne(
+      { _id: appointment._id },
+      dataUpdate
+    );
+    return result;
+  }
+
+  async deleteAppointment(appointmentId: string) {
+    const appointment = await appointmentModel.findOne({ _id: appointmentId });
+    if (!appointment) throw new Error("Not Found Appointment.");
+    const result = await appointmentModel
+      .deleteOne({ _id: appointment._id })
+      .exec();
+    return result;
   }
 }

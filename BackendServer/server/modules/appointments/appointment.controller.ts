@@ -26,4 +26,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:appointment_id", async (req, res) => {
+  try {
+    const result = await appointmentService.updateAppointmentById(
+      req.params.appointment_id,
+      req.body
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
+router.delete("/:appointment_id", async (req, res) => {
+  try {
+    const result = await appointmentService.deleteAppointment(
+      req.params.appointment_id
+    );
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export const AppointmentController = router;
