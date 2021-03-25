@@ -54,7 +54,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:id="@+id/input_birth" />
+                    android:id="@+id/input_birth"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:focusableInTouchMode="false"/>
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:layout_width="wrap_content"
