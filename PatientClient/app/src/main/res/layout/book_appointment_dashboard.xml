@@ -342,11 +342,14 @@
                             android:backgroundTint="@color/white"
                             android:textColor="@color/black"
                             android:layout_marginHorizontal="16dp"
+                            android:id="@+id/all_service_button"
                             />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

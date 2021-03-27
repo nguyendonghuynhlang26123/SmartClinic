@@ -32,5 +32,9 @@ public class BookAppointmentDashboard extends AppCompatActivity {
             Intent i = new Intent(this, LocationActivity.class);
             startActivity(i);
         });
+        findViewById(R.id.all_service_button).setOnClickListener(v->{
+            Intent i = new Intent(this, ServiceActivity.class);
+            startActivity(i);
+        });
     }
 }
