@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.fragments.AppointmentConfirmFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:drawablePadding="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:text="Your total invoice amount will be finalized at the clinic based upon any adjustments from insurance coverage or other promotional offers."
+                    android:drawableLeft="@drawable/ic_warning" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="false"
+                    android:text="Confirm Appointment"
+                    android:textSize="16sp"
+                    style="@style/CornerButton"
+                    android:id="@+id/process_button"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
+                android:paddingBottom="200dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                >
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:progress="100"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm Appointment"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginTop="16dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:text="Please confirm the details of your Appointment"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:srcCompat="@drawable/avatar"
+                    app:shapeAppearanceOverlay="@style/roundedImageView"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City Hospital"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="29 Phu Chau Street, Tam Phu Ward, Thu Duc City"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="4dp"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Everday, 07:00 - 22:00"
+                    android:drawableLeft="@drawable/ic_appointment"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="4dp"
+                    android:textSize="14sp"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_doctor"
+                        android:id="@+id/service_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:paddingRight="8dp"
+                        android:paddingVertical="6dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Service"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/service_icon"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/service_label"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="General Care"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@+id/service_label"
+                        app:layout_constraintLeft_toRightOf="@id/service_icon"
+                        android:layout_marginLeft="8dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_schedule"
+                        android:id="@+id/schedule_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:paddingRight="8dp"
+                        android:paddingVertical="6dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date and Time"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/schedule_icon"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/schedule_label"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sat-Mar 27 | 9:00"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@+id/schedule_label"
+                        app:layout_constraintLeft_toRightOf="@id/schedule_icon"
+                        android:layout_marginLeft="8dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_about_us"
+                        android:id="@+id/reason_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:paddingRight="8dp"
+                        android:paddingVertical="6dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reason"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/reason_icon"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/reason_label"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lactose Allergy"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@+id/reason_label"
+                        app:layout_constraintLeft_toRightOf="@id/reason_icon"
+                        android:layout_marginLeft="8dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>
