@@ -28,40 +28,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a8bbaa3-60e1-4270-afe3-df15beefbc34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/team13/doctorclient/LoginActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/team13/doctorclient/LoginFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/team13/doctorclient/NetworkUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/team13/doctorclient/SignupFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_password.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_phone.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_profile.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_password.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_phone.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_password.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_phone.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_password.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_phone.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_password.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_phone.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_signup.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/BookAppointmentActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/BookAppointmentDashboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/SchedulePickFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/activity_book_appointment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/book_appointment_dashboard.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/fragment_schedule_pick.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/PharmacyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/PharmacyActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/models/Cart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-anydpi/ic_appointment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-anydpi/ic_appointment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-anydpi/ic_phone.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-anydpi/ic_phone.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-hdpi/ic_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-hdpi/ic_appointment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-hdpi/ic_phone.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-hdpi/ic_phone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-mdpi/ic_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-mdpi/ic_appointment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-mdpi/ic_phone.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-mdpi/ic_phone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xhdpi/ic_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xhdpi/ic_appointment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xhdpi/ic_phone.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xhdpi/ic_phone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xxhdpi/ic_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xxhdpi/ic_appointment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xxhdpi/ic_phone.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/drawable-xxhdpi/ic_phone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/activity_cart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/activity_cart.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -198,6 +196,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="698" y="190" key="AndroidCreateResourceFileDialog" timestamp="1616749130574">
