@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.team13.patientclient.R;
-import com.team13.patientclient.models.Cart;
+import com.team13.patientclient.activities.Cart;
 
 /**
  * A simple {@link Fragment} subclass.

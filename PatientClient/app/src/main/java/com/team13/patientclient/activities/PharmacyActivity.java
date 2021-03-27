@@ -11,7 +11,6 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.Cart;
 import com.team13.patientclient.models.Drug;
 
 import java.util.ArrayList;

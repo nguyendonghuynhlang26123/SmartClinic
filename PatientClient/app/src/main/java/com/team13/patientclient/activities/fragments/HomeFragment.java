@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.team13.patientclient.activities.BookAppointmentDashboard;
 import com.team13.patientclient.activities.LocationActivity;
 import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
@@ -103,7 +104,9 @@ public class HomeFragment extends Fragment {
             startActivity(i);
         });
         view.findViewById(R.id.appointment_shortcut).setOnClickListener(v->{
-            listener.goToAppoinment();
+//            listener.goToAppoinment();
+            Intent i = new Intent(view.getContext(), BookAppointmentDashboard.class);
+            startActivity(i);
         });
         view.findViewById(R.id.blog_shortcut).setOnClickListener(v->{
             listener.gotoBlog();
