@@ -28,14 +28,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a8bbaa3-60e1-4270-afe3-df15beefbc34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/BookAppointmentActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/BookAppointmentDashboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/Cart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/SchedulePickFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/activity_book_appointment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/book_appointment_dashboard.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/res/layout/fragment_schedule_pick.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/PharmacyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/PharmacyActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PatientClient/app/src/main/java/com/team13/patientclient/activities/fragments/HomeFragment.java" afterDir="false" />
