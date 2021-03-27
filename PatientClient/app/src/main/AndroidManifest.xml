@@ -13,12 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".activities.DrugActivity"></activity>
+        <activity android:name=".activities.BookAppointmentActivity"></activity>
+        <activity android:name=".activities.BookAppointmentDashboard" />
+        <activity android:name=".activities.Cart" />
+        <activity android:name=".activities.DrugActivity" />
         <activity android:name=".activities.CommonServiceActivity" />
         <activity android:name=".activities.DoctorDetailActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.DepartmentActivity" />
-        <activity android:name=".models.Cart" />
         <activity android:name=".activities.PharmacyActivity" />
         <activity android:name=".activities.LocationActivity" />
         <activity android:name=".activities.MainActivity" />
