@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class SchedulePickFragment extends Fragment {
     int selectedDay = 0;
     SchedulePickFragmentListener listener;
     final SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.US);
-    final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm", Locale.US);
+    final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
     final String[] times = {"07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00",
                             "11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30",
                             "16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00",
@@ -158,6 +159,7 @@ public class SchedulePickFragment extends Fragment {
         int minute = Integer.parseInt(time.substring(3,5));
         int hour = Integer.parseInt(time.substring(0,2));
         LocalTime currentTime = LocalTime.of(hour, minute);
+        Log.w("Current Time",currentTime.toString());
         int minute1, hour1;
         RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
         params.topMargin = Math.round(convertDpToPixel(4,view.getContext()));
