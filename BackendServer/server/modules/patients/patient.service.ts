@@ -1,30 +1,30 @@
-import { PatientInterface } from "../../interfaces";
-import { patientModel } from "../../models";
-import { UserService } from "../users/user.service";
+import { PatientInterface } from '../../interfaces';
+import { patientModel } from '../../models';
+import { UserService } from '../users/user.service';
 
 export class PatientService {
   async getPatientById(patientId: string) {
     try {
       const patient = await patientModel
         .findOne({ _id: patientId })
-        .populate("appointment_list");
+        .populate('appointment_list');
       if (!patient) {
-        throw new Error("Not Found Patient.");
+        throw new Error('Not Found Patient.');
       }
       return patient;
     } catch (error) {
       console.log(error);
-      throw new Error("Get Patient Error.");
+      throw new Error('Get Patient Error.');
     }
   }
 
   async getAllPatient() {
     try {
-      const patients = await patientModel.find().populate("appointment_list");
+      const patients = await patientModel.find().populate('appointment_list');
       return patients;
     } catch (error) {
       console.log(error);
-      throw new Error("Get All Patient Error.");
+      throw new Error('Get All Patient Error.');
     }
   }
 
@@ -34,7 +34,6 @@ export class PatientService {
       patient_avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
         patient_name
       )}&rounded=true&background=random`,
-      appointment_list: [],
       medical_history: [],
       token: token,
     };
@@ -43,7 +42,7 @@ export class PatientService {
 
   async updatePatientById(patientId: string, dataUpdate) {
     const patient = await patientModel.findOne({ _id: patientId });
-    if (!patient) throw new Error("Not Found Patient.");
+    if (!patient) throw new Error('Not Found Patient.');
     const result = await patientModel.updateOne(
       { _id: patient._id },
       dataUpdate
@@ -53,7 +52,7 @@ export class PatientService {
 
   async deletePatient(patientId: string) {
     const patient = await patientModel.findOne({ _id: patientId });
-    if (!patient) throw new Error("Not Found Patient.");
+    if (!patient) throw new Error('Not Found Patient.');
     const result = await patientModel.deleteOne({ _id: patient._id }).exec();
     return result;
   }
