@@ -69,7 +69,7 @@ public class PatientModel {
         this.gender = gender;
     }
 
-    public double getDateOfBirth() {
+    public long getDateOfBirth() {
         return dateOfBirth;
     }
 

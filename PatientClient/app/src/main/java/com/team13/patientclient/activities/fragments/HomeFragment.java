@@ -12,8 +12,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.BookAppointmentDashboard;
 import com.team13.patientclient.activities.LocationActivity;
 import com.team13.patientclient.activities.PharmacyActivity;
@@ -82,6 +84,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((TextView) view.findViewById(R.id.welcome_text)).setText("Hi, " + Store.get_instance().getName());
+
         viewPager = view.findViewById(R.id.news_banner);
         bannerAdapter = new BannerAdapter(view.getContext());
         viewPager.setAdapter(bannerAdapter);

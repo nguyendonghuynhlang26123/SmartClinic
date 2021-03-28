@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
         AccountModel accountData = Store.get_instance().getUserAccount();
 
         ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getName());
-        if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getWeight() + "kg");
+        if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_weight)).setText(accountData.getUserInfor().getWeight() + "kg");
         if (accountData.getUserInfor().getDateOfBirth() != 0) ((TextView) view.findViewById(R.id.profile_age)).setText(accountData.getUserInfor().getAge() + "");
         if (!accountData.getUserInfor().getGender().isEmpty()) ((TextView) view.findViewById(R.id.profile_gender)).setText(accountData.getUserInfor().getGender());
         Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_avatar));
