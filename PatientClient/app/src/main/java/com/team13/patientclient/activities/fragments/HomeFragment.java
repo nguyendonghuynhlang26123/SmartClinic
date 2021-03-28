@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.BookAppointmentDashboard;
@@ -22,9 +24,12 @@ import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.BannerAdapter;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.Drug;
+import com.team13.patientclient.models.MedicineModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.MedicineService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,34 +96,46 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(bannerAdapter);
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);
-//        departmentList = view.findViewById(R.id.department_list);
-//        DepartmentItemAdapter departmentItemAdapter = new DepartmentItemAdapter(view.getContext(), getDepartments());
-//        departmentList.setAdapter(departmentItemAdapter);
-//        departmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
-        pharmacyList = view.findViewById(R.id.pharmacy_list);
-        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), getDepartments());
-        pharmacyList.setAdapter(pharmacyItemAdapter);
-        pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        pharmacyRendering(view);
+
         view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);
             startActivity(i);
         });
+
         view.findViewById(R.id.location_button).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), LocationActivity.class);
             startActivity(i);
         });
+
         view.findViewById(R.id.appointment_shortcut).setOnClickListener(v->{
 //            listener.goToAppoinment();
             Intent i = new Intent(view.getContext(), BookAppointmentDashboard.class);
             startActivity(i);
         });
+
         view.findViewById(R.id.blog_shortcut).setOnClickListener(v->{
             listener.gotoBlog();
         });
         return view;
     }
 
-   public interface HomeFragmentListener{
+    private void pharmacyRendering(View view) {
+        MedicineService service = new MedicineService();
+        service.getMinimizedMedicineData(new OnResponse<MedicineModel[]>() {
+            @Override
+            public void onRequestSuccess(MedicineModel[] list) {
+                Log.d("LONG", new Gson().toJson(list));
+                pharmacyList = view.findViewById(R.id.pharmacy_list);
+                PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(list)));
+                pharmacyList.setAdapter(pharmacyItemAdapter);
+                pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            }
+        });
+    }
+
+    public interface HomeFragmentListener{
         void goToAppoinment();
         void gotoBlog();
    }
@@ -139,11 +156,4 @@ public class HomeFragment extends Fragment {
         listener = null;
     }
 
-    ArrayList<Drug> getDepartments(){
-        ArrayList<Drug> drugs = new ArrayList<>(7);
-        for(int i=0;i<7;++i){
-            drugs.add(new Drug("dep"));
-        }
-        return drugs;
-    }
 }

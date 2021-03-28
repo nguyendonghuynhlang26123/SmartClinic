@@ -5,26 +5,27 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.DrugActivity;
-import com.team13.patientclient.models.Drug;
+import com.team13.patientclient.models.MedicineModel;
 
 import java.util.ArrayList;
 
 public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapter.ViewHolder> {
     private final Context context;
-    private final ArrayList<Drug> drugs;
+    private final ArrayList<MedicineModel> drugs;
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
-    public PharmacyItemAdapter(Context context, ArrayList<Drug> drugs){
+    public PharmacyItemAdapter(Context context, ArrayList<MedicineModel> drugs){
         this.context = context;
         this.drugs = drugs;
     }
@@ -39,6 +40,8 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
+
+        Picasso.get().load(drugs.get(position).getThumbnail()).into((ImageView)view.findViewById(R.id.pharmacy_item_img));
         view.setOnClickListener(v->{
             Intent i = new Intent(context, DrugActivity.class);
             context.startActivity(i);
