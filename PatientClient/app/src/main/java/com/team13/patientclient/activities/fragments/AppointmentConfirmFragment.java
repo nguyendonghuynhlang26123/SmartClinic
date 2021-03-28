@@ -1,5 +1,6 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.team13.patientclient.R;
 
@@ -25,7 +27,7 @@ public class AppointmentConfirmFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    AppointmentConfirmListener listener;
     public AppointmentConfirmFragment() {
         // Required empty public constructor
     }
@@ -61,6 +63,37 @@ public class AppointmentConfirmFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointment_confirm, container, false);
+        View view = inflater.inflate(R.layout.fragment_appointment_confirm, container, false);
+        TextView selectedTime = view.findViewById(R.id.selected_time);
+        selectedTime.setText(listener.getSelectedTime());
+        TextView selectedService = view.findViewById(R.id.selected_service);
+        selectedService.setText(listener.getSelectedService());
+        TextView reason = view.findViewById(R.id.selected_reason);
+        reason.setText(listener.getReason());
+        view.findViewById(R.id.process_button).setOnClickListener(v->listener.handleConfirm());
+        return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AppointmentConfirmListener) {
+            listener = (AppointmentConfirmListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement AppointmentConfirmListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    public interface AppointmentConfirmListener{
+        String getSelectedTime();
+        String getSelectedService();
+        String getReason();
+        void handleConfirm();
     }
 }
