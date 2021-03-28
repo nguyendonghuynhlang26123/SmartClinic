@@ -1,6 +1,7 @@
 package com.team13.patientclient.activities.fragments;
 
 import android.app.DatePickerDialog;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,25 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.squareup.picasso.Picasso;
-import com.team13.patientclient.CircularImageView;
-=======
-import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
->>>>>>> da2be45a5b634ba10bc0dbdbf48acd54c911c850
+import com.squareup.picasso.Picasso;
+import com.team13.patientclient.CircularImageView;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.models.PatientModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.PatientService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,9 +44,13 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Uri avatarURL;
+
     int selectedYear = 2000;
     int selectedMonth = 5;
     int selectedDayOfMonth = 10;
+
+
     public ProfileEditFragment() {
         // Required empty public constructor
     }
@@ -84,35 +88,53 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
 
         // Inflate the layout for this fragment
-<<<<<<< HEAD
-        EditText dobInput = view.findViewById(R.id.profile_edit_dob);
-        EditText nameInput = view.findViewById(R.id.profile_edit_name);
+        TextInputEditText nameInput = view.findViewById(R.id.profile_edit_name);
+        TextInputEditText editTextDate = view.findViewById(R.id.input_birth);
         CircularImageView avatarView = view.findViewById(R.id.profile_edit_avatar);
         RadioGroup genderRadioGroup = view.findViewById(R.id.profile_edit_gender);
 
-        AccountModel accountData = Store.get_instance().getUserAccount();
-        PatientModel userProfile = accountData.getUserInfor();
+        PatientModel userProfile = Store.get_instance().getUserAccount().getUserInfor();
 
         nameInput.setText(userProfile.getName());
 
-        //if (accountData.getUserInfor().getWeight() != 0) ((EditText) view.findViewById(R.id.profile_edit_name)).setText(accountData.getUserInfor().getWeight() + "kg");
-        if (accountData.getUserInfor().getDateOfBirth() != 0) dobInput.setText(userProfile.getDateOfBirth() + "");
-        if (accountData.equals("Male")) genderRadioGroup.check(R.id.profile_edit_gender_male);
-        else if (accountData.equals("FeMale")) genderRadioGroup.check(R.id.profile_edit_gender_female);
-        Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_edit_avatar));
+        if (userProfile.getDateOfBirth() != 0) editTextDate.setText(userProfile.getDateOfBirthString() + "");
+        if (userProfile.getGender().equals("Male")) ((RadioButton)view.findViewById(R.id.profile_edit_gender_male)).setChecked(true);
+        else if (userProfile.getGender().equals("Female")) ((RadioButton)view.findViewById(R.id.profile_edit_gender_female)).setChecked(true);
+        Picasso.get().load(userProfile.getAvatarUrl()).into(avatarView);
 
-        view.findViewById(R.id.profile_edit_save_button).setOnClickListener(v -> {
-            //TODO: GET LOCAL DATA AND CALL PUT REQUEST
-=======
-        View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
-        TextInputEditText editTextDate = view.findViewById(R.id.input_birth);
         editTextDate.setOnClickListener(v->{
             DatePickerDialog.OnDateSetListener dateSetListener = (view1, year, monthOfYear, dayOfMonth) -> editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
             DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
                     dateSetListener, selectedYear, selectedMonth, selectedDayOfMonth);
             datePickerDialog.show();
->>>>>>> da2be45a5b634ba10bc0dbdbf48acd54c911c850
+        });
+
+        view.findViewById(R.id.profile_edit_save_button).setOnClickListener(v ->{
+            String name  = nameInput.getText().toString();
+            String avatarURI = avatarURL == null ? userProfile.getAvatarUrl() : avatarURL.toString();
+            String gender = genderRadioGroup.getCheckedRadioButtonId() == -1 ? "" : (genderRadioGroup.getCheckedRadioButtonId() == R.id.profile_edit_gender_male) ? "Male" : "Female";
+            long dob = Utils.dateStringToNumber(editTextDate.getText().toString());
+            double weight = 0;
+
+            if (name.isEmpty()){
+                Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            PatientService patientService = new PatientService();
+            patientService.updatePatientProfile(userProfile.getId(), new PatientModel(name, avatarURI, gender, dob, weight), new OnResponse<Void>() {
+                @Override
+                public void onRequestSuccess(Void response) {
+                    Toast.makeText(getContext(),"Update successfully", Toast.LENGTH_SHORT).show();
+
+                    userProfile.setName(name);
+                    userProfile.setAvatarUrl(avatarURI);
+                    userProfile.setDateOfBirth(dob);
+                    userProfile.setGender(gender);
+                    userProfile.setWeight(weight);
+                }
+            });
         });
         return view;
     }
