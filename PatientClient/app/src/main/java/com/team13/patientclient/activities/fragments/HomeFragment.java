@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -17,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.team13.patientclient.activities.BookAppointmentDashboard;
 import com.team13.patientclient.activities.LocationActivity;
 import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.DepartmentActivity;
 import com.team13.patientclient.adapters.BannerAdapter;
-import com.team13.patientclient.adapters.DepartmentItemAdapter;
-import com.team13.patientclient.models.Department;
+import com.team13.patientclient.adapters.PharmacyItemAdapter;
+import com.team13.patientclient.models.Drug;
 
 import java.util.ArrayList;
 
@@ -95,8 +92,8 @@ public class HomeFragment extends Fragment {
 //        departmentList.setAdapter(departmentItemAdapter);
 //        departmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
         pharmacyList = view.findViewById(R.id.pharmacy_list);
-        DepartmentItemAdapter departmentItemAdapter1 = new DepartmentItemAdapter(view.getContext(), getDepartments());
-        pharmacyList.setAdapter(departmentItemAdapter1);
+        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), getDepartments());
+        pharmacyList.setAdapter(pharmacyItemAdapter);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);
@@ -107,7 +104,9 @@ public class HomeFragment extends Fragment {
             startActivity(i);
         });
         view.findViewById(R.id.appointment_shortcut).setOnClickListener(v->{
-            listener.goToAppoinment();
+//            listener.goToAppoinment();
+            Intent i = new Intent(view.getContext(), BookAppointmentDashboard.class);
+            startActivity(i);
         });
         view.findViewById(R.id.blog_shortcut).setOnClickListener(v->{
             listener.gotoBlog();
@@ -136,11 +135,11 @@ public class HomeFragment extends Fragment {
         listener = null;
     }
 
-    ArrayList<Department> getDepartments(){
-        ArrayList<Department> departments = new ArrayList<>(7);
+    ArrayList<Drug> getDepartments(){
+        ArrayList<Drug> drugs = new ArrayList<>(7);
         for(int i=0;i<7;++i){
-            departments.add(new Department("dep"));
+            drugs.add(new Drug("dep"));
         }
-        return departments;
+        return drugs;
     }
 }

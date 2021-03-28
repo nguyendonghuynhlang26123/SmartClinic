@@ -18,6 +18,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="64dp"
             android:src="@drawable/ic_add_appointment"
+            android:id="@+id/add_appointment_button"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

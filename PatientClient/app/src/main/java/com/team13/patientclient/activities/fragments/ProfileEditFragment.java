@@ -1,12 +1,15 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -15,6 +18,12 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.CircularImageView;
+=======
+import android.widget.DatePicker;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputEditText;
+>>>>>>> da2be45a5b634ba10bc0dbdbf48acd54c911c850
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.models.AccountModel;
@@ -35,7 +44,9 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    int selectedYear = 2000;
+    int selectedMonth = 5;
+    int selectedDayOfMonth = 10;
     public ProfileEditFragment() {
         // Required empty public constructor
     }
@@ -73,6 +84,7 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
 
         // Inflate the layout for this fragment
+<<<<<<< HEAD
         EditText dobInput = view.findViewById(R.id.profile_edit_dob);
         EditText nameInput = view.findViewById(R.id.profile_edit_name);
         CircularImageView avatarView = view.findViewById(R.id.profile_edit_avatar);
@@ -91,6 +103,16 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
 
         view.findViewById(R.id.profile_edit_save_button).setOnClickListener(v -> {
             //TODO: GET LOCAL DATA AND CALL PUT REQUEST
+=======
+        View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        TextInputEditText editTextDate = view.findViewById(R.id.input_birth);
+        editTextDate.setOnClickListener(v->{
+            DatePickerDialog.OnDateSetListener dateSetListener = (view1, year, monthOfYear, dayOfMonth) -> editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(),
+                    android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                    dateSetListener, selectedYear, selectedMonth, selectedDayOfMonth);
+            datePickerDialog.show();
+>>>>>>> da2be45a5b634ba10bc0dbdbf48acd54c911c850
         });
         return view;
     }
