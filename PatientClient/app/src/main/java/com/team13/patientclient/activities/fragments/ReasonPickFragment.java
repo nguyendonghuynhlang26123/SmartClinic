@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.team13.patientclient.R;
 
 /**
@@ -65,7 +68,14 @@ public class ReasonPickFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reason_pick, container, false);
         TextView reason = view.findViewById(R.id.input_reason);
-        view.findViewById(R.id.process_button).setOnClickListener(v->listener.gotoAppointmentConfirm(reason.getText().toString()));
+        TextInputLayout layout = view.findViewById(R.id.outlinedReasonField);
+        int maxCounter = layout.getCounterMaxLength();
+        view.findViewById(R.id.process_button).setOnClickListener(v->{
+            String reasonText = reason.getText().toString();
+            if(reasonText.trim().isEmpty()||reasonText.length() > maxCounter)
+                Toast.makeText(view.getContext(),"Invalid reason", Toast.LENGTH_SHORT).show();
+            else listener.gotoAppointmentConfirm(reason.getText().toString());
+        });
         return view;
     }
 

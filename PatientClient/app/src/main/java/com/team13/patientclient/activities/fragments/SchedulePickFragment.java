@@ -159,7 +159,6 @@ public class SchedulePickFragment extends Fragment {
         int minute = Integer.parseInt(time.substring(3,5));
         int hour = Integer.parseInt(time.substring(0,2));
         LocalTime currentTime = LocalTime.of(hour, minute);
-        Log.w("Current Time",currentTime.toString());
         int minute1, hour1;
         RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
         params.topMargin = Math.round(convertDpToPixel(4,view.getContext()));
