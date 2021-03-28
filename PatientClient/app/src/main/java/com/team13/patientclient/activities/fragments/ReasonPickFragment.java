@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.team13.patientclient.R;
 
@@ -63,7 +64,8 @@ public class ReasonPickFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reason_pick, container, false);
-        view.findViewById(R.id.process_button).setOnClickListener(v->listener.gotoAppointmentConfirm());
+        TextView reason = view.findViewById(R.id.input_reason);
+        view.findViewById(R.id.process_button).setOnClickListener(v->listener.gotoAppointmentConfirm(reason.getText().toString()));
         return view;
     }
 
@@ -84,6 +86,6 @@ public class ReasonPickFragment extends Fragment {
     }
 
     public interface ReasonPickFragmentListener{
-        void gotoAppointmentConfirm();
+        void gotoAppointmentConfirm(String reason);
     }
 }

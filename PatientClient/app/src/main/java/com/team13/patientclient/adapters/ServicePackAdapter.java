@@ -52,6 +52,7 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
         servicePrice.setText(format.format(servicePack.price));
         view.setOnClickListener(v->{
             Intent i = new Intent(context, BookAppointmentActivity.class);
+            i.putExtra("Service",servicePack.name);
             context.startActivity(i);
         });
     }
