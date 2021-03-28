@@ -6,6 +6,7 @@ const MedicineSchema = new Schema(
     medicine_name: { type: String, required: true, unique: true },
     thumbnail: { type: String, default: null },
     price: { type: Number, required: true },
+    unit: { type: String, default: 'VND/unit' },
     volume: { type: String, default: '' },
     brand: { type: String, default: '' },
     from: { type: String, default: '' },

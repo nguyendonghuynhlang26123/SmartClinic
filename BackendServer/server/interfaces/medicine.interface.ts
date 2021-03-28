@@ -4,6 +4,7 @@ export class MedicineInterface extends BaseInterface {
   medicine_name: string;
   thumbnail: string;
   price: number;
+  unit?: string;
   description?: string;
   user_manual?: string;
   ingredient?: string;

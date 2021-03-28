@@ -1,29 +1,31 @@
-import { MedicineInterface } from "../../interfaces";
-import { medicineModel } from "../../models";
+import { MedicineInterface } from '../../interfaces';
+import { medicineModel } from '../../models';
 
 export class MedicineService {
   async getMedicineById(medicineId: string) {
     try {
       const medicine = await medicineModel
         .findOne({ _id: medicineId })
-        .populate("category");
+        .populate('category');
       if (!medicine) {
-        throw new Error("Not Found Medicine.");
+        throw new Error('Not Found Medicine.');
       }
       return medicine;
     } catch (error) {
       console.log(error);
-      throw new Error("Get Medicine Error.");
+      throw new Error('Get Medicine Error.');
     }
   }
 
-  async getAllMedicine() {
+  async getAllMedicine(query?) {
     try {
-      const medicines = await medicineModel.find().populate("category");
+      if (query?.select && query.select instanceof Array)
+        return await medicineModel.find({}, query.select.join(' '));
+      const medicines = await medicineModel.find().populate('category');
       return medicines;
     } catch (error) {
       console.log(error);
-      throw new Error("Get All Medicine Error.");
+      throw new Error('Bad request');
     }
   }
 
@@ -37,7 +39,7 @@ export class MedicineService {
 
   async updateMedicineById(medicineId: string, dataUpdate) {
     const medicine = await medicineModel.findOne({ _id: medicineId });
-    if (!medicine) throw new Error("Not Found Medicine.");
+    if (!medicine) throw new Error('Not Found Medicine.');
     const result = await medicineModel.updateOne(
       { _id: medicine._id },
       dataUpdate
@@ -47,10 +49,8 @@ export class MedicineService {
 
   async deleteMedicine(medicineId: string) {
     const medicine = await medicineModel.findOne({ _id: medicineId });
-    if (!medicine) throw new Error("Not Found Medicine.");
-    const result = await medicineModel
-      .deleteOne({ _id: medicine._id })
-      .exec();
+    if (!medicine) throw new Error('Not Found Medicine.');
+    const result = await medicineModel.deleteOne({ _id: medicine._id }).exec();
     return result;
   }
 }
