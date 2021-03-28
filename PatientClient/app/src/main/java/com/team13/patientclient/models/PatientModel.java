@@ -1,7 +1,17 @@
 package com.team13.patientclient.models;
 
+import android.annotation.SuppressLint;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.team13.patientclient.Utils;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class PatientModel {
     @SerializedName("_id")
@@ -18,7 +28,7 @@ public class PatientModel {
     String gender;
 
     @SerializedName("patient_dob")
-    double dateOfBirth;
+    long dateOfBirth;
 
     @SerializedName("patient_weight")
     double weight;
@@ -26,13 +36,13 @@ public class PatientModel {
     @SerializedName("token")
     String token;
 
-    public PatientModel(String name, String avatarUrl, String gender, double dateOfBirth, double weight, String token) {
+    public PatientModel(String name, String avatarUrl, String gender, long dateOfBirth, double weight) {
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.weight = weight;
-        this.token = token;
+        this.token = "No FCM yet";
     }
 
     public String getName() {
@@ -59,12 +69,29 @@ public class PatientModel {
         this.gender = gender;
     }
 
-    public double getDateOfBirth() {
+    public long getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(double dateOfBirth) {
+    public String getDateOfBirthString(){
+        if (dateOfBirth == 0) return "";
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat(Utils.DATE_PATTERN);
+        Date date = new Date(dateOfBirth);
+        return dateFormat.format(date);
+    }
+
+    public void setDateOfBirth(long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setDateOfBirth(String formatedDOB) {
+        this.dateOfBirth = Utils.dateStringToNumber(formatedDOB);
+    }
+
+    public int getAge() {
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat(Utils.DATE_PATTERN);
+        Date date = new Date(dateOfBirth);
+        return Utils.calculateAge(date, new Date());
     }
 
     public double getWeight() {

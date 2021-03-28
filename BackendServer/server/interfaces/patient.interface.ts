@@ -6,7 +6,9 @@ export class PatientInterface extends BaseInterface {
   patient_gender?: 'Male' | 'Female';
   patient_dob?: number;
   patient_weight?: number;
-  appointment_list: string[];
-  medical_history: string[];
+  medical_history?: {
+    appointment: string;
+    prescription: string;
+  }[];
   token: string;
 }

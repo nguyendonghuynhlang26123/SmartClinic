@@ -33,6 +33,8 @@ public class Store {
         return userAccount;
     }
 
+    public String getName() {return userAccount.getUserInfor().getName();}
+
     public void setUserAccount(AccountModel userAccount) {
         this.userAccount = userAccount;
     }

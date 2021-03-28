@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.models.AccountModel;
-import com.team13.patientclient.models.Cart;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,11 +72,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        cartButton = view.findViewById(R.id.service_cart);
-        cartButton.setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), Cart.class);
-            startActivity(i);
-        });
+         
         view.findViewById(R.id.profile_edit_button).setOnClickListener(v->{
             ProfileEditFragment profileEditFragment = new ProfileEditFragment();
             assert getFragmentManager() != null;
@@ -88,8 +83,8 @@ public class ProfileFragment extends Fragment {
         AccountModel accountData = Store.get_instance().getUserAccount();
 
         ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getName());
-        if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_name)).setText(accountData.getUserInfor().getWeight() + "kg");
-        if (accountData.getUserInfor().getDateOfBirth() != 0) ((TextView) view.findViewById(R.id.profile_age)).setText(accountData.getUserInfor().getDateOfBirth() + "");
+        if (accountData.getUserInfor().getWeight() != 0) ((TextView) view.findViewById(R.id.profile_weight)).setText(accountData.getUserInfor().getWeight() + "kg");
+        if (accountData.getUserInfor().getDateOfBirth() != 0) ((TextView) view.findViewById(R.id.profile_age)).setText(accountData.getUserInfor().getAge() + "");
         if (!accountData.getUserInfor().getGender().isEmpty()) ((TextView) view.findViewById(R.id.profile_gender)).setText(accountData.getUserInfor().getGender());
         Picasso.get().load(accountData.getUserInfor().getAvatarUrl()).into((ImageView) view.findViewById(R.id.profile_avatar));
 

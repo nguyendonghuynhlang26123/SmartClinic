@@ -1,22 +1,22 @@
-import * as express from "express";
-import { MedicineService } from "./medicine.service";
+import * as express from 'express';
+import { MedicineService } from './medicine.service';
 const router = express.Router();
 
 const medicineService: MedicineService = new MedicineService();
 
-router.get("/", async (req, res) => {
-  const medicines = await medicineService.getAllMedicine();
+router.get('/', async (req, res) => {
+  const medicines = await medicineService.getAllMedicine(req.query);
   res.json(medicines);
 });
 
-router.get("/:medicine_id", async (req, res) => {
+router.get('/:medicine_id', async (req, res) => {
   const medicine = await medicineService.getMedicineById(
     req.params.medicine_id
   );
   res.json(medicine);
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const medicine = await medicineService.createMedicine(req.body);
     res.json(medicine);
@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:medicine_id", async (req, res) => {
+router.put('/:medicine_id', async (req, res) => {
   try {
     const result = await medicineService.updateMedicineById(
       req.params.medicine_id,
@@ -39,11 +39,9 @@ router.put("/:medicine_id", async (req, res) => {
   }
 });
 
-router.delete("/:medicine_id", async (req, res) => {
+router.delete('/:medicine_id', async (req, res) => {
   try {
-    const result = await medicineService.deleteMedicine(
-      req.params.medicine_id
-    );
+    const result = await medicineService.deleteMedicine(req.params.medicine_id);
     res.json(result);
   } catch (err) {
     console.log(err);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.patientclient.R;
@@ -21,6 +22,8 @@ import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AuthService;
+
+import okhttp3.internal.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,6 +90,13 @@ public class SignupFragment extends Fragment {
             String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
             String name = ((TextView) view.findViewById(R.id.sign_up_name)).getText().toString();
             String password = ((TextView) view.findViewById(R.id.sign_up_password)).getText().toString();
+            
+            if (phone.isEmpty() || name.isEmpty() || password.isEmpty() ){
+                Toast.makeText(getContext(), "Please fill all empty field!", Toast.LENGTH_SHORT).show();
+            }
+            if (!Utils.checkValidPatientName(name) ){
+                Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
+            }
 
             AuthService authService = new AuthService();
             authService.register(phone, password, name, new OnResponse<AccountModel>(getContext()) {

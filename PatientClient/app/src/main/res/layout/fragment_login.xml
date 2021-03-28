@@ -24,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:id="@+id/input_phone"/>
+                android:id="@+id/input_phone"
+                android:text="0774022683"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -40,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:text="123"
                 android:id="@+id/input_password"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
