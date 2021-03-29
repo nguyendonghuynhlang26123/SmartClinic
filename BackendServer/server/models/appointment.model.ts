@@ -13,10 +13,16 @@ const AppointmentSchema = new Schema(
       ref: 'patients',
       required: true,
     },
-    time: { type: Number, required: true },
+    time: { type: String, required: true },
+    date: { type: String, required: true },
+    service: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'medical-services',
+      required: true,
+    },
     is_expired: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     created_at: { type: Number },
     updated_at: { type: Number },

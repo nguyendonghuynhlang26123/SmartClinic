@@ -101,10 +101,11 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
 
         PatientModel userProfile = Store.get_instance().getUserAccount().getUserInfor();
 
+        //TODO: RE RENDER AFTER EDIT
         nameInput.setText(userProfile.getName());
 
         if (userProfile.getDateOfBirth() != 0) editTextDate.setText(userProfile.getDateOfBirthString() + "");
-        if (userProfile.getWeight() != 0) editTextDate.setText(userProfile.getWeight() + "");
+        if (userProfile.getWeight() != 0) weightInput.setText(userProfile.getWeight() + "");
         if (userProfile.getGender().equals("Male")) ((RadioButton)view.findViewById(R.id.profile_edit_gender_male)).setChecked(true);
         else if (userProfile.getGender().equals("Female")) ((RadioButton)view.findViewById(R.id.profile_edit_gender_female)).setChecked(true);
         Picasso.get().load(userProfile.getAvatarUrl()).into(avatarView);

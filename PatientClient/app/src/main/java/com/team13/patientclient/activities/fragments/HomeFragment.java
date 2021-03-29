@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.BookAppointmentDashboard;
@@ -24,9 +22,9 @@ import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.BannerAdapter;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.MedicineModel;
+import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.MedicineService;
+import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +95,7 @@ public class HomeFragment extends Fragment {
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);
 
-        pharmacyRendering(view);
+        medicineRenderingHandle(view);
 
         view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);
@@ -121,19 +119,33 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void pharmacyRendering(View view) {
-        MedicineService service = new MedicineService();
-        service.getMinimizedMedicineData(new OnResponse<MedicineModel[]>() {
+    private void medicineRenderingHandle(View view) {
+        DrugService service = new DrugService();
+        DrugModel[] emptyModels = getEmptyModel(4);
+
+        //Rendering dumb data first while waiting responses from apis
+        pharmacyList = view.findViewById(R.id.pharmacy_list);
+        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(emptyModels)));
+        pharmacyList.setAdapter(pharmacyItemAdapter);
+        pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        service.getMinimizedData(new OnResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(MedicineModel[] list) {
-                Log.d("LONG", new Gson().toJson(list));
-                pharmacyList = view.findViewById(R.id.pharmacy_list);
-                PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(list)));
-                pharmacyList.setAdapter(pharmacyItemAdapter);
-                pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            public void onRequestSuccess(DrugModel[] list) {
+                pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }
         });
     }
+
+    private DrugModel[] getEmptyModel(int n) {
+        DrugModel[] returnData = new DrugModel[n];
+
+        for (int i = 0; i < n; i++) {
+            returnData[i] = new DrugModel();
+        }
+        return returnData;
+    }
+
 
     public interface HomeFragmentListener{
         void goToAppoinment();

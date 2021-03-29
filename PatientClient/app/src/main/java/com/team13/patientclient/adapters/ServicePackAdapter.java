@@ -1,5 +1,6 @@
 package com.team13.patientclient.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.BookAppointmentActivity;
 import com.team13.patientclient.models.ServicePack;
 
@@ -29,6 +32,11 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
         this.servicePacks = servicePacks;
     }
 
+    public void setData(ArrayList<ServicePack> newData){
+        servicePacks = newData;
+        this.notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,24 +45,33 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
         ServicePack servicePack = servicePacks.get(position);
+
         ImageView serviceIcon = view.findViewById(R.id.service_icon);
-        serviceIcon.setImageResource(servicePack.serviceIcon);
         TextView serviceLabel = view.findViewById(R.id.service_label);
-        serviceLabel.setText(servicePack.name);
         TextView servicePrice = view.findViewById(R.id.service_price);
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMinimumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
-        servicePrice.setText(format.format(servicePack.price));
-        view.setOnClickListener(v->{
-            Intent i = new Intent(context, BookAppointmentActivity.class);
-            i.putExtra("Service",servicePack.name);
-            context.startActivity(i);
-        });
+
+        if (!servicePack.isEmpty()){
+            view.findViewById(R.id.lazylayout).setVisibility(View.VISIBLE);
+            serviceLabel.setText(servicePack.getName());
+            servicePrice.setText(Utils.formatingPrice(servicePack.getPrice()));
+            if (servicePack.getServiceIcon().isEmpty()) serviceIcon.setImageResource(R.drawable.ic_doctor);
+            else Picasso.get().load(servicePack.getServiceIcon()).into(serviceIcon);
+
+            view.setOnClickListener(v->{
+                Intent i = new Intent(context, BookAppointmentActivity.class);
+                i.putExtra("Service",servicePack.getName());
+                context.startActivity(i);
+            });
+        }
+        else{
+            view.findViewById(R.id.lazylayout).setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override

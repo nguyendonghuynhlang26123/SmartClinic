@@ -1,8 +1,10 @@
-import { BaseInterface } from "./base/base.interface";
+import { BaseInterface } from './base/base.interface';
 
 export class AppointmentInterface extends BaseInterface {
   doctor: string;
   patient: string;
-  time: number;
-  is_expired: boolean;
+  service: string;
+  time: string;
+  date: string;
+  is_expired?: boolean;
 }

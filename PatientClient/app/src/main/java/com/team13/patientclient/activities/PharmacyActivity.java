@@ -11,9 +11,9 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.MedicineModel;
+import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.MedicineService;
+import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,21 +44,37 @@ public class PharmacyActivity extends AppCompatActivity {
     }
 
     private void renderingMedicineList() {
-        MedicineService medicineService = new MedicineService();
-        medicineService.getMinimizedMedicineData(new OnResponse<MedicineModel[]>() {
+        DrugService drugService = new DrugService();
+        DrugModel[] emptyModels = getEmptyModel(5);
+
+        //Rendering empty data while waiting for response from server
+        commonDrugList = findViewById(R.id.common_drug);
+        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(PharmacyActivity.this, new ArrayList<>(Arrays.asList(emptyModels)));
+        commonDrugList.setAdapter(pharmacyItemAdapter);
+        commonDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
+
+        insuranceDrugList = findViewById(R.id.insurance_drug);
+        insuranceDrugList.setAdapter(pharmacyItemAdapter);
+        insuranceDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
+
+        othersDrugList = findViewById(R.id.others_drug);
+        othersDrugList.setAdapter(pharmacyItemAdapter);
+        othersDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
+
+        drugService.getMinimizedData(new OnResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(MedicineModel[] response) {
-                commonDrugList = findViewById(R.id.common_drug);
-                PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(PharmacyActivity.this, new ArrayList<>(Arrays.asList(response)));
-                commonDrugList.setAdapter(pharmacyItemAdapter);
-                commonDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                insuranceDrugList = findViewById(R.id.insurance_drug);
-                insuranceDrugList.setAdapter(pharmacyItemAdapter);
-                insuranceDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                othersDrugList = findViewById(R.id.others_drug);
-                othersDrugList.setAdapter(pharmacyItemAdapter);
-                othersDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
+            public void onRequestSuccess(DrugModel[] list) {
+                pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }
         });
+    }
+
+    private DrugModel[] getEmptyModel(int n) {
+        DrugModel[] returnData = new DrugModel[n];
+
+        for (int i = 0; i < n; i++) {
+            returnData[i] = new DrugModel();
+        }
+        return returnData;
     }
 }
