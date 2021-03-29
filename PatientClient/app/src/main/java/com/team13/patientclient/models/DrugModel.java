@@ -3,7 +3,7 @@ package com.team13.patientclient.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MedicineModel {
+public class DrugModel {
     @SerializedName("medicine_name")
     String name;
 
@@ -44,7 +44,7 @@ public class MedicineModel {
     @Expose(serialize = false)
     String id;
 
-    public MedicineModel(String name, String thumbnail, long price, String unit, String description, String userManual, String ingredients, String volume, String brand, String fromCountry, String preservation, String[] category) {
+    public DrugModel(String name, String thumbnail, long price, String unit, String description, String userManual, String ingredients, String volume, String brand, String fromCountry, String preservation, String[] category) {
         this.name = name;
         this.thumbnail = thumbnail;
         this.price = price;
@@ -59,7 +59,7 @@ public class MedicineModel {
         this.category = category;
     }
 
-    public MedicineModel() {
+    public DrugModel() {
         this.name = "";
         this.thumbnail = "";
         this.price = 0;

@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.BookAppointmentDashboard;
@@ -24,11 +22,10 @@ import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.BannerAdapter;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.MedicineModel;
+import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.MedicineService;
+import com.team13.patientclient.repository.services.DrugService;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -123,8 +120,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void medicineRenderingHandle(View view) {
-        MedicineService service = new MedicineService();
-        MedicineModel[] emptyModels = getEmptyModel(4);
+        DrugService service = new DrugService();
+        DrugModel[] emptyModels = getEmptyModel(4);
 
         //Rendering dumb data first while waiting responses from apis
         pharmacyList = view.findViewById(R.id.pharmacy_list);
@@ -132,19 +129,19 @@ public class HomeFragment extends Fragment {
         pharmacyList.setAdapter(pharmacyItemAdapter);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        service.getMinimizedMedicineData(new OnResponse<MedicineModel[]>() {
+        service.getMinimizedData(new OnResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(MedicineModel[] list) {
+            public void onRequestSuccess(DrugModel[] list) {
                 pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }
         });
     }
 
-    private MedicineModel[] getEmptyModel(int n) {
-        MedicineModel[] returnData = new MedicineModel[n];
+    private DrugModel[] getEmptyModel(int n) {
+        DrugModel[] returnData = new DrugModel[n];
 
         for (int i = 0; i < n; i++) {
-            returnData[i] = new MedicineModel();
+            returnData[i] = new DrugModel();
         }
         return returnData;
     }

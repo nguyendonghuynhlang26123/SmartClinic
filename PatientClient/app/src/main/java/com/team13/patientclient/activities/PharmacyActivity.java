@@ -11,9 +11,9 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
-import com.team13.patientclient.models.MedicineModel;
+import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.MedicineService;
+import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +44,8 @@ public class PharmacyActivity extends AppCompatActivity {
     }
 
     private void renderingMedicineList() {
-        MedicineService medicineService = new MedicineService();
-        MedicineModel[] emptyModels = getEmptyModel(5);
+        DrugService drugService = new DrugService();
+        DrugModel[] emptyModels = getEmptyModel(5);
 
         //Rendering empty data while waiting for response from server
         commonDrugList = findViewById(R.id.common_drug);
@@ -61,19 +61,19 @@ public class PharmacyActivity extends AppCompatActivity {
         othersDrugList.setAdapter(pharmacyItemAdapter);
         othersDrugList.setLayoutManager(new LinearLayoutManager(PharmacyActivity.this, LinearLayoutManager.HORIZONTAL, false));
 
-        medicineService.getMinimizedMedicineData(new OnResponse<MedicineModel[]>() {
+        drugService.getMinimizedData(new OnResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(MedicineModel[] list) {
+            public void onRequestSuccess(DrugModel[] list) {
                 pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }
         });
     }
 
-    private MedicineModel[] getEmptyModel(int n) {
-        MedicineModel[] returnData = new MedicineModel[n];
+    private DrugModel[] getEmptyModel(int n) {
+        DrugModel[] returnData = new DrugModel[n];
 
         for (int i = 0; i < n; i++) {
-            returnData[i] = new MedicineModel();
+            returnData[i] = new DrugModel();
         }
         return returnData;
     }
