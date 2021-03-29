@@ -10,8 +10,11 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.ServicePackAdapter;
 import com.team13.patientclient.models.ServicePack;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.ServicePackService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServiceActivity extends AppCompatActivity {
 
@@ -21,23 +24,33 @@ public class ServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service);
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
+
         RecyclerView serviceList = findViewById(R.id.service_list);
-        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getServices());
+
+        //rendering dumb data while waitting for response from server
+        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(10));
         serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         serviceList.setAdapter(servicePackAdapter);
+
+        callApiAndRender(servicePackAdapter);
     }
-    ArrayList<ServicePack> getServices(){
-        ArrayList<ServicePack> servicePacks = new ArrayList<>(10);
-        servicePacks.add(new ServicePack("General Care",R.drawable.ic_doctor,500000));
-        servicePacks.add(new ServicePack("Pediatric",R.drawable.ic_doctor,500000));
-        servicePacks.add(new ServicePack("Maternity Full Exam",R.drawable.ic_doctor,2500000));
-        servicePacks.add(new ServicePack("Annual Health Check Up",R.drawable.ic_doctor,3000000));
-        servicePacks.add(new ServicePack("Cardiology",R.drawable.ic_doctor,600000));
-        servicePacks.add(new ServicePack("Endocrinology",R.drawable.ic_doctor,600000));
-        servicePacks.add(new ServicePack("Vaccine Consultation",R.drawable.ic_doctor,500000));
-        servicePacks.add(new ServicePack("Ear, Nose, Throat",R.drawable.ic_doctor,500000));
-        servicePacks.add(new ServicePack("Eye Care",R.drawable.ic_doctor,500000));
-        servicePacks.add(new ServicePack("Maternity Consultation",R.drawable.ic_doctor,1000000));
+
+    private void callApiAndRender(ServicePackAdapter servicePackAdapter) {
+        ServicePackService service = new ServicePackService();
+        service.get(new OnResponse<ServicePack[]>() {
+            @Override
+            public void onRequestSuccess(ServicePack[] list) {
+                //Rendering data as soon as it received
+                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+            }
+        });
+    }
+
+    ArrayList<ServicePack> getEmptyModels(int n){
+        ArrayList<ServicePack> servicePacks = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            servicePacks.add(new ServicePack());
+        }
         return servicePacks;
     }
 }
