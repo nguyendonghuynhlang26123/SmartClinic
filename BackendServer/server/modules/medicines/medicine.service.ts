@@ -29,7 +29,7 @@ export class MedicineService {
 
     const medicines = await medicineModel.find(
       {
-        service_name: new RegExp(query.search, 'i'),
+        medicine_name: new RegExp(query.search, 'i'),
       },
       selection,
       {
