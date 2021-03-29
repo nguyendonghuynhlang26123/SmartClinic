@@ -2,6 +2,7 @@ package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapter.ViewHolder> {
     private final Context context;
-    private final ArrayList<MedicineModel> drugs;
+    private ArrayList<MedicineModel> drugs;
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -37,11 +38,16 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
         return new ViewHolder(view);
     }
 
+    public void setData(ArrayList<MedicineModel> drugs){
+        this.drugs = drugs;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-
-        Picasso.get().load(drugs.get(position).getThumbnail()).into((ImageView)view.findViewById(R.id.pharmacy_item_img));
+        String url = drugs.get(position).getThumbnail();
+        if (!url.isEmpty()) Picasso.get().load(url).into((ImageView)view.findViewById(R.id.pharmacy_item_img));
         view.setOnClickListener(v->{
             Intent i = new Intent(context, DrugActivity.class);
             context.startActivity(i);
@@ -52,4 +58,6 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
     public int getItemCount() {
         return drugs.size();
     }
+
+
 }
