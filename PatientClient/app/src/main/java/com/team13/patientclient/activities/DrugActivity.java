@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.models.DrugModel;
@@ -42,6 +44,8 @@ public class DrugActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.drug_from)).setText(drug.getFromCountry());
                 ((TextView) findViewById(R.id.drug_volume)).setText(drug.getVolume());
                 ((TextView) findViewById(R.id.drug_price)).setText(Utils.formatingPrice(drug.getPrice()));
+
+                if (!drug.getThumbnail().isEmpty()) Picasso.get().load(drug.getThumbnail()).into((ImageView) findViewById(R.id.drug_thumbnail));
             }
         });
     }
