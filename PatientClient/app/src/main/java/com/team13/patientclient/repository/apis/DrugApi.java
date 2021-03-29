@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface DrugApi {
-    @GET("/medicines?select=thumbnail&select=price&select=category&select=medicine_name")
+    @GET("/medicines?select=thumbnail&select=price&select=category&select=medicine_name&select=_id")
     Call<DrugModel[]> get();
 
     @GET("/medicines/{id}")

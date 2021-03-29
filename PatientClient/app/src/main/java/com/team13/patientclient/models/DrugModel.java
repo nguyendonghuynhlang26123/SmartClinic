@@ -40,7 +40,7 @@ public class DrugModel {
     @SerializedName("category")
     String[] category;
 
-    @SerializedName("id")
+    @SerializedName("_id")
     @Expose(serialize = false)
     String id;
 

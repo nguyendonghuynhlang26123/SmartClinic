@@ -5,9 +5,11 @@ import android.annotation.SuppressLint;
 import com.team13.patientclient.activities.ErrorResponse;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Response;
 
@@ -43,5 +45,11 @@ public class Utils {
         int d2 = Integer.parseInt(formatter.format(currentDate));
         int age = (d2 - d1) / 10000;
         return age;
+    }
+
+    public static String formatingPrice(long price){
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+        return (fmt.format(price));
     }
 }
