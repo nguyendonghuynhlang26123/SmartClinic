@@ -1,5 +1,5 @@
-import { AppointmentInterface } from "../../interfaces";
-import { appointmentModel } from "../../models";
+import { AppointmentInterface } from '../../interfaces';
+import { appointmentModel } from '../../models';
 
 export class AppointmentService {
   async getAppointmentById(appointmentId: string) {
@@ -8,26 +8,30 @@ export class AppointmentService {
         .findOne({
           _id: appointmentId,
         })
-        .populate("doctor patient");
+        .populate('doctor patient');
       if (!appointment) {
-        throw new Error("Not Found Appointment.");
+        throw new Error('Not Found Appointment.');
       }
       return appointment;
     } catch (error) {
       console.log(error);
-      throw new Error("Get Appointment Error.");
+      throw new Error('Get Appointment Error.');
     }
   }
 
-  async getAllAppointment() {
+  async getAllAppointment(query?) {
     try {
+      let filter = {};
+      if (query?.date) filter = { ...filter, date: query.date };
+      if (query?.service_id) filter = { ...filter, service: query.service_id };
+
       const appointments = await appointmentModel
-        .find()
-        .populate("doctor patient");
+        .find(filter)
+        .populate('doctor patient service');
       return appointments;
     } catch (error) {
       console.log(error);
-      throw new Error("Get All Appointment Error.");
+      throw new Error('Get All Appointment Error.');
     }
   }
 
@@ -41,7 +45,7 @@ export class AppointmentService {
 
   async updateAppointmentById(appointmentId: string, dataUpdate) {
     const appointment = await appointmentModel.findOne({ _id: appointmentId });
-    if (!appointment) throw new Error("Not Found Appointment.");
+    if (!appointment) throw new Error('Not Found Appointment.');
     const result = await appointmentModel.updateOne(
       { _id: appointment._id },
       dataUpdate
@@ -51,7 +55,7 @@ export class AppointmentService {
 
   async deleteAppointment(appointmentId: string) {
     const appointment = await appointmentModel.findOne({ _id: appointmentId });
-    if (!appointment) throw new Error("Not Found Appointment.");
+    if (!appointment) throw new Error('Not Found Appointment.');
     const result = await appointmentModel
       .deleteOne({ _id: appointment._id })
       .exec();
