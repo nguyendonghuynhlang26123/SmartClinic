@@ -14,7 +14,6 @@ const MedicalServiceSchema = new Schema(
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
-
 export const medicalServiceModel = mongoose.model<
   MedicalServiceInterface & Document
 >('medical-services', MedicalServiceSchema);

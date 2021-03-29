@@ -12,9 +12,24 @@ export class MedicalServicesService {
 
   async getAllServices(query?) {
     try {
-      let limit = {};
-      if (query?.limit) limit = { limit: Number(query.limit) };
-      const services = await medicalServiceModel.find({}, {}, limit);
+      let selection = {};
+      if (query?.select) {
+        if (query.select instanceof Array) {
+          for (const property of query.select) {
+            selection[property] = 1;
+          }
+        } else selection = { [query.select]: 1 };
+      }
+
+      const services = await medicalServiceModel.find(
+        {
+          service_name: new RegExp(query.search, 'i'),
+        },
+        selection,
+        {
+          limit: Number(query.limit),
+        }
+      );
       return services;
     } catch (error) {
       console.log(error);

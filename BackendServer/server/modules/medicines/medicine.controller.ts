@@ -5,8 +5,26 @@ const router = express.Router();
 const medicineService: MedicineService = new MedicineService();
 
 router.get('/', async (req, res) => {
-  const medicines = await medicineService.getAllMedicine(req.query);
-  res.json(medicines);
+  try {
+    const medicines = await medicineService.getAllMedicine(req.query);
+    res.json(medicines);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'Bad request! ' + err.message });
+  }
+});
+
+router.get('/category/{category_id}', async (req, res) => {
+  try {
+    const medicines = await medicineService.getMedicinesByCategory(
+      req.params.category_id,
+      req.query
+    );
+    res.json(medicines);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'Bad request! ' + err.message });
+  }
 });
 
 router.get('/:medicine_id', async (req, res) => {

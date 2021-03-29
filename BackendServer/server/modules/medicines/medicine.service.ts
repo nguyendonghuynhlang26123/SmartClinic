@@ -1,5 +1,5 @@
 import { MedicineInterface } from '../../interfaces';
-import { medicineModel } from '../../models';
+import { categoryModel, medicineModel } from '../../models';
 
 export class MedicineService {
   async getMedicineById(medicineId: string) {
@@ -18,15 +18,50 @@ export class MedicineService {
   }
 
   async getAllMedicine(query?) {
-    try {
-      if (query?.select && query.select instanceof Array)
-        return await medicineModel.find({}, query.select.join(' '));
-      const medicines = await medicineModel.find().populate('category');
-      return medicines;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Bad request');
+    let selection = {};
+    if (query?.select) {
+      if (query.select instanceof Array) {
+        for (const property of query.select) {
+          selection[property] = 1;
+        }
+      } else selection = { [query.select]: 1 };
     }
+
+    const medicines = await medicineModel.find(
+      {
+        service_name: new RegExp(query.search, 'i'),
+      },
+      selection,
+      {
+        limit: Number(query.limit),
+      }
+    );
+    return medicines;
+  }
+
+  async getMedicinesByCategory(category_id, query?) {
+    const category = categoryModel.findOne({ _id: category_id });
+    if (!category) throw new Error('Category not found');
+
+    let selection = {};
+    if (query?.select) {
+      if (query.select instanceof Array) {
+        for (const property of query.select) {
+          selection[property] = 1;
+        }
+      } else selection = { [query.select]: 1 };
+    }
+
+    const medicines = await medicineModel.find(
+      {
+        category: category_id,
+      },
+      selection,
+      {
+        limit: Number(query.limit),
+      }
+    );
+    return medicines;
   }
 
   async createMedicine(data: MedicineInterface) {
