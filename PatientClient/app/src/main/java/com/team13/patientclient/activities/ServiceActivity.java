@@ -27,7 +27,7 @@ public class ServiceActivity extends AppCompatActivity {
 
         RecyclerView serviceList = findViewById(R.id.service_list);
 
-        //rendering dumb data while waitting for response from server
+        //rendering dumb data while waiting for response from server
         ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(10));
         serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         serviceList.setAdapter(servicePackAdapter);

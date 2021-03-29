@@ -1,6 +1,8 @@
 package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,13 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
+import com.team13.patientclient.adapters.ServicePackAdapter;
+import com.team13.patientclient.models.ServicePack;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.ServicePackService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BookAppointmentDashboard extends AppCompatActivity {
 
@@ -17,32 +26,38 @@ public class BookAppointmentDashboard extends AppCompatActivity {
         setContentView(R.layout.book_appointment_dashboard);
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
-        final TextView[] service = new TextView[1];
-        findViewById(R.id.general_care_card).setOnClickListener(v->{
-            service[0] = findViewById(R.id.general_care_label);
-            Intent i = new Intent(this, BookAppointmentActivity.class);
-            i.putExtra("Service",service[0].getText().toString());
+
+        RecyclerView serviceList = findViewById(R.id.service_list);
+
+        //rendering dumb data while waiting for response from server
+        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(3));
+        serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        serviceList.setAdapter(servicePackAdapter);
+
+        callApiAndRender(servicePackAdapter);
+
+        findViewById(R.id.all_service_button).setOnClickListener(l -> {
+            Intent i = new Intent(BookAppointmentDashboard.this, ServiceActivity.class);
             startActivity(i);
         });
-        findViewById(R.id.pediatric_card).setOnClickListener(v->{
-            service[0] = findViewById(R.id.pediatric_label);
-            Intent i = new Intent(this, BookAppointmentActivity.class);
-            i.putExtra("Service",service[0].getText().toString());
-            startActivity(i);
+    }
+
+    private void callApiAndRender(ServicePackAdapter servicePackAdapter) {
+        ServicePackService service = new ServicePackService();
+        service.get(3, new OnResponse<ServicePack[]>() {
+            @Override
+            public void onRequestSuccess(ServicePack[] list) {
+                //Rendering data as soon as it received
+                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+            }
         });
-        findViewById(R.id.maternity_card).setOnClickListener(v->{
-            service[0] = findViewById(R.id.maternity_label);
-            Intent i = new Intent(this, BookAppointmentActivity.class);
-            i.putExtra("Service",service[0].getText().toString());
-            startActivity(i);
-        });
-        findViewById(R.id.location_button).setOnClickListener(v->{
-            Intent i = new Intent(this, LocationActivity.class);
-            startActivity(i);
-        });
-        findViewById(R.id.all_service_button).setOnClickListener(v->{
-            Intent i = new Intent(this, ServiceActivity.class);
-            startActivity(i);
-        });
+    }
+
+    ArrayList<ServicePack> getEmptyModels(int n){
+        ArrayList<ServicePack> servicePacks = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            servicePacks.add(new ServicePack());
+        }
+        return servicePacks;
     }
 }

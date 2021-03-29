@@ -31,36 +31,38 @@
                 app:layout_constraintLeft_toRightOf="@+id/service_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/service_label"
+                android:text="Test"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next Available Time"
-                android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@+id/service_label"
-                app:layout_constraintLeft_toRightOf="@id/service_icon"
-                android:id="@+id/service_time_label"
-                android:layout_marginLeft="8dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Next Available Time"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/service_label"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/service_icon"-->
+<!--                android:id="@+id/service_time_label"-->
+<!--                android:layout_marginLeft="8dp"/>-->
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:text="Mar 27, 2021 9:30"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/service_time_label"
-                app:layout_constraintTop_toBottomOf="@id/service_label" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:text="Mar 27, 2021 9:30"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/service_time_label"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/service_label" />-->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/service_time_label"
+                app:layout_constraintTop_toBottomOf="@+id/service_label"
                 app:layout_constraintLeft_toRightOf="@id/service_icon"
                 app:cardCornerRadius="12dp"
+                android:paddingVertical="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp">
                 <TextView
@@ -68,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginVertical="4dp"
+                    android:text="10,000VND"
                     android:textStyle="bold"
                     android:id="@+id/service_price"/>
             </com.google.android.material.card.MaterialCardView>
