@@ -22,7 +22,7 @@ const AppointmentSchema = new Schema(
     },
     is_expired: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     created_at: { type: Number },
     updated_at: { type: Number },

@@ -6,7 +6,7 @@ const router = express.Router();
 const service: MedicalServicesService = new MedicalServicesService();
 
 router.get('/', async (req, res) => {
-  const servicesArray = await service.getAllPatient();
+  const servicesArray = await service.getAllServices(req.query);
   res.json(servicesArray);
 });
 

@@ -6,5 +6,5 @@ export class AppointmentInterface extends BaseInterface {
   service: string;
   time: string;
   date: string;
-  is_expired: boolean;
+  is_expired?: boolean;
 }

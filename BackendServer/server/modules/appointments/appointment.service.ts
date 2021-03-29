@@ -24,10 +24,14 @@ export class AppointmentService {
       let filter = {};
       if (query?.date) filter = { ...filter, date: query.date };
       if (query?.service_id) filter = { ...filter, service: query.service_id };
+      let limit = {};
+      if (query?.limit) limit = { limit: Number(query.limit) };
 
-      const appointments = await appointmentModel
-        .find(filter)
-        .populate('doctor patient service');
+      const appointments = await appointmentModel.find(
+        filter,
+        'doctor patient service',
+        limit
+      );
       return appointments;
     } catch (error) {
       console.log(error);

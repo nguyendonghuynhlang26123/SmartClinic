@@ -10,10 +10,12 @@ export class MedicalServicesService {
     return service;
   }
 
-  async getAllPatient() {
+  async getAllServices(query?) {
     try {
-      const patients = await medicalServiceModel.find();
-      return patients;
+      let limit = {};
+      if (query?.limit) limit = { limit: Number(query.limit) };
+      const services = await medicalServiceModel.find({}, {}, limit);
+      return services;
     } catch (error) {
       console.log(error);
       throw new Error('Get All Services Error.');
