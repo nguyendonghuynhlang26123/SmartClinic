@@ -6,13 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.ServicePackAdapter;
+import com.team13.patientclient.models.HospitalModel;
 import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.HospitalService;
 import com.team13.patientclient.repository.services.ServicePackService;
 
 import java.util.ArrayList;
@@ -49,6 +53,21 @@ public class BookAppointmentDashboard extends AppCompatActivity {
             public void onRequestSuccess(ServicePack[] list) {
                 //Rendering data as soon as it received
                 servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+            }
+        });
+
+        HospitalService hospitalService = new HospitalService();
+        hospitalService.getHospital("6056b843cefabf3368f043cf", new OnResponse<HospitalModel>() {
+            @Override
+            public void onRequestSuccess(HospitalModel hospital) {
+                Picasso.get().load(hospital.getImgUrl()).into((ImageView)findViewById(R.id.hospital_thumbnail));
+
+                ((TextView) findViewById(R.id.hospital_name)).setText(hospital.getName());
+                ((TextView) findViewById(R.id.hospital_address)).setText(hospital.getAddress());
+                ((TextView) findViewById(R.id.hospital_phone)).setText(hospital.getPhone());
+
+                String workingHours = hospital.getDayOfWorks() + ", " + hospital.getOpenTime() + " - " + hospital.getCloseTime();
+                ((TextView) findViewById(R.id.hospital_working_time)).setText(workingHours);
             }
         });
     }

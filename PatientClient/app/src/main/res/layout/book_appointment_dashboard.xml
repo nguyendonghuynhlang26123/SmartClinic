@@ -36,6 +36,7 @@
                 android:orientation="vertical"
                 android:layout_marginHorizontal="16dp">
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/hospital_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     app:srcCompat="@drawable/avatar"
@@ -46,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
                     <TextView
+                        android:id="@+id/hospital_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CITY HOSPITAL"
@@ -69,6 +71,7 @@
                         android:id="@+id/location_button"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <TextView
+                    android:id="@+id/hospital_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="29 Phu Chau Street, Tam Phu Ward, Thu Duc City"
@@ -77,6 +80,7 @@
                     android:drawablePadding="4dp"
                     android:scrollbarSize="14sp"/>
                 <TextView
+                    android:id="@+id/hospital_working_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Everday, 07:00 - 22:00"
@@ -85,6 +89,7 @@
                     android:drawablePadding="4dp"
                     android:scrollbarSize="14sp"/>
                 <TextView
+                    android:id="@+id/hospital_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0966331010"
