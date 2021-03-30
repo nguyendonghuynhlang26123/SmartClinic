@@ -59,71 +59,19 @@
                     android:textStyle="bold"
                     android:textSize="14sp"
                     android:text="These time slots are in Vietnam timezone (GMT+7:00)"/>
-                <com.google.android.material.card.MaterialCardView
+
+                <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:cardCornerRadius="9dp"
-                    android:backgroundTint="@color/grey">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_marginVertical="16dp"
-                        android:layout_marginHorizontal="16dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:id="@+id/day1"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/black"
-                            android:layout_marginTop="8dp"/>
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:id="@+id/day1_time_group">
-
-                        </RadioGroup>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginTop="32dp"
-                    app:cardCornerRadius="9dp"
-                    android:backgroundTint="@color/grey">
-                    <LinearLayout
+                    android:id="@+id/radio_group">
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_marginVertical="16dp"
-                        android:layout_marginHorizontal="16dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:id="@+id/day2"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/black"
-                            android:layout_marginTop="8dp"/>
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:id="@+id/day2_time_group">
-                        </RadioGroup>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/schedule_recycle_view"
+                        />
+                </RadioGroup>
             </LinearLayout>
         </ScrollView>
 

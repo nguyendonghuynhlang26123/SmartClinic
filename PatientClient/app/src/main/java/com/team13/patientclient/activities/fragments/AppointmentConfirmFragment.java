@@ -65,12 +65,15 @@ public class AppointmentConfirmFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_appointment_confirm, container, false);
         TextView selectedTime = view.findViewById(R.id.selected_time);
-        selectedTime.setText(listener.getSelectedTime());
         TextView selectedService = view.findViewById(R.id.selected_service);
-        selectedService.setText(listener.getSelectedService());
         TextView reason = view.findViewById(R.id.selected_reason);
+
+        selectedService.setText(listener.getSelectedService());
+        selectedTime.setText(listener.getSelectedTime());
         reason.setText(listener.getReason());
         view.findViewById(R.id.process_button).setOnClickListener(v->listener.handleConfirm());
+
+
         return view;
     }
 

@@ -5,6 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team13.patientclient.R;
+import com.team13.patientclient.Utils;
+import com.team13.patientclient.activities.PharmacyActivity;
+import com.team13.patientclient.adapters.SchedulePickerAdapter;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -86,39 +93,43 @@ public class SchedulePickFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule_pick, container, false);
         timestamp = new Timestamp(System.currentTimeMillis());
-        Timestamp nextDayTimestamp = addDays(timestamp, 1);
-        TextView day1 = view.findViewById(R.id.day1);
-        TextView day2 = view.findViewById(R.id.day2);
+        Timestamp nextDayTimestamp = Utils.addDays(timestamp, 1);
         String[] days = new String[2];
         days[0] = dayFormat.format(timestamp);         // current day
         days[1] = dayFormat.format(nextDayTimestamp);  // next day
-        day1.setText(days[0]);
-        day2.setText(days[1]);
-        day1TimeGroup = view.findViewById(R.id.day1_time_group);
-        day2TimeGroup = view.findViewById(R.id.day2_time_group);
-        renderTimeChoice(view);
-        day1TimeGroup.check(day1TimeGroup.getChildAt(0).getId());
-        day1TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            selectedDay = 0;
-            if(day2TimeGroup.getCheckedRadioButtonId()!=-1)
-                day2TimeGroup.clearCheck();
-        });
-        day2TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            selectedDay = 1;
-            if(day1TimeGroup.getCheckedRadioButtonId()!=-1)
-                day1TimeGroup.clearCheck();
-        });
-        view.findViewById(R.id.process_button).setOnClickListener(v->{
-            RadioButton checkedButton;
-            if(selectedDay==0){
-                checkedButton = day1TimeGroup.findViewById(day1TimeGroup.getCheckedRadioButtonId());
-            } else {
-                checkedButton = day2TimeGroup.findViewById(day2TimeGroup.getCheckedRadioButtonId());
-            }
-            if (checkedButton==null)
-                Toast.makeText(view.getContext(),"Please select a time", Toast.LENGTH_SHORT).show();
-            else listener.gotoReasonPick(days[selectedDay] + " " + checkedButton.getText().toString());
-        });
+
+        RecyclerView rcv = view.findViewById(R.id.schedule_recycle_view);
+        SchedulePickerAdapter adapter = new SchedulePickerAdapter(getContext(), days);
+        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rcv.setAdapter(adapter);
+
+//        day1.setText(days[0]);
+//        day2.setText(days[1]);
+//        day1TimeGroup = view.findViewById(R.id.day1_time_group);
+//        day2TimeGroup = view.findViewById(R.id.day2_time_group);
+//        renderTimeChoice(view);
+//        day1TimeGroup.check(day1TimeGroup.getChildAt(0).getId());
+//        day1TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
+//            selectedDay = 0;
+//            if(day2TimeGroup.getCheckedRadioButtonId()!=-1)
+//                day2TimeGroup.clearCheck();
+//        });
+//        day2TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
+//            selectedDay = 1;
+//            if(day1TimeGroup.getCheckedRadioButtonId()!=-1)
+//                day1TimeGroup.clearCheck();
+//        });
+//        view.findViewById(R.id.process_button).setOnClickListener(v->{
+//            RadioButton checkedButton;
+//            if(selectedDay==0){
+//                checkedButton = day1TimeGroup.findViewById(day1TimeGroup.getCheckedRadioButtonId());
+//            } else {
+//                checkedButton = day2TimeGroup.findViewById(day2TimeGroup.getCheckedRadioButtonId());
+//            }
+//            if (checkedButton==null)
+//                Toast.makeText(view.getContext(),"Please select a time", Toast.LENGTH_SHORT).show();
+//            else listener.gotoReasonPick(days[selectedDay] + " " + checkedButton.getText().toString());
+//        });
         return view;
     }
 
@@ -141,41 +152,41 @@ public class SchedulePickFragment extends Fragment {
     public interface SchedulePickFragmentListener{
         void gotoReasonPick(String time);
     }
-
-    public static float convertDpToPixel(float dp, Context context){
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-
-    private Timestamp addDays(Timestamp date, int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days);
-        return new Timestamp(cal.getTime().getTime());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void renderTimeChoice(View view){
-        String time = timeFormat.format(timestamp);
-        int minute = Integer.parseInt(time.substring(3,5));
-        int hour = Integer.parseInt(time.substring(0,2));
-        LocalTime currentTime = LocalTime.of(hour, minute);
-        int minute1, hour1;
-        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = Math.round(convertDpToPixel(4,view.getContext()));
-        params.bottomMargin = Math.round(convertDpToPixel(4,view.getContext()));
-        for (String s : times) {
-            minute1 = Integer.parseInt(s.substring(3, 5));
-            hour1 = Integer.parseInt(s.substring(0, 2));
-            if (currentTime.isBefore(LocalTime.of(hour1, minute1))) {
-                RadioButton timeButton = new RadioButton(view.getContext());
-                timeButton.setText(s);
-                timeButton.setLayoutParams(params);
-                day1TimeGroup.addView(timeButton);
-            }
-            RadioButton timeButton = new RadioButton(view.getContext());
-            timeButton.setText(s);
-            timeButton.setLayoutParams(params);
-            day2TimeGroup.addView(timeButton);
-        }
-    }
+//
+//    public static float convertDpToPixel(float dp, Context context){
+//        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+//    }
+//
+//    private Timestamp addDays(Timestamp date, int days) {
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(date);
+//        cal.add(Calendar.DATE, days);
+//        return new Timestamp(cal.getTime().getTime());
+//    }
+//
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void renderTimeChoice(View view){
+//        String time = timeFormat.format(timestamp);
+//        int minute = Integer.parseInt(time.substring(3,5));
+//        int hour = Integer.parseInt(time.substring(0,2));
+//        LocalTime currentTime = LocalTime.of(hour, minute);
+//        int minute1, hour1;
+//        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
+//        params.topMargin = Math.round(convertDpToPixel(4,view.getContext()));
+//        params.bottomMargin = Math.round(convertDpToPixel(4,view.getContext()));
+//        for (String s : times) {
+//            minute1 = Integer.parseInt(s.substring(3, 5));
+//            hour1 = Integer.parseInt(s.substring(0, 2));
+//            if (currentTime.isBefore(LocalTime.of(hour1, minute1))) {
+//                RadioButton timeButton = new RadioButton(view.getContext());
+//                timeButton.setText(s);
+//                timeButton.setLayoutParams(params);
+//                day1TimeGroup.addView(timeButton);
+//            }
+//            RadioButton timeButton = new RadioButton(view.getContext());
+//            timeButton.setText(s);
+//            timeButton.setLayoutParams(params);
+//            day2TimeGroup.addView(timeButton);
+//        }
+//    }
 }
