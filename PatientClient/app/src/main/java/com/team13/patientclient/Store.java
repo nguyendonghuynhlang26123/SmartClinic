@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.models.HospitalModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class Store {
     }
 
     private AccountModel userAccount;
+    private HospitalModel hospital;
 
     private Store(){
     }
@@ -37,5 +39,13 @@ public class Store {
 
     public void setUserAccount(AccountModel userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public HospitalModel getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(HospitalModel hospital) {
+        this.hospital = hospital;
     }
 }
