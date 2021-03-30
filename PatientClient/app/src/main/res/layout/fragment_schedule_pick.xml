@@ -60,18 +60,14 @@
                     android:textSize="14sp"
                     android:text="These time slots are in Vietnam timezone (GMT+7:00)"/>
 
-                <RadioGroup
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="32dp"
-                    android:id="@+id/radio_group">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/schedule_recycle_view"
-                        />
-                </RadioGroup>
+                    android:id="@+id/schedule_groups"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
