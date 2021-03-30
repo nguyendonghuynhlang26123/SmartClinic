@@ -69,7 +69,8 @@ public class Utils {
         return new Timestamp(cal.getTime().getTime());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    @SuppressLint("NewApi")
     public static ArrayList<String> generateTimes(String startTime, String closeTime, int gapInMinutes) {
         try {
             int startMin = Integer.parseInt(startTime.substring(3,5));

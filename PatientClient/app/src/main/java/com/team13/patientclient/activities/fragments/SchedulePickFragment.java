@@ -1,32 +1,45 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.XmlResourceParser;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.PharmacyActivity;
-import com.team13.patientclient.adapters.SchedulePickerAdapter;
+import com.team13.patientclient.models.HospitalModel;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -36,38 +49,19 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class SchedulePickFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    RadioGroup day1TimeGroup, day2TimeGroup;
     Timestamp timestamp;
-    int selectedDay = 0;
     SchedulePickFragmentListener listener;
+    RadioButton activeBtn;
     final SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.US);
     final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
-    final String[] times = {"07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00",
-                            "11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30",
-                            "16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00",
-                            "20:30","21:00","21:30","22:00"};
+
     public SchedulePickFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SchedulePickFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SchedulePickFragment newInstance(String param1, String param2) {
         SchedulePickFragment fragment = new SchedulePickFragment();
         Bundle args = new Bundle();
@@ -81,8 +75,8 @@ public class SchedulePickFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -98,38 +92,13 @@ public class SchedulePickFragment extends Fragment {
         days[0] = dayFormat.format(timestamp);         // current day
         days[1] = dayFormat.format(nextDayTimestamp);  // next day
 
-        RecyclerView rcv = view.findViewById(R.id.schedule_recycle_view);
-        SchedulePickerAdapter adapter = new SchedulePickerAdapter(getContext(), days);
-        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rcv.setAdapter(adapter);
+        View day1 = renderTimeChoice(view, days[0]);
+        View day2 = renderTimeChoice(view, days[1]);
 
-//        day1.setText(days[0]);
-//        day2.setText(days[1]);
-//        day1TimeGroup = view.findViewById(R.id.day1_time_group);
-//        day2TimeGroup = view.findViewById(R.id.day2_time_group);
-//        renderTimeChoice(view);
-//        day1TimeGroup.check(day1TimeGroup.getChildAt(0).getId());
-//        day1TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
-//            selectedDay = 0;
-//            if(day2TimeGroup.getCheckedRadioButtonId()!=-1)
-//                day2TimeGroup.clearCheck();
-//        });
-//        day2TimeGroup.setOnCheckedChangeListener((group, checkedId) -> {
-//            selectedDay = 1;
-//            if(day1TimeGroup.getCheckedRadioButtonId()!=-1)
-//                day1TimeGroup.clearCheck();
-//        });
-//        view.findViewById(R.id.process_button).setOnClickListener(v->{
-//            RadioButton checkedButton;
-//            if(selectedDay==0){
-//                checkedButton = day1TimeGroup.findViewById(day1TimeGroup.getCheckedRadioButtonId());
-//            } else {
-//                checkedButton = day2TimeGroup.findViewById(day2TimeGroup.getCheckedRadioButtonId());
-//            }
-//            if (checkedButton==null)
-//                Toast.makeText(view.getContext(),"Please select a time", Toast.LENGTH_SHORT).show();
-//            else listener.gotoReasonPick(days[selectedDay] + " " + checkedButton.getText().toString());
-//        });
+        LinearLayout layout = view.findViewById(R.id.schedule_groups);
+        layout.addView(day1);
+        layout.addView(day2);
+
         return view;
     }
 
@@ -152,41 +121,111 @@ public class SchedulePickFragment extends Fragment {
     public interface SchedulePickFragmentListener{
         void gotoReasonPick(String time);
     }
-//
-//    public static float convertDpToPixel(float dp, Context context){
-//        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-//    }
-//
-//    private Timestamp addDays(Timestamp date, int days) {
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(date);
-//        cal.add(Calendar.DATE, days);
-//        return new Timestamp(cal.getTime().getTime());
-//    }
-//
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private void renderTimeChoice(View view){
-//        String time = timeFormat.format(timestamp);
-//        int minute = Integer.parseInt(time.substring(3,5));
-//        int hour = Integer.parseInt(time.substring(0,2));
-//        LocalTime currentTime = LocalTime.of(hour, minute);
-//        int minute1, hour1;
-//        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
-//        params.topMargin = Math.round(convertDpToPixel(4,view.getContext()));
-//        params.bottomMargin = Math.round(convertDpToPixel(4,view.getContext()));
-//        for (String s : times) {
-//            minute1 = Integer.parseInt(s.substring(3, 5));
-//            hour1 = Integer.parseInt(s.substring(0, 2));
-//            if (currentTime.isBefore(LocalTime.of(hour1, minute1))) {
-//                RadioButton timeButton = new RadioButton(view.getContext());
-//                timeButton.setText(s);
-//                timeButton.setLayoutParams(params);
-//                day1TimeGroup.addView(timeButton);
-//            }
-//            RadioButton timeButton = new RadioButton(view.getContext());
-//            timeButton.setText(s);
-//            timeButton.setLayoutParams(params);
-//            day2TimeGroup.addView(timeButton);
-//        }
-//    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+
+    @SuppressLint("NewApi")
+    private View renderTimeChoice(View view, String day){
+        View card = getLayoutInflater().inflate(R.layout.time_picking_item,null, false);
+
+        RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
+        HospitalModel hospital = Store.get_instance().getHospital();
+        ArrayList<String> shifts = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
+        //Render only available time
+        if (day.equals(dayFormat.format(timestamp))){
+            shifts = getAvailableTime(shifts);
+        }
+
+        ((TextView) card.findViewById(R.id.time_pick_day)).setText(day);
+
+        if (shifts.size() == 0){
+            TextView notification = new TextView(getContext());
+            notification.setText("Sorry! No more appointment is available today!");
+            notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            radioGroup.addView(notification);
+        }
+        Log.d("LONG", "" + shifts);
+
+        //Events
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton selectingBtn = group.findViewById(checkedId);
+            handleRadioBtnClicked(selectingBtn);
+        });
+
+        for (int i = 0; i < shifts.size(); i++) {
+            String s = shifts.get(i);
+            RadioButton timeButton = new RadioButton(getContext());
+            timeButton.setText(s);
+            timeButton.setTag(day);
+            stylingRadioBtn(timeButton);
+
+            radioGroup.addView(timeButton);
+        }
+
+        return card;
+    }
+
+    @SuppressLint("NewApi")
+    void stylingRadioBtn(RadioButton btn){
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams( RadioGroup.LayoutParams.MATCH_PARENT ,RadioGroup.LayoutParams.WRAP_CONTENT);
+        params.topMargin = Math.round(convertDpToPixel(4,getContext()));
+        params.bottomMargin = Math.round(convertDpToPixel(4,getContext()));
+
+        btn.setLayoutParams(params);
+        btn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btn.setTextSize(16);
+        btn.setButtonDrawable(R.color.transparent);
+        btn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.radio_btn_bg_selector));
+
+        int pixel = (int) convertDpToPixel(10, getContext());
+        btn.setPadding(0,pixel,0,pixel);
+
+        btn.setTextColor(new ColorStateList(
+                new int [] [] {
+                        new int [] {android.R.attr.state_checked},
+                        new int [] {-android.R.attr.state_checked},
+                        new int [] {-android.R.attr.state_enabled},
+                },
+                new int [] {
+                        Color.WHITE,
+                        Color.parseColor("#FFBB86FC"),
+                        Color.parseColor("#374151"),
+                }
+        ));
+    }
+    @SuppressLint("NewApi")
+    ArrayList<String> getAvailableTime(ArrayList<String> curShifts) {
+        String curTime = timeFormat.format(timestamp);
+        int curMinute = Integer.parseInt(curTime.substring(3,5));
+        int curHour = Integer.parseInt(curTime.substring(0,2));
+        LocalTime currentTime = LocalTime.of(curHour,curMinute );
+
+        for (int i = 0; i < curShifts.size(); i++) {
+            String time = curShifts.get(i);
+            int min = Integer.parseInt(time.substring(3,5));
+            int hour = Integer.parseInt(time.substring(0,2));
+
+            if (currentTime.isBefore(LocalTime.of(hour,min))) {
+                Log.d("LONG", "STOP AT" + i + " - " + time + " at " + curTime);
+                return new ArrayList<>(curShifts.subList(i, curShifts.size()));
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    boolean compareBtn(RadioButton btnA, RadioButton btnB){
+        return btnA.getTag().equals(btnB.getTag()) && btnA.getText().equals(btnB.getText());
+    }
+
+    void handleRadioBtnClicked (RadioButton selectingBtn) {
+        if (activeBtn != null) {
+            if (compareBtn(selectingBtn, activeBtn)) return;
+            activeBtn.setChecked(false);
+        }
+        activeBtn = selectingBtn;
+        activeBtn.setChecked(true);
+    }
 }
