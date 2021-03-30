@@ -56,6 +56,8 @@ public class SchedulePickFragment extends Fragment {
     SchedulePickFragmentListener listener;
     RadioButton activeBtn;
     final SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.US);
+    final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+
     public SchedulePickFragment() {
         // Required empty public constructor
     }
@@ -125,15 +127,27 @@ public class SchedulePickFragment extends Fragment {
     }
 
 
+    @SuppressLint("NewApi")
     private View renderTimeChoice(View view, String day){
-        Log.d("LONG_DEBUG", "START_RENDER " + day);
         View card = getLayoutInflater().inflate(R.layout.time_picking_item,null, false);
 
         RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
         HospitalModel hospital = Store.get_instance().getHospital();
         ArrayList<String> shifts = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
+        //Render only available time
+        if (day.equals(dayFormat.format(timestamp))){
+            shifts = getAvailableTime(shifts);
+        }
 
         ((TextView) card.findViewById(R.id.time_pick_day)).setText(day);
+
+        if (shifts.size() == 0){
+            TextView notification = new TextView(getContext());
+            notification.setText("Sorry! No more appointment is available today!");
+            notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            radioGroup.addView(notification);
+        }
+        Log.d("LONG", "" + shifts);
 
         //Events
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -182,12 +196,24 @@ public class SchedulePickFragment extends Fragment {
                 }
         ));
     }
-
+    @SuppressLint("NewApi")
     ArrayList<String> getAvailableTime(ArrayList<String> curShifts) {
-        int startIndex = -1;
+        String curTime = timeFormat.format(timestamp);
+        int curMinute = Integer.parseInt(curTime.substring(3,5));
+        int curHour = Integer.parseInt(curTime.substring(0,2));
+        LocalTime currentTime = LocalTime.of(curHour,curMinute );
+
         for (int i = 0; i < curShifts.size(); i++) {
-            
+            String time = curShifts.get(i);
+            int min = Integer.parseInt(time.substring(3,5));
+            int hour = Integer.parseInt(time.substring(0,2));
+
+            if (currentTime.isBefore(LocalTime.of(hour,min))) {
+                Log.d("LONG", "STOP AT" + i + " - " + time + " at " + curTime);
+                return new ArrayList<>(curShifts.subList(i, curShifts.size()));
+            }
         }
+        return new ArrayList<>();
     }
 
     boolean compareBtn(RadioButton btnA, RadioButton btnB){
