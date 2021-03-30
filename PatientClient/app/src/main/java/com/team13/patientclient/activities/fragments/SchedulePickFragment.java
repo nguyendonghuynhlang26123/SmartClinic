@@ -1,6 +1,10 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.XmlResourceParser;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +32,9 @@ import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.models.HospitalModel;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -134,21 +141,53 @@ public class SchedulePickFragment extends Fragment {
             handleRadioBtnClicked(selectingBtn);
         });
 
-        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = Math.round(convertDpToPixel(4,getContext()));
-        params.bottomMargin = Math.round(convertDpToPixel(4,getContext()));
-
         for (int i = 0; i < shifts.size(); i++) {
             String s = shifts.get(i);
             RadioButton timeButton = new RadioButton(getContext());
             timeButton.setText(s);
             timeButton.setTag(day);
-            timeButton.setLayoutParams(params);
+            stylingRadioBtn(timeButton);
 
             radioGroup.addView(timeButton);
         }
 
         return card;
+    }
+
+    @SuppressLint("NewApi")
+    void stylingRadioBtn(RadioButton btn){
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams( RadioGroup.LayoutParams.MATCH_PARENT ,RadioGroup.LayoutParams.WRAP_CONTENT);
+        params.topMargin = Math.round(convertDpToPixel(4,getContext()));
+        params.bottomMargin = Math.round(convertDpToPixel(4,getContext()));
+
+        btn.setLayoutParams(params);
+        btn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btn.setTextSize(16);
+        btn.setButtonDrawable(R.color.transparent);
+        btn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.radio_btn_bg_selector));
+
+        int pixel = (int) convertDpToPixel(10, getContext());
+        btn.setPadding(0,pixel,0,pixel);
+
+        btn.setTextColor(new ColorStateList(
+                new int [] [] {
+                        new int [] {android.R.attr.state_checked},
+                        new int [] {-android.R.attr.state_checked},
+                        new int [] {-android.R.attr.state_enabled},
+                },
+                new int [] {
+                        Color.WHITE,
+                        Color.parseColor("#FFBB86FC"),
+                        Color.parseColor("#374151"),
+                }
+        ));
+    }
+
+    ArrayList<String> getAvailableTime(ArrayList<String> curShifts) {
+        int startIndex = -1;
+        for (int i = 0; i < curShifts.size(); i++) {
+            
+        }
     }
 
     boolean compareBtn(RadioButton btnA, RadioButton btnB){
@@ -159,10 +198,8 @@ public class SchedulePickFragment extends Fragment {
         if (activeBtn != null) {
             if (compareBtn(selectingBtn, activeBtn)) return;
             activeBtn.setChecked(false);
-            Log.d("LONG", "BEFORE: " + activeBtn.getTag() + " - " + activeBtn.getText());
         }
         activeBtn = selectingBtn;
         activeBtn.setChecked(true);
-        Log.d("LONG", "AFTER: " + activeBtn.getTag() + " - " + activeBtn.getText());
     }
 }
