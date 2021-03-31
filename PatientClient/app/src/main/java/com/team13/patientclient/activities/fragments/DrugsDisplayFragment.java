@@ -1,8 +1,10 @@
 package com.team13.patientclient.activities.fragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
+import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
 
 import java.util.ArrayList;
@@ -34,11 +39,8 @@ public class DrugsDisplayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    RecyclerView commonDrugList;
-    RecyclerView insuranceDrugList;
-    RecyclerView othersDrugList;
     DrugDisplayListener listener;
-    ArrayList<DrugModel> data;
+    ArrayList<Category> data;
     public DrugsDisplayFragment() {
         // Required empty public constructor
     }
@@ -71,29 +73,28 @@ public class DrugsDisplayFragment extends Fragment {
         data = listener.getDisplayData();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_drugs_display, container, false);
-        commonDrugList = view.findViewById(R.id.common_drug);
-        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), data);
-
-        commonDrugList.setAdapter(pharmacyItemAdapter);
-        commonDrugList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        insuranceDrugList = view.findViewById(R.id.insurance_drug);
-        insuranceDrugList.setAdapter(pharmacyItemAdapter);
-        insuranceDrugList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        othersDrugList = view.findViewById(R.id.others_drug);
-        othersDrugList.setAdapter(pharmacyItemAdapter);
-        othersDrugList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        LinearLayout categoryListLayout = view.findViewById(R.id.category_list);
+        data.forEach(category -> {
+            View categoryView = LayoutInflater.from(view.getContext()).inflate(R.layout.drug_category_list,null);
+            PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), category.getDrugList());
+            RecyclerView drugList = categoryView.findViewById(R.id.category_item_list);
+            drugList.setAdapter(pharmacyItemAdapter);
+            drugList.setLayoutManager(new LinearLayoutManager(categoryView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            TextView categoryName = categoryView.findViewById(R.id.category_name);
+            categoryName.setText(category.getName());
+            categoryListLayout.addView(categoryView);
+        });
         return view;
     }
 
     public interface DrugDisplayListener{
-        ArrayList<DrugModel> getDisplayData();
+        ArrayList<Category> getDisplayData();
     }
 
     @Override
