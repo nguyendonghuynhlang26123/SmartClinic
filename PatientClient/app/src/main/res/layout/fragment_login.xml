@@ -85,6 +85,12 @@
                 android:paddingLeft="-12dp"
                 android:id="@+id/sign_up_text_button"/>
         </LinearLayout>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/progress"
+            android:visibility="invisible"/>
     </LinearLayout>
 
 </FrameLayout>
