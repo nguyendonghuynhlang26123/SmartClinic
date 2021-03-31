@@ -69,7 +69,8 @@ public class AppointmentConfirmFragment extends Fragment {
         TextView reason = view.findViewById(R.id.selected_reason);
 
         selectedService.setText(listener.getSelectedService());
-        selectedTime.setText(listener.getSelectedTime());
+        String text = listener.getSelectedTime() + ", " + listener.getSelectedDate();
+        selectedTime.setText(text);
         reason.setText(listener.getReason());
         view.findViewById(R.id.process_button).setOnClickListener(v->listener.handleConfirm());
 
@@ -95,6 +96,7 @@ public class AppointmentConfirmFragment extends Fragment {
 
     public interface AppointmentConfirmListener{
         String getSelectedTime();
+        String getSelectedDate();
         String getSelectedService();
         String getReason();
         void handleConfirm();

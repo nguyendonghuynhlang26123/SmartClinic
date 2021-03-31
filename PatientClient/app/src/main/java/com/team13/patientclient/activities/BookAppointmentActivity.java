@@ -9,15 +9,20 @@ import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentConfirmFragment;
 import com.team13.patientclient.activities.fragments.ReasonPickFragment;
 import com.team13.patientclient.activities.fragments.SchedulePickFragment;
+import com.team13.patientclient.models.Appointment;
+import com.team13.patientclient.models.ServicePack;
 
 public class BookAppointmentActivity extends AppCompatActivity implements
         SchedulePickFragment.SchedulePickFragmentListener,
         ReasonPickFragment.ReasonPickFragmentListener,
         AppointmentConfirmFragment.AppointmentConfirmListener {
     String time;
+    String date;
+    String serviceId;
     String serviceName;
     String reason;
     @Override
@@ -28,7 +33,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
         Intent i = getIntent();
-        serviceName = i.getStringExtra("Service");
+        serviceName = i.getStringExtra("service_name");
+        serviceId = i.getStringExtra("service_id");
     }
 
     private void loadFragment(Fragment fragment) {
@@ -40,8 +46,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void gotoReasonPick(String time) {
+    public void gotoReasonPick(String time, String date) {
         this.time = time;
+        this.date = date;
         loadFragment(new ReasonPickFragment());
     }
 
@@ -54,6 +61,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     @Override
     public String getSelectedTime() {
         return this.time;
+    }
+
+    @Override
+    public String getSelectedDate() {
+        return this.date;
     }
 
     @Override
@@ -70,5 +82,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     public void handleConfirm() {
         // Handle processing when click appointment confirm button
         //*** TODO ***//
+        String patientId = Store.get_instance().getUserAccount().getUserInfor().getId();
+        Appointment appointment = new Appointment(patientId, serviceId, reason, date, time);
+
     }
 }

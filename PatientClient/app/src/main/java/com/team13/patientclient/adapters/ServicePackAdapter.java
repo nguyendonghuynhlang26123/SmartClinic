@@ -64,7 +64,8 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
 
             view.setOnClickListener(v->{
                 Intent i = new Intent(context, BookAppointmentActivity.class);
-                i.putExtra("Service",servicePack.getName());
+                i.putExtra("service_name",servicePack.getName());
+                i.putExtra("service_id", servicePack.getId());
                 context.startActivity(i);
             });
         }
