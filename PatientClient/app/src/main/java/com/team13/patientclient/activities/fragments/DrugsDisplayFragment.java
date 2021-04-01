@@ -80,8 +80,10 @@ public class DrugsDisplayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_drugs_display, container, false);
         LinearLayout categoryListLayout = view.findViewById(R.id.category_list);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         data.forEach(category -> {
             View categoryView = LayoutInflater.from(view.getContext()).inflate(R.layout.drug_category_list,null);
+            categoryView.setLayoutParams(params);
             PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), category.getDrugList());
             RecyclerView drugList = categoryView.findViewById(R.id.category_item_list);
             drugList.setAdapter(pharmacyItemAdapter);
