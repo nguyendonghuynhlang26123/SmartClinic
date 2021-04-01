@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
         this.context = context;
         this.drugs = drugs;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,11 +47,14 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-        String url = drugs.get(position).getThumbnail();
+        DrugModel drug = drugs.get(position);
+        String url = drug.getThumbnail();
         if (!url.isEmpty()) Picasso.get().load(url).into((ImageView)view.findViewById(R.id.pharmacy_item_img));
+        TextView name = view.findViewById(R.id.pharmacy_item_name);
+        name.setText(drug.getName());
         view.setOnClickListener(v->{
             Intent i = new Intent(context, DrugActivity.class);
-            i.putExtra("id", drugs.get(position).getId());
+            i.putExtra("id", drug.getId());
             context.startActivity(i);
         });
     }

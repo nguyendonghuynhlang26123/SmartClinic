@@ -23,7 +23,7 @@ import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AuthService;
 
-import okhttp3.internal.Util;
+
 
 /**
  * A simple {@link Fragment} subclass.

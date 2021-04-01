@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -47,6 +48,7 @@ public class LoginFragment extends Fragment {
     private String mParam2;
     TextInputEditText phoneInput;
     TextInputEditText passwordInput;
+    ProgressBar progressBar;
     Button loginButton;
     Button signUpButton;
 
@@ -93,25 +95,27 @@ public class LoginFragment extends Fragment {
         signUpButton.setOnClickListener(v -> {
             ((LoginActivity)getActivity()).setSignUpFragment();
         });
+        progressBar = view.findViewById(R.id.progress);
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
             String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
             String password = passwordInput.getText().toString();
             if (phone.isEmpty() || password.isEmpty())
                 Toast.makeText(getContext(), "Empty Input! Please try again", Toast.LENGTH_SHORT).show();
-            verifyAndProcess(phone, password, view);
+            else verifyAndProcess(phone, password, view);
         });
 
         return view;
     }
 
     private void verifyAndProcess(String phone, String password, View view) {
+        progressBar.setVisibility(View.VISIBLE);
         AuthService auth = new AuthService();
         auth.login("+84" + phone, password, new OnResponse<AccountModel>(getContext()) {
             @Override
             public void onRequestSuccess(AccountModel account) {
                 Store.get_instance().setUserAccount(account);
-
+                progressBar.setVisibility(View.INVISIBLE);
                 Intent i = new Intent(view.getContext(), MainActivity.class);
                 startActivity(i);
             }
