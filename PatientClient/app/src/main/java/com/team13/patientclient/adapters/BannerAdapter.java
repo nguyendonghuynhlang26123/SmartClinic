@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.team13.patientclient.activities.ServiceActivity;
+import com.team13.patientclient.activities.CommonServiceActivity;
 import com.team13.patientclient.R;
 
 import java.util.Objects;
@@ -39,7 +39,7 @@ public class BannerAdapter extends PagerAdapter {
         itemView.setOnClickListener(v->{
             switch (position){
                 case 1:
-                    Intent i = new Intent(context, ServiceActivity.class);
+                    Intent i = new Intent(context, CommonServiceActivity.class);
                     context.startActivity(i);
                     break;
             }

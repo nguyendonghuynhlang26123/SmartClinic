@@ -25,7 +25,6 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-
     <style name="BottomLeftNoCornerCard" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomLeft</item>
     </style>
@@ -36,18 +35,6 @@
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeBottomRight">16dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
-    </style>
-
-    <style name="BottomRightNoCornerCard" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomRight</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.MaterialCardView.NoCutBottomRight" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">16dp</item>
-        <item name="cornerSizeTopLeft">16dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">16dp</item>
     </style>
 
     <style name="LeftCornerButton" parent="Widget.MaterialComponents.Button">
@@ -80,19 +67,5 @@
         <item name="cornerSizeBottomRight">24dp</item>
         <item name="cornerSizeTopLeft">24dp</item>
         <item name="cornerSizeBottomLeft">24dp</item>
-    </style>
-
-    <style name="OutlinedCard" parent="Widget.MaterialComponents.CardView">
-        <item name="strokeColor">@color/teal_700</item>
-        <item name="strokeWidth">1dp</item>
-    </style>
-    <style name="PurpleOutlinedCard" parent="Widget.MaterialComponents.CardView">
-        <item name="strokeColor">@color/purple_700</item>
-        <item name="strokeWidth">1dp</item>
-    </style>
-    <style name="OutlinedBottomLeftNoCorner" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomLeft</item>
-        <item name="strokeColor">@color/teal_700</item>
-        <item name="strokeWidth">1dp</item>
     </style>
 </resources>

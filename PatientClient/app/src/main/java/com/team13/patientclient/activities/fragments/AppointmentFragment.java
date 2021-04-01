@@ -1,6 +1,5 @@
 package com.team13.patientclient.activities.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.ServiceActivity;
 import com.team13.patientclient.adapters.AppointmentItemAdapter;
 import com.team13.patientclient.models.Appointment;
 
@@ -75,10 +73,6 @@ public class AppointmentFragment extends Fragment {
         AppointmentItemAdapter appointmentItemAdapter = new AppointmentItemAdapter(view.getContext(), getAppointments());
         appointmentList.setAdapter(appointmentItemAdapter);
         appointmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        view.findViewById(R.id.add_appointment_button).setOnClickListener(v->{
-            Intent i = new Intent(view.getContext(), ServiceActivity.class);
-            startActivity(i);
-        });
         return view;
     }
 

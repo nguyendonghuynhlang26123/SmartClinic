@@ -15,8 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="64dp">
+            android:orientation="vertical">
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="224dp"
@@ -197,14 +196,14 @@
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_description"
+                                android:src="@drawable/ic_cart"
                                 android:background="@color/transparent"
-                                android:tooltipText="Prescript"
+                                android:tooltipText="Cart"
                                 android:id="@+id/service_cart"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Prescript"
+                                android:text="Cart"
                                 android:layout_marginTop="4dp"/>
                         </LinearLayout>
                         <LinearLayout
@@ -290,6 +289,34 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_right_arrow"
                             android:id="@+id/fun_profile_trailing"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginHorizontal="16dp"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="24dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_description"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/fun_prescript_icon"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Prescript"
+                            android:layout_toRightOf="@+id/fun_prescript_icon"
+                            android:layout_toEndOf="@+id/fun_prescript_icon" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_right_arrow"
+                            android:id="@+id/fun_prescript_trailing"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
                             android:layout_marginHorizontal="16dp"/>
