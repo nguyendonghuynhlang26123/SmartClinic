@@ -25,8 +25,7 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-<<<<<<< Updated upstream
-=======
+
     <style name="BottomLeftNoCornerCard" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomLeft</item>
     </style>
@@ -51,7 +50,6 @@
         <item name="cornerSizeBottomLeft">16dp</item>
     </style>
 
->>>>>>> Stashed changes
     <style name="LeftCornerButton" parent="Widget.MaterialComponents.Button">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.RoundedLeft</item>
     </style>
