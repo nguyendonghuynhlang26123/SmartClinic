@@ -21,6 +21,10 @@
             android:background="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_container"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/nunito_bold"
-                android:text="Drug for you"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -63,7 +66,6 @@
                 android:layout_marginBottom="16dp"
                 android:id="@+id/drug_price"
                 android:fontFamily="@font/nunito_extrabold"
-                android:text="1,500₫"
                 android:textSize="30sp"
                 android:textStyle="bold" />
             <com.google.android.material.card.MaterialCardView
@@ -111,7 +113,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_italic"
-                            android:text="180 pills/box"
                             android:textSize="16sp" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -123,7 +124,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="GSK"
                             android:fontFamily="@font/nunito_italic"
                             android:id="@+id/drug_brand"
                             android:textSize="16sp" />
@@ -138,7 +138,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_italic"
-                            android:text="Vietnam"
                             android:id="@+id/drug_from"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -155,36 +154,57 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingVertical="8dp"
-                        android:layout_marginHorizontal="8dp" >
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_description"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:id="@+id/ic_description"/>
+                        android:layout_marginHorizontal="8dp"
+                        android:id="@+id/description_card">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Description"
                             android:fontFamily="@font/nunito_extrabold"
+                            android:drawableLeft="@drawable/ic_description"
+                            android:drawablePadding="8dp"
                             android:textSize="18sp"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/ic_description"/>
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/description_content"
+                            android:id="@+id/description_title"
+                            android:layout_marginTop="2dp"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/description_expand"
                             android:src="@drawable/ic_expand"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:minWidth="0dp"
                             android:minHeight="0dp"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/description_expanded"
+                            android:src="@drawable/ic_expanded"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/description_content"
+                            app:layout_constraintTop_toBottomOf="@+id/description_title"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginVertical="8dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:fontFamily="@font/nunito_italic"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
@@ -201,25 +221,21 @@
                         android:orientation="horizontal"
                         android:paddingVertical="8dp"
                         android:layout_marginHorizontal="8dp">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_pills"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:id="@+id/ic_ingredient"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Ingredient"
                             android:fontFamily="@font/nunito_extrabold"
+                            android:drawableLeft="@drawable/ic_pills"
+                            android:drawablePadding="8dp"
                             android:textSize="18sp"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/ic_ingredient"/>
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/ingredient_content"
+                            android:id="@+id/ingredient_title"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -227,9 +243,33 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:minWidth="0dp"
-                            android:minHeight="0dp"/>
+                            android:minHeight="0dp"
+                            android:id="@+id/ingredient_expand"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ingredient_expanded"
+                            android:src="@drawable/ic_expanded"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ingredient_content"
+                            app:layout_constraintTop_toBottomOf="@+id/ingredient_title"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginHorizontal="16dp"
+                            android:fontFamily="@font/nunito_italic"
+                            android:layout_marginVertical="8dp"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
@@ -246,25 +286,20 @@
                         android:orientation="horizontal"
                         android:paddingVertical="8dp"
                         android:layout_marginHorizontal="8dp">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_note"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:id="@+id/ic_user_manual"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="User manual"
                             android:fontFamily="@font/nunito_extrabold"
                             android:textSize="18sp"
-                            android:layout_marginLeft="16dp"
+                            android:drawableLeft="@drawable/ic_note"
+                            android:drawablePadding="8dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/ic_user_manual"/>
+                            app:layout_constraintBottom_toTopOf="@+id/manual_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:id="@+id/manual_title"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -272,9 +307,33 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:minWidth="0dp"
-                            android:minHeight="0dp"/>
+                            android:minHeight="0dp"
+                            android:id="@+id/manual_expand"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/manual_expanded"
+                            android:src="@drawable/ic_expanded"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/manual_content"
+                            app:layout_constraintTop_toBottomOf="@+id/manual_title"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginVertical="8dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:fontFamily="@font/nunito_italic"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
@@ -291,25 +350,20 @@
                         android:orientation="horizontal"
                         android:paddingVertical="8dp"
                         android:layout_marginHorizontal="8dp">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_insurance"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:id="@+id/ic_preservation"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Preservation and Caution"
                             android:fontFamily="@font/nunito_extrabold"
                             android:textSize="18sp"
-                            android:layout_marginLeft="16dp"
+                            android:drawableLeft="@drawable/ic_insurance"
+                            android:drawablePadding="8dp"
+                            android:layout_marginLeft="8dp"
                             android:gravity="center_vertical"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/ic_preservation"/>
+                            app:layout_constraintBottom_toTopOf="@+id/preservation_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:id="@+id/preservation_title"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -317,9 +371,33 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:minWidth="0dp"
-                            android:minHeight="0dp"/>
+                            android:minHeight="0dp"
+                            android:id="@+id/preservation_expand"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/preservation_expanded"
+                            android:src="@drawable/ic_expanded"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/preservation_content"
+                            app:layout_constraintTop_toBottomOf="@+id/preservation_title"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginVertical="8dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:fontFamily="@font/nunito_italic"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
