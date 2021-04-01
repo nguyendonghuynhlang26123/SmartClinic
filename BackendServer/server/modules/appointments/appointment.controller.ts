@@ -1,22 +1,27 @@
-import * as express from "express";
-import { AppointmentService } from "./appointment.service";
+import * as express from 'express';
+import { AppointmentService } from './appointment.service';
 const router = express.Router();
 
 const appointmentService: AppointmentService = new AppointmentService();
 
-router.get("/", async (req, res) => {
-  const appointments = await appointmentService.getAllAppointment();
-  res.json(appointments);
+router.get('/', async (req, res) => {
+  try {
+    const appointments = await appointmentService.getAllAppointment(req.query);
+    res.json(appointments);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'BAD REQUEST' });
+  }
 });
 
-router.get("/:appointment_id", async (req, res) => {
+router.get('/:appointment_id', async (req, res) => {
   const appointment = await appointmentService.getAppointmentById(
     req.params.appointment_id
   );
   res.json(appointment);
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const appointment = await appointmentService.createAppointment(req.body);
     res.json(appointment);
@@ -26,7 +31,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:appointment_id", async (req, res) => {
+router.put('/:appointment_id', async (req, res) => {
   try {
     const result = await appointmentService.updateAppointmentById(
       req.params.appointment_id,
@@ -39,7 +44,7 @@ router.put("/:appointment_id", async (req, res) => {
   }
 });
 
-router.delete("/:appointment_id", async (req, res) => {
+router.delete('/:appointment_id', async (req, res) => {
   try {
     const result = await appointmentService.deleteAppointment(
       req.params.appointment_id
