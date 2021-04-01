@@ -5,12 +5,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
+import com.team13.patientclient.models.HospitalModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +80,18 @@ public class AppointmentConfirmFragment extends Fragment {
         reason.setText(listener.getReason());
         view.findViewById(R.id.process_button).setOnClickListener(v->listener.handleConfirm());
 
+
+        HospitalModel hospital = Store.get_instance().getHospital();
+
+        if (!hospital.getImgUrl().isEmpty()) {
+            Picasso.get().load(hospital.getImgUrl()).into((ImageView) view.findViewById(R.id.hospital_thumbnail));
+        }
+
+        Log.d("LONG", new Gson().toJson(hospital));
+        ((TextView) view.findViewById(R.id.hospital_name)).setText(hospital.getName());
+        ((TextView) view.findViewById(R.id.hospital_address)).setText(hospital.getAddress());
+        String workingHours = hospital.getDayOfWorks() + ", " + hospital.getOpenTime() + " - " + hospital.getCloseTime();
+        ((TextView) view.findViewById(R.id.hospital_working_time)).setText(workingHours);
 
         return view;
     }
