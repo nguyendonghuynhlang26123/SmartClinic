@@ -20,23 +20,20 @@ export class AppointmentService {
   }
 
   async getAllAppointment(query?) {
-    try {
-      let filter = {};
-      if (query?.date) filter = { ...filter, date: query.date };
-      if (query?.service_id) filter = { ...filter, service: query.service_id };
-      let limit = {};
-      if (query?.limit) limit = { limit: Number(query.limit) };
+    console.log(
+      'log ~ file: appointment.service.ts ~ line 23 ~ AppointmentService ~ getAllAppointment ~ query',
+      query
+    );
+    let filter = {};
+    if (query?.date) filter = { ...filter, date: query.date };
+    if (query?.service_id) filter = { ...filter, service: query.service_id };
+    if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
+    if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
 
-      const appointments = await appointmentModel.find(
-        filter,
-        'doctor patient service',
-        limit
-      );
-      return appointments;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Get All Appointment Error.');
-    }
+    const appointments = await appointmentModel
+      .find(filter, {}, { limit: Number(query?.limit) })
+      .populate('doctor patient service');
+    return appointments;
   }
 
   async createAppointment(data: AppointmentInterface) {

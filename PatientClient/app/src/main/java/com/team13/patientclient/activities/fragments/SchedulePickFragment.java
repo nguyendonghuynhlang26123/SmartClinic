@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -55,7 +56,7 @@ public class SchedulePickFragment extends Fragment {
     Timestamp timestamp;
     SchedulePickFragmentListener listener;
     RadioButton activeBtn;
-    final SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.US);
+    final SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM", Locale.US);
     final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
 
     public SchedulePickFragment() {
@@ -99,6 +100,16 @@ public class SchedulePickFragment extends Fragment {
         layout.addView(day1);
         layout.addView(day2);
 
+        ((Button) view.findViewById(R.id.process_button)).setOnClickListener(l->{
+            if (activeBtn == null) {
+                Toast.makeText(getContext(), "Please select a day!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String[] tag = activeBtn.getTag().toString().split(";");
+
+            listener.gotoReasonPick(tag[0], tag[1]);
+        });
         return view;
     }
 
@@ -119,7 +130,7 @@ public class SchedulePickFragment extends Fragment {
     }
 
     public interface SchedulePickFragmentListener{
-        void gotoReasonPick(String time);
+        void gotoReasonPick(String time, String date);
     }
 
     public static float convertDpToPixel(float dp, Context context){
@@ -159,7 +170,7 @@ public class SchedulePickFragment extends Fragment {
             String s = shifts.get(i);
             RadioButton timeButton = new RadioButton(getContext());
             timeButton.setText(s);
-            timeButton.setTag(day);
+            timeButton.setTag(s + ";" + day);
             stylingRadioBtn(timeButton);
 
             radioGroup.addView(timeButton);
@@ -227,5 +238,9 @@ public class SchedulePickFragment extends Fragment {
         }
         activeBtn = selectingBtn;
         activeBtn.setChecked(true);
+    }
+
+    void disablingBookedTime(LinearLayout layout, String day) {
+        
     }
 }

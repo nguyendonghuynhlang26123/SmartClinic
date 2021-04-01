@@ -20,6 +20,7 @@ const AppointmentSchema = new Schema(
       ref: 'medical-services',
       required: true,
     },
+    note: { type: String, default: false },
     is_expired: {
       type: Boolean,
       default: false,

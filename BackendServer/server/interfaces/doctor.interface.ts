@@ -1,6 +1,7 @@
-import { BaseInterface } from "./base/base.interface";
+import { BaseInterface } from './base/base.interface';
 
 export class DoctorInterface extends BaseInterface {
+  name: string;
   avatar: string;
   bio: string;
   department: string;
