@@ -85,7 +85,7 @@ public class AppointmentFragment extends Fragment {
     ArrayList<Appointment> getAppointments(){
         ArrayList<Appointment> appointments = new ArrayList<>(3);
         for(int i=0;i<3;++i){
-            appointments.add(new Appointment("P01","D01","12 February 2021", "6:00AM - 9:00AM"));
+            appointments.add(new Appointment("P01","D01", "","12 February 2021", "6:00AM - 9:00AM"));
         }
         return appointments;
     }

@@ -106,7 +106,9 @@ public class SchedulePickFragment extends Fragment {
                 return;
             }
 
-            listener.gotoReasonPick(activeBtn.getText().toString(), activeBtn.getTag().toString());
+            String[] tag = activeBtn.getTag().toString().split(";");
+
+            listener.gotoReasonPick(tag[0], tag[1]);
         });
         return view;
     }
@@ -168,7 +170,7 @@ public class SchedulePickFragment extends Fragment {
             String s = shifts.get(i);
             RadioButton timeButton = new RadioButton(getContext());
             timeButton.setText(s);
-            timeButton.setTag(day);
+            timeButton.setTag(s + ";" + day);
             stylingRadioBtn(timeButton);
 
             radioGroup.addView(timeButton);
@@ -236,5 +238,9 @@ public class SchedulePickFragment extends Fragment {
         }
         activeBtn = selectingBtn;
         activeBtn.setChecked(true);
+    }
+
+    void disablingBookedTime(LinearLayout layout, String day) {
+        
     }
 }
