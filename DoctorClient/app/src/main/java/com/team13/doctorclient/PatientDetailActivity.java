@@ -18,7 +18,7 @@ public class PatientDetailActivity extends AppCompatActivity {
     PatientTimelineAdapter patientTimelineAdapter;
     RecyclerView patientTimeline;
     MaterialToolbar topAppBar;
-    Button prescriptionBtn;
+    Button startBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +29,12 @@ public class PatientDetailActivity extends AppCompatActivity {
         patientTimeline.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
-        prescriptionBtn=findViewById(R.id.prescriptionBtn);
-        prescriptionBtn.setOnClickListener(v -> {
-            Intent i= new Intent(this,PrescriptionViewActivity.class);
+        startBtn= findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(v -> {
+            Intent i= new Intent(this,CreatePrescription.class);
             this.startActivity(i);
         });
+
     }
     ArrayList<PatientTimeline> getPatientTimeline(){
         ArrayList<PatientTimeline> patientTimelineArrayList= new ArrayList<>(10);
