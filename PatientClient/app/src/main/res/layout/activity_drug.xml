@@ -184,7 +184,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/description_expanded"
+                            android:id="@+id/description_collapse"
                             android:src="@drawable/ic_expanded"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
@@ -249,7 +249,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/ingredient_expanded"
+                            android:id="@+id/ingredient_collapse"
                             android:src="@drawable/ic_expanded"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
@@ -313,7 +313,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/manual_expanded"
+                            android:id="@+id/manual_collapse"
                             android:src="@drawable/ic_expanded"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
@@ -377,7 +377,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/preservation_expanded"
+                            android:id="@+id/preservation_collapse"
                             android:src="@drawable/ic_expanded"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             app:layout_constraintRight_toRightOf="parent"
