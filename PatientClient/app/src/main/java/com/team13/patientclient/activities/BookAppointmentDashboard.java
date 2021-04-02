@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
@@ -41,6 +43,7 @@ public class BookAppointmentDashboard extends AppCompatActivity {
 
         //Render hospital data
         HospitalModel hospital = Store.get_instance().getHospital();
+        Log.d("LONG", new Gson().toJson(hospital));
         if (!hospital.getImgUrl().isEmpty()) Picasso.get().load(hospital.getImgUrl()).into((ImageView)findViewById(R.id.hospital_thumbnail));
 
         ((TextView) findViewById(R.id.hospital_name)).setText(hospital.getName());

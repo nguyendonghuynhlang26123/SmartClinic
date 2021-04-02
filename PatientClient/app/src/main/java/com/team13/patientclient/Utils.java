@@ -21,7 +21,6 @@ import java.util.Locale;
 import retrofit2.Response;
 
 public class Utils {
-//    public static final String BACK_END_API_PATH = "http://10.124.1.109:3669/";
     public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
 
     public static final int NAME_LENGTH_LIMIT = 16;
@@ -69,7 +68,8 @@ public class Utils {
         return new Timestamp(cal.getTime().getTime());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    @SuppressLint("NewApi")
     public static ArrayList<String> generateTimes(String startTime, String closeTime, int gapInMinutes) {
         try {
             int startMin = Integer.parseInt(startTime.substring(3,5));
