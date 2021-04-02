@@ -13,13 +13,21 @@ import com.team13.doctorclient.models.Drug;
 
 import java.util.ArrayList;
 
-public class DurgAdapter extends RecyclerView.Adapter<DurgAdapter.ViewHolder> {
+public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
     private final Context context;
-    public final ArrayList<Drug> drugs;
+    public ArrayList<Drug> drugs;
 
-    public DurgAdapter(Context context, ArrayList<Drug> drugs) {
+    public DrugAdapter(Context context, ArrayList<Drug> drugs) {
         this.context = context;
         this.drugs = drugs;
+    }
+    public DrugAdapter(Context context){
+        this.context=context;
+        drugs= new ArrayList<>();
+    }
+    public void setData(ArrayList<Drug> addDrugArrayList){
+        drugs= addDrugArrayList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -27,7 +35,7 @@ public class DurgAdapter extends RecyclerView.Adapter<DurgAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(context);
         View view=layoutInflater.inflate(R.layout.drug_prescription_item,parent,false);
-        return new DurgAdapter.ViewHolder(view);
+        return new DrugAdapter.ViewHolder(view);
     }
 
     @Override
