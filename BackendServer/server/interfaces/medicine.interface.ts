@@ -12,5 +12,5 @@ export class MedicineInterface extends BaseInterface {
   brand?: string;
   from?: string;
   preservation?: string;
-  category: string[];
+  category: string;
 }
