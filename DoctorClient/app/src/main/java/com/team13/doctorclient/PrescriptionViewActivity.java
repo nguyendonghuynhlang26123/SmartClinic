@@ -5,24 +5,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
-import com.team13.doctorclient.adapters.DurgAdapter;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Drug;
 
 import java.util.ArrayList;
 
 public class PrescriptionViewActivity extends AppCompatActivity {
     RecyclerView drugList;
-    DurgAdapter durgAdapter;
-
+    DrugAdapter drugAdapter;
+    MaterialToolbar topAppBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription__view_);
         drugList= findViewById(R.id.drug_list);
-        durgAdapter=new DurgAdapter(this,getDrug());
-        drugList.setAdapter(durgAdapter);
+        topAppBar= findViewById(R.id.topAppBar);
+        topAppBar.setNavigationOnClickListener(v -> finish());
+        drugAdapter =new DrugAdapter(this,getDrug());
+        drugList.setAdapter(drugAdapter);
         drugList.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
     }
     public ArrayList<Drug> getDrug(){
