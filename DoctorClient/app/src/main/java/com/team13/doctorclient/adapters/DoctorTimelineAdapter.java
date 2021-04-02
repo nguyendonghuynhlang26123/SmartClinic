@@ -79,6 +79,7 @@ public class DoctorTimelineAdapter extends RecyclerView.Adapter<DoctorTimelineAd
             super(itemView);
             mTimelineView = (TimelineView) itemView.findViewById(R.id.doctorTimeline);
             mTimelineView.initLine(viewType);
+            mTimelineView.setMarkerColor(itemView.getResources().getColor(R.color.dark_pink));
         }
     }
 

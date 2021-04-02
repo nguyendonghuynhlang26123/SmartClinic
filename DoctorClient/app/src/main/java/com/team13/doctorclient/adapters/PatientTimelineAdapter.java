@@ -1,14 +1,17 @@
 package com.team13.doctorclient.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.vipulasri.timelineview.TimelineView;
+import com.team13.doctorclient.PrescriptionViewActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.PatientTimeline;
 
@@ -23,6 +26,7 @@ public class PatientTimelineAdapter  extends RecyclerView.Adapter<PatientTimelin
             super(itemView);
             mTimelineView = (TimelineView) itemView.findViewById(R.id.patient_timeline);
             mTimelineView.initLine(viewType);
+            mTimelineView.setMarkerColor(itemView.getResources().getColor(R.color.dark_pink));
         }
     }
     public PatientTimelineAdapter(Context context, ArrayList<PatientTimeline> patientTimelineArrayList) {
@@ -40,6 +44,13 @@ public class PatientTimelineAdapter  extends RecyclerView.Adapter<PatientTimelin
 
     @Override
     public void onBindViewHolder(@NonNull PatientTimelineAdapter.ViewHolder holder, int position) {
+        View view=holder.itemView;
+        PatientTimeline patientTimeline= patientTimelineArrayList.get(position);
+        Button prescriptionBtn=view.findViewById(R.id.prescriptionBtn);
+        prescriptionBtn.setOnClickListener(v -> {
+            Intent i= new Intent(context, PrescriptionViewActivity.class);
+            context.startActivity(i);
+        });
     }
     @Override
     public int getItemViewType(int position) {

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
     <style name="Theme.DoctorClient" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/teal_primary</item>
@@ -8,9 +9,9 @@
         <!-- Secondary brand color. -->
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
-        <item name="actionMenuTextColor">?attr/colorPrimaryVariant</item>
+        <item name="actionMenuTextColor">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
     </style>
 </resources>
