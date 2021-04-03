@@ -1,8 +1,12 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -111,7 +115,7 @@ public class LoginFragment extends Fragment {
     private void verifyAndProcess(String phone, String password, View view) {
         progressBar.setVisibility(View.VISIBLE);
         AuthService auth = new AuthService();
-        auth.login("+84" + phone, password, new OnResponse<AccountModel>(getContext()) {
+        auth.login("+84" + phone, password, new OnResponse<AccountModel>() {
             @Override
             public void onRequestSuccess(AccountModel account) {
                 Store.get_instance().setUserAccount(account);

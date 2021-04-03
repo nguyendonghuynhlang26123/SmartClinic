@@ -5,6 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.team13.patientclient.MyApp;
+import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.models.ErrorResponse;
 
 import java.io.IOException;
@@ -14,13 +16,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public abstract class OnResponse<T> implements Callback<T> {
-    Context ctx = null;
-    public OnResponse(Context ctx) {
-        this.ctx = ctx;
-    }
-
-    public OnResponse() {
-    }
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
@@ -31,14 +26,17 @@ public abstract class OnResponse<T> implements Callback<T> {
         else{
             ErrorResponse errorResponse = null;
             try {
-                Log.d("LONG_DEBUG", new Gson().toJson(response.errorBody()));
                 errorResponse = new Gson().fromJson(
                         response.errorBody().string(),
                         ErrorResponse.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (ctx != null) Toast.makeText(ctx, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+            Log.d("LONG_DEBUG", new Gson().toJson(errorResponse));
+            //if (errorResponse != null) NotificationHandler.sendNotification(MyApp.getContext(), "Error", errorResponse.getMessage());
+            //if (ctx != null) Toast.makeText(MyApp.getContext(), errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            NotificationHandler.sendNotification(MyApp.getContext(), "Error", errorResponse.getMessage());
         }
     }
 

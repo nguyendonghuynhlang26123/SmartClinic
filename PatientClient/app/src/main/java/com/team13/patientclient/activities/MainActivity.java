@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener {
     BottomNavigationView bottomNavigationView;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,4 +97,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
             }
         });
     }
+
+
 }

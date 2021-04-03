@@ -99,7 +99,7 @@ public class SignupFragment extends Fragment {
             }
 
             AuthService authService = new AuthService();
-            authService.register(phone, password, name, new OnResponse<AccountModel>(getContext()) {
+            authService.register(phone, password, name, new OnResponse<AccountModel>() {
                 @Override
                 public void onRequestSuccess(AccountModel account) {
                     Store.get_instance().setUserAccount(account);
