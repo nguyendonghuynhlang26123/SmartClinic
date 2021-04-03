@@ -98,7 +98,7 @@ public class DrugsDisplayFragment extends Fragment {
             drugList.setLayoutManager(new LinearLayoutManager(categoryView.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
             //Call api asynchronously
-            callApiAndRender(pharmacyItemAdapter, category.getId());
+            callApiAndRender(pharmacyItemAdapter, categoryView, category.getId());
 
             //Add this view to layout
             categoryListLayout.addView(categoryView);
@@ -114,12 +114,16 @@ public class DrugsDisplayFragment extends Fragment {
         return result;
     }
 
-    void callApiAndRender(PharmacyItemAdapter adapter, String categoryId){
+    void callApiAndRender(PharmacyItemAdapter adapter, View categoryView, String categoryId){
         DrugService service = new DrugService();
         service.getMinimizedData(categoryId, new OnResponse<DrugModel[]>() {
             @Override
             public void onRequestSuccess(DrugModel[] list) {
                 adapter.setData(new ArrayList<>(Arrays.asList(list)));
+                if (list.length > 3) {
+                    categoryView.findViewById(R.id.category_detail).setVisibility(View.VISIBLE);
+                    //TODO: START NEW ITEM LIST ACTIVITY
+                }
             }
         });
     }
