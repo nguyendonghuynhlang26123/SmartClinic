@@ -3,7 +3,9 @@ package com.team13.patientclient.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DrugModel {
+import java.io.Serializable;
+
+public class DrugModel implements Serializable {
     @SerializedName("medicine_name")
     String name;
 
