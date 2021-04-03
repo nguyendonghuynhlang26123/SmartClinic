@@ -23,7 +23,7 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.BannerAdapter;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.DrugModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
@@ -129,9 +129,9 @@ public class HomeFragment extends Fragment {
         pharmacyList.setAdapter(pharmacyItemAdapter);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        service.getMinimizedData(new OnResponse<DrugModel[]>() {
+        service.getMinimizedData(new OnSuccessResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(DrugModel[] list) {
+            public void onSuccess(DrugModel[] list) {
                 pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }
         });

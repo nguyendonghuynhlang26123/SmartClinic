@@ -18,8 +18,7 @@ import com.team13.patientclient.Store;
 import com.team13.patientclient.adapters.ServicePackAdapter;
 import com.team13.patientclient.models.HospitalModel;
 import com.team13.patientclient.models.ServicePack;
-import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.HospitalService;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.ServicePackService;
 
 import java.util.ArrayList;
@@ -67,9 +66,9 @@ public class BookAppointmentDashboard extends AppCompatActivity {
 
     private void callApiAndRender(ServicePackAdapter servicePackAdapter) {
         ServicePackService service = new ServicePackService();
-        service.get(3, new OnResponse<ServicePack[]>() {
+        service.get(3, new OnSuccessResponse<ServicePack[]>() {
             @Override
-            public void onRequestSuccess(ServicePack[] list) {
+            public void onSuccess(ServicePack[] list) {
                 //Rendering data as soon as it received
                 servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
             }

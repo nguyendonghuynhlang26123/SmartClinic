@@ -1,28 +1,20 @@
 package com.team13.patientclient.activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.DrugsDisplayFragment;
-import com.team13.patientclient.activities.fragments.ProgressFragment;
-import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.CategoryService;
 import com.team13.patientclient.repository.services.DrugService;
 
@@ -71,10 +63,10 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
 
     private void renderDrugCategories(){
         CategoryService service = new CategoryService();
-        service.getCategoryList(new OnResponse<Category[]>() {
+        service.getCategoryList(new OnSuccessResponse<Category[]>() {
             @SuppressLint("NewApi")
             @Override
-            public void onRequestSuccess(Category[] list) {
+            public void onSuccess(Category[] list) {
                 drugCategories = new ArrayList<>(Arrays.asList(list));
 
                 Fragment fragment = new DrugsDisplayFragment();

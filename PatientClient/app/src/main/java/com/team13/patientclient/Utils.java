@@ -20,6 +20,8 @@ public class Utils {
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd-MM-yyyy";
 
+    public static final String NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID";
+
     public static boolean checkValidPatientName(String text) {
         return text.length() < NAME_LENGTH_LIMIT;
     }

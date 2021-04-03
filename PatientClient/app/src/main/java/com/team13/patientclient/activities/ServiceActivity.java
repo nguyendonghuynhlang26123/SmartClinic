@@ -3,8 +3,6 @@ package com.team13.patientclient.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
@@ -12,9 +10,8 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.ServiceDisplayFragment;
-import com.team13.patientclient.adapters.ServicePackAdapter;
 import com.team13.patientclient.models.ServicePack;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.ServicePackService;
 
 import java.util.ArrayList;
@@ -40,9 +37,9 @@ public class ServiceActivity extends AppCompatActivity implements ServiceDisplay
     private void callApiAndRender() {
         ServicePackService service = new ServicePackService();
         loadFragment(new ProgressFragment());
-        service.get(new OnResponse<ServicePack[]>() {
+        service.get(new OnSuccessResponse<ServicePack[]>() {
             @Override
-            public void onRequestSuccess(ServicePack[] list) {
+            public void onSuccess(ServicePack[] list) {
                 //Rendering data as soon as it received
 //                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
                 data = new ArrayList<>(Arrays.asList(list));

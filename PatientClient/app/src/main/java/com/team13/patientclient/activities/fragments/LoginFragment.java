@@ -6,30 +6,25 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.Gson;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
 import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.AuthService;
-
-import org.json.JSONObject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,13 +106,21 @@ public class LoginFragment extends Fragment {
     private void verifyAndProcess(String phone, String password, View view) {
         progressBar.setVisibility(View.VISIBLE);
         AuthService auth = new AuthService();
-        auth.login("+84" + phone, password, new OnResponse<AccountModel>(getContext()) {
+        auth.login("+84" + phone, password, new OnResponse<AccountModel>() {
             @Override
             public void onRequestSuccess(AccountModel account) {
                 Store.get_instance().setUserAccount(account);
                 progressBar.setVisibility(View.INVISIBLE);
                 Intent i = new Intent(view.getContext(), MainActivity.class);
                 startActivity(i);
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                progressBar.setVisibility(View.INVISIBLE);
+                TextView textError = view.findViewById(R.id.text_error);
+                textError.setText(response.getMessage());
+                textError.setVisibility(View.VISIBLE);
             }
         });
     }

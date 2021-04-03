@@ -8,19 +8,15 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.CircularImageView;
@@ -28,9 +24,8 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.ImagePickingActivity;
-import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.models.PatientModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.PatientService;
 
 /**
@@ -158,9 +153,9 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
 
     private void callPutApi(PatientModel userProfile, PatientModel updatedModel) {
         PatientService patientService = new PatientService();
-        patientService.updatePatientProfile(userProfile.getId(), updatedModel, new OnResponse<Void>() {
+        patientService.updatePatientProfile(userProfile.getId(), updatedModel, new OnSuccessResponse<Void>() {
             @Override
-            public void onRequestSuccess(Void response) {
+            public void onSuccess(Void response) {
                 Toast.makeText(getContext(),"Update successfully", Toast.LENGTH_SHORT).show();
 
                 userProfile.setName(updatedModel.getName());
