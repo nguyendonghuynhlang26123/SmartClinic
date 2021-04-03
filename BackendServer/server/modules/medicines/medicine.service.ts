@@ -17,8 +17,9 @@ export class MedicineService {
     }
   }
 
-  async getAllMedicine(query?) {
+  async getAllMedicine(query) {
     let selection = {};
+    let filter = {};
     if (query?.select) {
       if (query.select instanceof Array) {
         for (const property of query.select) {
@@ -26,10 +27,11 @@ export class MedicineService {
         }
       } else selection = { [query.select]: 1 };
     }
-
+    if (query?.category) filter['category'] = query.category;
     const medicines = await medicineModel.find(
       {
         medicine_name: new RegExp(query.search, 'i'),
+        ...filter,
       },
       selection,
       {

@@ -1,11 +1,6 @@
 package com.team13.patientclient;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
-import com.team13.patientclient.activities.ErrorResponse;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -17,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import retrofit2.Response;
 
 public class Utils {
     public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";

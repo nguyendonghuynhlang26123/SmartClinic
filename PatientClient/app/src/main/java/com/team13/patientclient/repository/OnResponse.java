@@ -5,14 +5,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.team13.patientclient.activities.ErrorResponse;
+import com.team13.patientclient.models.ErrorResponse;
 
 import java.io.IOException;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 
 public abstract class OnResponse<T> implements Callback<T> {

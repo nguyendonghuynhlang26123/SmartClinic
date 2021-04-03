@@ -23,6 +23,7 @@ import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.CategoryService;
 import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
@@ -51,27 +52,9 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
             }
             return false;
         });
-        renderingMedicineList();
+        renderDrugCategories();
     }
 
-    private void renderingMedicineList() {
-        drugService = new DrugService();
-        loadFragment(new ProgressFragment());
-        // Fix data later //
-        drugService.getMinimizedData(new OnResponse<DrugModel[]>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onRequestSuccess(DrugModel[] list) {
-            drugCategories = getEmptyCategory();
-            drugCategories.forEach(category -> {
-                category.setDrugList(list);
-            });
-            Fragment fragment = new DrugsDisplayFragment();
-            loadFragment(fragment);
-            }
-        });
-
-    }
 
     @Override
     public ArrayList<Category> getDisplayData() {
@@ -86,11 +69,17 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         transaction.commit();
     }
 
-    private ArrayList<Category> getEmptyCategory(){
-        ArrayList<Category> categories = new ArrayList<>(3);
-        categories.add(new Category("Category 1"));
-        categories.add(new Category("Category 2"));
-        categories.add(new Category("Category 3"));
-        return categories;
+    private void renderDrugCategories(){
+        CategoryService service = new CategoryService();
+        service.getCategoryList(new OnResponse<Category[]>() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onRequestSuccess(Category[] list) {
+                drugCategories = new ArrayList<>(Arrays.asList(list));
+
+                Fragment fragment = new DrugsDisplayFragment();
+                loadFragment(fragment);
+            }
+        });
     }
 }

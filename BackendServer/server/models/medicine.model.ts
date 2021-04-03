@@ -14,7 +14,7 @@ const MedicineSchema = new Schema(
     user_manual: { type: String, default: '' },
     ingredient: { type: String, default: '' },
     preservation: { type: String, default: '' },
-    category: [{ type: mongoose.Schema.Types.ObjectId, ref: 'categories' }],
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'categories' },
     created_at: { type: Number },
     updated_at: { type: Number },
   },

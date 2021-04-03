@@ -51,7 +51,7 @@ public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapte
         String url = drug.getThumbnail();
         if (!url.isEmpty()) Picasso.get().load(url).into((ImageView)view.findViewById(R.id.pharmacy_item_img));
         TextView name = view.findViewById(R.id.pharmacy_item_name);
-        name.setText(drug.getName());
+        if (!drug.getName().isEmpty()) name.setText(drug.getName());
         view.setOnClickListener(v->{
             Intent i = new Intent(context, DrugActivity.class);
             i.putExtra("id", drug.getId());

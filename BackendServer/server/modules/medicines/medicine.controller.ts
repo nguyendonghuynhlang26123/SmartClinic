@@ -4,9 +4,12 @@ const router = express.Router();
 
 const medicineService: MedicineService = new MedicineService();
 
-router.get('/', async (req, res) => {
+router.get('/category/{category_id}', async (req, res) => {
   try {
-    const medicines = await medicineService.getAllMedicine(req.query);
+    const medicines = await medicineService.getMedicinesByCategory(
+      req.params.category_id,
+      req.query
+    );
     res.json(medicines);
   } catch (err) {
     console.log(err);
@@ -14,12 +17,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/category/{category_id}', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const medicines = await medicineService.getMedicinesByCategory(
-      req.params.category_id,
-      req.query
-    );
+    const medicines = await medicineService.getAllMedicine(req.query);
     res.json(medicines);
   } catch (err) {
     console.log(err);

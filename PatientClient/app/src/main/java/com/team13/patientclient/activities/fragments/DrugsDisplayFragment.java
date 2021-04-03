@@ -20,7 +20,10 @@ import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.services.DrugService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -83,16 +86,46 @@ public class DrugsDisplayFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         data.forEach(category -> {
             View categoryView = LayoutInflater.from(view.getContext()).inflate(R.layout.drug_category_list,null);
+            //Displaying name
             categoryView.setLayoutParams(params);
-            PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), category.getDrugList());
-            RecyclerView drugList = categoryView.findViewById(R.id.category_item_list);
-            drugList.setAdapter(pharmacyItemAdapter);
-            drugList.setLayoutManager(new LinearLayoutManager(categoryView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             TextView categoryName = categoryView.findViewById(R.id.category_name);
             categoryName.setText(category.getName());
+
+            //Rendering dumb data first while waiting for response
+            RecyclerView drugList = categoryView.findViewById(R.id.category_item_list);
+            PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), emptyDrugList());
+            drugList.setAdapter(pharmacyItemAdapter);
+            drugList.setLayoutManager(new LinearLayoutManager(categoryView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+            //Call api asynchronously
+            callApiAndRender(pharmacyItemAdapter, categoryView, category.getId());
+
+            //Add this view to layout
             categoryListLayout.addView(categoryView);
         });
         return view;
+    }
+
+    ArrayList<DrugModel> emptyDrugList() {
+        ArrayList<DrugModel> result = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            result.add(new DrugModel());
+        }
+        return result;
+    }
+
+    void callApiAndRender(PharmacyItemAdapter adapter, View categoryView, String categoryId){
+        DrugService service = new DrugService();
+        service.getMinimizedData(categoryId, new OnResponse<DrugModel[]>() {
+            @Override
+            public void onRequestSuccess(DrugModel[] list) {
+                adapter.setData(new ArrayList<>(Arrays.asList(list)));
+                if (list.length > 3) {
+                    categoryView.findViewById(R.id.category_detail).setVisibility(View.VISIBLE);
+                    //TODO: START NEW ITEM LIST ACTIVITY
+                }
+            }
+        });
     }
 
     public interface DrugDisplayListener{

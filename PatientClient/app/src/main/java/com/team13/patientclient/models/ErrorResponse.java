@@ -1,4 +1,4 @@
-package com.team13.patientclient.activities;
+package com.team13.patientclient.models;
 
 import com.google.gson.annotations.SerializedName;
 

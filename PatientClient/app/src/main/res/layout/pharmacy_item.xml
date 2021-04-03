@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/pharmacy_item_name"
-            android:text="drug"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
+            android:text=""
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
     </LinearLayout>

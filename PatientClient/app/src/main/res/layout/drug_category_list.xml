@@ -31,7 +31,8 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textAllCaps="false"
             android:minHeight="0dp"
-            android:minWidth="0dp"/>
+            android:minWidth="0dp"
+            android:visibility="invisible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

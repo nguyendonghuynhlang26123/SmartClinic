@@ -10,5 +10,7 @@ public class DrugService {
 
     public void getMinimizedData(OnResponse<DrugModel[]> callback) { api.get().enqueue(callback);}
 
+    public void getMinimizedData(String categoryId, OnResponse<DrugModel[]> callback) { api.getByCategory(categoryId).enqueue(callback);}
+
     public void getDrugById(String id, OnResponse<DrugModel> callback) {api.getById(id).enqueue(callback);}
 }
