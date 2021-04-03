@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.BlogItemAdapter;
+import com.team13.patientclient.models.AnonymousQuestion;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +31,7 @@ public class BlogFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    ArrayList<AnonymousQuestion> questions= getEmptyQuestion();
     public BlogFragment() {
         // Required empty public constructor
     }
@@ -65,10 +68,20 @@ public class BlogFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blog, container, false);
-        BlogItemAdapter blogItemAdapter = new BlogItemAdapter(view.getContext());
+        BlogItemAdapter blogItemAdapter = new BlogItemAdapter(view.getContext(),questions);
         RecyclerView recyclerView = view.findViewById(R.id.blog_list);
         recyclerView.setAdapter(blogItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         return view;
+    }
+    private ArrayList<AnonymousQuestion> getEmptyQuestion(){
+        ArrayList<AnonymousQuestion> questions = new ArrayList<>(10);
+        questions.add(new AnonymousQuestion("Why i am so beautiful","1","2/4/2021"));
+        questions.add(new AnonymousQuestion("Why i am so beautiful","2","2/4/2021"));
+        questions.add(new AnonymousQuestion("Why i am so beautiful","3","2/4/2021"));
+        questions.add(new AnonymousQuestion("Why i am so beautiful","4","2/4/2021"));
+        questions.add(new AnonymousQuestion("Why i am so beautiful","5","2/4/2021"));
+        questions.add(new AnonymousQuestion("Why i am so beautiful","6","2/4/2021"));
+        return questions;
     }
 }
