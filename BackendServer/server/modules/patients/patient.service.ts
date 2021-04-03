@@ -77,7 +77,5 @@ export class PatientService {
     const appointment = await appointmentModel.create(data);
     if (!appointment)
       throw new Error('Error found when creating an appointment');
-
-    const 
   }
 }

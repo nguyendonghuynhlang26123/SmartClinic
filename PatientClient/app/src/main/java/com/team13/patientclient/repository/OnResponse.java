@@ -31,6 +31,7 @@ public abstract class OnResponse<T> implements Callback<T> {
         else{
             ErrorResponse errorResponse = null;
             try {
+                Log.d("LONG_DEBUG", new Gson().toJson(response.errorBody()));
                 errorResponse = new Gson().fromJson(
                         response.errorBody().string(),
                         ErrorResponse.class);
