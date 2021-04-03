@@ -1,6 +1,8 @@
 package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,6 +10,8 @@ import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.ProgressFragment;
+import com.team13.patientclient.activities.fragments.ServiceDisplayFragment;
 import com.team13.patientclient.adapters.ServicePackAdapter;
 import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnResponse;
@@ -16,8 +20,8 @@ import com.team13.patientclient.repository.services.ServicePackService;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ServiceActivity extends AppCompatActivity {
-
+public class ServiceActivity extends AppCompatActivity implements ServiceDisplayFragment.ServiceDisplayListener {
+    ArrayList<ServicePack> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,23 +29,24 @@ public class ServiceActivity extends AppCompatActivity {
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
 
-        RecyclerView serviceList = findViewById(R.id.service_list);
-
         //rendering dumb data while waiting for response from server
-        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(10));
-        serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        serviceList.setAdapter(servicePackAdapter);
+//        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(10));
+//        serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        serviceList.setAdapter(servicePackAdapter);
 
-        callApiAndRender(servicePackAdapter);
+        callApiAndRender();
     }
 
-    private void callApiAndRender(ServicePackAdapter servicePackAdapter) {
+    private void callApiAndRender() {
         ServicePackService service = new ServicePackService();
+        loadFragment(new ProgressFragment());
         service.get(new OnResponse<ServicePack[]>() {
             @Override
             public void onRequestSuccess(ServicePack[] list) {
                 //Rendering data as soon as it received
-                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+//                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+                data = new ArrayList<>(Arrays.asList(list));
+                loadFragment(new ServiceDisplayFragment());
             }
         });
     }
@@ -52,5 +57,18 @@ public class ServiceActivity extends AppCompatActivity {
             servicePacks.add(new ServicePack());
         }
         return servicePacks;
+    }
+
+    @Override
+    public ArrayList<ServicePack> getDisplayService() {
+        return data;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

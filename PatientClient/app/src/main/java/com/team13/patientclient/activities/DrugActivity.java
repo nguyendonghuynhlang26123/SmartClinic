@@ -5,6 +5,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,11 +27,6 @@ import com.team13.patientclient.repository.services.DrugService;
 public class DrugActivity extends AppCompatActivity {
     MaterialToolbar topAppBar;
     DrugModel medicine;
-    ImageButton descriptionExpand;
-    ImageButton ingredientExpand;
-    ImageButton manualExpand;
-    ImageButton preserveExpand;
-    ImageButton expanded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,62 +36,10 @@ public class DrugActivity extends AppCompatActivity {
 
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
-        descriptionExpand = findViewById(R.id.description_expand);
-        descriptionExpand.setOnClickListener(v->{
-            TextView description = findViewById(R.id.description_content);
-            description.setText(medicine.getDescription());
-            description.setVisibility(View.VISIBLE);
-            descriptionExpand.setVisibility(View.GONE);
-            expanded = findViewById(R.id.description_expanded);
-            expanded.setVisibility(View.VISIBLE);
-            expanded.setOnClickListener(l->{
-                description.setVisibility(View.GONE);
-                expanded.setVisibility(View.GONE);
-                descriptionExpand.setVisibility(View.VISIBLE);
-            });
-        });
-        manualExpand = findViewById(R.id.manual_expand);
-        manualExpand.setOnClickListener(v->{
-            TextView manual = findViewById(R.id.manual_content);
-            manual.setText(medicine.getUserManual());
-            manual.setVisibility(View.VISIBLE);
-            manualExpand.setVisibility(View.GONE);
-            expanded = findViewById(R.id.manual_expanded);
-            expanded.setVisibility(View.VISIBLE);
-            expanded.setOnClickListener(l->{
-                manual.setVisibility(View.GONE);
-                expanded.setVisibility(View.GONE);
-                manualExpand.setVisibility(View.VISIBLE);
-            });
-        });
-        ingredientExpand = findViewById(R.id.ingredient_expand);
-        ingredientExpand.setOnClickListener(v->{
-            TextView ingredient = findViewById(R.id.ingredient_content);
-            ingredient.setText(medicine.getIngredients());
-            ingredient.setVisibility(View.VISIBLE);
-            ingredientExpand.setVisibility(View.GONE);
-            expanded = findViewById(R.id.ingredient_expanded);
-            expanded.setVisibility(View.VISIBLE);
-            expanded.setOnClickListener(l->{
-                ingredient.setVisibility(View.GONE);
-                expanded.setVisibility(View.GONE);
-                ingredientExpand.setVisibility(View.VISIBLE);
-            });
-        });
-        preserveExpand = findViewById(R.id.preservation_expand);
-        preserveExpand.setOnClickListener(v->{
-            TextView preservation = findViewById(R.id.preservation_content);
-            preservation.setText(medicine.getPreservation());
-            preservation.setVisibility(View.VISIBLE);
-            preserveExpand.setVisibility(View.GONE);
-            expanded = findViewById(R.id.preservation_expanded);
-            expanded.setVisibility(View.VISIBLE);
-            expanded.setOnClickListener(l->{
-                preservation.setVisibility(View.GONE);
-                expanded.setVisibility(View.GONE);
-                preserveExpand.setVisibility(View.VISIBLE);
-            });
-        });
+        setExpand(R.id.description_expand, R.id.description_collapse, R.id.description_content);
+        setExpand(R.id.ingredient_expand, R.id.ingredient_collapse, R.id.ingredient_content);
+        setExpand(R.id.manual_expand, R.id.manual_collapse, R.id.manual_content);
+        setExpand(R.id.preservation_expand, R.id.preservation_collapse, R.id.preservation_content);
         renderingData(id);
     }
 
@@ -131,5 +76,36 @@ public class DrugActivity extends AppCompatActivity {
         transaction.detach(fragment);
         transaction.remove(fragment);
         transaction.commit();
+    }
+    @SuppressLint("NonConstantResourceId")
+    private void setExpand(int expandId, int collapseId, int contentId){
+        ImageButton buttonExpand = findViewById(expandId);
+        buttonExpand.setOnClickListener(v->{
+            TextView contentView = findViewById(contentId);
+            switch (expandId){
+                case R.id.description_expand:
+                    contentView.setText(medicine.getDescription());
+                    break;
+                case R.id.ingredient_expand:
+                    contentView.setText(medicine.getIngredients());
+                    break;
+                case R.id.manual_expand:
+                    contentView.setText(medicine.getUserManual());
+                    break;
+                case R.id.preservation_expand:
+                    contentView.setText(medicine.getPreservation());
+                    break;
+            }
+
+            contentView.setVisibility(View.VISIBLE);
+            buttonExpand.setVisibility(View.GONE);
+            ImageButton buttonCollapse = findViewById(collapseId);
+            buttonCollapse.setVisibility(View.VISIBLE);
+            buttonCollapse.setOnClickListener(l->{
+                contentView.setVisibility(View.GONE);
+                buttonCollapse.setVisibility(View.GONE);
+                buttonExpand.setVisibility(View.VISIBLE);
+            });
+        });
     }
 }
