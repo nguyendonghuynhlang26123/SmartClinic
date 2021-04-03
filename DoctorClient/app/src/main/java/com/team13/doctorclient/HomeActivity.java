@@ -29,6 +29,14 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new ScheduleFragment();
                     loadFragment(fragment);
                     return true;
+                case R.id.medical_record:
+                    fragment= new MedicalRecordFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.profile:
+                    fragment= new DoctorProfileFragment();
+                    loadFragment(fragment);
+                    return true;
                 default:
                     return false;
             }
