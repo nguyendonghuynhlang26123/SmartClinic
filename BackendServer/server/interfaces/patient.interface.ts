@@ -9,6 +9,7 @@ export class PatientInterface extends BaseInterface {
   medical_history?: {
     appointment: string;
     prescription: string;
+    status: string;
   }[];
   token: string;
 }

@@ -14,6 +14,6 @@ public interface DrugApi {
     @GET("/medicines/{id}")
     Call<DrugModel> getById(@Path("id") String id);
 
-    @GET("/medicines?select=thumbnail&select=medicine_name")
+    @GET("/medicines?select=thumbnail&select=medicine_name&limit=4")
     Call<DrugModel[]> getByCategory(@Query("category") String categoryId);
 }

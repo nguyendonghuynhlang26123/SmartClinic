@@ -1,5 +1,10 @@
 import { AppointmentInterface, PatientInterface } from '../../interfaces';
-import { doctorModel, patientModel } from '../../models';
+import {
+  doctorModel,
+  patientModel,
+  medicalServiceModel,
+  appointmentModel,
+} from '../../models';
 import { UserService } from '../users/user.service';
 
 export class PatientService {
@@ -65,5 +70,14 @@ export class PatientService {
 
     const doctor = await doctorModel.findOne({ _id: data.doctor });
     if (!doctor) throw new Error('Not found doctor');
+
+    const service = await medicalServiceModel.findOne({ _id: data.service });
+    if (!service) throw new Error('Not found Medical Service');
+
+    const appointment = await appointmentModel.create(data);
+    if (!appointment)
+      throw new Error('Error found when creating an appointment');
+
+    const 
   }
 }
