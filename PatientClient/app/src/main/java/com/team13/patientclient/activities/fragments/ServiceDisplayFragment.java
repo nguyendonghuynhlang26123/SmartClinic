@@ -75,6 +75,21 @@ public class ServiceDisplayFragment extends Fragment {
         ServicePackAdapter adapter = new ServicePackAdapter(view.getContext(), servicePacks);
         serviceList.setAdapter(adapter);
         serviceList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        serviceList.setOnFlingListener(new RecyclerView.OnFlingListener() {
+            private static final int SWIPE_VELOCITY_THRESHOLD = 2000;
+            @Override
+            public boolean onFling(int velocityX, int velocityY) {
+                if(Math.abs(velocityY)>SWIPE_VELOCITY_THRESHOLD){
+                    if(velocityY<0){
+                        // Swipe down
+                    } else {
+                        // Swipe up
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
         return view;
     }
 

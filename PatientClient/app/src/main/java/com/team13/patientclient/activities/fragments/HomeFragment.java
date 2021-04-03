@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager;
     BannerAdapter bannerAdapter;
     DotsIndicator dotsIndicator;
-    RecyclerView departmentList;
     RecyclerView pharmacyList;
 
     public HomeFragment() {
@@ -108,7 +107,6 @@ public class HomeFragment extends Fragment {
         });
 
         view.findViewById(R.id.appointment_shortcut).setOnClickListener(v->{
-//            listener.goToAppoinment();
             Intent i = new Intent(view.getContext(), BookAppointmentDashboard.class);
             startActivity(i);
         });
@@ -148,7 +146,6 @@ public class HomeFragment extends Fragment {
 
 
     public interface HomeFragmentListener{
-        void goToAppoinment();
         void gotoBlog();
    }
 

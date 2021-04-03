@@ -72,4 +72,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="OutlinedCard" parent="Widget.MaterialComponents.CardView">
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
 </resources>
