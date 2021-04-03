@@ -1,11 +1,9 @@
 package com.team13.patientclient.repository.services;
 
 import com.team13.patientclient.models.Appointment;
-import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.RetrofitSingleton;
 import com.team13.patientclient.repository.apis.AppointmentApi;
 
-import retrofit2.Call;
 import retrofit2.Callback;
 
 public class AppointmentService {

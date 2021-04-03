@@ -20,7 +20,7 @@ import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.LoginActivity;
 import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.models.AccountModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.AuthService;
 
 
@@ -99,9 +99,9 @@ public class SignupFragment extends Fragment {
             }
 
             AuthService authService = new AuthService();
-            authService.register(phone, password, name, new OnResponse<AccountModel>() {
+            authService.register(phone, password, name, new OnSuccessResponse<AccountModel>() {
                 @Override
-                public void onRequestSuccess(AccountModel account) {
+                public void onSuccess(AccountModel account) {
                     Store.get_instance().setUserAccount(account);
 
                     Intent i = new Intent(view.getContext(), MainActivity.class);

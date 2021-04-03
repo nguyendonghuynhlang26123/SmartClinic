@@ -1,16 +1,13 @@
 package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +18,7 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.models.DrugModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.DrugService;
 
 public class DrugActivity extends AppCompatActivity {
@@ -47,9 +44,9 @@ public class DrugActivity extends AppCompatActivity {
         DrugService service = new DrugService();
         Fragment fragment = new ProgressFragment();
         loadFragment(fragment);
-        service.getDrugById(id, new OnResponse<DrugModel>() {
+        service.getDrugById(id, new OnSuccessResponse<DrugModel>() {
             @Override
-            public void onRequestSuccess(DrugModel drug) {
+            public void onSuccess(DrugModel drug) {
                 medicine = drug;
                 ((TextView) findViewById(R.id.drug_name)).setText(drug.getName());
                 ((TextView) findViewById(R.id.drug_brand)).setText(drug.getBrand());

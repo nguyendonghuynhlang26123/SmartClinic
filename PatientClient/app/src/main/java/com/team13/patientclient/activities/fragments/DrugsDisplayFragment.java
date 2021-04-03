@@ -16,14 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
-import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.DrugService;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -116,9 +114,9 @@ public class DrugsDisplayFragment extends Fragment {
 
     void callApiAndRender(PharmacyItemAdapter adapter, View categoryView, String categoryId){
         DrugService service = new DrugService();
-        service.getMinimizedData(categoryId, new OnResponse<DrugModel[]>() {
+        service.getMinimizedData(categoryId, new OnSuccessResponse<DrugModel[]>() {
             @Override
-            public void onRequestSuccess(DrugModel[] list) {
+            public void onSuccess(DrugModel[] list) {
                 adapter.setData(new ArrayList<>(Arrays.asList(list)));
                 if (list.length > 3) {
                     categoryView.findViewById(R.id.category_detail).setVisibility(View.VISIBLE);
