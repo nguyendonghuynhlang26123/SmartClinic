@@ -13,6 +13,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentConfirmFragment;
+import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.ReasonPickFragment;
 import com.team13.patientclient.activities.fragments.SchedulePickFragment;
 import com.team13.patientclient.models.Appointment;
@@ -89,6 +90,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         String patientId = Store.get_instance().getUserAccount().getUserInfor().getId();
         Appointment appointment = new Appointment(patientId, serviceId, reason, date, time);
         AppointmentService service = new AppointmentService();
+
+        Fragment fragment = new ProgressFragment();
+        loadFragment(fragment);
 
         service.bookAnAppointment(appointment, new OnResponse<Appointment>() {
             @Override

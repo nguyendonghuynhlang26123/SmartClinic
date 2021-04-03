@@ -28,10 +28,15 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:medicine_id', async (req, res) => {
-  const medicine = await medicineService.getMedicineById(
-    req.params.medicine_id
-  );
-  res.json(medicine);
+  try {
+    const medicine = await medicineService.getMedicineById(
+      req.params.medicine_id
+    );
+    res.json(medicine);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'Bad request! ' + err.message });
+  }
 });
 
 router.post('/', async (req, res) => {

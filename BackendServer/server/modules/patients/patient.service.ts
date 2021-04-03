@@ -1,5 +1,10 @@
 import { AppointmentInterface, PatientInterface } from '../../interfaces';
-import { doctorModel, patientModel } from '../../models';
+import {
+  doctorModel,
+  patientModel,
+  medicalServiceModel,
+  appointmentModel,
+} from '../../models';
 import { UserService } from '../users/user.service';
 
 export class PatientService {
@@ -60,10 +65,5 @@ export class PatientService {
   }
 
   async bookAnAppointment(data: AppointmentInterface) {
-    const patient = await patientModel.findOne({ _id: data.patient });
-    if (!patient) throw new Error('Not Found Patient.');
-
-    const doctor = await doctorModel.findOne({ _id: data.doctor });
-    if (!doctor) throw new Error('Not found doctor');
-  }
+ }
 }

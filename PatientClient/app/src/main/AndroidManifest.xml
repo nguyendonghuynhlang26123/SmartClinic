@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
         <activity android:name=".activities.BookAppointmentActivity"></activity>
         <activity android:name=".activities.BookAppointmentDashboard" />
         <activity android:name=".activities.Cart" />

@@ -1,5 +1,10 @@
 import { AppointmentInterface } from '../../interfaces';
-import { appointmentModel } from '../../models';
+import {
+  appointmentModel,
+  patientModel,
+  doctorModel,
+  medicalServiceModel,
+} from '../../models';
 
 export class AppointmentService {
   async getAppointmentById(appointmentId: string) {
@@ -40,7 +45,33 @@ export class AppointmentService {
     delete data._id;
     delete data.created_at;
     delete data.updated_at;
+    if (!data.time || !data.date)
+      throw new Error('Bad request! Time & date is required');
+
+    const patient = await patientModel.findOne({ _id: data.patient });
+    if (!patient) throw new Error('Not Found Patient.');
+
+    const doctor = await doctorModel.findOne({ _id: data.doctor });
+    if (!doctor) throw new Error('Not found doctor');
+
+    const service = await medicalServiceModel.findOne({ _id: data.service });
+    if (!service) throw new Error('Not found Medical Service');
+
+    const checkAppointment = await appointmentModel.findOne({
+      doctor: data.doctor,
+      service: data.service,
+      time: data.time,
+      date: data.date,
+    });
+    if (checkAppointment)
+      throw new Error(
+        'This doctor has another appointment at this time! Please try again'
+      );
+
     const appointment = await appointmentModel.create(data);
+    if (!appointment)
+      throw new Error('Error found when creating an appointment');
+
     return appointment;
   }
 
