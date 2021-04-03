@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="Schedule"
+        android:contentDescription="Schedule"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/request"
+        android:icon="@drawable/ic_request"
+        android:title="Request"
+        android:contentDescription="Request"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/blog"
+        android:icon="@drawable/ic_message"
+        android:title="Question"
+        android:contentDescription="Message"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"
+        android:contentDescription="Profile"
+        app:showAsAction="always"
+        />
+</menu>
