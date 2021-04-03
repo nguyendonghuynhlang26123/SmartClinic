@@ -65,17 +65,5 @@ export class PatientService {
   }
 
   async bookAnAppointment(data: AppointmentInterface) {
-    const patient = await patientModel.findOne({ _id: data.patient });
-    if (!patient) throw new Error('Not Found Patient.');
-
-    const doctor = await doctorModel.findOne({ _id: data.doctor });
-    if (!doctor) throw new Error('Not found doctor');
-
-    const service = await medicalServiceModel.findOne({ _id: data.service });
-    if (!service) throw new Error('Not found Medical Service');
-
-    const appointment = await appointmentModel.create(data);
-    if (!appointment)
-      throw new Error('Error found when creating an appointment');
-  }
+ }
 }
