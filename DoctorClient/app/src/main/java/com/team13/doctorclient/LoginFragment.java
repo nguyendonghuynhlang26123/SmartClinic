@@ -77,7 +77,7 @@ public class LoginFragment extends Fragment {
         });
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), MainActivity.class);
+            Intent i = new Intent(view.getContext(), HomeActivity.class);
             startActivity(i);
         });
         return view;

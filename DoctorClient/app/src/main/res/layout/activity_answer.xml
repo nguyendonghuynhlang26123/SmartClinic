@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="Question"
+        app:titleTextColor="@color/black"
+        app:menu="@menu/question_top_app_bar"
+        app:navigationIcon="@drawable/ic_back"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:background="@color/white" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AnswerActivity"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="64dp">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/BottomLeftNoCornerCard"
+            android:backgroundTint="@color/teal_700"
+            android:layout_marginVertical="10dp"
+            android:elevation="16dp"
+            android:id="@+id/question_card"
+            android:layout_marginRight="48dp"
+            >
+
+            <TextView
+                android:id="@+id/answer_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginVertical="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_card"
+            android:id="@+id/answer_list"
+            android:layout_marginVertical="10dp"
+            ></androidx.recyclerview.widget.RecyclerView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="answer question"
+            android:id="@+id/answer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="48dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginVertical="10dp"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_send"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="@color/teal_700"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
