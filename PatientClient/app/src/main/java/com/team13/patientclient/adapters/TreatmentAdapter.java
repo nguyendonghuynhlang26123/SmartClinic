@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.TreatmentActivity;
+import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.models.Treatment;
 
 import java.util.ArrayList;
@@ -19,10 +22,11 @@ import java.util.ArrayList;
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.ViewHolder> {
     ArrayList<Treatment> treatments;
     final Context context;
-
-    public TreatmentAdapter(Context context, ArrayList<Treatment> treatments) {
+    TreatmentItemListener listener;
+    public TreatmentAdapter(Context context, TreatmentItemListener listener, ArrayList<Treatment> treatments) {
         this.context = context;
         this.treatments = treatments;
+        this.listener = listener;
     }
 
     @NonNull
@@ -54,6 +58,12 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             i.putExtra("prescription", treatment);
             context.startActivity(i);
         });
+        if(treatment.getPrescription()!=null){
+            ImageButton prescription = view.findViewById(R.id.treatment_prescription);
+            prescription.setVisibility(View.VISIBLE);
+            prescription.setOnClickListener(v-> listener.onItemClick(treatment.getPrescription()));
+        }
+
     }
 
     @Override
@@ -66,5 +76,8 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
+    }
+    public interface TreatmentItemListener{
+        void onItemClick(Treatment.Prescription prescription);
     }
 }

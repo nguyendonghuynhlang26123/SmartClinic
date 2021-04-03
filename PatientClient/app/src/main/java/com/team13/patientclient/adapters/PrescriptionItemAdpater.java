@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +34,14 @@ public class PrescriptionItemAdpater extends RecyclerView.Adapter<PrescriptionIt
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
         DrugDetail drug = drugs.get(position);
-
+        TextView number = view.findViewById(R.id.prescription_item_number);
+        number.setText(String.valueOf(position+1));
+        TextView name = view.findViewById(R.id.prescription_item_name);
+        name.setText(drug.getDrugModel().getName());
+        TextView quantity = view.findViewById(R.id.prescription_item_quantity);
+        quantity.setText(String.valueOf(drug.getQuantity()));
+        TextView note = view.findViewById(R.id.prescription_item_note);
+        note.setText(drug.getNote());
     }
 
     @Override

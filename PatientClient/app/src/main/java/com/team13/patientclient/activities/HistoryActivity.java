@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.adapters.TreatmentAdapter;
 import com.team13.patientclient.models.DrugDetail;
 import com.team13.patientclient.models.DrugModel;
@@ -26,7 +27,10 @@ public class HistoryActivity extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v->finish());
         RecyclerView treatmentList = findViewById(R.id.treatment_list);
-        TreatmentAdapter adapter = new TreatmentAdapter(this, getEmptyTreatment());
+        TreatmentAdapter adapter = new TreatmentAdapter(this, prescription -> {
+            PrescriptionFragment fragment = PrescriptionFragment.newInstance(prescription);
+            fragment.show(getSupportFragmentManager(),fragment.getTag());
+        }, getEmptyTreatment());
         treatmentList.setAdapter(adapter);
         treatmentList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
