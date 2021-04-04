@@ -6,19 +6,27 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.gson.Gson;
+import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentConfirmFragment;
+import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.ReasonPickFragment;
 import com.team13.patientclient.activities.fragments.SchedulePickFragment;
 import com.team13.patientclient.models.Appointment;
-import com.team13.patientclient.models.ServicePack;
+import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AppointmentService;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookAppointmentActivity extends AppCompatActivity implements
         SchedulePickFragment.SchedulePickFragmentListener,
@@ -90,10 +98,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         Appointment appointment = new Appointment(patientId, serviceId, reason, date, time);
         AppointmentService service = new AppointmentService();
 
+        Fragment fragment = new ProgressFragment();
+        loadFragment(fragment);
+
         service.bookAnAppointment(appointment, new OnResponse<Appointment>() {
             @Override
             public void onRequestSuccess(Appointment response) {
-                Toast.makeText(BookAppointmentActivity.this, "Book an appointment successfully!", Toast.LENGTH_SHORT).show();
+                NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
+                finish();
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book failed!! " + response.getMessage());
                 finish();
             }
         });

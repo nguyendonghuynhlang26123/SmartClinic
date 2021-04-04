@@ -13,11 +13,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public abstract class OnResponse<T> implements Callback<T> {
+public abstract class OnSuccessResponse<T> implements Callback<T> {
+
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.isSuccessful()){
-            Runnable runnable = () -> onRequestSuccess(response.body());
+            Runnable runnable = () -> onSuccess(response.body());
             runnable.run();
         }
         else{
@@ -29,11 +30,8 @@ public abstract class OnResponse<T> implements Callback<T> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            NotificationHandler.sendNotification(MyApp.getContext(), "Error", errorResponse.getMessage());
 
-            ErrorResponse finalErrorResponse = errorResponse;
-            Runnable runnable = () -> onRequestFailed(finalErrorResponse);
-            runnable.run();
+            NotificationHandler.sendNotification(MyApp.getContext(), "Error", errorResponse.getMessage());
         }
     }
 
@@ -42,6 +40,6 @@ public abstract class OnResponse<T> implements Callback<T> {
         Log.d("LONG_FAILURE", t.getMessage());
     }
 
-    public abstract void onRequestSuccess(T response);
-    public abstract void onRequestFailed(ErrorResponse response);
+    public abstract void onSuccess(T response);
+
 }

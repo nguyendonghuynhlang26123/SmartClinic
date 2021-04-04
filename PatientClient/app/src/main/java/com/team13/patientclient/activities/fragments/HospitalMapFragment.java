@@ -1,7 +1,5 @@
 package com.team13.patientclient.activities.fragments;
 
-import androidx.fragment.app.Fragment;
-
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,12 +9,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.models.HospitalModel;
-import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.services.HospitalService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HospitalMapFragment extends SupportMapFragment implements OnMapReadyCallback {
 

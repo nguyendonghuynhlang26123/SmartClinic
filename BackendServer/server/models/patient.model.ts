@@ -19,6 +19,11 @@ const PatientSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'prescriptions',
           },
+          status: {
+            type: String,
+            default: 'PENDING',
+            enum: ['PENDING', 'EXPIRED', 'PROCESSED', 'REEXAM'],
+          },
         },
       ],
       default: [],
