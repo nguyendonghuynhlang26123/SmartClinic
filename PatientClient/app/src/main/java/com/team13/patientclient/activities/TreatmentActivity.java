@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.models.Treatment;
@@ -28,10 +30,18 @@ public class TreatmentActivity extends AppCompatActivity {
         service.setText(treatment.getServicePack());
         TextView time = findViewById(R.id.treatment_time);
         time.setText(treatment.getTime()+", "+treatment.getDate());
-        findViewById(R.id.treatment_prescription).setOnClickListener(v->{
-            PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());
-            assert getSupportFragmentManager()!=null;
-            fragment.show(getSupportFragmentManager(),fragment.getTag());
-        });
+        TextView status = findViewById(R.id.treatment_status);
+        status.setText(treatment.getStatus());
+        ExtendedFloatingActionButton prescriptionButton = findViewById(R.id.treatment_prescription);
+        if(treatment.getPrescription()!=null){
+            prescriptionButton.setOnClickListener(v->{
+                PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());
+                assert getSupportFragmentManager()!=null;
+                fragment.show(getSupportFragmentManager(),fragment.getTag());
+            });
+        } else {
+            prescriptionButton.setVisibility(View.GONE);
+        }
+
     }
 }
