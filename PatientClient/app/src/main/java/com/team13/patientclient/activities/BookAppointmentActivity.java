@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -105,6 +107,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements
             @Override
             public void onRequestSuccess(Appointment response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
+                setAlarmForNotification();
                 finish();
             }
 
@@ -114,5 +117,15 @@ public class BookAppointmentActivity extends AppCompatActivity implements
                 finish();
             }
         });
+    }
+
+    private void setAlarmForNotification() {
+        Intent intent = new Intent(BookAppointmentActivity.this, AlarmReceiverActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        long curTime = System.currentTimeMillis();
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, curTime + 1000*10, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, curTime  + 10*1000, 1000 * 10, pendingIntent); // Millisec * Second * Minute
+
     }
 }
