@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.activities.HistoryActivity;
 import com.team13.patientclient.models.AccountModel;
 
 /**
@@ -77,6 +78,10 @@ public class ProfileFragment extends Fragment {
             ProfileEditFragment profileEditFragment = new ProfileEditFragment();
             assert getFragmentManager() != null;
             profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
+        });
+        view.findViewById(R.id.service_treatment).setOnClickListener(v->{
+            Intent i = new Intent(view.getContext(), HistoryActivity.class);
+            view.getContext().startActivity(i);
         });
 
         //Render view data

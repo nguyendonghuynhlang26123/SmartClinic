@@ -18,13 +18,13 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="64dp"
             android:src="@drawable/ic_add_appointment"
+            android:textAllCaps="false"
             android:id="@+id/add_appointment_button"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@color/purple_200">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/pink_primary"
                     style="@style/BottomCornerCard">
                     <TextView
                         android:layout_width="wrap_content"

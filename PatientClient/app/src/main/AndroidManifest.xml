@@ -14,11 +14,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <activity android:name=".activities.BookAppointmentActivity"></activity>
+
+        android:theme="@style/Theme.PatientClient"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.TreatmentActivity"/>
+        <activity android:name=".activities.HistoryActivity" />
+        <activity android:name=".activities.BookAppointmentActivity" />
         <activity android:name=".activities.BookAppointmentDashboard" />
         <activity android:name=".activities.Cart" />
         <activity android:name=".activities.DrugActivity" />

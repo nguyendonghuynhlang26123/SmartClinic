@@ -71,12 +71,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
     }
 
     @Override
-    public void goToAppoinment() {
-        loadFragment(new AppointmentFragment());
-        bottomNavigationView.setSelectedItemId(R.id.appointment);
-    }
-
-    @Override
     public void gotoBlog() {
         loadFragment(new BlogFragment());
         bottomNavigationView.setSelectedItemId(R.id.blog);

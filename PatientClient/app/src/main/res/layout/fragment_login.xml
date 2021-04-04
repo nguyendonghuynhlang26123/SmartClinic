@@ -50,7 +50,7 @@
             android:text="Forget password?"
             android:textSize="14sp"
             android:textAllCaps="false"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            style="@style/Widget.App.Button.TextButton"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.App.Button.TextButton"
                 android:text="Sign up"
                 android:textAllCaps="false"
                 android:paddingLeft="-12dp"

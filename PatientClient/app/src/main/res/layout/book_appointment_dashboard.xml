@@ -74,37 +74,36 @@
                     android:id="@+id/hospital_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="29 Phu Chau Street, Tam Phu Ward, Thu Duc City"
                     android:drawableLeft="@drawable/ic_location"
                     android:layout_marginTop="8dp"
-                    android:drawablePadding="4dp"
-                    android:scrollbarSize="14sp"/>
+                    android:drawablePadding="8dp"
+                    android:scrollbarSize="14sp"
+                    android:gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/hospital_working_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Everday, 07:00 - 22:00"
                     android:drawableLeft="@drawable/ic_appointment"
                     android:layout_marginTop="8dp"
-                    android:drawablePadding="4dp"
-                    android:scrollbarSize="14sp"/>
+                    android:drawablePadding="8dp"
+                    android:scrollbarSize="14sp"
+                    android:gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/hospital_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0966331010"
                     android:typeface="monospace"
                     android:layout_marginTop="8dp"
-                    android:drawableLeft="@drawable/ic_phone"
-                    android:drawablePadding="4dp"
-                    android:scrollbarSize="14sp"/>
+                    android:drawableLeft="@drawable/ic_local_phone"
+                    android:drawablePadding="8dp"
+                    android:scrollbarSize="14sp"
+                    android:gravity="center_vertical"/>
 
             </LinearLayout>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="@color/purple_200"
                 style="@style/RightSymmetricalCornerCard">
                 <LinearLayout
                     android:layout_width="match_parent"

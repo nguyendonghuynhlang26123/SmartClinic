@@ -95,8 +95,9 @@
                     android:text="29 Phu Chau Street, Tam Phu Ward, Thu Duc City"
                     android:drawableLeft="@drawable/ic_location"
                     android:layout_marginTop="8dp"
-                    android:drawablePadding="4dp"
-                    android:textSize="14sp"/>
+                    android:drawablePadding="8dp"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/hospital_working_time"
                     android:layout_width="match_parent"
@@ -104,8 +105,9 @@
                     android:text="Everday, 07:00 - 22:00"
                     android:drawableLeft="@drawable/ic_appointment"
                     android:layout_marginTop="8dp"
-                    android:drawablePadding="4dp"
-                    android:textSize="14sp"/>
+                    android:drawablePadding="8dp"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -147,7 +149,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_schedule"
+                        android:src="@drawable/ic_schedule_time"
                         android:id="@+id/schedule_icon"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
