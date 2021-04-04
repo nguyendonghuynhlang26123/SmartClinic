@@ -38,13 +38,14 @@ public class DrugModel {
     String preservation;
 
     @SerializedName("category")
-    String[] category;
+    @Expose(deserialize =  false)
+    String category;
 
     @SerializedName("_id")
     @Expose(serialize = false)
     String id;
 
-    public DrugModel(String name, String thumbnail, long price, String unit, String description, String userManual, String ingredients, String volume, String brand, String fromCountry, String preservation, String[] category) {
+    public DrugModel(String name, String thumbnail, long price, String unit, String description, String userManual, String ingredients, String volume, String brand, String fromCountry, String preservation, String category) {
         this.name = name;
         this.thumbnail = thumbnail;
         this.price = price;
@@ -161,11 +162,11 @@ public class DrugModel {
         this.preservation = preservation;
     }
 
-    public String[] getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(String[] category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
