@@ -1,4 +1,4 @@
-import { AppointmentInterface } from '../../interfaces';
+import { AppointmentInterface, PrescriptionDetails } from '../../interfaces';
 import {
   appointmentModel,
   patientModel,
@@ -25,19 +25,24 @@ export class AppointmentService {
   }
 
   async getAllAppointment(query?) {
-    console.log(
-      'log ~ file: appointment.service.ts ~ line 23 ~ AppointmentService ~ getAllAppointment ~ query',
-      query
-    );
     let filter = {};
+    let selection = {};
     if (query?.date) filter = { ...filter, date: query.date };
+    if (query?.is_expired) filter = { ...filter, is_expired: query.is_expired };
     if (query?.service_id) filter = { ...filter, service: query.service_id };
     if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
     if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
+    if (query?.select) {
+      if (query.select instanceof Array) {
+        for (const s of query.select) {
+          selection[s] = 1;
+        }
+      } else selection = { [query.select]: 1 };
+    }
 
-    const appointments = await appointmentModel
-      .find(filter, {}, { limit: Number(query?.limit) })
-      .populate('doctor patient service');
+    const appointments = await appointmentModel.find(filter, selection, {
+      limit: Number(query?.limit),
+    });
     return appointments;
   }
 
@@ -71,6 +76,20 @@ export class AppointmentService {
     const appointment = await appointmentModel.create(data);
     if (!appointment)
       throw new Error('Error found when creating an appointment');
+    const appointmentId = (await appointment.toObject())._id;
+    const updatedData = {
+      appointment: appointmentId,
+      prescription: null,
+    };
+
+    await patientModel.updateOne(
+      { _id: data.patient },
+      {
+        $push: {
+          medical_history: updatedData,
+        },
+      }
+    );
 
     return appointment;
   }

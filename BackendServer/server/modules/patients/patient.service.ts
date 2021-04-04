@@ -63,7 +63,4 @@ export class PatientService {
     const result = await patientModel.deleteOne({ _id: patient._id }).exec();
     return result;
   }
-
-  async bookAnAppointment(data: AppointmentInterface) {
- }
 }

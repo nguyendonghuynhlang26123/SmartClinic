@@ -11,6 +11,7 @@ const PatientSchema = new Schema(
     medical_history: {
       type: [
         {
+          _id: false,
           appointment: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'appointments',
@@ -18,11 +19,7 @@ const PatientSchema = new Schema(
           prescription: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'prescriptions',
-          },
-          status: {
-            type: String,
-            default: 'PENDING',
-            enum: ['PENDING', 'EXPIRED', 'PROCESSED', 'REEXAM'],
+            default: null,
           },
         },
       ],
