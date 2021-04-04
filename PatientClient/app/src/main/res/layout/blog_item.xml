@@ -36,9 +36,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginHorizontal="16dp"
-            app:cardBackgroundColor="@color/grey"
             app:cardCornerRadius="9dp"
             android:id="@+id/card"
             android:layout_marginTop="16dp"
@@ -57,7 +55,7 @@
                     android:textAllCaps="false"
                     android:minHeight="0dp"
                     android:minWidth="0dp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.App.Button.TextButton"
                     android:padding="0dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -74,9 +72,8 @@
                     android:textAllCaps="false"
                     android:minHeight="0dp"
                     android:minWidth="0dp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:padding="0dp"
-                    android:textColor="@color/black" />
+                    style="@style/Widget.App.Button.TextButton"
+                    android:padding="0dp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,7 +84,7 @@
                     />
 
                 <Button
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.App.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="0dp"
@@ -104,9 +101,9 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         app:layout_constraintTop_toBottomOf="@+id/answer_list_container"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/pink_dark"
         android:layout_marginTop="32dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

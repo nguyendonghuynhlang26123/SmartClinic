@@ -100,7 +100,7 @@ public class SchedulePickFragment extends Fragment {
         layout.addView(day1);
         layout.addView(day2);
 
-        ((Button) view.findViewById(R.id.process_button)).setOnClickListener(l->{
+        view.findViewById(R.id.process_button).setOnClickListener(l->{
             if (activeBtn == null) {
                 Toast.makeText(getContext(), "Please select a day!", Toast.LENGTH_SHORT).show();
                 return;

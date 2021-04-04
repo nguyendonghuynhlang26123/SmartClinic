@@ -103,7 +103,7 @@
                 android:id="@+id/treatment_time_label"
                 android:text="Time"
                 android:textStyle="bold"
-                android:drawableLeft="@drawable/ic_schedule"
+                android:drawableLeft="@drawable/ic_schedule_time"
                 android:drawablePadding="16dp"
                 android:gravity="bottom"
                 android:textSize="18sp"

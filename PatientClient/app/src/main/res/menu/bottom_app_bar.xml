@@ -17,7 +17,7 @@
         />
     <item
         android:id="@+id/appointment"
-        android:icon="@drawable/ic_appointment"
+        android:icon="@drawable/ic_clock"
         android:title="Appointment"
         android:contentDescription="Appointment"
         app:showAsAction="always"

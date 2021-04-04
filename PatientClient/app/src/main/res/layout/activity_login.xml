@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.LoginActivity"
-    android:background="@color/purple_200">
+    android:background="@color/pink_light">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EDOCTOR"
         android:textStyle="bold"
         android:textSize="36sp"
-        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

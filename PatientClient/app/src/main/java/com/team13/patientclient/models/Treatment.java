@@ -46,6 +46,29 @@ public class Treatment implements Serializable{
             return drugList;
         }
 
+        public String getPatientName() {
+            return patientName;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getSymptom() {
+            return symptom;
+        }
+
+        public String getDiagnose() {
+            return diagnose;
+        }
+
+        public String getDoctorName() {
+            return doctorName;
+        }
+
+        public String getNote() {
+            return note;
+        }
     }
     public void setPrescription(Prescription prescription) {
         this.prescription = prescription;
