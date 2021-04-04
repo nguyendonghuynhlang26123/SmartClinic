@@ -3,9 +3,8 @@ import { categoryModel, medicineModel } from '../../models';
 
 export class MedicineService {
   async getMedicineById(medicineId: string) {
-    const medicine = await medicineModel
-      .findOne({ _id: medicineId })
-      .populate('category');
+    const medicine = await medicineModel.findOne({ _id: medicineId });
+    //.populate('category');
     if (!medicine) {
       throw new Error('Not Found Medicine.');
     }

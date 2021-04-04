@@ -9,10 +9,10 @@
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/request"
+        android:id="@+id/medical_record"
         android:icon="@drawable/ic_request"
-        android:title="Request"
-        android:contentDescription="Request"
+        android:title="Record"
+        android:contentDescription="Record"
         app:showAsAction="always"
         />
     <item

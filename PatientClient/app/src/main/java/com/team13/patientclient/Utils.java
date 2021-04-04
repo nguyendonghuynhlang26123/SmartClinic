@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-    public static final String BACK_END_API_PATH = "http://192.168.100.11:3669/";
+    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    //public static final String BACK_END_API_PATH = "http://192.168.100.11:3669/";
 
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd-MM-yyyy";
