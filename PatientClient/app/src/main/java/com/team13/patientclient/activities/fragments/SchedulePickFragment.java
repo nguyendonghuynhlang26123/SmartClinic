@@ -31,7 +31,11 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.PharmacyActivity;
+import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
+import com.team13.patientclient.repository.OnResponse;
+import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.AppointmentService;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -42,7 +46,9 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +59,7 @@ public class SchedulePickFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    AppointmentService appointmentService;
     Timestamp timestamp;
     SchedulePickFragmentListener listener;
     RadioButton activeBtn;
@@ -75,6 +82,8 @@ public class SchedulePickFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appointmentService = new AppointmentService();
+
         if (getArguments() != null) {
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -92,13 +101,10 @@ public class SchedulePickFragment extends Fragment {
         String[] days = new String[2];
         days[0] = dayFormat.format(timestamp);         // current day
         days[1] = dayFormat.format(nextDayTimestamp);  // next day
-
-        View day1 = renderTimeChoice(view, days[0]);
-        View day2 = renderTimeChoice(view, days[1]);
-
         LinearLayout layout = view.findViewById(R.id.schedule_groups);
-        layout.addView(day1);
-        layout.addView(day2);
+
+        addSchedule(layout, days[0]);
+        addSchedule(layout, days[1]);
 
         view.findViewById(R.id.process_button).setOnClickListener(l->{
             if (activeBtn == null) {
@@ -107,10 +113,37 @@ public class SchedulePickFragment extends Fragment {
             }
 
             String[] tag = activeBtn.getTag().toString().split(";");
-
             listener.gotoReasonPick(tag[0], tag[1]);
         });
         return view;
+    }
+
+    private void addSchedule(LinearLayout layout, String day) {
+        HospitalModel hospital = Store.get_instance().getHospital();
+        ArrayList<String> shifts = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
+        //Render only available time
+        if (day.equals(dayFormat.format(timestamp))){
+            shifts = getAvailableTime(shifts);
+        }
+
+        if (shifts.size() == 0){
+            View day1 = renderTimeChoice(day, shifts, new HashSet<>());
+            layout.addView(day1);
+        }else{
+            ArrayList<String> finalShifts = shifts;
+            appointmentService.getAppointmentByDate(day, new OnSuccessResponse<Appointment[]>() {
+                @Override
+                public void onSuccess(Appointment[] appointments) {
+                    Set<String> existedAppointment = new HashSet<>();
+                    for (Appointment appointment : appointments){
+                        existedAppointment.add(appointment.getTime());
+                    }
+
+                    View day1 = renderTimeChoice(day, finalShifts, existedAppointment);
+                    layout.addView(day1);
+                }
+            });
+        }
     }
 
     @Override
@@ -139,18 +172,11 @@ public class SchedulePickFragment extends Fragment {
 
 
     @SuppressLint("NewApi")
-    private View renderTimeChoice(View view, String day){
+    private View renderTimeChoice(String day, ArrayList<String> shifts, Set<String> thatDayAppointments){
         View card = getLayoutInflater().inflate(R.layout.time_picking_item,null, false);
 
-        RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
-        HospitalModel hospital = Store.get_instance().getHospital();
-        ArrayList<String> shifts = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
-        //Render only available time
-        if (day.equals(dayFormat.format(timestamp))){
-            shifts = getAvailableTime(shifts);
-        }
-
         ((TextView) card.findViewById(R.id.time_pick_day)).setText(day);
+        RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
 
         if (shifts.size() == 0){
             TextView notification = new TextView(getContext());
@@ -158,7 +184,6 @@ public class SchedulePickFragment extends Fragment {
             notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             radioGroup.addView(notification);
         }
-        Log.d("LONG", "" + shifts);
 
         //Events
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -167,12 +192,14 @@ public class SchedulePickFragment extends Fragment {
         });
 
         for (int i = 0; i < shifts.size(); i++) {
-            String s = shifts.get(i);
+            String time = shifts.get(i);
             RadioButton timeButton = new RadioButton(getContext());
-            timeButton.setText(s);
-            timeButton.setTag(s + ";" + day);
+            timeButton.setText(time);
+            timeButton.setTag(time + ";" + day);
             stylingRadioBtn(timeButton);
-
+            if (checkAppointmentIsExisting(time, thatDayAppointments)){
+                timeButton.setEnabled(false);
+            }
             radioGroup.addView(timeButton);
         }
 
@@ -196,17 +223,20 @@ public class SchedulePickFragment extends Fragment {
 
         btn.setTextColor(new ColorStateList(
                 new int [] [] {
-                        new int [] {android.R.attr.state_checked},
-                        new int [] {-android.R.attr.state_checked},
-                        new int [] {-android.R.attr.state_enabled},
+                        new int [] {android.R.attr.state_checked, android.R.attr.state_enabled},
+                        new int [] {-android.R.attr.state_checked, android.R.attr.state_enabled},
+                        new int [] {-android.R.attr.state_enabled, android.R.attr.state_checked},
+                        new int [] {-android.R.attr.state_enabled, -android.R.attr.state_checked},
                 },
                 new int [] {
                         Color.WHITE,
-                        Color.parseColor("#FFBB86FC"),
-                        Color.parseColor("#374151"),
+                        Color.parseColor("#6d4c41"),
+                        Color.parseColor("#cccccc"),
+                        Color.parseColor("#cccccc"),
                 }
         ));
     }
+
     @SuppressLint("NewApi")
     ArrayList<String> getAvailableTime(ArrayList<String> curShifts) {
         String curTime = timeFormat.format(timestamp);
@@ -240,7 +270,7 @@ public class SchedulePickFragment extends Fragment {
         activeBtn.setChecked(true);
     }
 
-    void disablingBookedTime(LinearLayout layout, String day) {
-        
+    boolean checkAppointmentIsExisting(String time, Set<String> existing) {
+        return existing.contains(time);
     }
 }
