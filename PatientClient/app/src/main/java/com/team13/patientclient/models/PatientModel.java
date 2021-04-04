@@ -36,6 +36,9 @@ public class PatientModel {
     @SerializedName("token")
     String token;
 
+    //@SerializedName("medical_history")
+    MedicalHistory[] history;
+
     public PatientModel(String name, String avatarUrl, String gender, long dateOfBirth, double weight) {
         this.name = name;
         this.avatarUrl = avatarUrl;
@@ -116,5 +119,13 @@ public class PatientModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public MedicalHistory[] getHistory() {
+        return history;
+    }
+
+    public void setHistory(MedicalHistory[] history) {
+        this.history = history;
     }
 }

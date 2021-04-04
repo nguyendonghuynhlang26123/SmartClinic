@@ -26,6 +26,7 @@ public class Treatment implements Serializable{
         this.patientName = patientName;
         this.status=status;
     }
+
     public class Prescription implements Serializable {
         ArrayList<DrugDetail> drugList;
         String note;
