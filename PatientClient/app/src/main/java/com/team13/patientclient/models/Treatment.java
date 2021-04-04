@@ -13,8 +13,9 @@ public class Treatment implements Serializable{
     String patientName;
     String time;
     Prescription prescription;
+    String status;
 
-    public Treatment(String treatmentId, String servicePack, String date,String time, String doctorId, String doctorName, String patientId, String patientName) {
+    public Treatment(String treatmentId, String servicePack, String date,String time, String doctorId, String doctorName, String patientId, String patientName, String status) {
         this.treatmentId = treatmentId;
         this.servicePack = servicePack;
         this.doctorName = doctorName;
@@ -23,6 +24,7 @@ public class Treatment implements Serializable{
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.patientName = patientName;
+        this.status=status;
     }
     public class Prescription implements Serializable {
         ArrayList<DrugDetail> drugList;
@@ -102,7 +104,13 @@ public class Treatment implements Serializable{
         return treatmentId;
     }
 
-    public void createPrescription(ArrayList<DrugDetail> drugList, String note,String symptom, String diagnose){
-        prescription = new Prescription(drugList, note,patientName,symptom,diagnose,doctorName,time+", "+date);
+    public String getStatus() {
+        return status;
+    }
+
+    public void createPrescription(ArrayList<DrugDetail> drugList, String note, String symptom, String diagnose){
+        if(!status.equals("CANCEL")){
+            prescription = new Prescription(drugList, note,patientName,symptom,diagnose,doctorName,time+", "+date);
+        }
     }
 }
