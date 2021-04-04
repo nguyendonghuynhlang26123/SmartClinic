@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.team13.patientclient.R;
@@ -31,7 +32,7 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private Treatment.Prescription mParam1;
+    private Treatment.Prescription prescription;
 
     public PrescriptionFragment() {
         // Required empty public constructor
@@ -57,7 +58,7 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (Treatment.Prescription)getArguments().getSerializable(ARG_PARAM1);
+            prescription = (Treatment.Prescription)getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -67,9 +68,21 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_prescription, container, false);
         RecyclerView drugList = view.findViewById(R.id.drug_list);
-        PrescriptionItemAdpater adapter = new PrescriptionItemAdpater(view.getContext(),mParam1.getDrugList());
+        PrescriptionItemAdpater adapter = new PrescriptionItemAdpater(view.getContext(),prescription.getDrugList());
         drugList.setAdapter(adapter);
         drugList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+        TextView name = view.findViewById(R.id.prescription_patient_name);
+        name.setText(prescription.getPatientName());
+        TextView symptom = view.findViewById(R.id.prescription_patient_symptom);
+        symptom.setText(prescription.getSymptom());
+        TextView diagnose = view.findViewById(R.id.prescription_patient_diagnose);
+        diagnose.setText(prescription.getDiagnose());
+        TextView date = view.findViewById(R.id.prescription_patient_date);
+        date.setText(prescription.getDate());
+        TextView note = view.findViewById(R.id.prescription_note);
+        note.setText(prescription.getNote());
+        TextView doctor = view.findViewById(R.id.prescription_doctor);
+        doctor.setText(prescription.getDoctorName());
         return view;
     }
 
