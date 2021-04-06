@@ -7,11 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.DrugsDisplayFragment;
+import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.models.Category;
 import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
@@ -22,11 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayFragment.DrugDisplayListener {
-    DrugService drugService;
-    ArrayList<DrugModel> data;
+
     ArrayList<Category> drugCategories;
     MaterialToolbar topAppBar;
-    CircularProgressIndicator progressIndicator;
+    String searchQuery="";
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,20 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
                 return true;
             }
             return false;
+        });
+        SearchView searchView = findViewById(R.id.category_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchQuery = query;
+                renderDrugCategories();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
         renderDrugCategories();
     }
@@ -63,15 +78,21 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
 
     private void renderDrugCategories(){
         CategoryService service = new CategoryService();
-        service.getCategoryList(new OnSuccessResponse<Category[]>() {
-            @SuppressLint("NewApi")
-            @Override
-            public void onSuccess(Category[] list) {
-                drugCategories = new ArrayList<>(Arrays.asList(list));
+        loadFragment(new ProgressFragment());
+        if(searchQuery.isEmpty()){
+            service.getCategoryList(new OnSuccessResponse<Category[]>() {
+                @SuppressLint("NewApi")
+                @Override
+                public void onSuccess(Category[] list) {
+                    drugCategories = new ArrayList<>(Arrays.asList(list));
+                    Fragment fragment = new DrugsDisplayFragment();
+                    loadFragment(fragment);
+                }
+            });
+        } else {
+            // Get with @Query
+            // ***TODO
+        }
 
-                Fragment fragment = new DrugsDisplayFragment();
-                loadFragment(fragment);
-            }
-        });
     }
 }

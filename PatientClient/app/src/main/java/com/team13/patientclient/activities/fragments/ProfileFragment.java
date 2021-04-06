@@ -1,5 +1,6 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
@@ -83,7 +85,15 @@ public class ProfileFragment extends Fragment {
             Intent i = new Intent(view.getContext(), HistoryActivity.class);
             view.getContext().startActivity(i);
         });
+        view.findViewById(R.id.fun_about_trailing).setOnClickListener(v->{
+            String[] students = {"18127003","18127016","18127136","18127269"};
+            new MaterialAlertDialogBuilder(view.getContext())
+                    .setTitle("Team 13")
+                    .setItems(students, (dialog, which) -> {
 
+                    })
+                    .show();
+        });
         //Render view data
         AccountModel accountData = Store.get_instance().getUserAccount();
 
