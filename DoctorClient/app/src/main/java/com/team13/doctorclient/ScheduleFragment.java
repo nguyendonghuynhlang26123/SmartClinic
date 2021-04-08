@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +16,10 @@ import com.google.android.material.card.MaterialCardView;
 import com.team13.doctorclient.adapters.DoctorTimelineAdapter;
 import com.team13.doctorclient.models.DoctorTimeline;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
@@ -37,9 +40,10 @@ public class ScheduleFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private HorizontalCalendar horizontalCalendar;
-
+    Calendar selectedDay;
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     ArrayList<MyAppointment> appointments = new ArrayList<>();
-    RecyclerView timeline;
+    ArrayList<DoctorTimeline> data;
     String[] times = {"7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"};
     public ScheduleFragment() {
         // Required empty public constructor
@@ -83,26 +87,23 @@ public class ScheduleFragment extends Fragment {
 //        endDate.add(Calendar.DAY_OF_MONTH, -1);
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
-        Calendar selectedDay = Calendar.getInstance();
+        selectedDay = Calendar.getInstance();
         selectedDay.add(Calendar.DATE,-1);
         horizontalCalendar = new HorizontalCalendar.Builder(view,R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5).defaultSelectedDate(selectedDay)
                 .build();
-
+        renderData(selectedDay);
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
+                renderData(date);
             }
 
         });
-        timeline= view.findViewById(R.id.doctorTimeline);
-        DoctorTimelineAdapter doctorTimelineAdapter = new DoctorTimelineAdapter(view.getContext(),getTimeline());
-        timeline.setAdapter(doctorTimelineAdapter);
-        timeline.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-
         return view;
     }
+
     private class MyAppointment{
         String patientName;
         String treatment;
@@ -124,23 +125,40 @@ public class ScheduleFragment extends Fragment {
 
     }
     int isSeized(String time){
-        for(MyAppointment appoinment: appointments){
-            if(time.equals(appoinment.time)) return appointments.indexOf(appoinment);
+        for(MyAppointment appointment: appointments){
+            if(time.equals(appointment.time)) return appointments.indexOf(appointment);
         }
         return -1;
     }
-    ArrayList<DoctorTimeline> getTimeline(){
+    ArrayList<DoctorTimeline> getTimeline(Calendar date){
         ArrayList<DoctorTimeline> doctorTimelineArrayList = new ArrayList<DoctorTimeline>(10);
         for(String s: times){
             int a = isSeized(s);
+            Date day = date.getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(day);
+            calendar.add(Calendar.DATE,1);
             if(a!=-1){
                 MyAppointment appointment = appointments.get(a);
-                doctorTimelineArrayList.add(new DoctorTimeline(true,appointment.patientName,appointment.treatment,s));
+
+                doctorTimelineArrayList.add(new DoctorTimeline(true,appointment.patientName,appointment.treatment,format.format(calendar.getTime()),s));
             } else {
-                doctorTimelineArrayList.add(new DoctorTimeline(false,null,null,null));
+                doctorTimelineArrayList.add(new DoctorTimeline(false,null,null, format.format(calendar.getTime()), s));
             }
         }
         return doctorTimelineArrayList;
     }
-
+    void renderData(Calendar date){
+        loadFragment(R.id.timeline_display_container, new ProgressFragment());
+        data = getTimeline(date);
+        TimelineDisplayFragment fragment = TimelineDisplayFragment.newInstance(data);
+        loadFragment(R.id.timeline_display_container, fragment);
+    }
+    private void loadFragment(int Id, Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(Id, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

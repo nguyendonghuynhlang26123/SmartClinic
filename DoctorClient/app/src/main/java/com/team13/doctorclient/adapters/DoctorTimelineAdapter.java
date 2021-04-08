@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,13 +42,23 @@ public class DoctorTimelineAdapter extends RecyclerView.Adapter<DoctorTimelineAd
         View view=holder.itemView;
         DoctorTimeline doctorTimeline = doctorTimelineArrayList.get(position);
         LinearLayout linearLayout = view.findViewById(R.id.timeline_container);
+        TextView timeView = view.findViewById(R.id.timeline_time_line);
+        String time = doctorTimeline.getTime().split(" ")[1];
+        timeView.setText(time);
         if(doctorTimeline.isSeized){
             View smallview = LayoutInflater.from(context).inflate(R.layout.timeline_item_card,null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             linearLayout.addView(smallview,params);
             patientCardview= view.findViewById(R.id.patient_line);
+            TextView cardTimeView = smallview.findViewById(R.id.timeline_time);
+            cardTimeView.setText(time);
+            TextView patientName = smallview.findViewById(R.id.timeline_patient_name);
+            patientName.setText(doctorTimeline.getPatientName());
+            Button treatment = smallview.findViewById(R.id.timeline_treatment);
+            treatment.setText(doctorTimeline.getTreatment());
             patientCardview.setOnClickListener(v -> {
                 Intent i= new Intent(context, PatientDetailActivity.class);
+                i.putExtra("timeline",doctorTimeline);
                 context.startActivity(i);
             });
         } else {
