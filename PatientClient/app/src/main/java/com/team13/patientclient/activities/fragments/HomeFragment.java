@@ -1,18 +1,23 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.team13.patientclient.Store;
@@ -20,6 +25,7 @@ import com.team13.patientclient.activities.BookAppointmentDashboard;
 import com.team13.patientclient.activities.LocationActivity;
 import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.R;
+import com.team13.patientclient.activities.ServiceActivity;
 import com.team13.patientclient.adapters.BannerAdapter;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.DrugModel;
@@ -87,7 +93,27 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ((TextView) view.findViewById(R.id.welcome_text)).setText("Hi, " + Store.get_instance().getName());
+        SearchView searchView = view.findViewById(R.id.home_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent i = new Intent(view.getContext(), ServiceActivity.class);
+                i.putExtra(SearchManager.QUERY, query);
+                i.setAction(Intent.ACTION_SEARCH);
+                view.getContext().startActivity(i);
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                String query = searchView.getQuery().toString();
+//                if(!query.isEmpty()){
+//                    test.setText(query);
+//                    return true;
+//                }
+                return false;
+            }
+        });
         viewPager = view.findViewById(R.id.news_banner);
         bannerAdapter = new BannerAdapter(view.getContext());
         viewPager.setAdapter(bannerAdapter);

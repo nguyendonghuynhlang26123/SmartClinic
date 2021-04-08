@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.badge.BadgeDrawable;
@@ -24,7 +26,6 @@ import com.team13.patientclient.repository.services.HospitalService;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener {
     BottomNavigationView bottomNavigationView;
-
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

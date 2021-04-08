@@ -24,13 +24,13 @@
         <activity android:name=".activities.BookAppointmentDashboard" />
         <activity android:name=".activities.Cart" />
         <activity android:name=".activities.DrugActivity" />
-        <activity android:name=".activities.ServiceActivity" />
+        <activity android:name=".activities.ServiceActivity"/>
         <activity android:name=".activities.DoctorDetailActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.AllServiceActivity" />
         <activity android:name=".activities.PharmacyActivity" />
         <activity android:name=".activities.LocationActivity" />
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
