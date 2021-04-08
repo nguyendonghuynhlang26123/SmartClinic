@@ -5,14 +5,13 @@ import {
   medicalServiceModel,
   appointmentModel,
 } from '../../models';
-import { UserService } from '../users/user.service';
 
 export class PatientService {
   async getPatientById(patientId: string) {
     try {
       const patient = await patientModel
         .findOne({ _id: patientId })
-        .populate('appointment_list');
+        .populate('current_appointment');
       if (!patient) {
         throw new Error('Not Found Patient.');
       }
@@ -62,5 +61,35 @@ export class PatientService {
     if (!patient) throw new Error('Not Found Patient.');
     const result = await patientModel.deleteOne({ _id: patient._id }).exec();
     return result;
+  }
+
+  async cancelAppointment(patientId: string, appointmentId: string) {
+    if (!appointmentId || !patientId)
+      throw new Error('Bad Request! PatientId or AppointmentId is undefined');
+
+    const patient: any = (
+      await patientModel.findOne({ _id: patientId })
+    ).toObject();
+    console.log(
+      'log ~ file: patient.service.ts ~ line 71 ~ PatientService ~ cancelAppointment ~ patient',
+      patient
+    );
+    if (!patient) throw new Error('Not Found Patient.');
+    if (patient.current_appointment.toString() !== appointmentId)
+      throw new Error(
+        'This patient does not have appointment with category ' + appointmentId
+      );
+
+    const appointment = await appointmentModel.findOne({ _id: appointmentId });
+    if (!appointment) throw new Error('Not Found Appointment.');
+
+    await patientModel.updateOne(
+      { _id: patientId },
+      { current_appointment: null }
+    );
+    return await appointmentModel.updateOne(
+      { _id: patientId },
+      { status: 'CANCELED' }
+    );
   }
 }

@@ -28,7 +28,6 @@ export class AppointmentService {
     let filter = {};
     let selection = {};
     if (query?.date) filter = { ...filter, date: query.date };
-    if (query?.is_expired) filter = { ...filter, is_expired: query.is_expired };
     if (query?.service_id) filter = { ...filter, service: query.service_id };
     if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
     if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
@@ -40,9 +39,13 @@ export class AppointmentService {
       } else selection = { [query.select]: 1 };
     }
 
-    const appointments = await appointmentModel.find(filter, selection, {
-      limit: Number(query?.limit),
-    });
+    const appointments = await appointmentModel.find(
+      { ...filter, status: 'PENDING' },
+      selection,
+      {
+        limit: Number(query?.limit),
+      }
+    );
     return appointments;
   }
 
@@ -67,6 +70,7 @@ export class AppointmentService {
       service: data.service,
       time: data.time,
       date: data.date,
+      status: 'PENDING',
     });
     if (checkAppointment)
       throw new Error(
@@ -77,18 +81,10 @@ export class AppointmentService {
     if (!appointment)
       throw new Error('Error found when creating an appointment');
     const appointmentId = (await appointment.toObject())._id;
-    const updatedData = {
-      appointment: appointmentId,
-      prescription: null,
-    };
 
     await patientModel.updateOne(
       { _id: data.patient },
-      {
-        $push: {
-          medical_history: updatedData,
-        },
-      }
+      { current_appointment: appointmentId }
     );
 
     return appointment;

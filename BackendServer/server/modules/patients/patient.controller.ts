@@ -24,7 +24,20 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put("/:patient_id", async (req, res) => {
+router.post('/cancel/:patient_id', async (req, res) => {
+  try {
+    const patient = await patientService.cancelAppointment(
+      req.params.patient_id,
+      req.body.appointment_id
+    );
+    res.json(patient);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
+});
+
+router.put('/:patient_id', async (req, res) => {
   try {
     const result = await patientService.updatePatientById(
       req.params.patient_id,
@@ -37,11 +50,9 @@ router.put("/:patient_id", async (req, res) => {
   }
 });
 
-router.delete("/:patient_id", async (req, res) => {
+router.delete('/:patient_id', async (req, res) => {
   try {
-    const result = await patientService.deletePatient(
-      req.params.patient_id
-    );
+    const result = await patientService.deletePatient(req.params.patient_id);
     res.json(result);
   } catch (err) {
     console.log(err);

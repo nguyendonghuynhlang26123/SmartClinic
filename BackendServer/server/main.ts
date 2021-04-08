@@ -12,6 +12,7 @@ import { PatientController } from './modules/patients/patient.controller';
 import { PrescriptionController } from './modules/prescriptions/prescription.controller';
 import { MedicalServiceController } from './modules/medicalServices/medicalServices.controller';
 import { AuthController } from './modules/auth/auth.api';
+import { TreatmentController } from './modules/treatments/treatment.api';
 
 async function initServer() {
   const app = express();
@@ -39,6 +40,7 @@ async function initServer() {
   app.use('/medicines', MedicineController);
   app.use('/patients', PatientController);
   app.use('/prescriptions', PrescriptionController);
+  app.use('/treatments', TreatmentController);
   app.use('/medical-services', MedicalServiceController);
 
   app.get('/', (req, res) => {
