@@ -1,10 +1,15 @@
 package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
@@ -19,13 +24,31 @@ import java.util.Arrays;
 
 public class ServiceActivity extends AppCompatActivity implements ServiceDisplayFragment.ServiceDisplayListener {
     ArrayList<ServicePack> data;
+    String searchQuery="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
+        Intent i = getIntent();
+        if(Intent.ACTION_SEARCH.equals(i.getAction())){
+            searchQuery = i.getStringExtra(SearchManager.QUERY);
+        }
+        SearchView searchView = findViewById(R.id.service_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchQuery = query;
+                callApiAndRender();
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         //rendering dumb data while waiting for response from server
 //        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(10));
 //        serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -37,23 +60,26 @@ public class ServiceActivity extends AppCompatActivity implements ServiceDisplay
     private void callApiAndRender() {
         ServicePackService service = new ServicePackService();
         loadFragment(new ProgressFragment());
-        service.get(new OnSuccessResponse<ServicePack[]>() {
-            @Override
-            public void onSuccess(ServicePack[] list) {
-                //Rendering data as soon as it received
-//                servicePackAdapter.setData(new ArrayList<>(Arrays.asList(list)));
-                data = new ArrayList<>(Arrays.asList(list));
-                loadFragment(new ServiceDisplayFragment());
-            }
-        });
-    }
-
-    ArrayList<ServicePack> getEmptyModels(int n){
-        ArrayList<ServicePack> servicePacks = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            servicePacks.add(new ServicePack());
+        if(searchQuery.isEmpty()){
+            service.get(new OnSuccessResponse<ServicePack[]>() {
+                @Override
+                public void onSuccess(ServicePack[] list) {
+                    //Rendering data as soon as it received
+                    data = new ArrayList<>(Arrays.asList(list));
+                    loadFragment(new ServiceDisplayFragment());
+                }
+            });
+        } else {
+            service.get(searchQuery, new OnSuccessResponse<ServicePack[]>() {
+                @Override
+                public void onSuccess(ServicePack[] list) {
+                    //Rendering data as soon as it received
+                    data = new ArrayList<>(Arrays.asList(list));
+                    loadFragment(new ServiceDisplayFragment());
+                }
+            });
         }
-        return servicePacks;
+
     }
 
     @Override

@@ -12,4 +12,6 @@ public class ServicePackService {
     public void get(Callback<ServicePack[]> callback) {api.getAll().enqueue(callback);}
 
     public void get(int limit, Callback<ServicePack[]> callback) {api.getAll(limit).enqueue(callback);}
+
+    public  void get(String query, Callback<ServicePack[]> callback) {api.get(query).enqueue(callback);}
 }
