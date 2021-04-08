@@ -90,7 +90,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thurday, 1 April | 13:30"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/ic_time"

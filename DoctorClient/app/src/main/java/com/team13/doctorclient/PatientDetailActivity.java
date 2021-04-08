@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.doctorclient.adapters.PatientTimelineAdapter;
+import com.team13.doctorclient.models.DoctorTimeline;
 import com.team13.doctorclient.models.PatientTimeline;
 
 import java.util.ArrayList;
@@ -19,20 +21,30 @@ public class PatientDetailActivity extends AppCompatActivity {
     RecyclerView patientTimeline;
     MaterialToolbar topAppBar;
     Button startBtn;
+    DoctorTimeline doctorTimeline;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_detail);
+        Intent i = getIntent();
+        doctorTimeline =(DoctorTimeline)i.getSerializableExtra("timeline");
         patientTimeline=findViewById(R.id.patient_treatment_timeline);
         patientTimelineAdapter= new PatientTimelineAdapter(this,getPatientTimeline());
         patientTimeline.setAdapter(patientTimelineAdapter);
         patientTimeline.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
+        TextView patientTime = findViewById(R.id.patient_time);
+        patientTime.setText(doctorTimeline.getTime());
+        TextView patientTreatment = findViewById(R.id.patient_treatment);
+        patientTreatment.setText(doctorTimeline.getTreatment());
+        //TODO: Money
         startBtn= findViewById(R.id.startBtn);
         startBtn.setOnClickListener(v -> {
-            Intent i= new Intent(this,CreatePrescription.class);
-            this.startActivity(i);
+            Intent intent= new Intent(this,CreatePrescription.class);
+            intent.putExtra("time",doctorTimeline.getTime());
+            intent.putExtra("patientName", doctorTimeline.getPatientName());
+            this.startActivity(intent);
         });
 
     }
