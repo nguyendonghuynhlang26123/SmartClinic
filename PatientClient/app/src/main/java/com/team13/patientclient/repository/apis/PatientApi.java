@@ -14,4 +14,9 @@ public interface PatientApi {
     @PUT("/patients/{id}")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<Void> update(@Path("id") String id, @Body PatientModel data);
+
+
+    @PUT("/patients/cancel/{id}")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<Void> cancelAppointment(@Path("id") String id, @Field("appointment_id") String appointmentId);
 }

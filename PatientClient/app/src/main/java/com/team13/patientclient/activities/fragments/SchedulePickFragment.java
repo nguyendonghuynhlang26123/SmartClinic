@@ -2,6 +2,7 @@ package com.team13.patientclient.activities.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -43,15 +45,13 @@ import java.util.Set;
  * create an instance of this fragment.
  */
 public class SchedulePickFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     AppointmentService appointmentService;
     Timestamp timestamp;
     SchedulePickFragmentListener listener;
     RadioButton activeBtn;
-    final SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM", Locale.US);
-    final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+    final SimpleDateFormat dayFormat = new SimpleDateFormat(Utils.DATE_PATTERN, Locale.US);
+    final SimpleDateFormat timeFormat = new SimpleDateFormat(Utils.TIME_PATTERN , Locale.US);
 
     public SchedulePickFragment() {
         // Required empty public constructor
@@ -60,8 +60,6 @@ public class SchedulePickFragment extends Fragment {
     public static SchedulePickFragment newInstance(String param1, String param2) {
         SchedulePickFragment fragment = new SchedulePickFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,6 +87,11 @@ public class SchedulePickFragment extends Fragment {
         days[0] = dayFormat.format(timestamp);         // current day
         days[1] = dayFormat.format(nextDayTimestamp);  // next day
         LinearLayout layout = view.findViewById(R.id.schedule_groups);
+
+        if (Store.get_instance().isHavingAnAppointment()){
+            layout.addView(denyBookingNotification());
+            return view;
+        }
 
         addSchedule(layout, days[0]);
         addSchedule(layout, days[1]);
@@ -158,6 +161,18 @@ public class SchedulePickFragment extends Fragment {
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
+    @SuppressLint("NewApi")
+    private View denyBookingNotification(){
+        View card = getLayoutInflater().inflate(R.layout.time_picking_item,null, false);
+        ((TextView) card.findViewById(R.id.time_pick_day)).setText("⚠ You already has an appointment booked!");
+        RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
+        TextView notification = new TextView(getContext());
+        notification.setText("You can cancel your appointment in the appointment view");
+        notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        radioGroup.addView(notification);
+
+        return card;
+    }
 
     @SuppressLint("NewApi")
     private View renderTimeChoice(String day, ArrayList<String> shifts, Set<String> thatDayAppointments){

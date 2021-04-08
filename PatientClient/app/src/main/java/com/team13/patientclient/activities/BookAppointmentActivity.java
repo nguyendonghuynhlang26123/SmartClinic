@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.AppointmentConfirmFragment;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.ReasonPickFragment;
@@ -112,7 +114,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements
             @Override
             public void onRequestSuccess(Appointment response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
-                setAlarmForNotification();
+                Store.get_instance().bookingAnAppointment(response);
+                setAlarmForNotification(response);
                 finish();
             }
 
@@ -124,11 +127,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         });
     }
 
-    private void setAlarmForNotification() {
+    private void setAlarmForNotification(Appointment appointment) {
         Intent intent = new Intent(BookAppointmentActivity.this, AlarmReceiverActivity.class);
+        intent.putExtra(Utils.BROADCAST_APPOINTMENT_ID,  appointment.getId());
+        intent.putExtra(Utils.BROADCAST_PATIENT_ID,  Store.get_instance().getUserAccount().getUserInfor().getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long curTime = System.currentTimeMillis();
+        Log.d("LONG", "SET ALARM");
         alarmManager.set(AlarmManager.RTC_WAKEUP, curTime + 1000*10, pendingIntent);
 
     }

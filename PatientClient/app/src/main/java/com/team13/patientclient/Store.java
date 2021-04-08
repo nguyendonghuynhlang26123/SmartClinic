@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
 
 import java.util.ArrayList;
@@ -47,5 +48,13 @@ public class Store {
 
     public void setHospital(HospitalModel hospital) {
         this.hospital = hospital;
+    }
+
+    public boolean isHavingAnAppointment(){
+        return this.userAccount.getUserInfor().getCurrentAppointment() != null;
+    }
+
+    public void bookingAnAppointment(Appointment appointment){
+        this.userAccount.getUserInfor().setCurrentAppointment(appointment);
     }
 }

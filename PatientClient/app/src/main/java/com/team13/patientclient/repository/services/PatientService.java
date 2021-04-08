@@ -10,4 +10,6 @@ public class PatientService {
     PatientApi api = RetrofitSingleton.getInstance().create(PatientApi.class);
 
     public void updatePatientProfile(String id, PatientModel data, Callback<Void> cb) { api.update(id, data).enqueue(cb);}
+
+    public void cancelAppointment(String patientId, String appointmentId, Callback<Void> cb) {api.cancelAppointment(patientId,appointmentId).enqueue(cb);}
 }
