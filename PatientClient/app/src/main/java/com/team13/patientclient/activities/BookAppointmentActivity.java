@@ -67,6 +67,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     }
 
     @Override
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    @Override
     public void gotoAppointmentConfirm(String reason) {
         this.reason = reason;
         loadFragment(new AppointmentConfirmFragment());
@@ -124,8 +129,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long curTime = System.currentTimeMillis();
-        //alarmManager.set(AlarmManager.RTC_WAKEUP, curTime + 1000*10, pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, curTime  + 10*1000, 1000 * 10, pendingIntent); // Millisec * Second * Minute
+        alarmManager.set(AlarmManager.RTC_WAKEUP, curTime + 1000*10, pendingIntent);
 
     }
 }

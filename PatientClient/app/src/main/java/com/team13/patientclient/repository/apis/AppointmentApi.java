@@ -10,8 +10,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface AppointmentApi {
-    @GET("/appointments?select=time&is_expired=false")
-    Call<Appointment[]> getByDate(@Query("date") String date);
+    @GET("/appointments?select=time")
+    Call<Appointment[]> getByDate(@Query("date") String date, @Query("service_id") String serviceID);
 
     @POST("/appointments")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

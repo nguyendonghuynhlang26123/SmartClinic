@@ -9,8 +9,8 @@ import retrofit2.Callback;
 public class AppointmentService {
     AppointmentApi api = RetrofitSingleton.getInstance().create(AppointmentApi.class);
 
-    public void getAppointmentByDate(String date, Callback<Appointment[]> callback){
-        api.getByDate(date).enqueue(callback);
+    public void getAppointmentByDate(String date, String serviceId, Callback<Appointment[]> callback){
+        api.getByDate(date, serviceId).enqueue(callback);
     }
 
     public void bookAnAppointment(Appointment data, Callback<Appointment> callback) {

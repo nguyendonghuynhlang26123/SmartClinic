@@ -3,49 +3,36 @@ package com.team13.patientclient.activities.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.XmlResourceParser;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
-import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
-import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.AppointmentService;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -131,7 +118,7 @@ public class SchedulePickFragment extends Fragment {
             layout.addView(day1);
         }else{
             ArrayList<String> finalShifts = shifts;
-            appointmentService.getAppointmentByDate(day, new OnSuccessResponse<Appointment[]>() {
+            appointmentService.getAppointmentByDate(day, listener.getServiceId(), new OnSuccessResponse<Appointment[]>() {
                 @Override
                 public void onSuccess(Appointment[] appointments) {
                     Set<String> existedAppointment = new HashSet<>();
@@ -164,6 +151,7 @@ public class SchedulePickFragment extends Fragment {
 
     public interface SchedulePickFragmentListener{
         void gotoReasonPick(String time, String date);
+        String getServiceId();
     }
 
     public static float convertDpToPixel(float dp, Context context){
