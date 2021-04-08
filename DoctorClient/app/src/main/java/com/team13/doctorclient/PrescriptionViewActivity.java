@@ -27,6 +27,7 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         drugList.setAdapter(drugAdapter);
         drugList.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
     }
+    //TODO
     public ArrayList<Drug> getDrug(){
         ArrayList<Drug> drugArrayList= new ArrayList<>(10);
         for(int i=0;i<10;++i){
