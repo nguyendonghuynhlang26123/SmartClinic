@@ -23,8 +23,52 @@ public class Prescription {
     @SerializedName("date")
     String date;
 
-    public class Doctor {
-        @SerializedName("name")
-        String doctorName;
+
+    public ArrayList<DrugDetail> getDrugList() {
+        return drugList;
+    }
+
+    public void setDrugList(ArrayList<DrugDetail> drugList) {
+        this.drugList = drugList;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getSymptom() {
+        return symptom;
+    }
+
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
+    }
+
+    public String getDiagnose() {
+        return diagnose;
+    }
+
+    public void setDiagnose(String diagnose) {
+        this.diagnose = diagnose;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

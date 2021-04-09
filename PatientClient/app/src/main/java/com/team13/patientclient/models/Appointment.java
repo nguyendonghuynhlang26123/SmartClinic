@@ -1,5 +1,6 @@
 package com.team13.patientclient.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Appointment {
@@ -10,10 +11,20 @@ public class Appointment {
     String patientId;
 
     @SerializedName("service")
+    @Expose(serialize = false)
+    MedicalService service;
+
+    @SerializedName("service")
+    @Expose(deserialize = false)
     String serviceId;
 
     @SerializedName("doctor")
+    @Expose(deserialize = false)
     String doctorId;
+
+    @SerializedName("doctor")
+    @Expose(serialize = false)
+    Doctor doctor;
 
     @SerializedName("date")
     String date;
@@ -32,6 +43,10 @@ public class Appointment {
         this.time = time;
         this.note = note;
     }
+
+    public String getDoctorName(){return doctor.doctorName;}
+
+    public String getServiceName() {return service.serviceName;}
 
     public String getPatientId() {
         return patientId;
@@ -87,5 +102,13 @@ public class Appointment {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    class MedicalService{
+        @SerializedName("_id")
+        public String id;
+
+        @SerializedName("service_name")
+        public String serviceName;
     }
 }

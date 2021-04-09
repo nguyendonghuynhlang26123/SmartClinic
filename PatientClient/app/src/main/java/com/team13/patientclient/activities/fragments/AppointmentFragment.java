@@ -116,6 +116,7 @@ public class AppointmentFragment extends Fragment {
         for(Treatment treatment: treatments){
             treatment.createPrescription(testDrugList,"Comeback at 3/3/2021","No","Sleep");
         }
+
         treatments.add(0, new Treatment("1","General Care","5/1/2021","17:30","A","Dr.Coco","B","MN","PENDING"));
         return treatments;
     }

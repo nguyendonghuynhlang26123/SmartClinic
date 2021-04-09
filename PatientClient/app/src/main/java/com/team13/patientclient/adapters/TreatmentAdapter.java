@@ -47,8 +47,6 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         service.setText(treatment.getServicePack());
         TextView symptom = view.findViewById(R.id.treatment_time);
         symptom.setText("Time: " + treatment.getTime());
-        TextView diagnose = view.findViewById(R.id.treatment_id);
-        diagnose.setText("ID: " + treatment.getTreatmentId());
         MaterialCardView treatmentCard = view.findViewById(R.id.treatment_card);
         treatmentCard.setOnClickListener(v->{
             Intent i = new Intent(context, TreatmentActivity.class);

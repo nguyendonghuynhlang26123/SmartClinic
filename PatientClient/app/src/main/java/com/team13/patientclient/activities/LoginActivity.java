@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +13,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.LoginFragment;
 import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.SignupFragment;
+import com.team13.patientclient.models.HospitalModel;
+import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.HospitalService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener {
     TabLayout tabLayout;
     ProgressBar progressBar;
     TextView welcomeData;
@@ -78,6 +84,29 @@ public class LoginActivity extends AppCompatActivity {
     public void setSignUpFragment(){
         loadFragment(new SignupFragment());
         tabLayout.selectTab(tabLayout.getTabAt(1));
+    }
+
+    @Override
+    public void startProgram() {
+        //INIT DATA
+        getHospitalData();
+    }
+
+    public void switchActivity(){
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(i);
+    }
+
+    private void getHospitalData(){
+        HospitalService hospitalService = new HospitalService();
+        hospitalService.getHospital("6056b843cefabf3368f043cf", new OnSuccessResponse<HospitalModel>() {
+            @Override
+            public void onSuccess(HospitalModel hospital) {
+                Store.get_instance().setHospital(hospital);
+
+                if (Store.get_instance().isFullyLoaded()) switchActivity();
+            }
+        });
     }
 
 }

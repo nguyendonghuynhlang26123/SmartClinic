@@ -32,6 +32,8 @@ public class Store {
     private Store(){
     }
 
+    public boolean isFullyLoaded() { return userAccount != null && hospital != null; }
+
     public AccountModel getUserAccount() {
         return userAccount;
     }

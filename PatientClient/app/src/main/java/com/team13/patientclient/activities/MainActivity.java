@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getHospitalData();
         loadFragment(new HomeFragment());
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -77,15 +76,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
         bottomNavigationView.setSelectedItemId(R.id.blog);
     }
 
-    private void getHospitalData(){
-        HospitalService hospitalService = new HospitalService();
-        hospitalService.getHospital("6056b843cefabf3368f043cf", new OnSuccessResponse<HospitalModel>() {
-            @Override
-            public void onSuccess(HospitalModel hospital) {
-                Store.get_instance().setHospital(hospital);
-            }
-        });
-    }
+
 
 
 }
