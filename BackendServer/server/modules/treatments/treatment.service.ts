@@ -5,21 +5,24 @@ import { treatmentModel } from '../../models';
 const appointmentService = new AppointmentService();
 
 export class TreatmentService {
-  async getTreatmentById(treatmentId: string) {
-    try {
-      const treatment = await treatmentModel
-        .findOne({ _id: treatmentId })
-        .populate(
-          'appointment prescription prescription.medicine_list.medicine'
-        );
-      if (!treatment) {
-        throw new Error('Not Found treatment.');
-      }
-      return treatment;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Get treatment Error.');
+  async getTreatments() {
+    const treatments = await treatmentModel
+      .find()
+      .populate('appointment prescription prescription.medicine_list.medicine');
+    if (!treatments) {
+      throw new Error('Get treatment error');
     }
+    return treatments;
+  }
+
+  async getTreatmentById(treatmentId: string) {
+    const treatment = await treatmentModel
+      .findOne({ _id: treatmentId })
+      .populate('appointment prescription prescription.medicine_list.medicine');
+    if (!treatment) {
+      throw new Error('Not Found treatment.');
+    }
+    return treatment;
   }
 
   async createTreatment(data: TreatmentInterface) {

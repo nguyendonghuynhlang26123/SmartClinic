@@ -5,13 +5,23 @@ const router = express.Router();
 const patientService: PatientService = new PatientService();
 
 router.get('/', async (req, res) => {
-  const patients = await patientService.getAllPatient();
-  res.json(patients);
+  try {
+    const patients = await patientService.getAllPatient();
+    res.json(patients);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
 });
 
 router.get('/:patient_id', async (req, res) => {
-  const patient = await patientService.getPatientById(req.params.patient_id);
-  res.json(patient);
+  try {
+    const patient = await patientService.getPatientById(req.params.patient_id);
+    res.json(patient);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
 });
 
 router.post('/', async (req, res) => {
@@ -31,6 +41,16 @@ router.post('/cancel/:patient_id', async (req, res) => {
       req.body.appointment_id
     );
     res.json(patient);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
+});
+
+router.get('/medical_history/:patient_id', async (req, res) => {
+  try {
+    const data = await patientService.getMedicalHistory(req.params.patient_id);
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(400).json({ 'message': err.message });

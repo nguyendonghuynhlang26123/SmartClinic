@@ -10,6 +10,10 @@ router.get('/:treatment_id', async (req, res) => {
   );
   res.json(treatment);
 });
+router.get('/', async (req, res) => {
+  const treatments = await treatmentService.getTreatments();
+  res.json(treatments);
+});
 
 router.post('/', async (req, res) => {
   try {

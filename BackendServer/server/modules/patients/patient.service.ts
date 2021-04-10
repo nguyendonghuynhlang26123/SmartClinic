@@ -70,10 +70,6 @@ export class PatientService {
     const patient: any = (
       await patientModel.findOne({ _id: patientId })
     ).toObject();
-    console.log(
-      'log ~ file: patient.service.ts ~ line 71 ~ PatientService ~ cancelAppointment ~ patient',
-      patient
-    );
     if (!patient) throw new Error('Not Found Patient.');
     if (patient.current_appointment.toString() !== appointmentId)
       throw new Error(
@@ -91,5 +87,45 @@ export class PatientService {
       { _id: patientId },
       { status: 'CANCELED' }
     );
+  }
+
+  async getMedicalHistory(patientId: string) {
+    if (!patientId) throw new Error('Bad Request! PatientId is undefined');
+
+    const data: any = await patientModel
+      .findOne({ _id: patientId }, 'medical_history')
+      .populate({
+        path: 'medical_history',
+        populate: [
+          {
+            path: 'appointment',
+            model: 'appointments',
+            populate: [
+              {
+                path: 'service',
+                select: 'service_name',
+              },
+              {
+                path: 'doctor',
+                select: 'name',
+              },
+            ],
+          },
+          {
+            path: 'prescription',
+            model: 'prescriptions',
+            populate: {
+              path: 'medicine_list.medicine',
+              model: 'medicines',
+              select: 'medicine_name',
+            },
+          },
+        ],
+      });
+
+    if (!data) {
+      throw new Error('Not Found Patient.');
+    }
+    return data.toObject().medical_history;
   }
 }
