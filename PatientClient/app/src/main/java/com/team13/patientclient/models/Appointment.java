@@ -3,7 +3,9 @@ package com.team13.patientclient.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
     @SerializedName("_id")
     String id;
 
@@ -11,19 +13,9 @@ public class Appointment {
     String patientId;
 
     @SerializedName("service")
-    @Expose(serialize = false)
-    MedicalService service;
-
-    @SerializedName("service")
-    @Expose(deserialize = false)
-    String serviceId;
+    ServicePack service;
 
     @SerializedName("doctor")
-    @Expose(deserialize = false)
-    String doctorId;
-
-    @SerializedName("doctor")
-    @Expose(serialize = false)
     Doctor doctor;
 
     @SerializedName("date")
@@ -35,18 +27,25 @@ public class Appointment {
     @SerializedName("note")
     String note;
 
-    public Appointment(String patientId, String serviceId, String note, String date, String time){
+    @SerializedName("status")
+    String status;
+
+    public Appointment(String patientId, ServicePack service, String note, String date, String time){
         this.patientId = patientId;
-        this.serviceId = serviceId;
-        this.doctorId = "6064131892cd230c287d5bd4";
+        this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
         this.date = date;
         this.time = time;
         this.note = note;
+        this.service = service;
+        this.status = "PENDING";
     }
 
-    public String getDoctorName(){return doctor.doctorName;}
+    public Appointment(){
+    }
 
-    public String getServiceName() {return service.serviceName;}
+    public String getDoctorName(){return ((Doctor)doctor).doctorName;}
+
+    public String getServiceName() {return (service).getName();}
 
     public String getPatientId() {
         return patientId;
@@ -57,19 +56,28 @@ public class Appointment {
     }
 
     public String getServiceId() {
-        return serviceId;
+        return service.getId();
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public ServicePack getService() {
+        return (ServicePack) service;
     }
 
-    public String getDoctorId() {
-        return doctorId;
+    public void setService(ServicePack service) {
+        this.service = service;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDate() {
@@ -104,11 +112,5 @@ public class Appointment {
         this.id = id;
     }
 
-    class MedicalService{
-        @SerializedName("_id")
-        public String id;
-
-        @SerializedName("service_name")
-        public String serviceName;
-    }
+    public String getStatus(){ return this.status;}
 }

@@ -40,7 +40,7 @@ public class PatientModel {
     String[] history;
 
     @SerializedName("current_appointment")
-    Appointment currentAppointment;
+    String currentAppointment;
 
 
     public PatientModel(String name, String avatarUrl, String gender, long dateOfBirth, double weight) {
@@ -133,11 +133,11 @@ public class PatientModel {
         this.history = history;
     }
 
-    public Appointment getCurrentAppointment() {
+    public String getCurrentAppointment() {
         return currentAppointment;
     }
 
-    public void setCurrentAppointment(Appointment currentAppointment) {
+    public void setCurrentAppointment(String currentAppointment) {
         this.currentAppointment = currentAppointment;
     }
 }

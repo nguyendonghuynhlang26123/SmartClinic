@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.TreatmentActivity;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
+import com.team13.patientclient.models.Prescription;
 import com.team13.patientclient.models.Treatment;
 
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     ArrayList<Treatment> treatments;
     final Context context;
     TreatmentItemListener listener;
-    public TreatmentAdapter(Context context, TreatmentItemListener listener, ArrayList<Treatment> treatments) {
+    public TreatmentAdapter(Context context, TreatmentItemListener listener) {
         this.context = context;
-        this.treatments = treatments;
+        this.treatments = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -68,9 +69,10 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
                 ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
                 removeButton.setVisibility(View.VISIBLE);
                 removeButton.setOnClickListener(v->{
+                    listener.onAppointmentRemove(treatments.get(position).getAppointment().getId());
+
                     treatments.remove(position);
                     notifyDataSetChanged();
-                    listener.onAppointmentRemove();
                 });
             }
         } else if (position == treatments.size() - 1){
@@ -86,15 +88,19 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         return treatments.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public void setData(ArrayList<Treatment> newData){
+        this.treatments = newData;
+        this.notifyDataSetChanged();
+    }
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
     public interface TreatmentItemListener{
-        void onItemClick(Treatment.Prescription prescription);
+        void onItemClick(Prescription prescription);
         void onHasAppointment();
-        void onAppointmentRemove();
+        void onAppointmentRemove(String appointmentId);
     }
 }

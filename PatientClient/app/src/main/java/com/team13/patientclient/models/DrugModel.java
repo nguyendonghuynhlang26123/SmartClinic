@@ -76,6 +76,20 @@ public class DrugModel implements Serializable {
         this.preservation = "";
     }
 
+    public DrugModel(String name) {
+        this.name = name;
+        this.thumbnail = "";
+        this.price = 0;
+        this.unit = "";
+        this.description = "";
+        this.userManual = "";
+        this.ingredients = "";
+        this.volume = "";
+        this.brand = "";
+        this.fromCountry = "";
+        this.preservation = "";
+    }
+
     public String getName() {
         return name;
     }

@@ -39,6 +39,7 @@ public class Store {
     }
 
     public String getName() {return userAccount.getUserInfor().getName();}
+    public String getPatientId() {return userAccount.getUserInfor().getId();}
 
     public void setUserAccount(AccountModel userAccount) {
         this.userAccount = userAccount;
@@ -53,10 +54,11 @@ public class Store {
     }
 
     public boolean isHavingAnAppointment(){
-        return this.userAccount.getUserInfor().getCurrentAppointment() != null;
+        return false;
+        //return this.userAccount.getUserInfor().getCurrentAppointment() != null;
     }
 
-    public void bookingAnAppointment(Appointment appointment){
-        this.userAccount.getUserInfor().setCurrentAppointment(appointment);
+    public void bookingAnAppointment(String appointmentId){
+        this.userAccount.getUserInfor().setCurrentAppointment(appointmentId);
     }
 }

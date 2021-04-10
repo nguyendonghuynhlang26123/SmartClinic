@@ -2,9 +2,10 @@ package com.team13.patientclient.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Prescription {
+public class Prescription implements Serializable {
     @SerializedName("medicine_list")
     ArrayList<DrugDetail> drugList;
 
@@ -17,12 +18,13 @@ public class Prescription {
     @SerializedName("diagnosis")
     String diagnose;
 
-    @SerializedName("doctor")
-    Doctor doctor;
 
-    @SerializedName("date")
-    String date;
-
+    public Prescription(ArrayList<DrugDetail> drugList, String note, String symptom, String diagnose) {
+        this.drugList = drugList;
+        this.note = note;
+        this.symptom = symptom;
+        this.diagnose = diagnose;
+    }
 
     public ArrayList<DrugDetail> getDrugList() {
         return drugList;
@@ -54,21 +56,5 @@ public class Prescription {
 
     public void setDiagnose(String diagnose) {
         this.diagnose = diagnose;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

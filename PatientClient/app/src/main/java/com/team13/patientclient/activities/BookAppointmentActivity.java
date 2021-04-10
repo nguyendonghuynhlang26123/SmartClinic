@@ -23,10 +23,12 @@ import com.team13.patientclient.activities.fragments.ReasonPickFragment;
 import com.team13.patientclient.activities.fragments.SchedulePickFragment;
 import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.ErrorResponse;
+import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AppointmentService;
 
 import java.io.IOException;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,19 +105,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     public void handleConfirm() {
         // Handle processing when click appointment confirm button
         //*** TODO ***//
-        String patientId = Store.get_instance().getUserAccount().getUserInfor().getId();
-        Appointment appointment = new Appointment(patientId, serviceId, reason, date, time);
+        String patientId = Store.get_instance().getPatientId();
+        Appointment appointment = new Appointment(patientId, new ServicePack(serviceId), reason, date, time);
         AppointmentService service = new AppointmentService();
 
         Fragment fragment = new ProgressFragment();
         loadFragment(fragment);
 
-        service.bookAnAppointment(appointment, new OnResponse<Appointment>() {
+        service.bookAnAppointment(appointment, new OnResponse<Map<String, String>>() {
             @Override
-            public void onRequestSuccess(Appointment response) {
+            public void onRequestSuccess(Map<String, String> response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
-                Store.get_instance().bookingAnAppointment(response);
-                setAlarmForNotification(response);
+                Store.get_instance().bookingAnAppointment(response.get("_id"));
+                //setAlarmForNotification(response.get("_id"));
                 finish();
             }
 
@@ -130,7 +132,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     private void setAlarmForNotification(Appointment appointment) {
         Intent intent = new Intent(BookAppointmentActivity.this, AlarmReceiverActivity.class);
         intent.putExtra(Utils.BROADCAST_APPOINTMENT_ID,  appointment.getId());
-        intent.putExtra(Utils.BROADCAST_PATIENT_ID,  Store.get_instance().getUserAccount().getUserInfor().getId());
+        intent.putExtra(Utils.BROADCAST_PATIENT_ID,  Store.get_instance().getPatientId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long curTime = System.currentTimeMillis();

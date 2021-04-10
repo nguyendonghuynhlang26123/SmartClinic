@@ -4,6 +4,9 @@ import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.repository.RetrofitSingleton;
 import com.team13.patientclient.repository.apis.AppointmentApi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Callback;
 
 public class AppointmentService {
@@ -13,7 +16,14 @@ public class AppointmentService {
         api.getByDate(date, serviceId).enqueue(callback);
     }
 
-    public void bookAnAppointment(Appointment data, Callback<Appointment> callback) {
-        api.post(data).enqueue(callback);
+    public void bookAnAppointment(Appointment data, Callback<Map<String, String>> callback) {
+        Map<String, String> dataMap = new HashMap<>();
+        dataMap.put("doctor", data.getDoctor().getId());
+        dataMap.put("patient", data.getPatientId());
+        dataMap.put("service", data.getServiceId());
+        dataMap.put("time", data.getTime());
+        dataMap.put("date", data.getDate());
+        dataMap.put("note", data.getNote());
+        api.post(dataMap).enqueue(callback);
     }
 }
