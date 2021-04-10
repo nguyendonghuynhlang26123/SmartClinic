@@ -2,6 +2,7 @@ package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.TreatmentActivity;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
+import com.team13.patientclient.models.Prescription;
 import com.team13.patientclient.models.Treatment;
 
 import java.util.ArrayList;
@@ -24,9 +27,12 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     ArrayList<Treatment> treatments;
     final Context context;
     TreatmentItemListener listener;
-    public TreatmentAdapter(Context context, TreatmentItemListener listener, ArrayList<Treatment> treatments) {
+    public TreatmentAdapter(Context context) {
         this.context = context;
-        this.treatments = treatments;
+        this.treatments = new ArrayList<>();
+    }
+
+    public void setListener( TreatmentItemListener listener){
         this.listener = listener;
     }
 
@@ -47,8 +53,6 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         service.setText(treatment.getServicePack());
         TextView symptom = view.findViewById(R.id.treatment_time);
         symptom.setText("Time: " + treatment.getTime());
-        TextView diagnose = view.findViewById(R.id.treatment_id);
-        diagnose.setText("ID: " + treatment.getTreatmentId());
         MaterialCardView treatmentCard = view.findViewById(R.id.treatment_card);
         treatmentCard.setOnClickListener(v->{
             Intent i = new Intent(context, TreatmentActivity.class);
@@ -70,9 +74,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
                 ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
                 removeButton.setVisibility(View.VISIBLE);
                 removeButton.setOnClickListener(v->{
-                    treatments.remove(position);
-                    notifyDataSetChanged();
-                    listener.onAppointmentRemove();
+                    listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId());
                 });
             }
         } else if (position == treatments.size() - 1){
@@ -88,15 +90,31 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         return treatments.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public void setData(ArrayList<Treatment> newData){
+        this.treatments.addAll(newData);
+        this.notifyDataSetChanged();
+    }
 
+    public void insertCurrentAppointment(Treatment treatment){
+        this.treatments.add(0, treatment);
+        this.notifyDataSetChanged();
+    }
+
+    public void removeElement(int position){
+        Log.d("LONG", new Gson().toJson(treatments.get(0).getStatus()));
+        treatments.remove(position);
+        Log.d("LONG", new Gson().toJson(treatments.get(0).getStatus()));
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
     public interface TreatmentItemListener{
-        void onItemClick(Treatment.Prescription prescription);
+        void onItemClick(Prescription prescription);
         void onHasAppointment();
-        void onAppointmentRemove();
+        void onAppointmentRemove(int position, String appointmentId);
     }
 }

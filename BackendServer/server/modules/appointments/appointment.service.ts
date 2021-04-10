@@ -1,4 +1,4 @@
-import { AppointmentInterface } from '../../interfaces';
+import { AppointmentInterface, PrescriptionDetails } from '../../interfaces';
 import {
   appointmentModel,
   patientModel,
@@ -13,7 +13,7 @@ export class AppointmentService {
         .findOne({
           _id: appointmentId,
         })
-        .populate('doctor patient');
+        .populate('doctor patient service');
       if (!appointment) {
         throw new Error('Not Found Appointment.');
       }
@@ -25,19 +25,27 @@ export class AppointmentService {
   }
 
   async getAllAppointment(query?) {
-    console.log(
-      'log ~ file: appointment.service.ts ~ line 23 ~ AppointmentService ~ getAllAppointment ~ query',
-      query
-    );
     let filter = {};
+    let selection = {};
     if (query?.date) filter = { ...filter, date: query.date };
     if (query?.service_id) filter = { ...filter, service: query.service_id };
     if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
     if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
+    if (query?.select) {
+      if (query.select instanceof Array) {
+        for (const s of query.select) {
+          selection[s] = 1;
+        }
+      } else selection = { [query.select]: 1 };
+    }
 
-    const appointments = await appointmentModel
-      .find(filter, {}, { limit: Number(query?.limit) })
-      .populate('doctor patient service');
+    const appointments = await appointmentModel.find(
+      { ...filter, status: 'PENDING' },
+      selection,
+      {
+        limit: Number(query?.limit),
+      }
+    );
     return appointments;
   }
 
@@ -62,6 +70,7 @@ export class AppointmentService {
       service: data.service,
       time: data.time,
       date: data.date,
+      status: 'PENDING',
     });
     if (checkAppointment)
       throw new Error(
@@ -71,6 +80,12 @@ export class AppointmentService {
     const appointment = await appointmentModel.create(data);
     if (!appointment)
       throw new Error('Error found when creating an appointment');
+    const appointmentId = (await appointment.toObject())._id;
+
+    await patientModel.updateOne(
+      { _id: data.patient },
+      { current_appointment: appointmentId }
+    );
 
     return appointment;
   }

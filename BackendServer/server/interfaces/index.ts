@@ -7,3 +7,4 @@ export * from './doctor.interface';
 export * from './medicine.interface';
 export * from './prescription.interface';
 export * from './medicalService.interface';
+export * from './treatment.interface';

@@ -7,21 +7,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.ServiceActivity;
-import com.team13.patientclient.adapters.AppointmentItemAdapter;
 import com.team13.patientclient.adapters.TreatmentAdapter;
 import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.DrugDetail;
 import com.team13.patientclient.models.DrugModel;
+import com.team13.patientclient.models.Prescription;
 import com.team13.patientclient.models.Treatment;
+import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.AppointmentService;
+import com.team13.patientclient.repository.services.PatientService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -78,9 +86,10 @@ public class AppointmentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointment, container, false);
         TextView notify = view.findViewById(R.id.appointment_notify);
         RecyclerView treatmentList = view.findViewById(R.id.treatment_list);
-        TreatmentAdapter adapter = new TreatmentAdapter(view.getContext(), new TreatmentAdapter.TreatmentItemListener() {
+        TreatmentAdapter adapter = new TreatmentAdapter(view.getContext());
+        adapter.setListener(new TreatmentAdapter.TreatmentItemListener() {
             @Override
-            public void onItemClick(Treatment.Prescription prescription) {
+            public void onItemClick(Prescription prescription) {
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(prescription);
                 fragment.show(getFragmentManager(),fragment.getTag());
             }
@@ -92,31 +101,46 @@ public class AppointmentFragment extends Fragment {
             }
 
             @Override
-            public void onAppointmentRemove() {
+            public void onAppointmentRemove(int position, String appointmentId) {
                 notify.setVisibility(View.GONE);
+                PatientService service = new PatientService();
+                service.cancelAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
+                    @Override
+                    public void onSuccess(Void response) {
+                        Toast.makeText(getContext(), "Appointment Canceled! #" + position, Toast.LENGTH_SHORT).show();
+                        adapter.removeElement(position);
+                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointment(null);
+                    }
+                });
             }
-        }, getEmptyTreatment());
+        });
         treatmentList.setAdapter(adapter);
         treatmentList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         view.findViewById(R.id.add_appointment_button).setOnClickListener(v->{
             Intent i = new Intent(view.getContext(), ServiceActivity.class);
             startActivity(i);
         });
+
+        callApiAndRender(adapter);
         return view;
     }
+    void callApiAndRender(TreatmentAdapter adapter){
+        PatientService service = new PatientService();
+        AppointmentService appointmentService = new AppointmentService();
 
-    ArrayList<Treatment> getEmptyTreatment(){
-        ArrayList<Treatment> treatments = new ArrayList<>(8);
-        treatments.add(new Treatment("5","General Care","4/1/2021","17:30","A","Dr.Coco","B","MN","CANCEL"));
-        treatments.add(new Treatment("4","General Care","3/1/2021","17:30","A","Dr.Coco","B","MN","PROCESSED"));
-        treatments.add(new Treatment("3","General Care","2/1/2021","17:30","A","Dr.Coco","B","MN","PROCESSED"));
-        treatments.add(new Treatment("2","General Care","1/1/2021","17:30","A","Dr.Coco","B","MN","PROCESSED"));
-        treatments.add(new Treatment("1","General Care","31/12/2020","17:30","A","Dr.Coco","B","MN","PROCESSED"));
-        ArrayList<DrugDetail> testDrugList= new ArrayList<DrugDetail>(Collections.singletonList(new DrugDetail(new DrugModel(), 2, "Morning: 2")));
-        for(Treatment treatment: treatments){
-            treatment.createPrescription(testDrugList,"Comeback at 3/3/2021","No","Sleep");
-        }
-        treatments.add(0, new Treatment("1","General Care","5/1/2021","17:30","A","Dr.Coco","B","MN","PENDING"));
-        return treatments;
+        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointment(), new OnSuccessResponse<Appointment>() {
+            @Override
+            public void onSuccess(Appointment currentAppointment) {
+                adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
+            }
+        });
+
+        service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
+            @Override
+            public void onSuccess(Treatment[] treatmentList) {
+                adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
+            }
+        });
+
     }
 }

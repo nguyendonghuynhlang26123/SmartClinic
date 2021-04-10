@@ -5,14 +5,13 @@ import {
   medicalServiceModel,
   appointmentModel,
 } from '../../models';
-import { UserService } from '../users/user.service';
 
 export class PatientService {
   async getPatientById(patientId: string) {
     try {
       const patient = await patientModel
         .findOne({ _id: patientId })
-        .populate('appointment_list');
+        .populate('current_appointment');
       if (!patient) {
         throw new Error('Not Found Patient.');
       }
@@ -64,6 +63,69 @@ export class PatientService {
     return result;
   }
 
-  async bookAnAppointment(data: AppointmentInterface) {
- }
+  async cancelAppointment(patientId: string, appointmentId: string) {
+    if (!appointmentId || !patientId)
+      throw new Error('Bad Request! PatientId or AppointmentId is undefined');
+
+    const patient: any = (
+      await patientModel.findOne({ _id: patientId })
+    ).toObject();
+    if (!patient) throw new Error('Not Found Patient.');
+    if (patient.current_appointment.toString() !== appointmentId)
+      throw new Error(
+        'This patient does not have appointment with category ' + appointmentId
+      );
+
+    const appointment = await appointmentModel.findOne({ _id: appointmentId });
+    if (!appointment) throw new Error('Not Found Appointment.');
+
+    await patientModel.updateOne(
+      { _id: patientId },
+      { current_appointment: null }
+    );
+    return await appointmentModel.updateOne(
+      { _id: patientId },
+      { status: 'CANCELED' }
+    );
+  }
+
+  async getMedicalHistory(patientId: string) {
+    if (!patientId) throw new Error('Bad Request! PatientId is undefined');
+
+    const data: any = await patientModel
+      .findOne({ _id: patientId }, 'medical_history')
+      .populate({
+        path: 'medical_history',
+        populate: [
+          {
+            path: 'appointment',
+            model: 'appointments',
+            populate: [
+              {
+                path: 'service',
+                select: 'service_name',
+              },
+              {
+                path: 'doctor',
+                select: 'name',
+              },
+            ],
+          },
+          {
+            path: 'prescription',
+            model: 'prescriptions',
+            populate: {
+              path: 'medicine_list.medicine',
+              model: 'medicines',
+              select: 'medicine_name',
+            },
+          },
+        ],
+      });
+
+    if (!data) {
+      throw new Error('Not Found Patient.');
+    }
+    return data.toObject().medical_history;
+  }
 }

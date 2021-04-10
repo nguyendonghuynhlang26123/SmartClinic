@@ -36,6 +36,13 @@ public class PatientModel {
     @SerializedName("token")
     String token;
 
+    @SerializedName("medical_history")
+    String[] history;
+
+    @SerializedName("current_appointment")
+    String currentAppointment;
+
+
     public PatientModel(String name, String avatarUrl, String gender, long dateOfBirth, double weight) {
         this.name = name;
         this.avatarUrl = avatarUrl;
@@ -116,5 +123,21 @@ public class PatientModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String[] getHistory() {
+        return history;
+    }
+
+    public void setHistory(String[] history) {
+        this.history = history;
+    }
+
+    public String getCurrentAppointment() {
+        return currentAppointment;
+    }
+
+    public void setCurrentAppointment(String currentAppointment) {
+        this.currentAppointment = currentAppointment;
     }
 }
