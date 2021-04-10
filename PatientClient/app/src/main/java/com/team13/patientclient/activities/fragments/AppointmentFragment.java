@@ -102,7 +102,8 @@ public class AppointmentFragment extends Fragment {
 
             @Override
             public void onAppointmentRemove(int position, String appointmentId) {
-                notify.setVisibility(View.GONE);
+                notify.setVisibility(View.GONE); 
+                view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE); 
                 PatientService service = new PatientService();
                 service.cancelAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
                     @Override
@@ -111,7 +112,7 @@ public class AppointmentFragment extends Fragment {
                         adapter.removeElement(position);
                         Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointment(null);
                     }
-                });
+                }); 
             }
         });
         treatmentList.setAdapter(adapter);

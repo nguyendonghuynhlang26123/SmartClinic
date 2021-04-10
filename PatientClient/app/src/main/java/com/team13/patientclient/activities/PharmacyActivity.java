@@ -7,11 +7,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.team13.patientclient.R;
+import com.team13.patientclient.activities.fragments.CategoryFragment;
 import com.team13.patientclient.activities.fragments.DrugsDisplayFragment;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.models.Category;
@@ -68,6 +72,11 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         return drugCategories;
     }
 
+    @Override
+    public void categoryDetailLoad(String categoryId) {
+        renderCategoryItems(categoryId);
+    }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -93,6 +102,19 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
             // Get with @Query
             // ***TODO
         }
+
+    }
+    private void renderCategoryItems(String categoryId){
+        // ***TODO: GET DRUG LIST OF A CATEGORY
+        // Connect api and get data with @categoryName
+        DrugService service = new DrugService();
+        service.getDrugByCategory(categoryId, new OnSuccessResponse<DrugModel[]>() {
+            @Override
+            public void onSuccess(DrugModel[] list) {
+                Fragment fragment = CategoryFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
+                loadFragment(fragment);
+            }
+        });
 
     }
 }

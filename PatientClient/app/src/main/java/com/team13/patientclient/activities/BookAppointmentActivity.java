@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,10 +44,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     String serviceId;
     String serviceName;
     String reason;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appointment);
+        context = this;
         loadFragment(new SchedulePickFragment());
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
@@ -118,7 +121,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
                 Store.get_instance().bookingAnAppointment(response.get("_id"));
                 //setAlarmForNotification(response.get("_id"));
-                finish();
+                Intent i = new Intent(context, MainActivity.class);
+                context.startActivity(i); 
             }
 
             @Override
