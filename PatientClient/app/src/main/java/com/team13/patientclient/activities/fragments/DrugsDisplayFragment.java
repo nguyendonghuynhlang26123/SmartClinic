@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.team13.patientclient.R;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.models.Category;
@@ -24,6 +27,10 @@ import com.team13.patientclient.repository.services.DrugService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +104,7 @@ public class DrugsDisplayFragment extends Fragment {
 
             //Call api asynchronously
             callApiAndRender(pharmacyItemAdapter, categoryView, category.getId());
+//            test();
 
             //Add this view to layout
             categoryListLayout.addView(categoryView);
@@ -119,8 +127,11 @@ public class DrugsDisplayFragment extends Fragment {
             public void onSuccess(DrugModel[] list) {
                 adapter.setData(new ArrayList<>(Arrays.asList(list)));
                 if (list.length > 3) {
-                    categoryView.findViewById(R.id.category_detail).setVisibility(View.VISIBLE);
-                    //TODO: START NEW ITEM LIST ACTIVITY
+                    Button detailButton = categoryView.findViewById(R.id.category_detail);
+                    detailButton.setVisibility(View.VISIBLE);
+                    // START NEW ITEM LIST ACTIVITY
+                    detailButton.setOnClickListener(v->listener.categoryDetailLoad(categoryId));
+
                 }
             }
         });
@@ -128,6 +139,31 @@ public class DrugsDisplayFragment extends Fragment {
 
     public interface DrugDisplayListener{
         ArrayList<Category> getDisplayData();
+        void categoryDetailLoad(String categoryName);
+    }
+
+    void test(){
+        DrugService service = new DrugService();
+        service.searchDrug("extra", 4, new OnSuccessResponse<DrugModel[]>() {
+            @Override
+            public void onSuccess(DrugModel[] response) {
+                Log.d("LONG", new Gson().toJson(response));
+            }
+        });
+        service.getMinimizedData(new Callback<DrugModel[]>() {
+            @Override
+            public void onResponse(Call<DrugModel[]> call, Response<DrugModel[]> response) {
+                if (response.isSuccessful()) {
+                    DrugModel[]  data = response.body();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DrugModel[]> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

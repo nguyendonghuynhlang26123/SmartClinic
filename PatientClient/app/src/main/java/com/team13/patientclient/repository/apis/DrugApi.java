@@ -16,4 +16,10 @@ public interface DrugApi {
 
     @GET("/medicines?select=thumbnail&select=medicine_name&limit=4")
     Call<DrugModel[]> getByCategory(@Query("category") String categoryId);
+
+    @GET("/medicines?select=thumbnail&select=medicine_name")
+    Call<DrugModel[]> getAllByCategory(@Query("category") String categoryId);
+
+    @GET("/medicines?select=thumbnail&select=medicine_name")
+    Call<DrugModel[]> searchMedicineByName(@Query("search") String searchKey, @Query("limit") int limit);
 }

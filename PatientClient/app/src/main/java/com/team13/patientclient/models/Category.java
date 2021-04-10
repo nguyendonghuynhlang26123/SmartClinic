@@ -13,26 +13,10 @@ public class Category {
     @SerializedName("_id")
     String id;
 
-    @Expose(deserialize = false, serialize = false)
-    ArrayList<DrugModel> drugList = new ArrayList<>();
-
-    public Category(String name, DrugModel[] drugList){
-        this.name = name;
-        this.drugList = new ArrayList<>(Arrays.asList(drugList));
-    }
     public Category(String name){
         this.name = name;
-        this.drugList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            this.drugList.add(new DrugModel());
-        }
     }
-    public void setDrugList(DrugModel[] drugList){
-        this.drugList = new ArrayList<>(Arrays.asList(drugList));
-    }
-    public ArrayList<DrugModel> getDrugList(){
-        return drugList;
-    }
+
     public String getName(){
         return name;
     }
