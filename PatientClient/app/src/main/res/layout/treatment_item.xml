@@ -6,13 +6,14 @@
     android:minHeight="121dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
-        android:layout_width="69dp"
+        android:layout_width="54dp"
         android:layout_height="wrap_content"
-        android:text="1/1/2021"
+        android:textSize="14sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/timeline_marker"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
         android:id="@+id/treatment_date" />
     <TextView
         android:layout_width="2dp"
@@ -27,7 +28,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_timeline_marker"
+        android:src="@drawable/ic_check"
         android:id="@+id/timeline_marker"
         app:layout_constraintTop_toBottomOf="@+id/upper_line"
         app:layout_constraintBottom_toTopOf="@+id/lower_line"
@@ -71,6 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/treatment_remove_button"
+                app:layout_constraintBottom_toTopOf="@+id/treatment_time"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"/>
             <ImageButton
                 android:layout_width="wrap_content"
@@ -92,6 +94,7 @@
                 android:id="@+id/treatment_time"
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/treatment_service"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <TextView
                 android:layout_width="wrap_content"

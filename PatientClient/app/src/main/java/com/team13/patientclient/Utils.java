@@ -57,6 +57,11 @@ public class Utils {
         return (fmt.format(price));
     }
 
+    public static String shortenString(String string, int charLimit){
+        if (string.length()<= charLimit) return string;
+        return string.substring(0,charLimit)+"...";
+    }
+
     public static Timestamp addDays(Timestamp date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

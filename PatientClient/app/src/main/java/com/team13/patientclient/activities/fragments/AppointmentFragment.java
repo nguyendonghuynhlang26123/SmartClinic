@@ -94,6 +94,7 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onAppointmentRemove() {
                 notify.setVisibility(View.GONE);
+                view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE);
             }
         }, getEmptyTreatment());
         treatmentList.setAdapter(adapter);

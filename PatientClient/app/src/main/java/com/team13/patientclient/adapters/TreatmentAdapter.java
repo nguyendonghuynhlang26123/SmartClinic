@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.TreatmentActivity;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.models.Treatment;
@@ -41,10 +43,23 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
         Treatment treatment = treatments.get(position);
+        ImageButton stateIcon = view.findViewById(R.id.timeline_marker);
+        switch (treatment.getStatus()){
+            case "PROCESSED":
+                stateIcon.setImageResource(R.drawable.ic_check);
+                break;
+            case "CANCEL":
+                stateIcon.setImageResource(R.drawable.ic_cancelled);
+                break;
+            case "PENDING":
+                stateIcon.setImageResource(R.drawable.ic_pending);
+                break;
+        }
         TextView time = view.findViewById(R.id.treatment_date);
-        time.setText(treatment.getDate());
+        String[] temp = treatment.getDate().split("/");
+        time.setText(temp[0]+"/"+temp[1]+"\n"+temp[2]);
         TextView service = view.findViewById(R.id.treatment_service);
-        service.setText(treatment.getServicePack());
+        service.setText(Utils.shortenString(treatment.getServicePack(),20));
         TextView symptom = view.findViewById(R.id.treatment_time);
         symptom.setText("Time: " + treatment.getTime());
         TextView diagnose = view.findViewById(R.id.treatment_id);
