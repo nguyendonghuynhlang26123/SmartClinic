@@ -53,9 +53,13 @@ public class Store {
         this.hospital = hospital;
     }
 
+    public String getCurrentAppointment(){
+        return this.userAccount.getUserInfor().getCurrentAppointment();
+    }
+
     public boolean isHavingAnAppointment(){
-        return false;
-        //return this.userAccount.getUserInfor().getCurrentAppointment() != null;
+        //return false;
+        return this.getCurrentAppointment() != null;
     }
 
     public void bookingAnAppointment(String appointmentId){

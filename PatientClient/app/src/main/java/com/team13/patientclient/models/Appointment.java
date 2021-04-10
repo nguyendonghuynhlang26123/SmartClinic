@@ -9,8 +9,6 @@ public class Appointment implements Serializable {
     @SerializedName("_id")
     String id;
 
-    @SerializedName("patient")
-    String patientId;
 
     @SerializedName("service")
     ServicePack service;
@@ -31,7 +29,6 @@ public class Appointment implements Serializable {
     String status;
 
     public Appointment(String patientId, ServicePack service, String note, String date, String time){
-        this.patientId = patientId;
         this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
         this.date = date;
         this.time = time;
@@ -46,14 +43,6 @@ public class Appointment implements Serializable {
     public String getDoctorName(){return ((Doctor)doctor).doctorName;}
 
     public String getServiceName() {return (service).getName();}
-
-    public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
 
     public String getServiceId() {
         return service.getId();

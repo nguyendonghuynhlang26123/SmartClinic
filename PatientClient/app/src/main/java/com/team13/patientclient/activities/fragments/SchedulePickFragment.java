@@ -170,7 +170,7 @@ public class SchedulePickFragment extends Fragment {
         notification.setText("You can cancel your appointment in the appointment view");
         notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         radioGroup.addView(notification);
-
+        card.findViewById(R.id.process_button).setEnabled(false);
         return card;
     }
 

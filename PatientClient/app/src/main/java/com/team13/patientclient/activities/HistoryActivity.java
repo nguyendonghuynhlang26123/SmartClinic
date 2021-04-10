@@ -28,7 +28,8 @@ public class HistoryActivity extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v->finish());
         RecyclerView treatmentList = findViewById(R.id.treatment_list);
-        TreatmentAdapter adapter = new TreatmentAdapter(this, new TreatmentAdapter.TreatmentItemListener() {
+        TreatmentAdapter adapter = new TreatmentAdapter(this);
+        adapter.setListener( new TreatmentAdapter.TreatmentItemListener() {
             @Override
             public void onItemClick(Prescription prescription) {
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(prescription);
@@ -41,7 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAppointmentRemove(String appointmentId) {
+            public void onAppointmentRemove(int pos, String appointmentId) {
 
             }
         });

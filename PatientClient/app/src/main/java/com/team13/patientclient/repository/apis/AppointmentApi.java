@@ -11,9 +11,13 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface AppointmentApi {
+    @GET("/appointments/{id}")
+    Call<Appointment> getAppointmentById(@Path("id") String appointmentId);
+
     @GET("/appointments?select=time")
     Call<Appointment[]> getByDate(@Query("date") String date, @Query("service_id") String serviceID);
 

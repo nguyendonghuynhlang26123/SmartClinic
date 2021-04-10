@@ -19,11 +19,13 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.ServiceActivity;
 import com.team13.patientclient.adapters.TreatmentAdapter;
+import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.DrugDetail;
 import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.models.Prescription;
 import com.team13.patientclient.models.Treatment;
 import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.AppointmentService;
 import com.team13.patientclient.repository.services.PatientService;
 
 import java.util.ArrayList;
@@ -84,7 +86,8 @@ public class AppointmentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointment, container, false);
         TextView notify = view.findViewById(R.id.appointment_notify);
         RecyclerView treatmentList = view.findViewById(R.id.treatment_list);
-        TreatmentAdapter adapter = new TreatmentAdapter(view.getContext(), new TreatmentAdapter.TreatmentItemListener() {
+        TreatmentAdapter adapter = new TreatmentAdapter(view.getContext());
+        adapter.setListener(new TreatmentAdapter.TreatmentItemListener() {
             @Override
             public void onItemClick(Prescription prescription) {
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(prescription);
@@ -98,13 +101,15 @@ public class AppointmentFragment extends Fragment {
             }
 
             @Override
-            public void onAppointmentRemove(String appointmentId) {
+            public void onAppointmentRemove(int position, String appointmentId) {
                 notify.setVisibility(View.GONE);
                 PatientService service = new PatientService();
                 service.cancelAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
                     @Override
                     public void onSuccess(Void response) {
-                        Toast.makeText(getContext(), "Appointment Canceled!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Appointment Canceled! #" + position, Toast.LENGTH_SHORT).show();
+                        adapter.removeElement(position);
+                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointment(null);
                     }
                 });
             }
@@ -121,12 +126,21 @@ public class AppointmentFragment extends Fragment {
     }
     void callApiAndRender(TreatmentAdapter adapter){
         PatientService service = new PatientService();
-        service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
+        AppointmentService appointmentService = new AppointmentService();
+
+        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointment(), new OnSuccessResponse<Appointment>() {
             @Override
-            public void onSuccess(Treatment[] response) {
-                Log.d("LONG", new Gson().toJson(response));
-                adapter.setData(new ArrayList<>(Arrays.asList(response)));
+            public void onSuccess(Appointment currentAppointment) {
+                adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
             }
         });
+
+        service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
+            @Override
+            public void onSuccess(Treatment[] treatmentList) {
+                adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
+            }
+        });
+
     }
 }

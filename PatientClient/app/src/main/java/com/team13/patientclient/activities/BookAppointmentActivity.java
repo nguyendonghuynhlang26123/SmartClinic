@@ -112,7 +112,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         Fragment fragment = new ProgressFragment();
         loadFragment(fragment);
 
-        service.bookAnAppointment(appointment, new OnResponse<Map<String, String>>() {
+        service.bookAnAppointment(appointment, Store.get_instance().getPatientId(), new OnResponse<Map<String, String>>() {
             @Override
             public void onRequestSuccess(Map<String, String> response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
