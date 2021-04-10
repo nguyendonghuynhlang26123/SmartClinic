@@ -1,19 +1,20 @@
 package com.team13.patientclient.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
     @SerializedName("_id")
     String id;
 
-    @SerializedName("patient")
-    String patientId;
 
     @SerializedName("service")
-    String serviceId;
+    ServicePack service;
 
     @SerializedName("doctor")
-    String doctorId;
+    Doctor doctor;
 
     @SerializedName("date")
     String date;
@@ -24,37 +25,48 @@ public class Appointment {
     @SerializedName("note")
     String note;
 
-    public Appointment(String patientId, String serviceId, String note, String date, String time){
-        this.patientId = patientId;
-        this.serviceId = serviceId;
-        this.doctorId = "6064131892cd230c287d5bd4";
+    @SerializedName("status")
+    String status;
+
+    public Appointment(String patientId, ServicePack service, String note, String date, String time){
+        this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
         this.date = date;
         this.time = time;
         this.note = note;
+        this.service = service;
+        this.status = "PENDING";
     }
 
-    public String getPatientId() {
-        return patientId;
+    public Appointment(){
     }
 
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
+    public String getDoctorName(){return ((Doctor)doctor).doctorName;}
+
+    public String getServiceName() {return (service).getName();}
 
     public String getServiceId() {
-        return serviceId;
+        return service.getId();
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public ServicePack getService() {
+        return (ServicePack) service;
     }
 
-    public String getDoctorId() {
-        return doctorId;
+    public void setService(ServicePack service) {
+        this.service = service;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDate() {
@@ -80,4 +92,14 @@ public class Appointment {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStatus(){ return this.status;}
 }

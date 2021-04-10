@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
 
 import java.util.ArrayList;
@@ -31,11 +32,14 @@ public class Store {
     private Store(){
     }
 
+    public boolean isFullyLoaded() { return userAccount != null && hospital != null; }
+
     public AccountModel getUserAccount() {
         return userAccount;
     }
 
     public String getName() {return userAccount.getUserInfor().getName();}
+    public String getPatientId() {return userAccount.getUserInfor().getId();}
 
     public void setUserAccount(AccountModel userAccount) {
         this.userAccount = userAccount;
@@ -47,5 +51,18 @@ public class Store {
 
     public void setHospital(HospitalModel hospital) {
         this.hospital = hospital;
+    }
+
+    public String getCurrentAppointment(){
+        return this.userAccount.getUserInfor().getCurrentAppointment();
+    }
+
+    public boolean isHavingAnAppointment(){
+        //return false;
+        return this.getCurrentAppointment() != null;
+    }
+
+    public void bookingAnAppointment(String appointmentId){
+        this.userAccount.getUserInfor().setCurrentAppointment(appointmentId);
     }
 }

@@ -5,13 +5,23 @@ const router = express.Router();
 const patientService: PatientService = new PatientService();
 
 router.get('/', async (req, res) => {
-  const patients = await patientService.getAllPatient();
-  res.json(patients);
+  try {
+    const patients = await patientService.getAllPatient();
+    res.json(patients);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
 });
 
 router.get('/:patient_id', async (req, res) => {
-  const patient = await patientService.getPatientById(req.params.patient_id);
-  res.json(patient);
+  try {
+    const patient = await patientService.getPatientById(req.params.patient_id);
+    res.json(patient);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
 });
 
 router.post('/', async (req, res) => {
@@ -24,7 +34,30 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put("/:patient_id", async (req, res) => {
+router.post('/cancel/:patient_id', async (req, res) => {
+  try {
+    const patient = await patientService.cancelAppointment(
+      req.params.patient_id,
+      req.body.appointment_id
+    );
+    res.json(patient);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
+});
+
+router.get('/medical_history/:patient_id', async (req, res) => {
+  try {
+    const data = await patientService.getMedicalHistory(req.params.patient_id);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
+});
+
+router.put('/:patient_id', async (req, res) => {
   try {
     const result = await patientService.updatePatientById(
       req.params.patient_id,
@@ -37,11 +70,9 @@ router.put("/:patient_id", async (req, res) => {
   }
 });
 
-router.delete("/:patient_id", async (req, res) => {
+router.delete('/:patient_id', async (req, res) => {
   try {
-    const result = await patientService.deletePatient(
-      req.params.patient_id
-    );
+    const result = await patientService.deletePatient(req.params.patient_id);
     res.json(result);
   } catch (err) {
     console.log(err);

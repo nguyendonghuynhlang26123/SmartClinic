@@ -2,7 +2,9 @@ package com.team13.patientclient.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ServicePack {
+import java.io.Serializable;
+
+public class ServicePack implements Serializable {
     @SerializedName("service_name")
     String name;
 
@@ -30,6 +32,13 @@ public class ServicePack {
         this.description = "";
         this.serviceIcon = "";
         this.price = 0;
+    }
+    public ServicePack(String id) {
+        this.name = "";
+        this.description = "";
+        this.serviceIcon = "";
+        this.price = 0;
+        this.id=id;
     }
 
     public boolean isEmpty(){

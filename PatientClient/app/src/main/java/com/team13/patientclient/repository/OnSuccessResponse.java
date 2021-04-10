@@ -37,6 +37,7 @@ public abstract class OnSuccessResponse<T> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
+        NotificationHandler.sendNotification(MyApp.getContext(), "Error", t.getMessage());
         Log.d("LONG_FAILURE", t.getMessage());
     }
 

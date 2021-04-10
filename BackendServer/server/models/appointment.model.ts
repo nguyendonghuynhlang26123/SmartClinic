@@ -21,9 +21,10 @@ const AppointmentSchema = new Schema(
       required: true,
     },
     note: { type: String, default: false },
-    is_expired: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      default: 'PENDING',
+      enum: ['PENDING', 'CANCELED', 'PROCESSED'],
     },
     created_at: { type: Number },
     updated_at: { type: Number },

@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.adapters.PharmacyItemAdapter;
 import com.team13.patientclient.adapters.PrescriptionItemAdpater;
 import com.team13.patientclient.models.DrugDetail;
+import com.team13.patientclient.models.Prescription;
 import com.team13.patientclient.models.Treatment;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private Treatment.Prescription prescription;
+    private Prescription prescription;
 
     public PrescriptionFragment() {
         // Required empty public constructor
@@ -46,7 +48,7 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
      * @return A new instance of fragment PrescriptionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PrescriptionFragment newInstance(Treatment.Prescription prescription) {
+    public static PrescriptionFragment newInstance(Prescription prescription) {
         PrescriptionFragment fragment = new PrescriptionFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, prescription);
@@ -58,7 +60,7 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            prescription = (Treatment.Prescription)getArguments().getSerializable(ARG_PARAM1);
+            prescription = (Prescription)getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -72,17 +74,17 @@ public class PrescriptionFragment extends BottomSheetDialogFragment {
         drugList.setAdapter(adapter);
         drugList.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         TextView name = view.findViewById(R.id.prescription_patient_name);
-        name.setText(prescription.getPatientName());
+        name.setText(Store.get_instance().getUserAccount().getUserInfor().getName());
         TextView symptom = view.findViewById(R.id.prescription_patient_symptom);
         symptom.setText(prescription.getSymptom());
         TextView diagnose = view.findViewById(R.id.prescription_patient_diagnose);
         diagnose.setText(prescription.getDiagnose());
         TextView date = view.findViewById(R.id.prescription_patient_date);
-        date.setText(prescription.getDate());
+        //date.setText(prescription.getDate());
         TextView note = view.findViewById(R.id.prescription_note);
         note.setText(prescription.getNote());
         TextView doctor = view.findViewById(R.id.prescription_doctor);
-        doctor.setText(prescription.getDoctorName());
+        //doctor.setText(prescription.getDoctorName());
         return view;
     }
 

@@ -24,15 +24,17 @@ public class TreatmentActivity extends AppCompatActivity {
         treatment = (Treatment)i.getSerializableExtra("prescription");
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v->finish());
+
         TextView doctor = findViewById(R.id.treatment_doctor);
-        doctor.setText(treatment.getDoctorName());
         TextView service = findViewById(R.id.treatment_service);
-        service.setText(treatment.getServicePack());
         TextView time = findViewById(R.id.treatment_time);
-        time.setText(treatment.getTime()+", "+treatment.getDate());
         TextView status = findViewById(R.id.treatment_status);
-        status.setText(treatment.getStatus());
         ExtendedFloatingActionButton prescriptionButton = findViewById(R.id.treatment_prescription);
+
+        doctor.setText(treatment.getDoctorName());
+        service.setText(treatment.getServicePack());
+        time.setText(treatment.getTime() + ", " + treatment.getDate());
+        status.setText(treatment.getStatus());
         if(treatment.getPrescription()!=null){
             prescriptionButton.setOnClickListener(v->{
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());

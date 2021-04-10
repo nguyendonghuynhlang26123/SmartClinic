@@ -1,12 +1,19 @@
 package com.team13.patientclient.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class DrugDetail implements Serializable {
+    @SerializedName("medicine")
     DrugModel drugModel;
+
+    @SerializedName("quantity")
     int quantity;
+
+    @SerializedName("note")
     String note;
-    long total=0;
+
     public DrugDetail(DrugModel drugModel, int quantity, String note) {
         this.drugModel = drugModel;
         this.quantity = quantity;
@@ -23,9 +30,5 @@ public class DrugDetail implements Serializable {
 
     public String getNote() {
         return note;
-    }
-    public long getTotal(){
-        total = quantity * drugModel.price;
-        return total;
     }
 }
