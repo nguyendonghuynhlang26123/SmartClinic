@@ -13,7 +13,7 @@ export class AppointmentService {
         .findOne({
           _id: appointmentId,
         })
-        .populate('doctor patient');
+        .populate('doctor patient service');
       if (!appointment) {
         throw new Error('Not Found Appointment.');
       }
