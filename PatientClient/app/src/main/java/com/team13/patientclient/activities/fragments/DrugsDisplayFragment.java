@@ -98,7 +98,7 @@ public class DrugsDisplayFragment extends Fragment {
 
             //Rendering dumb data first while waiting for response
             RecyclerView drugList = categoryView.findViewById(R.id.category_item_list);
-            PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), emptyDrugList());
+            PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(categoryView.getContext(), emptyDrugList(), false);
             drugList.setAdapter(pharmacyItemAdapter);
             drugList.setLayoutManager(new LinearLayoutManager(categoryView.getContext(), LinearLayoutManager.HORIZONTAL, false));
 

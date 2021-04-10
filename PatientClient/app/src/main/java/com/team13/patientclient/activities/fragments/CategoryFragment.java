@@ -66,7 +66,7 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         RecyclerView drugs = view.findViewById(R.id.category_item_list);
-        drugs.setAdapter(new PharmacyItemAdapter(view.getContext(),drugList));
+        drugs.setAdapter(new PharmacyItemAdapter(view.getContext(),drugList,true));
         drugs.setLayoutManager(new GridLayoutManager(view.getContext(),2));
         return view;
     }

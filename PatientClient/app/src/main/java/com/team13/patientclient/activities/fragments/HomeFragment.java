@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
 
         //Rendering dumb data first while waiting responses from apis
         pharmacyList = view.findViewById(R.id.pharmacy_list);
-        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(emptyModels)));
+        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(emptyModels)), false);
         pharmacyList.setAdapter(pharmacyItemAdapter);
         pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
