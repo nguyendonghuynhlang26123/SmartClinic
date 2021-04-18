@@ -1,10 +1,8 @@
 package com.team13.patientclient.activities.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.patientclient.R;
-import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
-import com.team13.patientclient.activities.LoginActivity;
-import com.team13.patientclient.activities.MainActivity;
-import com.team13.patientclient.models.AccountModel;
-import com.team13.patientclient.repository.OnSuccessResponse;
-import com.team13.patientclient.repository.services.AuthService;
-
+import com.team13.patientclient.activities.OtpActivity;
 
 
 /**
@@ -42,7 +36,7 @@ public class SignupFragment extends Fragment {
     private String mParam2;
     TextInputEditText phoneInput;
     Button loginButton;
-
+    SignUpListener listener;
     public SignupFragment() {
         // Required empty public constructor
     }
@@ -72,6 +66,7 @@ public class SignupFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -82,9 +77,7 @@ public class SignupFragment extends Fragment {
         phoneInput = view.findViewById(R.id.sign_up_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         loginButton = view.findViewById(R.id.login_text_button);
-        loginButton.setOnClickListener(v -> {
-            ((LoginActivity)getActivity()).setLoginFragment();
-        });
+        loginButton.setOnClickListener(v -> listener.onBackToLogin());
 
         view.findViewById(R.id.sign_up_button).setOnClickListener(v ->{
             String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
@@ -96,19 +89,42 @@ public class SignupFragment extends Fragment {
             }
             if (!Utils.checkValidPatientName(name) ){
                 Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent i = new Intent(view.getContext(), OtpActivity.class);
+                i.putExtra("phone", phone);
+                view.getContext().startActivity(i);
             }
 
-            AuthService authService = new AuthService();
-            authService.register(phone, password, name, new OnSuccessResponse<AccountModel>() {
-                @Override
-                public void onSuccess(AccountModel account) {
-                    Store.get_instance().setUserAccount(account);
-
-                    Intent i = new Intent(view.getContext(), MainActivity.class);
-                    startActivity(i);
-                }
-            });
+//            AuthService authService = new AuthService();
+//            authService.register(phone, password, name, new OnSuccessResponse<AccountModel>() {
+//                @Override
+//                public void onSuccess(AccountModel account) {
+//                    Store.get_instance().setUserAccount(account);
+//
+//                    Intent i = new Intent(view.getContext(), MainActivity.class);
+//                    startActivity(i);
+//                }
+//            });
         });
         return view;
+    }
+    public interface SignUpListener{
+        void onBackToLogin();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SignUpListener) {
+            listener = (SignUpListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement SignUpListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 }
