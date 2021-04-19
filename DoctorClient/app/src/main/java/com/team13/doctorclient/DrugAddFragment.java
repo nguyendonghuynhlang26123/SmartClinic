@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,15 +82,15 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_drug_add, container, false);
         searchView= view.findViewById(R.id.search_drug);
-
         drugName= view.findViewById(R.id.drug_name);
+        // set value from search view to drug name
         qualityMorning= view.findViewById(R.id.input_morning_quality);
         qualityNoon= view.findViewById(R.id.input_noon_quality);
         qualityEvening= view.findViewById(R.id.input_evening_quality);
         note= view.findViewById(R.id.drug_note);
         discard= view.findViewById(R.id.drug_discardBtn);
         save= view.findViewById(R.id.drug_saveBtn);
-        String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()};
+
         discard.setOnClickListener(v -> {
             drugName.setText("");
             qualityMorning.setText("");
@@ -97,7 +99,7 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
             note.setText("");
         });
         save.setOnClickListener(v -> {
-
+            String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()};
             Drug addDrug= new Drug("001",drugName.toString(),String.valueOf(getTotalQuality(qualities)),note.getText().toString()) ;
             listener.onSaveDrug(addDrug);
             //TODO
@@ -112,8 +114,10 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
     public int getTotalQuality(String[] qualities){
         int total=0;
         for (String s:qualities) {
+            Log.w("quality", s);
             try {
                 total+= Integer.parseInt(s);
+                Log.w("total", String.valueOf(total));
             }
             catch (NumberFormatException e){
 

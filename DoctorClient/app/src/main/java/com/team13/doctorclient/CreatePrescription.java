@@ -18,16 +18,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.DoctorTimeline;
 import com.team13.doctorclient.models.Drug;
+import com.team13.doctorclient.models.PatientTimeline;
+import com.team13.doctorclient.models.Prescription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +41,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreatePrescription extends AppCompatActivity implements DrugAddFragment.AddDrugListener,
-        RescheduleFragment.RescheduleListener {
+        RescheduleFragment.RescheduleListener,ReviewPrescriptionFragment.ReviewDrugListener {
     MaterialToolbar topAppBar;
     BottomAppBar bottomAppBar;
     FloatingActionButton addDrug;
@@ -47,24 +51,38 @@ public class CreatePrescription extends AppCompatActivity implements DrugAddFrag
     DrugAddFragment drugAddFragment;
     Calendar myCalendar;
     DatePickerDialog dialog;
-    TextView startDay, endDay;
+    TextView startDay, endDay, note;
     ImageView pickDate;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     String time;
     RescheduleFragment fragment;
+    DoctorTimeline patient;
+    TextInputEditText symptom, diagnostic;
+    ReviewPrescriptionFragment reviewPrescriptionFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_prescription);
         Intent i = getIntent();
-        time = i.getStringExtra("time");
+        patient= (DoctorTimeline) i.getSerializableExtra("patient");
+
+        time=patient.getTime();
+
         TextView patientName = findViewById(R.id.prescription_patient_name);
-        patientName.setText(i.getStringExtra("patientName"));
+        patientName.setText(patient.getPatientName());
+
+        symptom=findViewById(R.id.input_symptom);
+        symptom.setText(patient.getSymptom());
+
+        diagnostic=findViewById(R.id.input_diagnostic);
+
+        note=findViewById(R.id.note_prescription);
         topAppBar= findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
+
         bottomAppBar=findViewById(R.id.bottom_app_bar);
         startDay= findViewById(R.id.prescription_patient_date_begin);
-        startDay.setText(i.getStringExtra("time").split(" ")[0]);
+        startDay.setText(patient.getTime().split(" ")[0]);
         endDay=findViewById(R.id.prescription_patient_date_end);
         myCalendar= Calendar.getInstance();
         pickDate=findViewById(R.id.pick_date);
@@ -106,7 +124,7 @@ public class CreatePrescription extends AppCompatActivity implements DrugAddFrag
             }
         });
         bottomAppBar.setNavigationOnClickListener(v->{
-            ReviewPrescriptionFragment reviewPrescriptionFragment=new ReviewPrescriptionFragment();
+            reviewPrescriptionFragment =new ReviewPrescriptionFragment();
             assert  getSupportFragmentManager()!=null;
             reviewPrescriptionFragment.show(getSupportFragmentManager(),reviewPrescriptionFragment.getTag());
         });
@@ -136,11 +154,15 @@ public class CreatePrescription extends AppCompatActivity implements DrugAddFrag
         drugAdapter.setData(addDrugArrayList);
         drugAddFragment.dismiss();
     }
-
+    @Override
+    public void onSaveListDrug(ArrayList<Drug> addDrugArrayList){
+        this.addDrugArrayList=addDrugArrayList;
+        drugAdapter.setData(addDrugArrayList);
+        reviewPrescriptionFragment.dismiss();
+    }
     @Override
     public void setReschedule(Appointment appointment) {
         //***TODO: Send to db
-
         endDay.setText(appointment.getDate());
         removeFragment(fragment);
     }
@@ -149,5 +171,9 @@ public class CreatePrescription extends AppCompatActivity implements DrugAddFrag
         transaction.detach(fragment);
         transaction.remove(fragment);
         transaction.commit();
+    }
+    private Prescription getPrescription(){
+        // id??
+        return new Prescription("001",patient.getPatientName(),addDrugArrayList,note.getText().toString(),symptom.getText().toString(),diagnostic.getText().toString(),startDay.getText().toString(),endDay.getText().toString());
     }
 }

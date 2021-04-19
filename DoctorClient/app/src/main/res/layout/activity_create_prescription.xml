@@ -93,6 +93,7 @@
                     android:layout_height="match_parent"
                     android:inputType="text"
                     android:id="@+id/input_symptom"
+
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
