@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.vipulasri.timelineview.TimelineView;
 import com.team13.doctorclient.PrescriptionViewActivity;
 import com.team13.doctorclient.R;
+import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.PatientTimeline;
 
 import java.util.ArrayList;
@@ -47,8 +49,14 @@ public class PatientTimelineAdapter  extends RecyclerView.Adapter<PatientTimelin
         View view=holder.itemView;
         PatientTimeline patientTimeline= patientTimelineArrayList.get(position);
         Button prescriptionBtn=view.findViewById(R.id.prescriptionBtn);
+        ((TextView)view.findViewById(R.id.patient_treatment_timeline_date)).setText(patientTimeline.getDate());
+        ((TextView)view.findViewById(R.id.patient_treatment_timeline_time)).setText(patientTimeline.getTime());
+        ((TextView)view.findViewById(R.id.symptom)).setText(patientTimeline.getPatientSymptom());
+        ((TextView)view.findViewById(R.id.diagnostic)).setText(patientTimeline.getPatientDiagnostic());
+        ((Button)view.findViewById(R.id.treatment)).setText(patientTimeline.getPatientTreatment());
         prescriptionBtn.setOnClickListener(v -> {
             Intent i= new Intent(context, PrescriptionViewActivity.class);
+            i.putExtra("IdPrescription",patientTimeline.getPrescriptionId());
             context.startActivity(i);
         });
     }

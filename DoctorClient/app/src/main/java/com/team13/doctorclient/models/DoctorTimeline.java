@@ -7,11 +7,13 @@ public class DoctorTimeline implements Serializable {
     String patientName;
     String treatment;
     String time;
-    public DoctorTimeline(boolean isSeized, String patientName, String treatment, String day, String time){
+    String symptom;
+    public DoctorTimeline(boolean isSeized, String patientName, String treatment, String day, String time, String symptom){
         this.isSeized=isSeized;
         this.patientName=patientName;
         this.treatment=treatment;
         this.time=day+" "+ time;
+        this.symptom=symptom;
     }
 
     public String getPatientName() {
@@ -25,4 +27,6 @@ public class DoctorTimeline implements Serializable {
     public String getTreatment() {
         return treatment;
     }
+
+    public String getSymptom(){return  symptom;}
 }
