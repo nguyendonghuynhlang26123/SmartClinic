@@ -3,19 +3,19 @@ package com.team13.doctorclient;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DoctorProfileFragment#newInstance} factory method to
+ * Use the {@link EditProfileDoctorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DoctorProfileFragment extends Fragment {
+public class EditProfileDoctorFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class DoctorProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DoctorProfileFragment() {
+    public EditProfileDoctorFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class DoctorProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DoctorProfileFragment.
+     * @return A new instance of fragment EditProfileDoctorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DoctorProfileFragment newInstance(String param1, String param2) {
-        DoctorProfileFragment fragment = new DoctorProfileFragment();
+    public static EditProfileDoctorFragment newInstance(String param1, String param2) {
+        EditProfileDoctorFragment fragment = new EditProfileDoctorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,19 +60,9 @@ public class DoctorProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_doctor_profile, container, false);
-        ImageButton editBtn=view.findViewById(R.id.profile_edit_button);
-        editBtn.setOnClickListener(v -> {
-            Fragment fragment= new EditProfileDoctorFragment();
-            loadFragment(fragment);
-        });
+        View view= inflater.inflate(R.layout.fragment_edit_profile_doctor, container, false);
+        FloatingActionButton addchip= view.findViewById(R.id.add_specialities);
+        //TODO
         return view;
-    }
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }
