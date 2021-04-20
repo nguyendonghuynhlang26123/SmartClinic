@@ -107,21 +107,23 @@ public class ScheduleFragment extends Fragment {
     private class MyAppointment{
         String patientName;
         String treatment;
+        String symptom;
         String time;
-        public MyAppointment( String patientName, String treatment, String time){
+        public MyAppointment( String patientName, String treatment, String symptom,String time){
             this.patientName = patientName;
             this.treatment = treatment;
-            this.time= time;
+            this.symptom= symptom;
+            this.time=time;
         }
     }
     void getAppointments(){
-        appointments.add(new MyAppointment("MN","Beauty","7:30"));
-        appointments.add(new MyAppointment("MN","Beauty","9:30"));
-        appointments.add(new MyAppointment("MN","Beauty","10:30"));
-        appointments.add(new MyAppointment("MN","Beauty","13:30"));
-        appointments.add(new MyAppointment("MN","Beauty","16:30"));
-        appointments.add(new MyAppointment("MN","Beauty","18:30"));
-        appointments.add(new MyAppointment("MN","Beauty","20:30"));
+        appointments.add(new MyAppointment("MN","Beauty","cough","7:30"));
+        appointments.add(new MyAppointment("MN","Beauty","fever","9:30"));
+        appointments.add(new MyAppointment("MN","Beauty","headache","10:30"));
+        appointments.add(new MyAppointment("MN","Beauty","cough","13:30"));
+        appointments.add(new MyAppointment("MN","Beauty","fever","16:30"));
+        appointments.add(new MyAppointment("MN","Beauty","headache","18:30"));
+        appointments.add(new MyAppointment("MN","Beauty","","20:30"));
 
     }
     int isSeized(String time){
@@ -141,9 +143,9 @@ public class ScheduleFragment extends Fragment {
             if(a!=-1){
                 MyAppointment appointment = appointments.get(a);
 
-                doctorTimelineArrayList.add(new DoctorTimeline(true,appointment.patientName,appointment.treatment,format.format(calendar.getTime()),s));
+                doctorTimelineArrayList.add(new DoctorTimeline(true,appointment.patientName,appointment.treatment,format.format(calendar.getTime()),s,appointment.symptom));
             } else {
-                doctorTimelineArrayList.add(new DoctorTimeline(false,null,null, format.format(calendar.getTime()), s));
+                doctorTimelineArrayList.add(new DoctorTimeline(false,null,null, format.format(calendar.getTime()), s,null));
             }
         }
         return doctorTimelineArrayList;

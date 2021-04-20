@@ -50,8 +50,8 @@ public class DoctorTimelineAdapter extends RecyclerView.Adapter<DoctorTimelineAd
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             linearLayout.addView(smallview,params);
             patientCardview= view.findViewById(R.id.patient_line);
-            TextView cardTimeView = smallview.findViewById(R.id.timeline_time);
-            cardTimeView.setText(time);
+            TextView cardSymptomView = smallview.findViewById(R.id.timeline_symptom);
+            cardSymptomView.setText(doctorTimeline.getSymptom());
             TextView patientName = smallview.findViewById(R.id.timeline_patient_name);
             patientName.setText(doctorTimeline.getPatientName());
             Button treatment = smallview.findViewById(R.id.timeline_treatment);

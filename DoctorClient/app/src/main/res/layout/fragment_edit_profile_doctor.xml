@@ -58,7 +58,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintTop_toBottomOf="parent"
                     android:id="@+id/doctor_avatar"/>
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Dr.Coco"
@@ -68,16 +68,6 @@
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"
                     android:id="@+id/doctor_name"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="26dp"
-                    android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_edit"
-                    android:background="@color/transparent"
-                    android:id="@+id/profile_edit_button"
-                    app:layout_constraintLeft_toRightOf="@id/doctor_name"
-                    app:layout_constraintBottom_toBottomOf="@id/doctor_name"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,9 +84,8 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:id="@+id/about_label"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <TextView
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Doctors tend to be predominantly investigative individuals, which means that they are quite inquisitive and curious people that often like to spend time alone with ..."
@@ -104,17 +93,33 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Specialities"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_vertical"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    android:id="@+id/add_specialities"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:layout_marginHorizontal="4dp"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/teal_700"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -124,13 +129,23 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 >
+
                 <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Entry"
+                    android:id="@+id/entryChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pediatric"
+                    android:checkable="true"
+                    android:text="aaaaaaa"
+                    app:chipIconTint="@color/white" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
                     android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    android:text="Pediatric"
+                    android:textAlignment="center" />
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -147,7 +162,15 @@
                     android:textAlignment="center"
                     android:gravity="center_horizontal"/>
             </LinearLayout>
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Save"
+                android:layout_marginVertical="10dp"
+                android:id="@+id/saveBtn"
+                />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

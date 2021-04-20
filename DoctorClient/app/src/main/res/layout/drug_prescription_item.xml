@@ -41,7 +41,7 @@ android:shrinkColumns="*"
         android:background="@color/black"/>
     <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="48"
         android:gravity="center"
         android:id="@+id/drug_name"

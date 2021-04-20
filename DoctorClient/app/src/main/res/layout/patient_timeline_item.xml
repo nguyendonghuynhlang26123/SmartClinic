@@ -84,6 +84,7 @@
                     android:minWidth="0dp"
                     android:clickable="false"
                     android:layout_marginVertical="5dp"
+                    android:id="@+id/treatment"
                     />
                 <TextView
                     android:layout_width="wrap_content"

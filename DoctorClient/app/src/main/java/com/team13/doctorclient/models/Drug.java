@@ -12,4 +12,20 @@ public class Drug {
         this.drugQuality = drugQuality;
         this.drugNote = drugNote;
     }
+
+    public String getDrugId() {
+        return drugId;
+    }
+
+    public String getDrugName() {
+        return drugName;
+    }
+
+    public String getDrugNote() {
+        return drugNote;
+    }
+
+    public String getDrugQuality() {
+        return drugQuality;
+    }
 }

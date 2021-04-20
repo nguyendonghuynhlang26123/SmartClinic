@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/timeline_patient_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:id="@+id/timeline_time"/>
+                android:id="@+id/timeline_symptom"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
