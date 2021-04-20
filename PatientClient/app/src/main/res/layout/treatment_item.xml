@@ -28,7 +28,6 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_check"
         android:id="@+id/timeline_marker"
         app:layout_constraintTop_toBottomOf="@+id/upper_line"
         app:layout_constraintBottom_toTopOf="@+id/lower_line"

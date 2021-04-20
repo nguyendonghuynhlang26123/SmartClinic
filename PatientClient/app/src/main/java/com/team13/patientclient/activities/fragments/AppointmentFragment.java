@@ -47,7 +47,7 @@ public class AppointmentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    ArrayList<Treatment> treatments = new ArrayList<>();
     public AppointmentFragment() {
         // Required empty public constructor
     }
@@ -133,12 +133,14 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onSuccess(Appointment currentAppointment) {
                 adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
+//                treatments.add(new Treatment(currentAppointment, null));
             }
         });
 
         service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
             @Override
             public void onSuccess(Treatment[] treatmentList) {
+//                treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
                 adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
             }
         });

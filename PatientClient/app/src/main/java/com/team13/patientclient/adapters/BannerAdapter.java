@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.team13.patientclient.activities.PharmacyActivity;
 import com.team13.patientclient.activities.ServiceActivity;
 import com.team13.patientclient.R;
 
@@ -36,14 +38,26 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.banner_item, container, false);
-        itemView.setOnClickListener(v->{
-            switch (position){
-                case 1:
+        ImageView bannerImage = itemView.findViewById(R.id.banner_image);
+        switch (position){
+            case 0:
+                bannerImage.setImageResource(R.drawable.banner2);
+                itemView.setOnClickListener(v->{
                     Intent i = new Intent(context, ServiceActivity.class);
                     context.startActivity(i);
-                    break;
-            }
-        });
+                });
+                break;
+            case 1:
+                bannerImage.setImageResource(R.drawable.banner1);
+                itemView.setOnClickListener(v->{
+                    Intent i = new Intent(context, PharmacyActivity.class);
+                    context.startActivity(i);
+                });
+                break;
+            case 2:
+                bannerImage.setImageResource(R.drawable.banner3);
+                break;
+        }
         Objects.requireNonNull(container).addView(itemView);
         return itemView;
     }

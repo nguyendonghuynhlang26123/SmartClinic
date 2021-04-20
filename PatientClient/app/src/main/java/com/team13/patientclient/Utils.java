@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
 
     //SETTINGS
     public static final int NAME_LENGTH_LIMIT = 16;
@@ -52,8 +52,7 @@ public class Utils {
         @SuppressLint("SimpleDateFormat") DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         int d1 = Integer.parseInt(formatter.format(birthDate));
         int d2 = Integer.parseInt(formatter.format(currentDate));
-        int age = (d2 - d1) / 10000;
-        return age;
+        return (d2 - d1) / 10000;
     }
 
     public static String formatingPrice(long price){

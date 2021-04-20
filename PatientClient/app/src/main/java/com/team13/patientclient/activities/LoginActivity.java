@@ -29,7 +29,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener {
+public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener,
+                                                            SignupFragment.SignUpListener
+{
     TabLayout tabLayout;
     ProgressBar progressBar;
     TextView welcomeData;
@@ -109,4 +111,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
         });
     }
 
+    @Override
+    public void onBackToLogin() {
+        setLoginFragment();
+    }
 }

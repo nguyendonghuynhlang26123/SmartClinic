@@ -51,7 +51,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         Treatment treatment = treatments.get(position);
         ImageButton stateIcon = view.findViewById(R.id.timeline_marker);
         switch (treatment.getStatus()){
-            case "PROCESSED":
+            case "PROCESSING":
                 stateIcon.setImageResource(R.drawable.ic_check);
                 break;
             case "CANCEL":
@@ -79,6 +79,9 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             prescription.setVisibility(View.VISIBLE);
             prescription.setOnClickListener(v-> listener.onItemClick(treatment.getPrescription()));
         }
+        ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
+        removeButton.setVisibility(View.INVISIBLE);
+        treatmentCard.setStrokeWidth(0);
         if(position == 0){
             view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
             if(treatment.getStatus().equals("PENDING")){
@@ -86,7 +89,6 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
                 treatmentCard.setStrokeWidth(8);
                 time.setTextColor(view.getResources().getColor(R.color.red));
                 listener.onHasAppointment();
-                ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
                 removeButton.setVisibility(View.VISIBLE);
                 removeButton.setOnClickListener(v->{
                     listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId());
@@ -119,7 +121,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         Log.d("LONG", new Gson().toJson(treatments.get(0).getStatus()));
         treatments.remove(position);
         Log.d("LONG", new Gson().toJson(treatments.get(0).getStatus()));
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "704315945958",
+    "project_id": "iotproject-edca8",
+    "storage_bucket": "iotproject-edca8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704315945958:android:6e266257890cdbaef29c27",
+        "android_client_info": {
+          "package_name": "com.team13.patientclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704315945958-pgacbkquqq5jok232mj2b9vsse47j1h5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team13.patientclient",
+            "certificate_hash": "2b161119833a51701fe51fec014486d3a9bb3603"
+          }
+        },
+        {
+          "client_id": "704315945958-8iqk366qn6np5b7nj3kkaa3bmd0d75vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeR7CinjZcPnGjjC5IDgUCEBX50Y8g1b0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704315945958-8iqk366qn6np5b7nj3kkaa3bmd0d75vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

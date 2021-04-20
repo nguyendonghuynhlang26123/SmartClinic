@@ -2,15 +2,18 @@ package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -32,6 +35,7 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
     ArrayList<Category> drugCategories;
     MaterialToolbar topAppBar;
     String searchQuery="";
+    FragmentManager fragmentManager = getSupportFragmentManager();
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,12 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         setContentView(R.layout.activity_pharmacy);
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> {
-            finish();
+            Toast.makeText(this,String.valueOf(fragmentManager.getBackStackEntryCount()),Toast.LENGTH_LONG).show();
+            if(fragmentManager.getBackStackEntryCount()<=2){
+                finish();
+            } else {
+                fragmentManager.popBackStack();
+            }
         });
         topAppBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.cart) {
@@ -79,7 +88,7 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
 
     private void loadFragment(Fragment fragment) {
         // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
