@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ScheduleItem;
@@ -89,19 +90,26 @@ public class ScheduleFragment extends Fragment {
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
         selectedDay = Calendar.getInstance();
+        TextView currentDay= view.findViewById(R.id.current_day);
+        currentDay.setText(format.format(selectedDay.getTime()));
         selectedDay.add(Calendar.DATE,-1);
         horizontalCalendar = new HorizontalCalendar.Builder(view,R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5).defaultSelectedDate(selectedDay)
                 .build();
-        renderData(selectedDay);
+        Calendar true_day = Calendar.getInstance();
+        true_day.setTime(selectedDay.getTime());
+        true_day.add(Calendar.DATE,1);
+        renderData(true_day);
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
+                date.add(Calendar.DATE,1);
                 renderData(date);
             }
 
         });
+
         return view;
     }
 
@@ -119,13 +127,13 @@ public class ScheduleFragment extends Fragment {
 
     void getAppointmentByDay(Calendar date){
         ServicePack servicePack = new ServicePack("Beauty Care","Face surgery",500000,"1");
-        appointments.add(new Appointment("MN",servicePack,"cough","20/04/2021","7:30","CANCEL"));
-        appointments.add(new Appointment("MN",servicePack,"fever","20/04/2021","9:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"headache","20/04/2021","10:30","CANCEL"));
-        appointments.add(new Appointment("MN",servicePack,"cough","20/04/2021","13:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"fever","20/04/2021","16:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"headache","20/04/2021","18:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"","20/04/2021","20:30","PENDING"));
+        appointments.add(new Appointment("MN",servicePack,"cough",format.format(date.getTime()),"7:30","CANCEL"));
+        appointments.add(new Appointment("MN",servicePack,"fever",format.format(date.getTime()),"9:30","PROCESSING"));
+        appointments.add(new Appointment("MN",servicePack,"headache",format.format(date.getTime()),"10:30","CANCEL"));
+        appointments.add(new Appointment("MN",servicePack,"cough",format.format(date.getTime()),"13:30","PROCESSING"));
+        appointments.add(new Appointment("MN",servicePack,"fever",format.format(date.getTime()),"16:30","PROCESSING"));
+        appointments.add(new Appointment("MN",servicePack,"headache",format.format(date.getTime()),"18:30","PROCESSING"));
+        appointments.add(new Appointment("MN",servicePack,"",format.format(date.getTime()),"20:30","PENDING"));
 
     }
 

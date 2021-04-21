@@ -1,11 +1,14 @@
 package com.team13.doctorclient;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,29 +27,29 @@ public class PatientDetailActivity extends AppCompatActivity {
     MaterialToolbar topAppBar;
     Button startBtn;
     Appointment appointment;
+    String status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_detail);
         Intent i = getIntent();
         appointment =(Appointment) i.getSerializableExtra("appointment");
-        patientTreatmentTimeline = findViewById(R.id.patient_treatment_timeline);
-        treatmentTimelineAdapter = new TreatmentTimelineAdapter(this,getTreatmentTimeline());
-        patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
-        patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        status = i.getStringExtra("status");
+
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
-        TextView patientTime = findViewById(R.id.patient_time);
-        patientTime.setText(appointment.getTime()+" "+appointment.getDate());
-        TextView patientTreatment = findViewById(R.id.patient_treatment);
-        patientTreatment.setText(appointment.getService().getName());
-        //TODO: Money
-        startBtn= findViewById(R.id.startBtn);
-        startBtn.setOnClickListener(v -> {
-            Intent intent= new Intent(this, NewPrescriptionActivity.class);
-            intent.putExtra("appointment", appointment);
-            this.startActivity(intent);
-        });
+
+        if(status.equals("START")){
+            loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
+            findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+            startBtn= findViewById(R.id.startBtn);
+            startBtn.setOnClickListener(v -> {
+                Intent intent= new Intent(this, NewPrescriptionActivity.class);
+                intent.putExtra("appointment", appointment);
+                this.startActivity(intent);
+            });
+        }
+        renderTreatmentTimeline();
 
     }
     ArrayList<Treatment> getTreatmentTimeline(){
@@ -58,5 +61,22 @@ public class PatientDetailActivity extends AppCompatActivity {
         treatments.add(new Treatment(appointment,prescription));
         treatments.add(new Treatment(appointment,prescription));
         return treatments;
+    }
+    void renderTreatmentTimeline(){
+        findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        // Get data from server
+        patientTreatmentTimeline = findViewById(R.id.treatment_timeline);
+        treatmentTimelineAdapter = new TreatmentTimelineAdapter(this,getTreatmentTimeline());
+        patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
+        patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        findViewById(R.id.progress).setVisibility(View.GONE);
+
+    }
+    private void loadFragment(int id, Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(id, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

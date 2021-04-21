@@ -61,6 +61,7 @@ public class ScheduleTimelineAdapter extends RecyclerView.Adapter<ScheduleTimeli
             appointmentCard.setOnClickListener(v -> {
                 Intent i= new Intent(context, PatientDetailActivity.class);
                 i.putExtra("appointment", appointment);
+                i.putExtra("status","START");
                 context.startActivity(i);
             });
         } else {

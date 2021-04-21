@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,8 +43,12 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         MaterialCardView patientCard= view.findViewById(R.id.medical_record);
         patientCard.setOnClickListener(v -> {
             Intent i= new Intent(context, PatientDetailActivity.class);
+            i.putExtra("status","REVIEW");
             context.startActivity(i);
         });
+        ((TextView)view.findViewById(R.id.treatment_patient_name)).setText(treatment.getAppointment().getPatientId());
+        ((TextView)view.findViewById(R.id.treatment_diagnostic)).setText(treatment.getPrescription().getDiagnose());
+        ((Button)view.findViewById(R.id.treatment_service)).setText(treatment.getServicePack());
     }
 
     @Override

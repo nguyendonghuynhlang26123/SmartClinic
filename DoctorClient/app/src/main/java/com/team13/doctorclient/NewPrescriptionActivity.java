@@ -125,7 +125,7 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
             drugAddFragment.show(getSupportFragmentManager(),drugAddFragment.getTag());
         });
         drugList= findViewById(R.id.drug_list);
-        drugAdapter= new DrugAdapter(this);
+        drugAdapter= new DrugAdapter(this, true);
         drugList.setAdapter(drugAdapter);
         drugList.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
 

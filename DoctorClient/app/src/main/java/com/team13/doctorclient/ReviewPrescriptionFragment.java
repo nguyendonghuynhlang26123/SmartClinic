@@ -84,7 +84,7 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_review_prescription, container, false);
         drugList= view.findViewById(R.id.drug_list);
-        drugAdapter =new DrugAdapter(view.getContext(),getDrug());
+        drugAdapter =new DrugAdapter(view.getContext(),getDrug(),false);
         drugList.setAdapter(drugAdapter);
         drugList.setLayoutManager(new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false));
         topAppBar=view.findViewById(R.id.topAppBar);
