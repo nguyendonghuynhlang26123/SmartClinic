@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.ServicePack;
 
 import java.util.Calendar;
 
@@ -59,6 +61,7 @@ public class RescheduleFragment extends DialogFragment {
     // TODO: Rename and change types and number of parameters
     public static RescheduleFragment newInstance(String param1) {
         RescheduleFragment fragment = new RescheduleFragment();
+        Log.d("DANG","creating reschedule");
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -78,6 +81,7 @@ public class RescheduleFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_reschedule, container, false);
+
         myCalendar= Calendar.getInstance();
         dayPicked=view.findViewById(R.id.date_picked);
         date=rescheduleTime.split(" ")[0];
@@ -104,25 +108,22 @@ public class RescheduleFragment extends DialogFragment {
                     .build();
             picker.show(getFragmentManager(),null);
 
-            picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    time= String.valueOf(picker.getHour());
-                    if(picker.getMinute()<=15){
-                        time+=":00";
-                        timePicked.setText(time);
+            picker.addOnPositiveButtonClickListener(v1 -> {
+                time= String.valueOf(picker.getHour());
+                if(picker.getMinute()<=15){
+                    time+=":00";
+                    timePicked.setText(time);
 
-                    }
-                    else if(picker.getMinute()>15&&picker.getMinute()<45){
-                        time+=":30";
-                        timePicked.setText(time);
+                }
+                else if(picker.getMinute()>15&&picker.getMinute()<45){
+                    time+=":30";
+                    timePicked.setText(time);
 //                        Log.w("Goto","1");
-                    }
-                    else if(picker.getMinute()>=45) {
-                        time= String.valueOf(picker.getHour()+1)+":00";
-                        timePicked.setText(time);
+                }
+                else if(picker.getMinute()>=45) {
+                    time= String.valueOf(picker.getHour()+1)+":00";
+                    timePicked.setText(time);
 //                        Log.w("Goto","1");
-                    }
                 }
             });
 
@@ -133,7 +134,8 @@ public class RescheduleFragment extends DialogFragment {
         rescheduleBtn=view.findViewById(R.id.reschedule_button);
         rescheduleBtn.setOnClickListener(v -> {
             Log.w("Date",date);
-            Appointment appointment = new Appointment("001","0010","reschedule",date,time);
+            ServicePack servicePack = new ServicePack("Beauty Care", "no", 500000,"1");
+            Appointment appointment = new Appointment("MN",servicePack,"reschedule",date,time,"PENDING");
             listener.setReschedule(appointment);
         });
         return view;

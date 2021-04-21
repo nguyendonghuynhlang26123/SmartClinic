@@ -1,15 +1,16 @@
 package com.team13.doctorclient.models;
 
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
     String id;
 
     String patientId;
 
+    ServicePack service;
 
-    String serviceId;
-
-    String doctorId;
+    Doctor doctor;
 
     String date;
 
@@ -17,13 +18,19 @@ public class Appointment {
 
     String note;
 
-    public Appointment(String patientId, String serviceId, String note, String date, String time){
+    String status;
+
+    public Appointment(String patientId, ServicePack service, String note, String date, String time, String status){
+        this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
         this.patientId = patientId;
-        this.serviceId = serviceId;
-        this.doctorId = "6064131892cd230c287d5bd4";
         this.date = date;
         this.time = time;
         this.note = note;
+        this.service = service;
+        this.status = status;
+    }
+
+    public Appointment(){
     }
 
     public String getPatientId() {
@@ -34,20 +41,20 @@ public class Appointment {
         this.patientId = patientId;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public ServicePack getService() {
+        return service;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setService(ServicePack service) {
+        this.service = service;
     }
 
-    public String getDoctorId() {
-        return doctorId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public String getDate() {
@@ -72,5 +79,13 @@ public class Appointment {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
