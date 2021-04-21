@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.team13.doctorclient.adapters.MedicalRecordAdapter;
+import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.Patient;
+import com.team13.doctorclient.models.Prescription;
+import com.team13.doctorclient.models.ServicePack;
+import com.team13.doctorclient.models.Treatment;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,7 @@ public class MedicalRecordFragment extends Fragment {
 
     SearchView searchView;
     MedicalRecordAdapter medicalRecordAdapter;
-    RecyclerView patientList;
+    RecyclerView treatmentList;
 
     public MedicalRecordFragment() {
         // Required empty public constructor
@@ -71,17 +75,20 @@ public class MedicalRecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_medical_record, container, false);
-        patientList= view.findViewById(R.id.patient_list);
-        medicalRecordAdapter= new MedicalRecordAdapter(view.getContext(),getPatient());
-        patientList.setAdapter(medicalRecordAdapter);
-        patientList.setLayoutManager(new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false));
+        treatmentList= view.findViewById(R.id.patient_list);
+        medicalRecordAdapter= new MedicalRecordAdapter(view.getContext(),getTreatments());
+        treatmentList.setAdapter(medicalRecordAdapter);
+        treatmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false));
         return view;
     }
-    public ArrayList<Patient> getPatient(){
-        ArrayList<Patient> patients= new ArrayList<>();
+    public ArrayList<Treatment> getTreatments(){
+        ArrayList<Treatment> treatments= new ArrayList<>();
+        ServicePack servicePack = new ServicePack("Beauty Care","no", 500000, "1");
+        Appointment appointment = new Appointment("MN", servicePack, "Cough","7/04/2021","13:30","PROCESSING");
+        Prescription prescription = new Prescription();
         for (int i=0;i<10;++i){
-            patients.add(new Patient("001","MN","core throat","general"));
+            treatments.add(new Treatment(appointment, prescription));
         }
-        return patients;
+        return treatments;
     }
 }
