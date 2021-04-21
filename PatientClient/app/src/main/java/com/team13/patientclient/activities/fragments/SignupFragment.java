@@ -91,20 +91,11 @@ public class SignupFragment extends Fragment {
                 Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
             } else {
                 Intent i = new Intent(view.getContext(), OtpActivity.class);
-                i.putExtra("phone", phone);
+                i.putExtra("phone", "+84" + phone);
+                i.putExtra("password", password);
+                i.putExtra("name", name);
                 view.getContext().startActivity(i);
             }
-
-//            AuthService authService = new AuthService();
-//            authService.register(phone, password, name, new OnSuccessResponse<AccountModel>() {
-//                @Override
-//                public void onSuccess(AccountModel account) {
-//                    Store.get_instance().setUserAccount(account);
-//
-//                    Intent i = new Intent(view.getContext(), MainActivity.class);
-//                    startActivity(i);
-//                }
-//            });
         });
         return view;
     }
