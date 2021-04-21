@@ -50,7 +50,7 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         patientDayEnd.setText(prescription.getDateEnd());
 
         topAppBar.setNavigationOnClickListener(v -> finish());
-        drugAdapter =new DrugAdapter(this,prescription.getDrugList());
+        drugAdapter =new DrugAdapter(this,prescription.getDrugList(),false);
         drugList.setAdapter(drugAdapter);
         drugList.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
     }

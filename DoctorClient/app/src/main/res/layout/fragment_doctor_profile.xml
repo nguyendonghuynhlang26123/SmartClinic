@@ -99,7 +99,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Doctors tend to be predominantly investigative individuals, which means that they are quite inquisitive and curious people that often like to spend time alone with ..."
+                android:id="@+id/doctor_about"
+
                 android:layout_marginTop="16dp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -108,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Specialities"
+                    android:text="Specialties"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
@@ -117,36 +118,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:weightSum="3"
+                android:id="@+id/chips"
+                app:chipSpacingHorizontal="10dp"
                 >
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pediatric"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal" />
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Surgery"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="16dp"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cold"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:gravity="center_horizontal"/>
-            </LinearLayout>
+            </com.google.android.material.chip.ChipGroup>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
