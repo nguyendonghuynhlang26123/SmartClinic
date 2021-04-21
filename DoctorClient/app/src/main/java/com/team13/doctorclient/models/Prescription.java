@@ -23,7 +23,9 @@ public class Prescription{
         this.dateStart= dateStart;
         this.dateEnd=dateEnd;
     }
+    public Prescription(){
 
+    }
     public ArrayList<Drug> getDrugList() {
         return drugList;
     }
@@ -56,7 +58,11 @@ public class Prescription{
         this.diagnose = diagnose;
     }
     public void setIdPrescription(String Id){ this.Id = Id;}
-    public String getIdPrescription(){return Id;}
+
+    public String getId() {
+        return Id;
+    }
+
     public void setPatientName(String patientName){this.patientName=patientName;}
     public String getPatientName(){return patientName;}
 
