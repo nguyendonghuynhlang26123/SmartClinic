@@ -2,12 +2,19 @@ package com.team13.doctorclient;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -25,7 +32,7 @@ public class EditProfileDoctorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    int SpannedLength = 0,chipLength = 10;
     public EditProfileDoctorFragment() {
         // Required empty public constructor
     }
@@ -62,7 +69,33 @@ public class EditProfileDoctorFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_edit_profile_doctor, container, false);
         FloatingActionButton addchip= view.findViewById(R.id.add_specialities);
-        //TODO
+
+
+        AppCompatEditText Phone = view.findViewById(R.id.phone);
+
+        Phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                ChipDrawable chip = ChipDrawable.createFromResource(getContext(), R.xml.chip);
+                chip.setText(editable.subSequence(SpannedLength,editable.length()-1));
+                chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+                ImageSpan span = new ImageSpan(chip);
+                editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannedLength = editable.length();
+                Log.w("length", String.valueOf(SpannedLength));
+
+            }
+        });
         return view;
     }
 }

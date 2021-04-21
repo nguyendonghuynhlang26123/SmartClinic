@@ -130,14 +130,16 @@
                 android:weightSum="3"
                 >
 
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Entry"
-                    android:id="@+id/entryChip"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:text="aaaaaaa"
-                    app:chipIconTint="@color/white" />
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    />
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
