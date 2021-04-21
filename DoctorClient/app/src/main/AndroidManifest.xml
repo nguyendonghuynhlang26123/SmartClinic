@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorClient">
-        <activity android:name=".CreatePrescription" />
+        <activity android:name=".NewPrescriptionActivity" />
         <activity android:name=".PrescriptionViewActivity" />
         <activity android:name=".PatientDetailActivity" />
         <activity android:name=".AnswerActivity" />

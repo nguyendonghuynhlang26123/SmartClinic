@@ -1,9 +1,7 @@
 package com.team13.doctorclient;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,25 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.team13.doctorclient.adapters.DoctorTimelineAdapter;
-import com.team13.doctorclient.models.DoctorTimeline;
+import com.team13.doctorclient.adapters.ScheduleTimelineAdapter;
+import com.team13.doctorclient.models.ScheduleItem;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TimelineDisplayFragment#newInstance} factory method to
+ * Use the {@link ScheduleTimelineFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimelineDisplayFragment extends Fragment {
+public class ScheduleTimelineFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private ArrayList<DoctorTimeline> data;
-    public TimelineDisplayFragment() {
+    private ArrayList<ScheduleItem> data;
+    public ScheduleTimelineFragment() {
         // Required empty public constructor
     }
 
@@ -42,8 +40,8 @@ public class TimelineDisplayFragment extends Fragment {
      * @return A new instance of fragment TimelineDisplayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TimelineDisplayFragment newInstance(ArrayList<DoctorTimeline> param1) {
-        TimelineDisplayFragment fragment = new TimelineDisplayFragment();
+    public static ScheduleTimelineFragment newInstance(ArrayList<ScheduleItem> param1) {
+        ScheduleTimelineFragment fragment = new ScheduleTimelineFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -54,7 +52,7 @@ public class TimelineDisplayFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            data = (ArrayList<DoctorTimeline>) getArguments().getSerializable(ARG_PARAM1);
+            data = (ArrayList<ScheduleItem>) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -62,10 +60,10 @@ public class TimelineDisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_timeline_display, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule_timeline, container, false);
         RecyclerView timeline= view.findViewById(R.id.doctor_timeline);
-        DoctorTimelineAdapter doctorTimelineAdapter = new DoctorTimelineAdapter(view.getContext(),data);
-        timeline.setAdapter(doctorTimelineAdapter);
+        ScheduleTimelineAdapter adapter = new ScheduleTimelineAdapter(view.getContext(),data);
+        timeline.setAdapter(adapter);
         timeline.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         return view;
     }
