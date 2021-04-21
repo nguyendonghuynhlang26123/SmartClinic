@@ -20,6 +20,10 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
+import com.team13.patientclient.models.AccountModel;
+import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.AuthService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,8 +33,14 @@ public class OtpActivity extends AppCompatActivity {
     private String verificationId;
     EditText inputOtp;
     PhoneAuthProvider.ForceResendingToken resendingToken;
+
     String testVerificationCode = "123456";
     String testPhone = "+84932138120";
+
+    String phone;
+    String name;
+    String password ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +49,9 @@ public class OtpActivity extends AppCompatActivity {
         mAuth.getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
         mAuth.getFirebaseAuthSettings().setAutoRetrievedSmsCodeForPhoneNumber(testPhone,testVerificationCode);
         Intent i = getIntent();
-        String phone = i.getStringExtra("phone");
+        phone = i.getStringExtra("phone");
+        name = i.getStringExtra("name");
+        password = i.getStringExtra("password");
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v->finish());
         inputOtp = findViewById(R.id.input_otp);
@@ -54,11 +66,17 @@ public class OtpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // if the code is correct and the task is successful
-                            // we are sending our user to new activity.
-                            FirebaseUser user = task.getResult().getUser();
-                            Intent i = new Intent(OtpActivity.this, MainActivity.class);
-                            startActivity(i);
+                            AuthService authService = new AuthService();
+                            authService.register(phone, password, name, new OnSuccessResponse<AccountModel>() {
+                                @Override
+                                public void onSuccess(AccountModel account) {
+                                    Store.get_instance().setUserAccount(account);
+
+                                    Intent i = new Intent(OtpActivity.this, MainActivity.class);
+                                    startActivity(i);
+                                }
+                            });
+
                         } else {
                             // if the code is not correct then we are
                             // displaying an error message to the user.
@@ -91,7 +109,6 @@ public class OtpActivity extends AppCompatActivity {
             // Save verification ID and resending token so we can use them later
             OtpActivity.this.verificationId = verificationId;
             resendingToken = token;
-//            OtpActivity.this.enab
         }
         // this method is called when user
         // receive OTP from Firebase.

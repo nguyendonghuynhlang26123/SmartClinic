@@ -19,12 +19,13 @@ import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentFragment;
 import com.team13.patientclient.activities.fragments.BlogFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
+import com.team13.patientclient.activities.fragments.ProfileEditFragment;
 import com.team13.patientclient.activities.fragments.ProfileFragment;
 import com.team13.patientclient.models.HospitalModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.HospitalService;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener {
+public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener, ProfileEditFragment.ProfileEditListener {
     BottomNavigationView bottomNavigationView;
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
     }
 
 
-
-
+    @Override
+    public void onUpdateSucceed() {
+        loadFragment(new ProfileFragment());
+    }
 }
