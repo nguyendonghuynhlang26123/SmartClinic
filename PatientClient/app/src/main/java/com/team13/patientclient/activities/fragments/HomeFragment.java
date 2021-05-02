@@ -120,9 +120,9 @@ public class HomeFragment extends Fragment {
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);
 
-        medicineRenderingHandle(view);
+//        medicineRenderingHandle(view);
 
-        view.findViewById(R.id.detail_pharmacy).setOnClickListener(v -> {
+        view.findViewById(R.id.pharmacy_button).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);
             startActivity(i);
         });
@@ -143,32 +143,32 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void medicineRenderingHandle(View view) {
-        DrugService service = new DrugService();
-        DrugModel[] emptyModels = getEmptyModel(4);
+//    private void medicineRenderingHandle(View view) {
+//        DrugService service = new DrugService();
+//        DrugModel[] emptyModels = getEmptyModel(4);
+//
+//        //Rendering dumb data first while waiting responses from apis
+//        pharmacyList = view.findViewById(R.id.pharmacy_list);
+//        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(emptyModels)), false);
+//        pharmacyList.setAdapter(pharmacyItemAdapter);
+//        pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+//
+//        service.getMinimizedData(new OnSuccessResponse<DrugModel[]>() {
+//            @Override
+//            public void onSuccess(DrugModel[] list) {
+//                pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
+//            }
+//        });
+//    }
 
-        //Rendering dumb data first while waiting responses from apis
-        pharmacyList = view.findViewById(R.id.pharmacy_list);
-        PharmacyItemAdapter pharmacyItemAdapter = new PharmacyItemAdapter(view.getContext(), new ArrayList<>(Arrays.asList(emptyModels)), false);
-        pharmacyList.setAdapter(pharmacyItemAdapter);
-        pharmacyList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        service.getMinimizedData(new OnSuccessResponse<DrugModel[]>() {
-            @Override
-            public void onSuccess(DrugModel[] list) {
-                pharmacyItemAdapter.setData(new ArrayList<>(Arrays.asList(list)));
-            }
-        });
-    }
-
-    private DrugModel[] getEmptyModel(int n) {
-        DrugModel[] returnData = new DrugModel[n];
-
-        for (int i = 0; i < n; i++) {
-            returnData[i] = new DrugModel();
-        }
-        return returnData;
-    }
+//    private DrugModel[] getEmptyModel(int n) {
+//        DrugModel[] returnData = new DrugModel[n];
+//
+//        for (int i = 0; i < n; i++) {
+//            returnData[i] = new DrugModel();
+//        }
+//        return returnData;
+//    }
 
 
     public interface HomeFragmentListener{
