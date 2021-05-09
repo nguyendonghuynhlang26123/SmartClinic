@@ -45,6 +45,11 @@ public class Utils {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    public static String getCurrentDateString(){
+        return new SimpleDateFormat(DATE_PATTERN).format(Calendar.getInstance().getTime());
+    }
+
     public static  int calculateAge(
             Date birthDate,
             Date currentDate) {

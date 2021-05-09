@@ -43,20 +43,11 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         setContentView(R.layout.activity_pharmacy);
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> {
-            Toast.makeText(this,String.valueOf(fragmentManager.getBackStackEntryCount()),Toast.LENGTH_LONG).show();
             if(fragmentManager.getBackStackEntryCount()<=2){
                 finish();
             } else {
                 fragmentManager.popBackStack();
             }
-        });
-        topAppBar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.cart) {
-                Intent i = new Intent(this, Cart.class);
-                startActivity(i);
-                return true;
-            }
-            return false;
         });
         SearchView searchView = findViewById(R.id.category_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

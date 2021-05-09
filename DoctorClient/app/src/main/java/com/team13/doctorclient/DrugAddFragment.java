@@ -99,8 +99,8 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
             note.setText("");
         });
         save.setOnClickListener(v -> {
-            String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()};
-            Drug addDrug= new Drug("001",drugName.getText().toString(),String.valueOf(getTotalQuality(qualities)),getNote(qualities)+note.getText().toString()) ;
+            String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()}; 
+            Drug addDrug= new Drug("001",drugName.getText().toString(),String.valueOf(getTotalQuality(qualities)),getNote(qualities)+note.getText().toString()) ; 
             listener.onSaveDrug(addDrug);
             //TODO
 

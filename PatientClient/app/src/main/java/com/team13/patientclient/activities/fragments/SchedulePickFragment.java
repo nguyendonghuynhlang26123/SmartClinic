@@ -89,6 +89,7 @@ public class SchedulePickFragment extends Fragment {
         LinearLayout layout = view.findViewById(R.id.schedule_groups);
 
         if (Store.get_instance().isHavingAnAppointment()){
+            view.findViewById(R.id.process_button).setEnabled(false);
             layout.addView(denyBookingNotification());
             return view;
         }
@@ -170,7 +171,6 @@ public class SchedulePickFragment extends Fragment {
         notification.setText("You can cancel your appointment in the appointment view");
         notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         radioGroup.addView(notification);
-        card.findViewById(R.id.process_button).setEnabled(false);
         return card;
     }
 

@@ -36,29 +36,29 @@ public class RetrofitSingleton {
 
     private Retrofit.Builder createAdapter() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        Interceptor retryingInterceptor = chain -> {
-            Request request = chain.request();
-
-            // try the request
-            Response response = chain.proceed(request);
-
-            int tryCount = 0;
-            while (!response.isSuccessful() && tryCount < 3) {
-                Log.d("intercept", "Request is not successful - " + tryCount);
-                tryCount++;
-
-                // retry the request
-                response = chain.proceed(request);
-            }
-
-            // otherwise just pass the original response on
-            return response;
-        };
+//        Interceptor retryingInterceptor = chain -> {
+//            Request request = chain.request();
+//
+//            // try the request
+//            Response response = chain.proceed(request);
+//
+//            int tryCount = 0;
+//            while (!response.isSuccessful() && tryCount < 3) {
+//                Log.d("intercept", "Request is not successful - " + tryCount);
+//                tryCount++;
+//
+//                // retry the request
+//                response = chain.proceed(request);
+//            }
+//
+//            // otherwise just pass the original response on
+//            return response;
+//        };
 
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         CookieHandler cookieHandler = new CookieManager();
 
-        httpClient = new OkHttpClient.Builder().addInterceptor(interceptor).addInterceptor(retryingInterceptor)
+        httpClient = new OkHttpClient.Builder().addInterceptor(interceptor)//.addInterceptor(retryingInterceptor)
                 .cookieJar(new JavaNetCookieJar(cookieHandler))
                 .build();
 

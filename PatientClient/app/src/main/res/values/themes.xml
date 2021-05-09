@@ -18,5 +18,6 @@
         <item name="tabIndicatorColor">@color/purple</item>
         <item name="materialCardViewStyle">@style/DefaultCard</item>
         <item name="borderlessButtonStyle">@style/Widget.App.Button.TextButton</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 </resources>
