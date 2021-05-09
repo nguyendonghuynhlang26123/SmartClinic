@@ -25,6 +25,8 @@ import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.AuthService;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.TimeUnit;
 
 public class OtpActivity extends AppCompatActivity {
@@ -113,7 +115,7 @@ public class OtpActivity extends AppCompatActivity {
         // this method is called when user
         // receive OTP from Firebase.
         @Override
-        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+        public void onVerificationCompleted(@NotNull PhoneAuthCredential phoneAuthCredential) {
             // below line is used for getting OTP code
             // which is sent in phone auth credentials.
 //            final String code = phoneAuthCredential.getSmsCode();

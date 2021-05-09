@@ -71,10 +71,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
 
     private void handleInitialNavigation() {
         Intent intent = getIntent();
-        final int[] navs = {R.id.home,R.id.blog,R.id.appointment,R.id.profile};
-        int navIndex = intent.getIntExtra("navigation", 0);
-
-        navigationHandle(navs[navIndex]);
+        int navId = intent.getIntExtra("navigation", R.id.home);
+        navigationHandle(navId);
     }
 
     private void loadFragment(Fragment fragment) {

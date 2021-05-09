@@ -4,13 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
@@ -18,7 +14,6 @@ import com.team13.patientclient.activities.fragments.ServiceDisplayFragment;
 import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.ServicePackService;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 

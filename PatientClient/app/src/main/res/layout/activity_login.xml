@@ -24,8 +24,8 @@
         android:id="@+id/welcome_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="EPATIENT"
+        android:layout_marginBottom="32dp" 
+        android:text="@string/epatient" 
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -52,11 +52,11 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login"/>
+                    android:text="@string/login"/>
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Signup" />
+                    android:text="@string/signup" />
             </com.google.android.material.tabs.TabLayout>
             <FrameLayout
                 android:id="@+id/frame_container"
