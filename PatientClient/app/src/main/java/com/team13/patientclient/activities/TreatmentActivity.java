@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.models.Treatment;
 
@@ -43,6 +47,26 @@ public class TreatmentActivity extends AppCompatActivity {
             });
         } else {
             prescriptionButton.setVisibility(View.GONE);
+            findViewById(R.id.treatment_qrlayout).setVisibility(View.VISIBLE);
+            ImageView qrImage = findViewById(R.id.treatment_qrcode);
+            String appointmentId = treatment.getAppointment().getId();
+            String patientId = Store.get_instance().getPatientId();
+            findViewById(R.id.treatment_qr_loading).setVisibility(View.VISIBLE);
+            if (appointmentId != null){
+                String url = "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + appointmentId + "-" + patientId;
+                Picasso.get().load(url).into(qrImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        findViewById(R.id.treatment_qr_loading).setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        findViewById(R.id.treatment_qr_loading).setVisibility(View.GONE);
+                        findViewById(R.id.treatment_failed).setVisibility(View.VISIBLE);
+                    }
+                });
+            }
         }
 
     }
