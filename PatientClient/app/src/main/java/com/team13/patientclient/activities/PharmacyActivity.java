@@ -6,19 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.card.MaterialCardView;
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.fragments.CategoryFragment;
+import com.team13.patientclient.activities.fragments.DrugListFragment;
 import com.team13.patientclient.activities.fragments.DrugsDisplayFragment;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.models.Category;
@@ -34,13 +30,21 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
 
     ArrayList<Category> drugCategories;
     MaterialToolbar topAppBar;
+    TextView searchResult;
+    MaterialCardView banner;
     String searchQuery="";
+    DrugService drugService;
     FragmentManager fragmentManager = getSupportFragmentManager();
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pharmacy);
+        drugService = new DrugService();
+
+        searchResult = findViewById(R.id.search_result);
+        banner = findViewById(R.id.pharmacy_banner);
+
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> {
             if(fragmentManager.getBackStackEntryCount()<=2){
@@ -53,8 +57,9 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchQuery = query;
-                renderDrugCategories();
+                banner.setVisibility(View.GONE);
+                loadFragment(new ProgressFragment());
+                renderDrugsListByKey(query);
                 return false;
             }
 
@@ -85,33 +90,44 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
         transaction.commit();
     }
 
-    private void renderDrugCategories(){
-        CategoryService service = new CategoryService();
-        loadFragment(new ProgressFragment());
-        if(searchQuery.isEmpty()){
-            service.getCategoryList(new OnSuccessResponse<Category[]>() {
-                @SuppressLint("NewApi")
-                @Override
-                public void onSuccess(Category[] list) {
-                    drugCategories = new ArrayList<>(Arrays.asList(list));
-                    Fragment fragment = new DrugsDisplayFragment();
+    private void renderDrugsListByKey(String key){
+        drugService.searchDrug(key, 10, new OnSuccessResponse<DrugModel[]>() {
+            @Override
+            public void onSuccess(DrugModel[] list) {
+                searchResult.setVisibility(View.VISIBLE);
+                if (list.length != 0){
+                    searchResult.setText("Found "+list.length+" result(s) matching \"" + key +"\":");
+                    Fragment fragment = DrugListFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
                     loadFragment(fragment);
                 }
-            });
-        } else {
-            // Get with @Query
-            // ***TODO
-        }
+                else {
+                    searchResult.setText("Sorry, but nothing matched your search term. Please try again!");
+                }
+            }
+        });
+    }
+
+    private void renderDrugCategories(){
+        CategoryService categoryService = new CategoryService();
+        loadFragment(new ProgressFragment());
+        categoryService.getCategoryList(new OnSuccessResponse<Category[]>() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onSuccess(Category[] list) {
+                drugCategories = new ArrayList<>(Arrays.asList(list));
+                Fragment fragment = new DrugsDisplayFragment();
+                loadFragment(fragment);
+            }
+        });
 
     }
     private void renderCategoryItems(String categoryId){
         // ***TODO: GET DRUG LIST OF A CATEGORY
         // Connect api and get data with @categoryName
-        DrugService service = new DrugService();
-        service.getDrugByCategory(categoryId, new OnSuccessResponse<DrugModel[]>() {
+        drugService.getDrugByCategory(categoryId, new OnSuccessResponse<DrugModel[]>() {
             @Override
             public void onSuccess(DrugModel[] list) {
-                Fragment fragment = CategoryFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
+                Fragment fragment = DrugListFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
                 loadFragment(fragment);
             }
         });

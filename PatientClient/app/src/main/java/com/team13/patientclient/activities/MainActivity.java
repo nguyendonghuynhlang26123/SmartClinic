@@ -31,32 +31,42 @@ import com.team13.patientclient.repository.services.HospitalService;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener, ProfileEditFragment.ProfileEditListener {
     BottomNavigationView bottomNavigationView;
+    int currentId;
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadFragment(new HomeFragment());
+        currentId = R.id.home;
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;
             switch (item.getItemId()){
                 case R.id.home:
+                    if (currentId == R.id.home) return false;
                     fragment = new HomeFragment();
                     loadFragment(fragment);
+                    currentId = R.id.home;
                     return true;
                 case R.id.blog:
+                    if (currentId == R.id.blog) return false;
                     fragment = new BlogFragment();
                     loadFragment(fragment);
+                    currentId = R.id.blog;
                     return true;
                 case R.id.appointment:
+                    if (currentId == R.id.appointment) return false;
                     fragment = new AppointmentFragment();
                     loadFragment(fragment);
+                    currentId = R.id.appointment;
                     return true;
                 case R.id.profile:
+                    if (currentId == R.id.profile) return false;
                     fragment = new ProfileFragment();
                     loadFragment(fragment);
+                    currentId = R.id.profile;
                     return true;
                 default:
                     return false;

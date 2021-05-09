@@ -122,10 +122,10 @@ public class AppointmentFragment extends Fragment {
             startActivity(i);
         });
 
-        callApiAndRender(adapter);
+        callApiAndRender(adapter, view);
         return view;
     }
-    void callApiAndRender(TreatmentAdapter adapter){
+    void callApiAndRender(TreatmentAdapter adapter, View view){
         PatientService service = new PatientService();
         AppointmentService appointmentService = new AppointmentService();
 
@@ -142,6 +142,7 @@ public class AppointmentFragment extends Fragment {
             public void onSuccess(Treatment[] treatmentList) {
                 treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
                 adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
+                view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
         });
 

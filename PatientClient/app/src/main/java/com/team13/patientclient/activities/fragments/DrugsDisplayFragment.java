@@ -131,7 +131,6 @@ public class DrugsDisplayFragment extends Fragment {
                     detailButton.setVisibility(View.VISIBLE);
                     // START NEW ITEM LIST ACTIVITY
                     detailButton.setOnClickListener(v->listener.categoryDetailLoad(categoryId));
-
                 }
             }
         });

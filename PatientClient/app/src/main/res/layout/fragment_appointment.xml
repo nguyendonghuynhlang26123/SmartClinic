@@ -20,6 +20,7 @@
             android:src="@drawable/ic_add_appointment"
             android:textAllCaps="false"
             android:id="@+id/add_appointment_button"
+            android:visibility="gone"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -60,6 +61,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/treatment_list"
                     android:layout_marginHorizontal="16dp"/>
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/progress_bar"/>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
