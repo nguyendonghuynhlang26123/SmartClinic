@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);
 
-//        medicineRenderingHandle(view);
+//      medicineRenderingHandle(view);
 
         view.findViewById(R.id.pharmacy_button).setOnClickListener(v -> {
             Intent i = new Intent(view.getContext(), PharmacyActivity.class);

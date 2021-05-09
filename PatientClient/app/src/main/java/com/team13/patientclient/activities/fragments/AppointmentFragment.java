@@ -133,14 +133,14 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onSuccess(Appointment currentAppointment) {
                 adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
-//                treatments.add(new Treatment(currentAppointment, null));
+                treatments.add(new Treatment(currentAppointment, null));
             }
         });
 
         service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
             @Override
             public void onSuccess(Treatment[] treatmentList) {
-//                treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
+                treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
                 adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
             }
         });

@@ -29,9 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener,
-                                                            SignupFragment.SignUpListener
-{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener,SignupFragment.SignUpListener{
     TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
