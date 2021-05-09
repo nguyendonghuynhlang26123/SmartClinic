@@ -100,7 +100,7 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         });
         save.setOnClickListener(v -> {
             String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()};
-            Drug addDrug= new Drug("001",drugName.toString(),String.valueOf(getTotalQuality(qualities)),note.getText().toString()) ;
+            Drug addDrug= new Drug("001",drugName.getText().toString(),String.valueOf(getTotalQuality(qualities)),getNote(qualities)+note.getText().toString()) ;
             listener.onSaveDrug(addDrug);
             //TODO
 
@@ -124,6 +124,25 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
             }
         }
         return total;
+    }
+    public String getNote(String[] qualities){
+        String note="";
+        for (int i = 0; i <qualities.length ; i++) {
+            if(!qualities[i].equals("")){
+                switch (i){
+                    case 0:
+                        note+="Buổi sáng: "+qualities[i]+"\n";
+                        break;
+                    case 1:
+                        note+="Buổi trưa: "+qualities[i]+"\n";
+                        break;
+                    case 2:
+                        note+="Buổi tối: "+qualities[i]+"\n";
+                        break;
+                }
+            }
+        }
+        return note;
     }
     public interface AddDrugListener{
         void onSaveDrug(Drug addDrug);

@@ -141,13 +141,15 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
     @Override
     public void onSaveDrug(Drug addDrug) {
         addDrugArrayList.add(addDrug);
+        Log.w("List", addDrugArrayList.get(0).getDrugNote());
         drugAdapter.setData(addDrugArrayList);
         drugAddFragment.dismiss();
     }
     @Override
     public void onSaveListDrug(ArrayList<Drug> addDrugArrayList){
-        this.addDrugArrayList=addDrugArrayList;
-        drugAdapter.setData(addDrugArrayList);
+        this.addDrugArrayList.addAll(addDrugArrayList);
+        Log.w("List", addDrugArrayList.get(0).getDrugNote());
+        drugAdapter.setData(this.addDrugArrayList);
         reviewPrescriptionFragment.dismiss();
     }
     @Override

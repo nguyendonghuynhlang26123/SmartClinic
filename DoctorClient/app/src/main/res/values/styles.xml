@@ -37,7 +37,7 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
     <style name="BottomRightNoCornerCard" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomLeft</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.NoCutBottomRight</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.MaterialCardView.NoCutBottomRight" parent="">
