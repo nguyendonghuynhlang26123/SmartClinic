@@ -93,7 +93,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
                 removeButton.setOnClickListener(v->{
                     listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId());
                 });
-            }
+            } else time.setTextColor(view.getResources().getColor(R.color.black));
         } else if (position == treatments.size() - 1){
             view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }

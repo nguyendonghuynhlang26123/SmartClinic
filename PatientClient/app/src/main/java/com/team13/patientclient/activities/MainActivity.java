@@ -2,69 +2,79 @@ package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 
-import android.app.SearchManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.patientclient.R;
-import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentFragment;
 import com.team13.patientclient.activities.fragments.BlogFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
 import com.team13.patientclient.activities.fragments.ProfileEditFragment;
 import com.team13.patientclient.activities.fragments.ProfileFragment;
-import com.team13.patientclient.models.HospitalModel;
-import com.team13.patientclient.repository.OnSuccessResponse;
-import com.team13.patientclient.repository.services.HospitalService;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener, ProfileEditFragment.ProfileEditListener {
     BottomNavigationView bottomNavigationView;
+    int currentId;
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadFragment(new HomeFragment());
+
+        currentId = -1;
+        handleInitialNavigation();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
-            switch (item.getItemId()){
-                case R.id.home:
-                    fragment = new HomeFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.blog:
-                    fragment = new BlogFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.appointment:
-                    fragment = new AppointmentFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.profile:
-                    fragment = new ProfileFragment();
-                    loadFragment(fragment);
-                    return true;
-                default:
-                    return false;
-            }
-        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> navigationHandle(item.getItemId()));
+
         BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
         badge.setVisible(true);
         badge.setNumber(99);
+    }
+
+    private boolean navigationHandle(int itemId) {
+        switch (itemId){
+            case R.id.home:
+                if (currentId == R.id.home) return false;
+                loadFragment( new HomeFragment());
+                currentId = R.id.home;
+                return true;
+            case R.id.blog:
+                if (currentId == R.id.blog) return false;
+                loadFragment(new BlogFragment());
+                currentId = R.id.blog;
+                return true;
+            case R.id.appointment:
+                if (currentId == R.id.appointment) return false;
+                loadFragment(new AppointmentFragment());
+                currentId = R.id.appointment;
+                return true;
+            case R.id.profile:
+                if (currentId == R.id.profile) return false;
+                loadFragment(new ProfileFragment());
+                currentId = R.id.profile;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void handleInitialNavigation() {
+        Intent intent = getIntent();
+        final int[] navs = {R.id.home,R.id.blog,R.id.appointment,R.id.profile};
+        int navIndex = intent.getIntExtra("navigation", 0);
+
+        navigationHandle(navs[navIndex]);
     }
 
     private void loadFragment(Fragment fragment) {
