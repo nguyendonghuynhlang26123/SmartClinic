@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             app:title="Pharmacy"
             app:titleTextColor="@color/black"
-            app:menu="@menu/cart_top_app_bar"
+            app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_back"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:background="@color/white" />

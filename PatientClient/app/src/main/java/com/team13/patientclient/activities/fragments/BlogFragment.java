@@ -9,12 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.team13.patientclient.R;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.adapters.BlogItemAdapter;
 import com.team13.patientclient.models.AnonymousQuestion;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +76,10 @@ public class BlogFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.blog_list);
         recyclerView.setAdapter(blogItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+        EditText question = view.findViewById(R.id.input_question);
+        view.findViewById(R.id.submit_button).setOnClickListener(v->{
+            blogItemAdapter.addItem(new AnonymousQuestion(question.getText().toString(), "1", Utils.getCurrentDateString()));
+        });
         return view;
     }
     private ArrayList<AnonymousQuestion> getEmptyQuestion(){

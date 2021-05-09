@@ -120,7 +120,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements
             public void onRequestSuccess(Map<String, String> response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
                 Store.get_instance().bookingAnAppointment(response.get("_id"));
-                //setAlarmForNotification(response.get("_id"));
+                setAlarmForNotification(response.get("_id"));
                 Intent i = new Intent(context, MainActivity.class);
                 context.startActivity(i); 
             }
@@ -133,9 +133,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         });
     }
 
-    private void setAlarmForNotification(Appointment appointment) {
+    private void setAlarmForNotification(String id) {
         Intent intent = new Intent(BookAppointmentActivity.this, AlarmReceiverActivity.class);
-        intent.putExtra(Utils.BROADCAST_APPOINTMENT_ID,  appointment.getId());
+        intent.putExtra(Utils.BROADCAST_APPOINTMENT_ID,  id);
         intent.putExtra(Utils.BROADCAST_PATIENT_ID,  Store.get_instance().getPatientId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
