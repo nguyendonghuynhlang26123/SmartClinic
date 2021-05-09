@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
+import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
@@ -168,8 +170,15 @@ public class SchedulePickFragment extends Fragment {
         ((TextView) card.findViewById(R.id.time_pick_day)).setText("⚠ You already has an appointment booked!");
         RadioGroup radioGroup = card.findViewById(R.id.time_pick_group);
         TextView notification = new TextView(getContext());
-        notification.setText("You can cancel your appointment in the appointment view");
+        //notification.setText("You can cancel your appointment in the appointment view");
+        notification.setText("You can go appointment view by click here 👆");
+        notification.setTypeface(notification.getTypeface(), Typeface.ITALIC);
         notification.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        card.setOnClickListener(t ->{
+            Intent i = new Intent(getContext(), MainActivity.class);
+            i.putExtra("navigation", 2); // 2 means appointment index in ['Home', 'Blog', 'Appointment', 'Profile']
+            startActivity(i);
+        });
         radioGroup.addView(notification);
         return card;
     }

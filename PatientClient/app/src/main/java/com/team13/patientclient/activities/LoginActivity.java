@@ -8,7 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -81,7 +86,15 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
             @Override
             public void onRequestSuccess(Void response) {
                 loadFragment(new LoginFragment());
-                findViewById(R.id.action_card).setVisibility(View.VISIBLE);
+                View card = findViewById(R.id.action_card);
+                Animation slideUp = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.slide_up);
+                findViewById(R.id.app_icon).startAnimation(slideUp);
+                findViewById(R.id.welcome_label).startAnimation(slideUp);
+
+                card.setVisibility(View.VISIBLE);
+                card.startAnimation(slideUp);
+
+                findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
 
             @Override
@@ -104,7 +117,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
