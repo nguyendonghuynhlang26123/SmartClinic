@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
                     return false;
             }
         });
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
-        badge.setVisible(true);
-        badge.setNumber(99);
+//        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
+//        badge.setVisible(true);
+//        badge.setNumber(99);
     }
 
     private void loadFragment(Fragment fragment) {

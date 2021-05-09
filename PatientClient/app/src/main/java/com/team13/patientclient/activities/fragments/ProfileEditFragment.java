@@ -47,7 +47,7 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     public ProfileEditFragment() {
         // Required empty public constructor
     }
-    public static ProfileEditFragment newInstance(String param1, String param2) {
+    public static ProfileEditFragment newInstance() {
         ProfileEditFragment fragment = new ProfileEditFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
