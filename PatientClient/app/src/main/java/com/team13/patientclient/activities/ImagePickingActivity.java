@@ -13,7 +13,7 @@ public class ImagePickingActivity {
         //mStorageRef = FirebaseStorage.getInstance().getReference("upload");
     }
 
-    public static Intent fileChoserIntent(){
+    public static Intent fileChooserIntent(){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);

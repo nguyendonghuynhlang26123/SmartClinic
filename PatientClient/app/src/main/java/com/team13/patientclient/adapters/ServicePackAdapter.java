@@ -8,20 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.BookAppointmentActivity;
 import com.team13.patientclient.models.ServicePack;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Locale;
+
 
 public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.ViewHolder> {
     ArrayList<ServicePack> servicePacks;
@@ -56,9 +51,9 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
         TextView servicePrice = view.findViewById(R.id.service_price);
 
         if (!servicePack.isEmpty()){
-            view.findViewById(R.id.lazylayout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.service_container).setVisibility(View.VISIBLE);
             serviceLabel.setText(servicePack.getName());
-            servicePrice.setText(Utils.formatingPrice(servicePack.getPrice()));
+            servicePrice.setText(Utils.formatPrice(servicePack.getPrice()));
             if (servicePack.getServiceIcon().isEmpty()) serviceIcon.setImageResource(R.drawable.ic_doctor);
             else Picasso.get().load(servicePack.getServiceIcon()).into(serviceIcon);
 
@@ -70,7 +65,7 @@ public class ServicePackAdapter extends RecyclerView.Adapter<ServicePackAdapter.
             });
         }
         else{
-            view.findViewById(R.id.lazylayout).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.service_container).setVisibility(View.INVISIBLE);
         }
 
     }

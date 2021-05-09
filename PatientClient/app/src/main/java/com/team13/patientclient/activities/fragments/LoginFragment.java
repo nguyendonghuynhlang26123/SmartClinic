@@ -1,7 +1,6 @@
 package com.team13.patientclient.activities.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,23 +18,17 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
-import com.team13.patientclient.activities.MainActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.LoginActivity;
 import com.team13.patientclient.models.AccountModel;
 import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.repository.OnResponse;
-import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.AuthService;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Objects;
+
 public class LoginFragment extends Fragment {
 
-    // TODO: Rename and change types of parameters
     TextInputEditText phoneInput;
     TextInputEditText passwordInput;
     ProgressBar progressBar;
@@ -46,7 +39,7 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
         // Required empty public constructor
     }
-    public static LoginFragment newInstance(String param1, String param2) {
+    public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -85,14 +78,12 @@ public class LoginFragment extends Fragment {
         phoneInput = view.findViewById(R.id.input_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         signUpButton = view.findViewById(R.id.sign_up_text_button);
-        signUpButton.setOnClickListener(v -> {
-            ((LoginActivity)getActivity()).setSignUpFragment();
-        });
+        signUpButton.setOnClickListener(v -> ((LoginActivity) Objects.requireNonNull(getActivity())).setSignUpFragment());
         progressBar = view.findViewById(R.id.progress);
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            String phone = Utils.unFormatPhoneNumber(phoneInput.getText().toString());
-            String password = passwordInput.getText().toString();
+            String phone = Utils.unFormatPhoneNumber(Objects.requireNonNull(phoneInput.getText()).toString());
+            String password = Objects.requireNonNull(passwordInput.getText()).toString();
             if (phone.isEmpty() || password.isEmpty())
                 Toast.makeText(getContext(), "Empty Input! Please try again", Toast.LENGTH_SHORT).show();
             else verifyAndProcess(phone, password, view);

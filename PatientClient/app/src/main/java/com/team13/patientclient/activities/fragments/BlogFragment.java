@@ -20,43 +20,18 @@ import com.team13.patientclient.adapters.BlogItemAdapter;
 import com.team13.patientclient.models.AnonymousQuestion;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BlogFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BlogFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     ArrayList<AnonymousQuestion> questions= getEmptyQuestion();
     public BlogFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlogFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BlogFragment newInstance(String param1, String param2) {
+    public static BlogFragment newInstance() {
         BlogFragment fragment = new BlogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,10 +39,6 @@ public class BlogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -78,13 +49,14 @@ public class BlogFragment extends Fragment {
         BlogItemAdapter blogItemAdapter = new BlogItemAdapter(view.getContext(),questions);
         blogItemAdapter.setListener(question -> {
             BlogDetailFragment fragment = BlogDetailFragment.newInstance(question);
+            assert getFragmentManager() != null;
             fragment.show(getFragmentManager(),fragment.getTag());
         });
         RecyclerView recyclerView = view.findViewById(R.id.blog_list);
         recyclerView.setAdapter(blogItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         EditText question = view.findViewById(R.id.input_question);
-        InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         view.findViewById(R.id.submit_button).setOnClickListener(v->{
             String questionContent = question.getText().toString();
             if(!questionContent.isEmpty()){

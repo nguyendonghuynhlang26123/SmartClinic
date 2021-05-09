@@ -14,7 +14,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doctor Coco"
+            android:text="@string/doctor_name"
             android:id="@+id/blog_dr"
             android:textSize="16sp"
             android:textAllCaps="false"

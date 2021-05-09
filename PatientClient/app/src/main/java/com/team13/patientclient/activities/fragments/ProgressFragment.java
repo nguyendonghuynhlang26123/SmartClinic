@@ -10,14 +10,7 @@ import android.view.ViewGroup;
 
 import com.team13.patientclient.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProgressFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProgressFragment extends Fragment {
-
-
 
 
     public ProgressFragment() {
@@ -25,7 +18,7 @@ public class ProgressFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ProgressFragment newInstance(String param1, String param2) {
+    public static ProgressFragment newInstance() {
         return new ProgressFragment();
     }
 

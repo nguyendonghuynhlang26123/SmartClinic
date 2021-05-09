@@ -4,13 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.PowerManager;
-import android.util.Log;
-
 import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.Utils;
-import com.team13.patientclient.repository.OnSuccessResponse;
-import com.team13.patientclient.repository.services.PatientService;
 
 public class AlarmReceiverActivity extends BroadcastReceiver {
     @SuppressLint("InvalidWakeLockTag")
@@ -20,17 +15,20 @@ public class AlarmReceiverActivity extends BroadcastReceiver {
         //PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LONG");
         //wl.acquire(1*60*1000L /*1 minutes*/);\
 //        Log.d("LONG", "RECEIVED ALARM");
-        String appointmentId = intent.getStringExtra(Utils.BROADCAST_APPOINTMENT_ID);
-        String patientId = intent.getStringExtra(Utils.BROADCAST_PATIENT_ID);
-        if (appointmentId != null && patientId != null) {
+        if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
+            String appointmentId = intent.getStringExtra(Utils.BROADCAST_APPOINTMENT_ID);
+            String patientId = intent.getStringExtra(Utils.BROADCAST_PATIENT_ID);
+            if (appointmentId != null && patientId != null) {
 //            PatientService service = new PatientService();
 //            service.cancelAppointment(patientId, appointmentId, new OnSuccessResponse<Void>() {
 //                @Override
 //                public void onSuccess(Void response) {
-                    NotificationHandler.sendNotification(context, "Appointment alarm", "Your current appointment is coming");
+                NotificationHandler.sendNotification(context, "Appointment alarm", "Your current appointment is coming");
 //                }
 //            });
+            }
         }
+
         //wl.release();
     }
 }

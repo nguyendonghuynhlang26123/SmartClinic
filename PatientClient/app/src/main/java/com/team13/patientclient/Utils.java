@@ -38,6 +38,7 @@ public class Utils {
     public static long dateStringToNumber(String formattedDate){
         try {
             @SuppressLint("SimpleDateFormat") Date date = new SimpleDateFormat(DATE_PATTERN).parse(formattedDate);
+            assert date != null;
             return date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -60,7 +61,7 @@ public class Utils {
         return (d2 - d1) / 10000;
     }
 
-    public static String formatingPrice(long price){
+    public static String formatPrice(long price){
         Locale locale = new Locale("vi", "VN");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
         return (fmt.format(price));

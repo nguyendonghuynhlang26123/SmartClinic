@@ -1,33 +1,17 @@
 package com.team13.patientclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-
-import android.Manifest;
 import android.annotation.SuppressLint;
-
-import android.app.SearchManager;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.patientclient.R;
-import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.fragments.AppointmentFragment;
 import com.team13.patientclient.activities.fragments.BlogFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
 import com.team13.patientclient.activities.fragments.ProfileEditFragment;
 import com.team13.patientclient.activities.fragments.ProfileFragment;
-import com.team13.patientclient.models.HospitalModel;
-import com.team13.patientclient.repository.OnSuccessResponse;
-import com.team13.patientclient.repository.services.HospitalService;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.HomeFragmentListener, ProfileEditFragment.ProfileEditListener {
     BottomNavigationView bottomNavigationView;

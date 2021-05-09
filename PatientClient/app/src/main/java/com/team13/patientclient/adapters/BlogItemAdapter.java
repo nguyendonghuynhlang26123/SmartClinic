@@ -15,10 +15,8 @@ import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.DoctorDetailActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.models.AnonymousQuestion;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHolder> {
     private final Context context;
@@ -49,7 +47,7 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
             context.startActivity(i);
         });
         TextView answerCount = view.findViewById(R.id.answer_count);
-        answerCount.setText("No Answer");
+        answerCount.setText(R.string.no_answer);
         if(question.hasAnswer()){
             view.findViewById(R.id.answer_shorten).setVisibility(View.VISIBLE);
             TextView blogAnswer = view.findViewById(R.id.blog_answer);
@@ -66,10 +64,10 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
             }
             blogAnswer.setText(answer);
             int count = question.getAnswerCount();
-            answerCount.setText(count + " Answer");
+            answerCount.setText(String.format(Locale.US,"%d Answer", count));
             if(count>1){
                 answerCount.setOnClickListener(v->listener.openDetail(question));
-                answerCount.setText(count + " Answers");
+                answerCount.setText(String.format(Locale.US,"%d Answers", count));
             }
         }
 

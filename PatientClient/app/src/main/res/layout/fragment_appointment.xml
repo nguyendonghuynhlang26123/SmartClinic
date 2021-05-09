@@ -13,8 +13,8 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Add appointment"
-            android:layout_gravity="bottom|right"
+            android:contentDescription="@string/add_appointment"
+            android:layout_gravity="bottom|end"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="64dp"
             android:src="@drawable/ic_add_appointment"
@@ -38,7 +38,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Appointment"
+                        android:text="@string/appointment"
                         android:textStyle="bold"
                         android:textSize="24sp"
                         android:layout_gravity="center"/>
@@ -46,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="You are having 1 appoinment awaiting"
+                    android:text="@string/appointment_waiting"
                     android:textStyle="italic"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif-black"

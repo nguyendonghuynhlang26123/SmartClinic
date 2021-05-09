@@ -33,12 +33,11 @@ public class TreatmentActivity extends AppCompatActivity {
 
         doctor.setText(treatment.getDoctorName());
         service.setText(treatment.getServicePack());
-        time.setText(treatment.getTime() + ", " + treatment.getDate());
+        time.setText(String.format("%s, %s", treatment.getTime(), treatment.getDate()));
         status.setText(treatment.getStatus());
         if(treatment.getPrescription()!=null){
             prescriptionButton.setOnClickListener(v->{
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());
-                assert getSupportFragmentManager()!=null;
                 fragment.show(getSupportFragmentManager(),fragment.getTag());
             });
         } else {
