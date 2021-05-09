@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.CircularImageView;
@@ -120,8 +122,13 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
         if (!Utils.checkValidPatientName(name) ){
             Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
         }
+        view.findViewById(R.id.profile_edit_save_button).setEnabled(false);
+        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
         ImageService is = new ImageService();
+        Toast.makeText(getContext(), FirebaseStorage.getInstance().get, Toast.LENGTH_LONG).show();
 
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(0);
         //TODO: UPLOAD IMAGE TO FIREBASE then call api!
         StorageTask task = is.uploadFile(avatarURL, this.getActivity().getContentResolver()).addOnSuccessListener(t ->{
             t.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri ->{
@@ -129,10 +136,14 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
                 PatientModel updatedModel = new PatientModel(name, uri.toString(), gender, dob, weight);
                 callPutApi(userProfile, updatedModel);
             });
-        }).addOnFailureListener(t -> {
-            Snackbar.make(view, "Upload Image Failed! The process is canceled", Snackbar.LENGTH_LONG ).show();
+        }).addOnProgressListener(t->{
+            double progress = (100.0 * t.getBytesTransferred() / t.getTotalByteCount());
+            progressBar.setProgress((int) progress);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Upload Image Failed! The process is canceled", Toast.LENGTH_LONG ).show();
+            dismiss();
         });
-
 
     }
 

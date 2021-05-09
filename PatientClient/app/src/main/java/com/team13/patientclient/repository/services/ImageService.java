@@ -11,7 +11,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class ImageService {
     public static final int PICK_IMAGE_REQUEST = 321;
-    private StorageReference mStorageRef;
+    public StorageReference mStorageRef;
 
     public ImageService(){
         mStorageRef = FirebaseStorage.getInstance().getReference("upload");
