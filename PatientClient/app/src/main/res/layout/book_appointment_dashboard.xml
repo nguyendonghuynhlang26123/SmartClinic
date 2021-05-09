@@ -39,7 +39,6 @@
                     android:id="@+id/hospital_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    app:srcCompat="@drawable/avatar"
                     app:shapeAppearanceOverlay="@style/roundedImageView"
                     android:scaleType="centerCrop"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +49,7 @@
                         android:id="@+id/hospital_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CITY HOSPITAL"
+                        android:text="@string/city_hospital"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
@@ -67,7 +66,7 @@
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:minHeight="0dp"
                         android:minWidth="0dp"
-                        android:contentDescription="Hospital location"
+                        android:contentDescription="@string/hospital_location"
                         android:id="@+id/location_button"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <TextView
@@ -114,7 +113,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Book Appointment"
+                        android:text="@string/book_appointment_label"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
                     <TextView
@@ -139,7 +138,7 @@
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="View All Services"
+                            android:text="@string/view_all_services"
                             android:textSize="16sp"
                             android:textAllCaps="false"
                             style="@style/CornerButton"

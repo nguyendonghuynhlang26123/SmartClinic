@@ -18,21 +18,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/outlinedPhoneField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Phone"
+            android:hint="@string/phone_label"
             app:startIconDrawable="@drawable/ic_phone">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:id="@+id/input_phone"
-                android:text="0774022683"/>
+                android:text="@string/test_number"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/outlinedPasswordField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Password"
+            android:hint="@string/password_label"
             android:layout_marginTop="24dp"
             app:endIconMode="password_toggle"
             app:errorEnabled="false"
@@ -41,13 +41,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="123"
+                android:text="@string/test_password"
                 android:id="@+id/input_password"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forget password?"
+            android:text="@string/forget_password"
             android:textSize="14sp"
             android:textAllCaps="false"
             style="@style/Widget.App.Button.TextButton"/>
@@ -64,14 +64,14 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:text="ERROR"
+                android:text="@string/error"
                 android:textColor="@color/red"
                 android:gravity="center_horizontal" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_button"
-                android:text="Login"
+                android:text="@string/login_label"
                 android:textSize="20sp"
                 android:paddingHorizontal="54dp"
                 android:paddingVertical="12dp"
@@ -85,12 +85,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account?"/>
+                android:text="@string/no_account"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.App.Button.TextButton"
-                android:text="Sign up"
+                android:text="@string/sign_up"
                 android:textAllCaps="false"
                 android:paddingLeft="-12dp"
                 android:id="@+id/sign_up_text_button"/>

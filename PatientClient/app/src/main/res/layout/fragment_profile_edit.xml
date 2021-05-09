@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update Information"
+                android:text="@string/update_information"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -39,32 +39,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Change avatar" />
+                    android:text="@string/change_avatar" />
             </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/outlinedNameField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Name"
+                android:hint="@string/name_label"
                 app:startIconDrawable="@drawable/ic_profile"
                 android:layout_marginVertical="12dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:id="@+id/profile_edit_name"
-                    android:text="Hai Dang"/>
+                    android:id="@+id/profile_edit_name" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/outlinedBirthField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Date of birth"
+                android:hint="@string/dob_hint"
                 app:startIconDrawable="@drawable/ic_schedule"
-                android:layout_marginVertical="12dp"
-                android:tooltipText="Month, date, year">
+                android:layout_marginVertical="12dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/outlinedWeightField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Weight"
+                android:hint="@string/weight_hint"
                 app:startIconDrawable="@drawable/ic_weight_scale"
                 android:layout_marginVertical="12dp">
                 <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender"
+                android:text="@string/gender_label"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
@@ -106,13 +104,13 @@
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Male"
+                    android:text="@string/male"
                     android:id="@+id/profile_edit_gender_male"
                     android:layout_weight="1"/>
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Female"
+                    android:text="@string/female"
                     android:id="@+id/profile_edit_gender_female"
                     android:layout_weight="1"/>
             </RadioGroup>
@@ -120,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/profile_edit_save_button"
-                android:text="Save"
+                android:text="@string/save"
                 android:layout_marginTop="16dp"
                 style="@style/CornerButton"/>
         </LinearLayout>

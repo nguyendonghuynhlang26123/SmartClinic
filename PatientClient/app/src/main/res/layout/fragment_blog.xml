@@ -14,14 +14,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fab_ask"
-            android:layout_gravity="right|bottom"
+            android:layout_gravity="end|bottom"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="64dp"
             app:icon="@drawable/ic_edit"
-            android:text="Ask"/>
+            android:text="@string/ask"/>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/scroll_container">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,52 +32,14 @@
                     android:layout_height="wrap_content"
                     style="@style/BottomCornerCard"
                     android:backgroundTint="@color/pink_primary">
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginHorizontal="16dp">
-                        <SearchView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
-                            android:background="@drawable/outlined_rounded_shape"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/doctor_major"
-                            android:orientation="horizontal"
-                            android:weightSum="3"
-                            android:layout_marginVertical="16dp">
-                            <com.google.android.material.chip.Chip
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Surgery"
-                                android:backgroundTint="@color/white"
-                                android:layout_weight="1"
-                                android:layout_marginRight="16dp"
-                                android:textAlignment="center"
-                                android:gravity="center_horizontal" />
-                            <com.google.android.material.chip.Chip
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Neurology"
-                                android:backgroundTint="@color/white"
-                                android:layout_weight="1"
-                                android:layout_marginHorizontal="16dp"
-                                android:textAlignment="center"
-                                android:gravity="center_horizontal"/>
-                            <com.google.android.material.chip.Chip
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Surgery"
-                                android:backgroundTint="@color/white"
-                                android:layout_weight="1"
-                                android:layout_marginLeft="16dp"
-                                android:textAlignment="center"
-                                android:gravity="center_horizontal"/>
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:text="@string/forum"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:layout_marginVertical="16dp"/>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -102,7 +65,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ask our doctor for free"
+                                android:text="@string/ask_title"
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginLeft="16dp"/>
@@ -111,7 +74,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/outlined_rounded_shape"
-                            android:hint="Why am I beautiful ?"
+                            android:hint="@string/ask_hint"
                             android:textSize="14sp"
                             android:id="@+id/input_question"/>
                         <LinearLayout
@@ -123,14 +86,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ask anonymously"
+                                android:text="@string/ask_warning"
                                 android:layout_weight="2"
                                 android:textStyle="italic"
                                 android:textSize="16sp"/>
                             <Button
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ask"
+                                android:text="@string/ask"
                                 android:id="@+id/submit_button"
                                 android:textSize="16sp"
                                 android:layout_weight="1"
@@ -156,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:text="More"
+                    android:text="@string/more_button"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     style="@style/Widget.MaterialComponents.Button"

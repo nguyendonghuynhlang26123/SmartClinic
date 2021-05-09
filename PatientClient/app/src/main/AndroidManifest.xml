@@ -20,14 +20,11 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.OtpActivity"/>
         <activity android:name=".activities.TreatmentActivity" />
-        <activity android:name=".activities.HistoryActivity" />
         <activity android:name=".activities.BookAppointmentActivity" />
         <activity android:name=".activities.BookAppointmentDashboard" />
         <activity android:name=".activities.DrugActivity" />
         <activity android:name=".activities.ServiceActivity" />
         <activity android:name=".activities.DoctorDetailActivity" />
-        <activity android:name=".activities.ChatActivity" />
-        <activity android:name=".activities.AllServiceActivity" />
         <activity android:name=".activities.PharmacyActivity" />
         <activity android:name=".activities.LocationActivity" />
         <activity android:name=".activities.MainActivity" />

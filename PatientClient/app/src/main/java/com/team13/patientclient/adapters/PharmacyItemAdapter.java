@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class PharmacyItemAdapter extends RecyclerView.Adapter<PharmacyItemAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<DrugModel> drugs;
-    private boolean isGrid;
+    private final boolean isGrid;
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

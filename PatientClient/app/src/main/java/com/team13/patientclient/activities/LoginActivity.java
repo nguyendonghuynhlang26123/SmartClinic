@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.LoginFragment;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
-import com.team13.patientclient.activities.fragments.SignupFragment;
+import com.team13.patientclient.activities.fragments.SignUpFragment;
 import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.HospitalModel;
 import com.team13.patientclient.repository.OnResponse;
@@ -34,14 +33,10 @@ import com.team13.patientclient.repository.apis.PingApi;
 import com.team13.patientclient.repository.apis.ServicePackApi;
 import com.team13.patientclient.repository.services.HospitalService;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener,SignupFragment.SignUpListener{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener, SignUpFragment.SignUpListener{
     TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +48,14 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment;
-                String title = tab.getText().toString();
+                String title = Objects.requireNonNull(tab.getText()).toString();
                 switch (title.toLowerCase(Locale.US)){
                     case "login":
                         fragment = new LoginFragment();
                         loadFragment(fragment);
                         break;
                     case "signup":
-                        fragment = new SignupFragment();
+                        fragment = new SignUpFragment();
                         loadFragment(fragment);
                         break;
                 }
@@ -126,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
         tabLayout.selectTab(tabLayout.getTabAt(0));
     }
     public void setSignUpFragment(){
-        loadFragment(new SignupFragment());
+        loadFragment(new SignUpFragment());
         tabLayout.selectTab(tabLayout.getTabAt(1));
     }
 

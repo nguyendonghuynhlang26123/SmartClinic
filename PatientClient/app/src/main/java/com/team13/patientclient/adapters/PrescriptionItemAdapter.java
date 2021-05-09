@@ -14,11 +14,11 @@ import com.team13.patientclient.models.DrugDetail;
 
 import java.util.ArrayList;
 
-public class PrescriptionItemAdpater extends RecyclerView.Adapter<PrescriptionItemAdpater.ViewHolder> {
+public class PrescriptionItemAdapter extends RecyclerView.Adapter<PrescriptionItemAdapter.ViewHolder> {
     final Context context;
     ArrayList<DrugDetail> drugs;
 
-    public PrescriptionItemAdpater(Context context, ArrayList<DrugDetail> drugs) {
+    public PrescriptionItemAdapter(Context context, ArrayList<DrugDetail> drugs) {
         this.context = context;
         this.drugs = drugs;
     }

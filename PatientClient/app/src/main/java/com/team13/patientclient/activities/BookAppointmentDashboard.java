@@ -36,7 +36,7 @@ public class BookAppointmentDashboard extends AppCompatActivity {
         RecyclerView serviceList = findViewById(R.id.service_list);
 
         //rendering dumb data while waiting for response from server
-        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels(3));
+        ServicePackAdapter servicePackAdapter = new ServicePackAdapter(this, getEmptyModels());
         serviceList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         serviceList.setAdapter(servicePackAdapter);
 
@@ -75,9 +75,9 @@ public class BookAppointmentDashboard extends AppCompatActivity {
         });
     }
 
-    ArrayList<ServicePack> getEmptyModels(int n){
+    ArrayList<ServicePack> getEmptyModels(){
         ArrayList<ServicePack> servicePacks = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < 3; i++) {
             servicePacks.add(new ServicePack());
         }
         return servicePacks;

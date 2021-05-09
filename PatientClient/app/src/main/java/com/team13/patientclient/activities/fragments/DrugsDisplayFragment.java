@@ -25,6 +25,8 @@ import com.team13.patientclient.models.DrugModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.DrugService;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,34 +41,15 @@ import retrofit2.Response;
  */
 public class DrugsDisplayFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     DrugDisplayListener listener;
     ArrayList<Category> data;
     public DrugsDisplayFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DrugsDisplayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DrugsDisplayFragment newInstance(String param1, String param2) {
+    public static DrugsDisplayFragment newInstance() {
         DrugsDisplayFragment fragment = new DrugsDisplayFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,10 +57,7 @@ public class DrugsDisplayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
         data = listener.getDisplayData();
     }
 
@@ -151,7 +131,7 @@ public class DrugsDisplayFragment extends Fragment {
         });
         service.getMinimizedData(new Callback<DrugModel[]>() {
             @Override
-            public void onResponse(Call<DrugModel[]> call, Response<DrugModel[]> response) {
+            public void onResponse(@NotNull Call<DrugModel[]> call, @NotNull Response<DrugModel[]> response) {
                 if (response.isSuccessful()) {
                     DrugModel[]  data = response.body();
 
@@ -159,14 +139,14 @@ public class DrugsDisplayFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DrugModel[]> call, Throwable t) {
+            public void onFailure(@NotNull Call<DrugModel[]> call, @NotNull Throwable t) {
 
             }
         });
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         if (context instanceof DrugDisplayListener) {
             listener = (DrugDisplayListener) context;
