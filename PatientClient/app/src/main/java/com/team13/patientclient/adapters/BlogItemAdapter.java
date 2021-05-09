@@ -59,4 +59,8 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
         }
     }
 
+    public void addItem(AnonymousQuestion question){
+        questions.add(0, question);
+        notifyDataSetChanged();
+    }
 }

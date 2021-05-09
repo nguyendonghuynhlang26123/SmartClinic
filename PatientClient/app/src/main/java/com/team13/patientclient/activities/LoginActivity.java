@@ -33,15 +33,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
                                                             SignupFragment.SignUpListener
 {
     TabLayout tabLayout;
-    ProgressBar progressBar;
-    TextView welcomeData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_login);
-        progressBar = findViewById(R.id.progress_circular_indicator);
-        welcomeData = findViewById(R.id.welcome_data);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

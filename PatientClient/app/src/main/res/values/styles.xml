@@ -96,4 +96,11 @@
         <item name="colorPrimary">@color/purple_dark</item>
     </style>
 
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
 </resources>

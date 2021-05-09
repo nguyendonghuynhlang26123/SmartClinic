@@ -20,17 +20,17 @@ public class AlarmReceiverActivity extends BroadcastReceiver {
         //PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LONG");
         //wl.acquire(1*60*1000L /*1 minutes*/);\
 //        Log.d("LONG", "RECEIVED ALARM");
-//        String appointmentId = intent.getStringExtra(Utils.BROADCAST_APPOINTMENT_ID);
-//        String patientId = intent.getStringExtra(Utils.BROADCAST_PATIENT_ID);
-//        if (appointmentId != null && patientId != null) {
+        String appointmentId = intent.getStringExtra(Utils.BROADCAST_APPOINTMENT_ID);
+        String patientId = intent.getStringExtra(Utils.BROADCAST_PATIENT_ID);
+        if (appointmentId != null && patientId != null) {
 //            PatientService service = new PatientService();
 //            service.cancelAppointment(patientId, appointmentId, new OnSuccessResponse<Void>() {
 //                @Override
 //                public void onSuccess(Void response) {
-//                    NotificationHandler.sendNotification(context, "Appointment canceled", "Your current appointment has been canceled");
+                    NotificationHandler.sendNotification(context, "Appointment alarm", "Your current appointment is coming");
 //                }
 //            });
-//        }
+        }
         //wl.release();
     }
 }
