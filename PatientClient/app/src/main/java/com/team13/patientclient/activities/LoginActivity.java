@@ -12,14 +12,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.LoginFragment;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.SignupFragment;
+import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.HospitalModel;
+import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.RetrofitSingleton;
+import com.team13.patientclient.repository.apis.PingApi;
+import com.team13.patientclient.repository.apis.ServicePackApi;
 import com.team13.patientclient.repository.services.HospitalService;
 
 import org.json.JSONException;
@@ -64,11 +71,40 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
 
             }
         });
-        loadFragment(new LoginFragment());
+
+        pingServer();
     }
+
+    private void pingServer() {
+        PingApi api = RetrofitSingleton.getInstance().create(PingApi.class);
+        api.ping().enqueue(new OnResponse<Void>() {
+            @Override
+            public void onRequestSuccess(Void response) {
+                loadFragment(new LoginFragment());
+                findViewById(R.id.action_card).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                View layout = findViewById(R.id.login_view);
+                Snackbar snackbar = Snackbar
+                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_LONG)
+                        .setAction("Try again", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                pingServer();
+                            }
+                        });
+
+                snackbar.show();
+            }
+        });
+    }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

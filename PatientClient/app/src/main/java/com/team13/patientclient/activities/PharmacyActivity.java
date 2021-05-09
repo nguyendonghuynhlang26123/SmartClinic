@@ -50,7 +50,9 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
             if(fragmentManager.getBackStackEntryCount()<=2){
                 finish();
             } else {
-                fragmentManager.popBackStack();
+                banner.setVisibility(View.VISIBLE);
+                searchResult.setVisibility(View.GONE);
+                renderDrugCategories();
             }
         });
         SearchView searchView = findViewById(R.id.category_search);
@@ -95,14 +97,10 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
             @Override
             public void onSuccess(DrugModel[] list) {
                 searchResult.setVisibility(View.VISIBLE);
-                if (list.length != 0){
-                    searchResult.setText("Found "+list.length+" result(s) matching \"" + key +"\":");
-                    Fragment fragment = DrugListFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
-                    loadFragment(fragment);
-                }
-                else {
-                    searchResult.setText("Sorry, but nothing matched your search term. Please try again!");
-                }
+                if (list.length != 0) searchResult.setText("Found "+list.length+" result(s) matching \"" + key +"\":");
+                else searchResult.setText("Sorry, but nothing matched your search term. Please try again!");
+                Fragment fragment = DrugListFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
+                loadFragment(fragment);
             }
         });
     }

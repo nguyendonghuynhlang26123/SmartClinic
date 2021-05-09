@@ -19,15 +19,17 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.CircularImageView;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
-import com.team13.patientclient.activities.ImagePickingActivity;
 import com.team13.patientclient.models.PatientModel;
 import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.services.ImageService;
 import com.team13.patientclient.repository.services.PatientService;
 
 /**
@@ -128,20 +130,18 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
         if (!Utils.checkValidPatientName(name) ){
             Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
         }
+        ImageService is = new ImageService();
 
         //TODO: UPLOAD IMAGE TO FIREBASE then call api!
-//        StorageTask task = is.uploadFile(img, FoodDialog.this.getActivity().getContentResolver()).addOnSuccessListener(t ->{
-//            t.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri ->{
-//                //UPload
-        PatientModel updatedModel = new PatientModel(name, avatarURI, gender, dob, weight);
-        callPutApi(userProfile, updatedModel);
-//            });
-//        }).addOnFailureListener(t -> {
-//            binding.foodModifyDialog.setVisibility(View.VISIBLE);
-//            binding.foodProcessDialog.setVisibility(View.GONE);
-//
-//            Snackbar.make(view, "Upload Failed", Snackbar.LENGTH_LONG ).show();
-//        });
+        StorageTask task = is.uploadFile(avatarURL, this.getActivity().getContentResolver()).addOnSuccessListener(t ->{
+            t.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri ->{
+                //UPload
+                PatientModel updatedModel = new PatientModel(name, uri.toString(), gender, dob, weight);
+                callPutApi(userProfile, updatedModel);
+            });
+        }).addOnFailureListener(t -> {
+            Snackbar.make(view, "Upload Image Failed! The process is canceled", Snackbar.LENGTH_LONG ).show();
+        });
 
 
     }
@@ -174,8 +174,8 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     }
 
     private void choosingAvatarHandler() {
-        Intent intent = ImagePickingActivity.fileChoserIntent();
-        startActivityForResult(intent, ImagePickingActivity.PICK_IMAGE_REQUEST);
+        Intent i = ImageService.fileChoserIntent();
+        startActivityForResult(i, ImageService.PICK_IMAGE_REQUEST);
     }
 
 
@@ -183,8 +183,9 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode== ImagePickingActivity.PICK_IMAGE_REQUEST && resultCode == -1 //OK STATUS
+        if (requestCode== ImageService.PICK_IMAGE_REQUEST && resultCode == -1 //OK STATUS
                 && data != null && data.getData() != null){
+
             avatarURL = data.getData();
             Picasso.get().load(avatarURL).into((ImageView) this.view.findViewById(R.id.profile_edit_avatar));
         }
