@@ -8,3 +8,4 @@ export * from './user.model';
 export * from './prescription.model';
 export * from './medicalService.model';
 export * from './treatment.model';
+export * from './forum.model';
