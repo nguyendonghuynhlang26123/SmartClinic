@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppointmentAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<ScheduleItem> timeline;
-    TextView status;
     public PendingAppointmentAdapter(Context context, ArrayList<ScheduleItem> timeline) {
         this.timeline = timeline;
         this.context=context;
@@ -50,13 +49,17 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             patientName.setText(appointment.getPatientId());
             Button treatment = view.findViewById(R.id.appointment_service);
             treatment.setText(appointment.getService().getName());
-            status=view.findViewById(R.id.status);
-            setStatus(appointment.getStatus());
-//            Button accept= view.findViewById(R.id.accept_patient);
-//            accept.setOnClickListener(v -> {
-//                setStatus("Check in");
-//                appointment.setStatus("Check in");
-//            });
+            TextView status=view.findViewById(R.id.status);
+            status.setText(appointment.getStatus());
+            Button accept= view.findViewById(R.id.accept_patient);
+            if(!appointment.getStatus().equals("CHECKED_IN")){
+                accept.setVisibility(View.VISIBLE);
+            }
+            accept.setOnClickListener(v -> {
+//                status.setText("CHECKED_IN");
+                appointment.setStatus("CHECKED_IN");
+                notifyItemChanged(position);
+            });
 //            Button update= view.findViewById(R.id.update_status);
 //            update.setOnClickListener(v -> {
 //                setStatus("Update");//?????
@@ -69,6 +72,15 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
 //                context.startActivity(i);
 //            });
         }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        super.onViewRecycled(holder);
+        View view = holder.itemView;
+        Button accept_button =  view.findViewById(R.id.accept_patient);
+        if(accept_button!=null) accept_button.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -92,9 +104,4 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             }
         }
     }
-
-    private void setStatus(String mess){
-        status.setText(mess);
-    }
-
 }

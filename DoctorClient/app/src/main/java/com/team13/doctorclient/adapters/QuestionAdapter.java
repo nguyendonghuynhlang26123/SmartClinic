@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.team13.doctorclient.AnswerActivity;
+import com.team13.doctorclient.ForumDetailFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Question;
 
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<Question> questions;
+    ForumItemListener listener;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ViewHolder(@NonNull View itemView) {
@@ -61,11 +64,16 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
         ImageButton detailQuestion= view.findViewById(R.id.showDetail_button);
         detailQuestion.setOnClickListener(v -> {
-            Intent i= new Intent(context, AnswerActivity.class);
-            i.putExtra("question",question);
-            context.startActivity(i);
+//            Intent i= new Intent(context, AnswerActivity.class);
+//            i.putExtra("question",question);
+//            context.startActivity(i);
             question.setState(1);
+            listener.openDetail(question);
         });
+    }
+
+    public void setListener(ForumItemListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -73,5 +81,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         return questions.size();
     }
 
-
+    public interface ForumItemListener{
+        void openDetail(Question question);
+    }
 }
