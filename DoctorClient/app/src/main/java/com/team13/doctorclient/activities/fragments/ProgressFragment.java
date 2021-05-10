@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities.fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.team13.doctorclient.R;
 
 /**
  * A simple {@link Fragment} subclass.

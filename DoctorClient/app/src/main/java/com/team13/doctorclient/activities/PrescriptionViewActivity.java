@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.Prescription;

@@ -12,9 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
-import com.team13.doctorclient.PatientDetailActivity;
+import com.team13.doctorclient.activities.PatientDetailActivity;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.models.Patient;
 import com.team13.doctorclient.models.Treatment;
 
 import java.util.ArrayList;

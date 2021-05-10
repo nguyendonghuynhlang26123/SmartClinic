@@ -1,12 +1,10 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +17,10 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.Prescription;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

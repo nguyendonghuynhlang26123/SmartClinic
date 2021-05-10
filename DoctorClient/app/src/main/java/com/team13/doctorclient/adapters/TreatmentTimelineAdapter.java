@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.team13.doctorclient.PrescriptionViewActivity;
+import com.team13.doctorclient.activities.PrescriptionViewActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Treatment;
 
