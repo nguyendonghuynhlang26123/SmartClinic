@@ -4,35 +4,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-import com.team13.doctorclient.activities.fragments.LoginFragment;
-import com.team13.doctorclient.NetworkUtils;
+import com.team13.doctorclient.Store;
+import com.team13.doctorclient.activities.fragments.DoctorLoginFragment;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.activities.fragments.SignupFragment;
+import com.team13.doctorclient.activities.fragments.NurseLoginFragment;
+import com.team13.doctorclient.repositories.RetrofitSingleton;
+import com.team13.doctorclient.repositories.apis.PingApi;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class LoginActivity extends AppCompatActivity implements DoctorLoginFragment.Listener {
     TabLayout tabLayout;
-    ProgressBar progressBar;
-    TextView welcomeData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        progressBar = findViewById(R.id.progress_circular_indicator);
-        welcomeData = findViewById(R.id.welcome_data);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -41,11 +39,11 @@ public class LoginActivity extends AppCompatActivity {
                 String title = tab.getText().toString();
                 switch (title.toLowerCase(Locale.US)){
                     case "login":
-                        fragment = new LoginFragment();
+                        fragment = new DoctorLoginFragment();
                         loadFragment(fragment);
                         break;
                     case "signup":
-                        fragment = new SignupFragment();
+                        fragment = new NurseLoginFragment();
                         loadFragment(fragment);
                         break;
                 }
@@ -61,8 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        loadFragment(new LoginFragment());
-//        Test();
+        pingServer();
     }
     private void loadFragment(Fragment fragment) {
         // load fragment
@@ -71,53 +68,56 @@ public class LoginActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private void pingServer() {
+        PingApi api = RetrofitSingleton.getInstance().create(PingApi.class);
+        api.ping().enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                loadFragment(new DoctorLoginFragment());
+                View card = findViewById(R.id.action_card);
+                Animation slideUp = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.slide_up);
+                findViewById(R.id.app_icon).startAnimation(slideUp);
+                findViewById(R.id.welcome_label).startAnimation(slideUp);
+
+                card.setVisibility(View.VISIBLE);
+                card.startAnimation(slideUp);
+
+                findViewById(R.id.progress_bar).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                View layout = findViewById(R.id.login_view);
+                Snackbar snackbar = Snackbar
+                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Try again", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                pingServer();
+                            }
+                        });
+                snackbar.show();
+            }
+        });
+    }
+
     public void setLoginFragment(){
-        loadFragment(new LoginFragment());
+        loadFragment(new DoctorLoginFragment());
         tabLayout.selectTab(tabLayout.getTabAt(0));
     }
     public void setSignUpFragment(){
-        loadFragment(new SignupFragment());
+        loadFragment(new NurseLoginFragment());
         tabLayout.selectTab(tabLayout.getTabAt(1));
     }
-    private void Test(){
-        URL api_path = NetworkUtils.buildUrlTest();
-        new ConnectServer().execute(api_path);
+
+    @Override
+    public void startProgram() {
+        if (Store.get_instance().isFullyLoaded()) switchActivity();
     }
-    public class ConnectServer extends AsyncTask<URL, Void, String>{
 
-        @Override
-        protected String doInBackground(URL... urls) {
-            URL api_path = urls[0];
-            String result = null;
-            try {
-                result = NetworkUtils.getResponseFromHttpUrl(api_path);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            progressBar.setVisibility(View.INVISIBLE);
-            if(s!=null && !s.equals("")){
-                try {
-                    JSONObject result = new JSONObject(s);
-                    String data = result.getString("name");
-                    welcomeData.setText(data);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                welcomeData.setVisibility(View.VISIBLE);
-            }
-        }
+    public void switchActivity(){
+        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(i);
     }
 }

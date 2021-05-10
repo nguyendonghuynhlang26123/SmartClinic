@@ -73,9 +73,9 @@ public class DoctorProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_doctor_profile, container, false);
         context=view.getContext();
         ((TextView)view.findViewById(R.id.doctor_name)).setText(doctor.getDoctorName());
-        ((TextView)view.findViewById(R.id.doctor_about)).setText(doctor.getAbout());
+        ((TextView)view.findViewById(R.id.doctor_about)).setText(doctor.getBio());
         chips=view.findViewById(R.id.chips);
-        renderSpecialties(doctor.getSpecialties());
+        renderSpecialties(doctor.getDepartment());
         ImageButton editBtn=view.findViewById(R.id.profile_edit_button);
         editBtn.setOnClickListener(v -> {
             Fragment fragment= EditProfileDoctorFragment.newInstance(doctor);
@@ -101,7 +101,7 @@ public class DoctorProfileFragment extends Fragment {
     }
     private  void getDoctor(){
         doctor= new Doctor("001","Dr CoCo");
-        doctor.setAbout("Doctors tend to be predominantly investigative individuals, which means that they are quite inquisitive and curious people that often like to spend time alone with ..");
-        doctor.setSpecialties("Pediatric,Surgery,Cold");
+        doctor.setBio("Doctors tend to be predominantly investigative individuals, which means that they are quite inquisitive and curious people that often like to spend time alone with ..");
+        doctor.setDepartment("Pediatric,Surgery,Cold");
     }
 }

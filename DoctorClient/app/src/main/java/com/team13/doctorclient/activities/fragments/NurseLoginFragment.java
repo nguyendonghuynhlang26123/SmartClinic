@@ -8,18 +8,16 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.activities.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SignupFragment#newInstance} factory method to
+ * Use the {@link NurseLoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SignupFragment extends Fragment {
+public class NurseLoginFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,23 +28,13 @@ public class SignupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     TextInputEditText phoneInput;
-    Button loginButton;
 
-    public SignupFragment() {
+    public NurseLoginFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignupFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SignupFragment newInstance(String param1, String param2) {
-        SignupFragment fragment = new SignupFragment();
+    public static NurseLoginFragment newInstance(String param1, String param2) {
+        NurseLoginFragment fragment = new NurseLoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,13 +55,9 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_nurse_login, container, false);
         phoneInput = view.findViewById(R.id.input_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        loginButton = view.findViewById(R.id.login_text_button);
-        loginButton.setOnClickListener(v -> {
-            ((LoginActivity)getActivity()).setLoginFragment();
-        });
         return view;
     }
 }

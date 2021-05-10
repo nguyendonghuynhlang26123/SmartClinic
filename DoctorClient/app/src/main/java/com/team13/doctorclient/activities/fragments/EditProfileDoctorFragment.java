@@ -57,9 +57,9 @@ public class EditProfileDoctorFragment extends Fragment {
         EditText name = view.findViewById(R.id.doctor_name);
         name.setText(doctor.getDoctorName());
         EditText about = view.findViewById(R.id.doctor_about);
-        about.setText(doctor.getAbout());
+        about.setText(doctor.getBio());
         chips = view.findViewById(R.id.chips);
-        renderSpecialties(doctor.getSpecialties());
+        renderSpecialties(doctor.getDepartment());
         AppCompatEditText inputChip = view.findViewById(R.id.input_chip);
 
         inputChip.addTextChangedListener(new TextWatcher() {
@@ -91,9 +91,9 @@ public class EditProfileDoctorFragment extends Fragment {
             }
         });
         view.findViewById(R.id.save_btn).setOnClickListener(v->{
-            doctor.setSpecialties(saveSpecialties());
+            doctor.setDepartment(saveSpecialties());
             doctor.setDoctorName(name.getText().toString());
-            doctor.setAbout(about.getText().toString());
+            doctor.setBio(about.getText().toString());
             getFragmentManager().popBackStack();
         });
         return view;
