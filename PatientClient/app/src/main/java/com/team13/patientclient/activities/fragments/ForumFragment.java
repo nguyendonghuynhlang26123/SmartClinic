@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.adapters.ForumItemAdapter;
@@ -78,6 +80,7 @@ public class ForumFragment extends Fragment {
             @Override
             public void onSuccess(ForumModel models) {
                 forumModel = models;
+                Log.d("LONG", new Gson().toJson(models));
                 forumItemAdapter.setData(new ArrayList<>(Arrays.asList(models.getTopics())));
                 page = nextPage;
             }

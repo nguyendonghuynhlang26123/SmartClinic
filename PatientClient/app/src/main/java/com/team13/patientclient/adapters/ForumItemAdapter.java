@@ -2,6 +2,7 @@ package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.DoctorDetailActivity;
 import com.team13.patientclient.R;
+import com.team13.patientclient.models.ForumModel;
 import com.team13.patientclient.models.ForumModel.Topics;
 
 import java.util.ArrayList;
@@ -50,21 +53,24 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         TextView answerCount = view.findViewById(R.id.answer_count);
         answerCount.setText(R.string.no_answer);
         if(topic.hasAnswer()){
+            ForumModel.Answers answer = topic.getFirstAnswer();
             view.findViewById(R.id.answer_shorten).setVisibility(View.VISIBLE);
-            TextView topicAnswer = view.findViewById(R.id.blog_answer);
-            String answer = topic.getFirstAnswer().content;
+            TextView topicAnswer = view.findViewById(R.id.topic_answer);
+            TextView doctorName = view.findViewById(R.id.blog_dr);
+            doctorName.setText(answer.authorName);
+            String answerContent = answer.content;
 
-            if(answer.length()>50){
-                answer = Utils.shortenString(answer, 20);
+            if(answerContent.length()>50){
+                answerContent = Utils.shortenString(answerContent, 20);
                 Button readMoreButton = view.findViewById(R.id.read_more_button);
                 readMoreButton.setVisibility(View.VISIBLE);
                 readMoreButton.setOnClickListener(v->{
-                    topicAnswer.setText(topic.getFirstAnswer().content);
+                    topicAnswer.setText(answer.content);
                     readMoreButton.setVisibility(View.GONE);
                 });
             }
 
-            topicAnswer.setText(answer);
+            topicAnswer.setText(answerContent);
             int count = topic.getAnswerCount();
             answerCount.setText(String.format(Locale.US,"%d Answer", count));
             if(count>1){

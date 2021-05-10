@@ -48,10 +48,10 @@ public class ForumModel {
         String topicString;
 
         @SerializedName("answers")
-        transient Answers[] answers;
+        Answers[] answers;
 
         @SerializedName("created_at")
-        transient long time;
+        long time;
 
         public String getTime () {
             return Utils.dateNumberToString(time);

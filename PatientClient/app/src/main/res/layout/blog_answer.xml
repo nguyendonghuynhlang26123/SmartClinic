@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/doctor_name"
-            android:id="@+id/topic_dr"
+            android:id="@+id/topic_author"
             android:textSize="16sp"
             android:textAllCaps="false"
             android:minHeight="0dp"

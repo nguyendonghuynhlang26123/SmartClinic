@@ -49,7 +49,7 @@ public class AnswerDetailFragment extends BottomSheetDialogFragment {
         for(ForumModel.Answers answer: topic.getAnswers()){
             View answerView = LayoutInflater.from(view.getContext()).inflate(R.layout.blog_answer, container);
             answerView.setLayoutParams(params);
-            TextView answerContent = answerView.findViewById(R.id.blog_answer);
+            TextView answerContent = answerView.findViewById(R.id.topic_answer);
             answerContent.setText(answer.content);
             layout.addView(answerView);
         }
