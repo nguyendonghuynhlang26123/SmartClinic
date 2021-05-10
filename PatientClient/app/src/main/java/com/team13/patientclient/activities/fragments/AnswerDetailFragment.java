@@ -14,13 +14,13 @@ public class AnswerDetailFragment extends BottomSheetDialogFragment {
 
     private static final String ARG_PARAM1 = "param1";
 
-    private ForumModel.Topics topic;
+    private ForumModel.Topic topic;
 
     public AnswerDetailFragment() {
         // Required empty public constructor
     }
 
-    public static AnswerDetailFragment newInstance(ForumModel.Topics question) {
+    public static AnswerDetailFragment newInstance(ForumModel.Topic question) {
         AnswerDetailFragment fragment = new AnswerDetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, question);
@@ -32,7 +32,7 @@ public class AnswerDetailFragment extends BottomSheetDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.topic = (ForumModel.Topics) getArguments().getSerializable(ARG_PARAM1);
+            this.topic = (ForumModel.Topic) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -46,7 +46,7 @@ public class AnswerDetailFragment extends BottomSheetDialogFragment {
         LinearLayout layout = view.findViewById(R.id.question_container);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(16,16,16,16);
-        for(ForumModel.Answers answer: topic.getAnswers()){
+        for(ForumModel.Answer answer: topic.getAnswers()){
             View answerView = LayoutInflater.from(view.getContext()).inflate(R.layout.blog_answer, container);
             answerView.setLayoutParams(params);
             TextView answerContent = answerView.findViewById(R.id.topic_answer);

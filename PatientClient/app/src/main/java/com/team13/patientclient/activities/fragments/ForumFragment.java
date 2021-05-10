@@ -8,18 +8,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.team13.patientclient.R;
-import com.team13.patientclient.Utils;
 import com.team13.patientclient.adapters.ForumItemAdapter;
+import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.ForumModel;
+import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.OnSuccessResponse;
 import com.team13.patientclient.repository.services.ForumService;
 
@@ -116,8 +116,27 @@ public class ForumFragment extends Fragment {
         InputMethodManager inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         EditText editText = view.findViewById(R.id.input_question);
         String questionContent = editText.getText().toString();
+        view.findViewById(R.id.asking_progressbar).setVisibility(View.VISIBLE);
+        v.setEnabled(false);
         if(!questionContent.isEmpty()){
-//            forumItemAdapter.addItem(new AnonymousQuestion(questionContent, "1", Utils.getCurrentDateString()));
+            ForumModel.Topic topic = new ForumModel.Topic(questionContent);
+            ForumService service = new ForumService();
+            service.createTopic(topic, new OnResponse<ForumModel.Topic>() {
+                @Override
+                public void onRequestSuccess(ForumModel.Topic response) {
+                    v.setEnabled(true);
+                    view.findViewById(R.id.asking_progressbar).setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Create Topic Success!", Toast.LENGTH_SHORT).show();
+                    forumItemAdapter.insertToHead(topic);
+                }
+
+                @Override
+                public void onRequestFailed(ErrorResponse response) {
+                    v.setEnabled(true);
+                    view.findViewById(R.id.asking_progressbar).setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Create Topic Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
             editText.setText("");
         }
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);

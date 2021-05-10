@@ -2,7 +2,6 @@ package com.team13.patientclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.DoctorDetailActivity;
 import com.team13.patientclient.R;
 import com.team13.patientclient.models.ForumModel;
-import com.team13.patientclient.models.ForumModel.Topics;
+import com.team13.patientclient.models.ForumModel.Topic;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.ViewHolder> {
     private final Context context;
-    ArrayList<Topics> topics;
+    ArrayList<Topic> topics;
     BlogItemListener listener;
     public ForumItemAdapter(Context context){
         this.context = context;
@@ -41,7 +39,7 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-        Topics topic = topics.get(position);
+        Topic topic = topics.get(position);
         TextView questionView = view.findViewById(R.id.blog_question);
         questionView.setText(topic.getTopicString());
         TextView questionDate = view.findViewById(R.id.blog_time);
@@ -50,7 +48,7 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         TextView answerCount = view.findViewById(R.id.answer_count);
         answerCount.setText(R.string.no_answer);
         if(topic.hasAnswer()){
-            ForumModel.Answers answer = topic.getFirstAnswer();
+            ForumModel.Answer answer = topic.getFirstAnswer();
             view.findViewById(R.id.answer_shorten).setVisibility(View.VISIBLE);
             TextView topicAnswer = view.findViewById(R.id.topic_answer);
             Button doctorBtn = view.findViewById(R.id.blog_dr);
@@ -103,13 +101,13 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         }
     }
 
-    public void addItem(Topics topic){
+    public void insertToHead(Topic topic){
         topics.add(0, topic);
         notifyDataSetChanged();
     }
 
-    public void appendData(ArrayList<Topics> topicsData){
-        topics.addAll(topicsData);
+    public void appendData(ArrayList<Topic> topicData){
+        topics.addAll(topicData);
         notifyDataSetChanged();
     }
 
@@ -118,6 +116,6 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
     }
 
     public interface BlogItemListener{
-        void openDetail(Topics topic);
+        void openDetail(Topic topic);
     }
 }

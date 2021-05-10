@@ -12,7 +12,7 @@ public class ForumService {
 
     public void search(int page, String search, Callback<ForumModel> cb) {api.get(page, search).enqueue(cb);}
 
-    public void createTopic(ForumModel.Topics topic, Callback<ForumModel.Topics> cb) { api.create(topic).enqueue(cb);}
+    public void createTopic(ForumModel.Topic topic, Callback<ForumModel.Topic> cb) { api.create(topic).enqueue(cb);}
 
-    public void publishAnswer(ForumModel.Answers answer , Callback<ForumModel.Answers> cb) { api.publishAnswer(answer).enqueue(cb);}
+    public void publishAnswer(ForumModel.Answer answer , Callback<ForumModel.Answer> cb) { api.publishAnswer(answer).enqueue(cb);}
 }

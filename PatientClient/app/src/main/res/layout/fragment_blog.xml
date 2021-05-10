@@ -81,8 +81,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginTop="16dp"
-                            android:weightSum="3">
+                            android:layout_marginTop="16dp" >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -99,6 +98,11 @@
                                 android:layout_weight="1"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"/>
+                            <ProgressBar
+                                android:layout_width="30dp"
+                                android:layout_height="40dp"
+                                android:id="@+id/asking_progressbar"
+                                android:visibility="gone"/>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>

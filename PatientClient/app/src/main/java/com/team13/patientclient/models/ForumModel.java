@@ -4,11 +4,10 @@ import com.google.gson.annotations.SerializedName;
 import com.team13.patientclient.Utils;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 public class ForumModel {
     @SerializedName("data")
-    Topics[] topics;
+    Topic[] topics;
 
     @SerializedName("totalPage")
     int totalPage;
@@ -22,7 +21,7 @@ public class ForumModel {
     public ForumModel() {
     }
 
-    public class Answers implements Serializable{
+    public static class Answer implements Serializable{
         @SerializedName("content")
         public String content;
 
@@ -35,7 +34,7 @@ public class ForumModel {
         @SerializedName("user_type")
         public String authorType;
 
-        public Answers(String content, String authorName, String authorId, String authorType) {
+        public Answer(String content, String authorName, String authorId, String authorType) {
             this.content = content;
             this.authorName = authorName;
             this.authorId = authorId;
@@ -43,12 +42,12 @@ public class ForumModel {
         }
     }
 
-    public class Topics implements Serializable {
+    public static class Topic implements Serializable {
         @SerializedName("topic")
         String topicString;
 
         @SerializedName("answers")
-        Answers[] answers;
+        Answer[] answers;
 
         @SerializedName("created_at")
         long time;
@@ -61,13 +60,14 @@ public class ForumModel {
             return answers != null && answers.length > 0;
         }
 
-        public Answers getFirstAnswer() {
+        public Answer getFirstAnswer() {
             if (!hasAnswer()) return null;
             return answers[0];
         }
 
-        public Topics(String topicString) {
+        public Topic(String topicString) {
             this.topicString = topicString;
+            time = System.currentTimeMillis();
         }
 
         public String getTopicString() {
@@ -76,16 +76,16 @@ public class ForumModel {
 
         public int getAnswerCount() { return answers.length;}
 
-        public Answers[] getAnswers() {
+        public Answer[] getAnswers() {
             return answers;
         }
     }
 
-    public Topics[] getTopics() {
+    public Topic[] getTopics() {
         return topics;
     }
 
-    public void setTopics(Topics[] topics) {
+    public void setTopics(Topic[] topics) {
         this.topics = topics;
     }
 

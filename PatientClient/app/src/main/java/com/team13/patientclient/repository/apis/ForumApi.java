@@ -8,7 +8,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ForumApi {
@@ -19,10 +18,9 @@ public interface ForumApi {
     Call<ForumModel> get(@Query("page") int page, @Query("search") String searchKey);
 
     @POST("/forums")
-    @FormUrlEncoded
-    Call<ForumModel.Topics> create(@Body ForumModel.Topics topic);
+    Call<ForumModel.Topic> create(@Body ForumModel.Topic topic);
 
     @PUT("/forums/answers/{id}")
     @FormUrlEncoded
-    Call<ForumModel.Answers> publishAnswer(@Body ForumModel.Answers answer);
+    Call<ForumModel.Answer> publishAnswer(@Body ForumModel.Answer answer);
 }
