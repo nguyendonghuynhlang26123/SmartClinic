@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
@@ -33,7 +34,7 @@ public class NurseHomeActivity extends AppCompatActivity {
             "18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"
     };
     HashMap<String, Integer> timeline = new HashMap<>(20);
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
