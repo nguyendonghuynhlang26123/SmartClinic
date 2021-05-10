@@ -125,7 +125,6 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
         view.findViewById(R.id.profile_edit_save_button).setEnabled(false);
         ProgressBar progressBar = view.findViewById(R.id.progress_bar);
         ImageService is = new ImageService();
-        Toast.makeText(getContext(), FirebaseStorage.getInstance().get, Toast.LENGTH_LONG).show();
 
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(0);
@@ -140,8 +139,7 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
             double progress = (100.0 * t.getBytesTransferred() / t.getTotalByteCount());
             progressBar.setProgress((int) progress);
         }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            //Toast.makeText(getContext(), "Upload Image Failed! The process is canceled", Toast.LENGTH_LONG ).show();
+            Toast.makeText(getContext(), "Upload Image Failed! The process is canceled", Toast.LENGTH_LONG ).show();
             dismiss();
         });
 

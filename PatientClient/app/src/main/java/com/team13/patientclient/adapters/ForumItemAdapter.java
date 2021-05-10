@@ -14,59 +14,61 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.DoctorDetailActivity;
 import com.team13.patientclient.R;
-import com.team13.patientclient.models.AnonymousQuestion;
+import com.team13.patientclient.models.ForumModel.Topics;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHolder> {
+public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.ViewHolder> {
     private final Context context;
-    ArrayList<AnonymousQuestion> questions;
+    ArrayList<Topics> topics;
     BlogItemListener listener;
-    public BlogItemAdapter(Context context, ArrayList<AnonymousQuestion> questions){
+    public ForumItemAdapter(Context context){
         this.context = context;
-        this.questions = questions;
+        topics = new ArrayList<>();
     }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.blog_item, parent, false);
-        return new BlogItemAdapter.ViewHolder(view);
+        return new ForumItemAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view = holder.itemView;
-        AnonymousQuestion question = questions.get(position);
+        Topics topic = topics.get(position);
         TextView questionView = view.findViewById(R.id.blog_question);
-        questionView.setText(question.getContent());
+        questionView.setText(topic.getTopicString());
         TextView questionDate = view.findViewById(R.id.blog_time);
-        questionDate.setText(question.getDate());
+        questionDate.setText(topic.getTime());
         view.findViewById(R.id.blog_dr).setOnClickListener(v->{
             Intent i = new Intent(context, DoctorDetailActivity.class);
             context.startActivity(i);
         });
         TextView answerCount = view.findViewById(R.id.answer_count);
         answerCount.setText(R.string.no_answer);
-        if(question.hasAnswer()){
+        if(topic.hasAnswer()){
             view.findViewById(R.id.answer_shorten).setVisibility(View.VISIBLE);
-            TextView blogAnswer = view.findViewById(R.id.blog_answer);
-            String answer = question.getFirstAnswer();
+            TextView topicAnswer = view.findViewById(R.id.blog_answer);
+            String answer = topic.getFirstAnswer().content;
 
             if(answer.length()>50){
                 answer = Utils.shortenString(answer, 20);
                 Button readMoreButton = view.findViewById(R.id.read_more_button);
                 readMoreButton.setVisibility(View.VISIBLE);
                 readMoreButton.setOnClickListener(v->{
-                    blogAnswer.setText(question.getFirstAnswer());
+                    topicAnswer.setText(topic.getFirstAnswer().content);
                     readMoreButton.setVisibility(View.GONE);
                 });
             }
-            blogAnswer.setText(answer);
-            int count = question.getAnswerCount();
+
+            topicAnswer.setText(answer);
+            int count = topic.getAnswerCount();
             answerCount.setText(String.format(Locale.US,"%d Answer", count));
             if(count>1){
-                answerCount.setOnClickListener(v->listener.openDetail(question));
+                answerCount.setOnClickListener(v->listener.openDetail(topic));
                 answerCount.setText(String.format(Locale.US,"%d Answers", count));
             }
         }
@@ -83,7 +85,7 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return questions.size();
+        return topics.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -93,8 +95,13 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
         }
     }
 
-    public void addItem(AnonymousQuestion question){
-        questions.add(0, question);
+    public void addItem(Topics topic){
+        topics.add(0, topic);
+        notifyDataSetChanged();
+    }
+
+    public void setData(ArrayList<Topics> topicsData){
+        topics = topicsData;
         notifyDataSetChanged();
     }
 
@@ -103,6 +110,6 @@ public class BlogItemAdapter extends RecyclerView.Adapter<BlogItemAdapter.ViewHo
     }
 
     public interface BlogItemListener{
-        void openDetail(AnonymousQuestion question);
+        void openDetail(Topics topic);
     }
 }
