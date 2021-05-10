@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.fragments.BlogFragment">
+    tools:context=".activities.fragments.ForumFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -40,7 +40,18 @@
                         android:textStyle="bold"
                         android:textSize="24sp"
                         android:layout_marginVertical="16dp"/>
+
                 </com.google.android.material.card.MaterialCardView>
+
+                <androidx.appcompat.widget.SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/outlined_rounded_shape"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    app:queryBackground="@null"
+                    android:id="@+id/forum_search"
+                    />
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,8 +92,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginTop="16dp"
-                            android:weightSum="3">
+                            android:layout_marginTop="16dp" >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -99,6 +109,11 @@
                                 android:layout_weight="1"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"/>
+                            <ProgressBar
+                                android:layout_width="30dp"
+                                android:layout_height="40dp"
+                                android:id="@+id/asking_progressbar"
+                                android:visibility="gone"/>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -115,6 +130,11 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="16dp"
                     android:minHeight="250dp"/>
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:id="@+id/progress_bar"
+                    />
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,6 +143,7 @@
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/more_btn"
                     />
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"

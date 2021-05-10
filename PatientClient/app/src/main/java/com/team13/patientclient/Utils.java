@@ -53,6 +53,12 @@ public class Utils {
         }
     }
 
+    public static String dateNumberToString(long timeStamp){
+        Date date = new Date(timeStamp);
+        SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
+        return format.format(date);
+    }
+
     @SuppressLint("SimpleDateFormat")
     public static String getCurrentDateString(){
         return new SimpleDateFormat(DATE_PATTERN).format(Calendar.getInstance().getTime());

@@ -8,3 +8,4 @@ export * from './medicine.interface';
 export * from './prescription.interface';
 export * from './medicalService.interface';
 export * from './treatment.interface';
+export * from './forum.interface';

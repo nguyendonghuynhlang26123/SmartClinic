@@ -36,6 +36,10 @@ import com.team13.patientclient.repository.services.HospitalService;
 import java.util.Locale;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener, SignUpFragment.SignUpListener{
     TabLayout tabLayout;
     @Override
@@ -77,9 +81,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
 
     private void pingServer() {
         PingApi api = RetrofitSingleton.getInstance().create(PingApi.class);
-        api.ping().enqueue(new OnResponse<Void>() {
+        api.ping().enqueue(new Callback<Void>() {
             @Override
-            public void onRequestSuccess(Void response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 loadFragment(new LoginFragment());
                 View card = findViewById(R.id.action_card);
                 Animation slideUp = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.slide_up);
@@ -93,17 +97,16 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
             }
 
             @Override
-            public void onRequestFailed(ErrorResponse response) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 View layout = findViewById(R.id.login_view);
                 Snackbar snackbar = Snackbar
-                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_LONG)
+                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_INDEFINITE)
                         .setAction("Try again", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 pingServer();
                             }
                         });
-
                 snackbar.show();
             }
         });
