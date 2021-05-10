@@ -77,6 +77,10 @@ public class ServiceActivity extends AppCompatActivity implements ServiceDisplay
 
     }
 
+    public void handleSearch(String query){
+
+    }
+
     @Override
     public ArrayList<ServicePack> getDisplayService() {
         return data;

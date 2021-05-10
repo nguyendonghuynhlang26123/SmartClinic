@@ -51,27 +51,27 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ((TextView) view.findViewById(R.id.welcome_text)).setText(getString(R.string.welcome_text,  Store.get_instance().getName()));
-        SearchView searchView = view.findViewById(R.id.home_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent i = new Intent(view.getContext(), ServiceActivity.class);
-                i.putExtra(SearchManager.QUERY, query);
-                i.setAction(Intent.ACTION_SEARCH);
-                view.getContext().startActivity(i);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                String query = searchView.getQuery().toString();
-//                if(!query.isEmpty()){
-//                    test.setText(query);
-//                    return true;
-//                }
-                return false;
-            }
-        });
+//        SearchView searchView = view.findViewById(R.id.home_search);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Intent i = new Intent(view.getContext(), ServiceActivity.class);
+//                i.putExtra(SearchManager.QUERY, query);
+//                i.setAction(Intent.ACTION_SEARCH);
+//                view.getContext().startActivity(i);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////                String query = searchView.getQuery().toString();
+////                if(!query.isEmpty()){
+////                    test.setText(query);
+////                    return true;
+////                }
+//                return false;
+//            }
+//        });
         viewPager = view.findViewById(R.id.news_banner);
         bannerAdapter = new BannerAdapter(view.getContext());
         viewPager.setAdapter(bannerAdapter);

@@ -89,7 +89,7 @@ public class AppointmentFragment extends Fragment {
 
         if (!Store.get_instance().isHavingAnAppointment()) view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE);
 
-            callApiAndRender(adapter, view);
+        callApiAndRender(adapter, view);
         return view;
     }
     void callApiAndRender(TreatmentAdapter adapter, View view){

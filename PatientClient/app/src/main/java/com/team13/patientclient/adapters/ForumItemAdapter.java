@@ -106,6 +106,11 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         notifyDataSetChanged();
     }
 
+    public void reset(){
+        topics.clear();
+        notifyDataSetChanged();
+    }
+
     public void appendData(ArrayList<Topic> topicData){
         topics.addAll(topicData);
         notifyDataSetChanged();

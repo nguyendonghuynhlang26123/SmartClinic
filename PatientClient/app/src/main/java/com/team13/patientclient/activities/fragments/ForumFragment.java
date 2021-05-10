@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
 import com.team13.patientclient.R;
@@ -33,6 +34,7 @@ public class ForumFragment extends Fragment {
     int page = 1;
     int totalPage = 1;
     int results = 1;
+    String searchKey = "";
     ForumItemAdapter forumItemAdapter;
 
     public ForumFragment() {
@@ -74,9 +76,30 @@ public class ForumFragment extends Fragment {
 
         view.findViewById(R.id.more_btn).setOnClickListener(this::handleMoreBtnPressed);
 
+        SearchView searchView = ((SearchView) view.findViewById(R.id.forum_search));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchKey = query;
+                view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+                callGetApi(1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    searchKey = "";
+                    callGetApi(1);
+                }
+                return false;
+            }
+        });
+
         callGetApi(1);
         return view;
     }
+
 
     private void handleMoreBtnPressed(View v) {
         view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
@@ -90,17 +113,33 @@ public class ForumFragment extends Fragment {
 
     private void callGetApi(int nextPage) {
         ForumService service = new ForumService();
-        service.get(nextPage, new OnSuccessResponse<ForumModel>() {
-            @Override
-            public void onSuccess(ForumModel models) {
-                forumItemAdapter.appendData(new ArrayList<>(Arrays.asList(models.getTopics())));
-                page = nextPage;
-                totalPage = models.getTotalPage();
-                results = models.getNumOfTopics();
-                view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
-                handlePages();
-            }
-        });
+        if (nextPage == 1) forumItemAdapter.reset();
+        if (!searchKey.isEmpty()){ // Is searching
+            service.search(nextPage, searchKey, new OnSuccessResponse<ForumModel>() {
+                @Override
+                public void onSuccess(ForumModel model) {
+                    forumItemAdapter.appendData(new ArrayList<>(Arrays.asList(model.getTopics())));
+                    page = nextPage;
+                    totalPage = model.getTotalPage();
+                    results = model.getNumOfTopics();
+                    view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+                    handlePages();
+                }
+            });
+        }
+        else{
+            service.get(nextPage, new OnSuccessResponse<ForumModel>() {
+                @Override
+                public void onSuccess(ForumModel models) {
+                    forumItemAdapter.appendData(new ArrayList<>(Arrays.asList(models.getTopics())));
+                    page = nextPage;
+                    totalPage = models.getTotalPage();
+                    results = models.getNumOfTopics();
+                    view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+                    handlePages();
+                }
+            });
+        }
     }
 
     private void handleAskBtnPressed() {

@@ -58,15 +58,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:text="@string/welcome_back"/>
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/outlined_rounded_shape"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                app:queryBackground="@null"
-                android:id="@+id/home_search"
-                />
+<!--            <androidx.appcompat.widget.SearchView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/outlined_rounded_shape"-->
+<!--                android:layout_marginHorizontal="16dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                app:queryBackground="@null"-->
+<!--                android:id="@+id/home_search"-->
+<!--                />-->
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="144dp"
