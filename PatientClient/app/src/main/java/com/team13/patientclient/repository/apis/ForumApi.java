@@ -22,7 +22,7 @@ public interface ForumApi {
     @FormUrlEncoded
     Call<ForumModel.Topics> create(@Body ForumModel.Topics topic);
 
-    @PUT("/forums/answers/:id")
+    @PUT("/forums/answers/{id}")
     @FormUrlEncoded
     Call<ForumModel.Answers> publishAnswer(@Body ForumModel.Answers answer);
 }

@@ -46,18 +46,20 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         questionView.setText(topic.getTopicString());
         TextView questionDate = view.findViewById(R.id.blog_time);
         questionDate.setText(topic.getTime());
-        view.findViewById(R.id.blog_dr).setOnClickListener(v->{
-            Intent i = new Intent(context, DoctorDetailActivity.class);
-            context.startActivity(i);
-        });
+
         TextView answerCount = view.findViewById(R.id.answer_count);
         answerCount.setText(R.string.no_answer);
         if(topic.hasAnswer()){
             ForumModel.Answers answer = topic.getFirstAnswer();
             view.findViewById(R.id.answer_shorten).setVisibility(View.VISIBLE);
             TextView topicAnswer = view.findViewById(R.id.topic_answer);
-            TextView doctorName = view.findViewById(R.id.blog_dr);
-            doctorName.setText(answer.authorName);
+            Button doctorBtn = view.findViewById(R.id.blog_dr);
+            doctorBtn.setText(answer.authorName);
+            doctorBtn.setOnClickListener(v->{
+                Intent i = new Intent(context, DoctorDetailActivity.class);
+                i.putExtra("id", answer.authorId);
+                context.startActivity(i);
+            });
             String answerContent = answer.content;
 
             if(answerContent.length()>50){
@@ -106,8 +108,8 @@ public class ForumItemAdapter extends RecyclerView.Adapter<ForumItemAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setData(ArrayList<Topics> topicsData){
-        topics = topicsData;
+    public void appendData(ArrayList<Topics> topicsData){
+        topics.addAll(topicsData);
         notifyDataSetChanged();
     }
 

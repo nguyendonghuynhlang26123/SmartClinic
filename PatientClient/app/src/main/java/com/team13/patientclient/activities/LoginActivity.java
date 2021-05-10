@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
             public void onFailure(Call<Void> call, Throwable t) {
                 View layout = findViewById(R.id.login_view);
                 Snackbar snackbar = Snackbar
-                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_LONG)
+                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_INDEFINITE)
                         .setAction("Try again", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

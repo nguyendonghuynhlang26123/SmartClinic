@@ -29,9 +29,12 @@ import java.util.Objects;
 
 public class ForumFragment extends Fragment {
 
-    ForumModel forumModel;
     View view;
     int page = 1;
+    int totalPage = 1;
+    int results = 1;
+    ForumItemAdapter forumItemAdapter;
+
     public ForumFragment() {
         // Required empty public constructor
     }
@@ -53,8 +56,7 @@ public class ForumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_blog, container, false);
-        forumModel = new ForumModel();
-        ForumItemAdapter forumItemAdapter = new ForumItemAdapter(view.getContext());
+        forumItemAdapter = new ForumItemAdapter(view.getContext());
         forumItemAdapter.setListener(topic -> {
 //            AnswerDetailFragment fragment = AnswerDetailFragment.newInstance(question);
 //            assert getFragmentManager() != null;
@@ -70,19 +72,33 @@ public class ForumFragment extends Fragment {
             handleAskBtnPressed();
         });
 
-        callGetApi(forumItemAdapter, 1);
+        view.findViewById(R.id.more_btn).setOnClickListener(this::handleMoreBtnPressed);
+
+        callGetApi(1);
         return view;
     }
 
-    private void callGetApi(ForumItemAdapter forumItemAdapter, int nextPage) {
+    private void handleMoreBtnPressed(View v) {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+        callGetApi(page+1);
+    }
+
+    private void handlePages(){
+        if (page >= totalPage)  view.findViewById(R.id.more_btn).setEnabled(false);
+        else view.findViewById(R.id.more_btn).setEnabled(true);
+    }
+
+    private void callGetApi(int nextPage) {
         ForumService service = new ForumService();
         service.get(nextPage, new OnSuccessResponse<ForumModel>() {
             @Override
             public void onSuccess(ForumModel models) {
-                forumModel = models;
-                Log.d("LONG", new Gson().toJson(models));
-                forumItemAdapter.setData(new ArrayList<>(Arrays.asList(models.getTopics())));
+                forumItemAdapter.appendData(new ArrayList<>(Arrays.asList(models.getTopics())));
                 page = nextPage;
+                totalPage = models.getTotalPage();
+                results = models.getNumOfTopics();
+                view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+                handlePages();
             }
         });
     }
