@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule"/>
+        android:id="@+id/schedule"
+        android:paddingBottom="64dp"/>
 
 </FrameLayout>
