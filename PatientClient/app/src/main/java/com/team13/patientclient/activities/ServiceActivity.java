@@ -25,12 +25,14 @@ public class ServiceActivity extends AppCompatActivity implements ServiceDisplay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        SearchView searchView = findViewById(R.id.service_search);
         topAppBar.setNavigationOnClickListener(v-> finish());
         Intent i = getIntent();
         if(Intent.ACTION_SEARCH.equals(i.getAction())){
             searchQuery = i.getStringExtra(SearchManager.QUERY);
+            searchView.setQuery(searchQuery, false);
         }
-        SearchView searchView = findViewById(R.id.service_search);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -74,10 +76,6 @@ public class ServiceActivity extends AppCompatActivity implements ServiceDisplay
                 }
             });
         }
-
-    }
-
-    public void handleSearch(String query){
 
     }
 
