@@ -10,13 +10,12 @@ import android.annotation.SuppressLint;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.AppointmentFragment;
-import com.team13.patientclient.activities.fragments.BlogFragment;
+import com.team13.patientclient.activities.fragments.ForumFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
 import com.team13.patientclient.activities.fragments.ProfileEditFragment;
 import com.team13.patientclient.activities.fragments.ProfileFragment;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
                 return true;
             case R.id.blog:
                 if (currentId == R.id.blog) return false;
-                loadFragment(new BlogFragment());
+                loadFragment(new ForumFragment());
                 currentId = R.id.blog;
                 return true;
             case R.id.appointment:
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
 
     @Override
     public void gotoBlog() {
-        loadFragment(new BlogFragment());
+        loadFragment(new ForumFragment());
         bottomNavigationView.setSelectedItemId(R.id.blog);
     }
 

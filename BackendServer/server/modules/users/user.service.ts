@@ -1,3 +1,5 @@
+import { doctorModel } from './../../models/doctor.model';
+import { DoctorService } from './../doctors/doctor.service';
 import { UserInterface } from '../../interfaces';
 import { userModel, patientModel } from '../../models';
 import * as bcrypt from 'bcrypt';
@@ -50,6 +52,14 @@ export class UserService {
       return {
         ...data,
         user_infor: patient,
+      };
+    } else if (user.user_type == 'DOCTOR') {
+      const doctor = await doctorModel.findOne({ _id: user.user_infor });
+      if (!doctor) throw new Error('Not found doctor information');
+
+      return {
+        ...data,
+        user_infor: doctor,
       };
     }
     return user;

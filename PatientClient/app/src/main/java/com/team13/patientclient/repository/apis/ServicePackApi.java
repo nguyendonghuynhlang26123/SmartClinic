@@ -14,5 +14,5 @@ public interface ServicePackApi {
     Call<ServicePack[]> getAll(@Query("limit") int limit);
 
     @GET("/medical-services")
-    Call<ServicePack[]> get(@Query("query") String query);
+    Call<ServicePack[]> get(@Query("search") String query);
 }

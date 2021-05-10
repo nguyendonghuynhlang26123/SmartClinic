@@ -63,12 +63,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-//                String query = searchView.getQuery().toString();
-//                if(!query.isEmpty()){
-//                    test.setText(query);
-//                    return true;
-//                }
+            public boolean onQueryTextChange(String newText) { 
                 return false;
             }
         });

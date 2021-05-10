@@ -13,6 +13,7 @@ import { PrescriptionController } from './modules/prescriptions/prescription.con
 import { MedicalServiceController } from './modules/medicalServices/medicalServices.controller';
 import { AuthController } from './modules/auth/auth.api';
 import { TreatmentController } from './modules/treatments/treatment.api';
+import { ForumController } from './modules/forums/forum.controller';
 
 async function initServer() {
   const app = express();
@@ -42,6 +43,7 @@ async function initServer() {
   app.use('/prescriptions', PrescriptionController);
   app.use('/treatments', TreatmentController);
   app.use('/medical-services', MedicalServiceController);
+  app.use('/forums', ForumController);
 
   app.get('/', (req, res) => {
     res.send('Hello World!');

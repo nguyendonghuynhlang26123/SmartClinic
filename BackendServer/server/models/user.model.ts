@@ -7,7 +7,11 @@ const UserSchema = new Schema(
   {
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    user_type: { type: String, required: true, enum: ['DOCTOR', 'PATIENT'] },
+    user_type: {
+      type: String,
+      required: true,
+      enum: ['DOCTOR', 'PATIENT', 'NURSE'],
+    },
     user_infor: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
