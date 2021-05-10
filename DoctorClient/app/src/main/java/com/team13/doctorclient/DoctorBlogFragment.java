@@ -36,6 +36,11 @@ import java.util.ArrayList;
             View view = inflater.inflate(R.layout.fragment_blog, container, false);
             questionList = view.findViewById(R.id.question_list);
             QuestionAdapter questionAdapter = new QuestionAdapter(view.getContext(), getQuestion());
+            questionAdapter.setListener(question -> {
+                ForumDetailFragment fragment = ForumDetailFragment.newInstance(question);
+                assert getFragmentManager() != null;
+                fragment.show(getFragmentManager(),fragment.getTag());
+            });
             questionList.setAdapter(questionAdapter);
             questionList.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
             return view;
@@ -45,7 +50,7 @@ import java.util.ArrayList;
         public ArrayList<Question> getQuestion() {
             ArrayList<Question> questions = new ArrayList<Question>(5);
             for (int i = 0; i < 7; ++i) {
-                questions.add(new Question("P001", "D001", "27th Mar", "1:30pm - 2:30pm", "Why I am so beautiful"));
+                questions.add(new Question("D001", "27th Mar", "1:30pm - 2:30pm", "Why I am so beautiful"));
             }
             questions.get(2).setState(2);
             questions.get(4).setState(1);
