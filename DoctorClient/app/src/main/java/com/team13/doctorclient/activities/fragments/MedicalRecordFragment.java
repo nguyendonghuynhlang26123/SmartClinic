@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities.fragments;
 
 import android.os.Bundle;
 
@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.MedicalRecordAdapter;
 import com.team13.doctorclient.models.Appointment;
-import com.team13.doctorclient.models.Patient;
 import com.team13.doctorclient.models.Prescription;
 import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.models.Treatment;

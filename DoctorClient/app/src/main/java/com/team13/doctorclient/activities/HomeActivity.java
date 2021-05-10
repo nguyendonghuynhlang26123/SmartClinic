@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,6 +8,11 @@ import android.os.Bundle;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.team13.doctorclient.activities.fragments.DoctorBlogFragment;
+import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
+import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
+import com.team13.doctorclient.R;
+import com.team13.doctorclient.activities.fragments.ScheduleFragment;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;

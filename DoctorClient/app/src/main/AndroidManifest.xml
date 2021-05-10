@@ -9,21 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorClient">
-        <activity android:name=".NurseHomeActivity">
+        <activity android:name=".activities.NurseHomeActivity">
 
         </activity>
-        <activity android:name=".NewPrescriptionActivity" />
-        <activity android:name=".PrescriptionViewActivity" />
-        <activity android:name=".PatientDetailActivity" />
-        <activity android:name=".AnswerActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.NewPrescriptionActivity" />
+        <activity android:name=".activities.PrescriptionViewActivity" />
+        <activity android:name=".activities.PatientDetailActivity" />
+        <activity android:name=".activities.AnswerActivity" />
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".activities.HomeActivity" />
     </application>
 
 </manifest>

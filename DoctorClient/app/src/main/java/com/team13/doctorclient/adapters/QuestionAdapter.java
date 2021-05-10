@@ -2,7 +2,6 @@ package com.team13.doctorclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
-import com.team13.doctorclient.AnswerActivity;
+import com.team13.doctorclient.activities.AnswerActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Question;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
