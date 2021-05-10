@@ -25,7 +25,7 @@ export class ForumService {
       forumModel.find(queryFind, null, {
         limit: Number(perPage),
         skip: Number((page - 1) * perPage),
-        sort: { created_at: 'desc' },
+        sort: { created_at: 'asc' },
       }),
       await forumModel.countDocuments(queryFind),
     ]);
