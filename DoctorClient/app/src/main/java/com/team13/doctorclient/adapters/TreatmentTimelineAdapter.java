@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.github.vipulasri.timelineview.TimelineView;
 import com.team13.doctorclient.PrescriptionViewActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Treatment;
@@ -22,12 +20,8 @@ public class TreatmentTimelineAdapter extends RecyclerView.Adapter<TreatmentTime
     private final Context context;
     private final ArrayList<Treatment> treatmentTimeline;
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TimelineView timelineViewMarker;
-        public ViewHolder(@NonNull View itemView, int viewType) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            timelineViewMarker = (TimelineView) itemView.findViewById(R.id.treatment_timeline_marker);
-            timelineViewMarker.initLine(viewType);
-            timelineViewMarker.setMarkerColor(itemView.getResources().getColor(R.color.dark_pink));
         }
     }
     public TreatmentTimelineAdapter(Context context, ArrayList<Treatment> treatmentTimeline) {
@@ -40,7 +34,7 @@ public class TreatmentTimelineAdapter extends RecyclerView.Adapter<TreatmentTime
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(context);
         View view=layoutInflater.inflate(R.layout.treatment_item,parent,false);
-        return new ViewHolder(view, viewType);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -58,10 +52,6 @@ public class TreatmentTimelineAdapter extends RecyclerView.Adapter<TreatmentTime
             i.putExtra("prescriptionId", treatment.getPrescription().getId());
             context.startActivity(i);
         });
-    }
-    @Override
-    public int getItemViewType(int position) {
-        return TimelineView.getTimeLineViewType(position, getItemCount());
     }
 
     @Override

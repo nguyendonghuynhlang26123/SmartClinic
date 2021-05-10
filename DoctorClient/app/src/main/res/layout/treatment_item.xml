@@ -6,15 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/treatment_container">
-    <com.github.vipulasri.timelineview.TimelineView
-        android:id="@+id/treatment_timeline_marker"
+    <include layout="@layout/timeline_marker"
+        android:id="@+id/timeline_marker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:markerSize="20dp"
-        app:lineWidth="5dp"
-        app:startLineColor="@color/teal_700"
-        app:endLineColor="@color/teal_700"
-        app:linePadding="5dp"
         />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

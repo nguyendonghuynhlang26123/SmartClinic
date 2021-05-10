@@ -33,14 +33,6 @@ public class NurseTimelineFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment NurseTimelineFragment.
-     */
-    // TODO: Rename and change types and number of parameters
 
     public static NurseTimelineFragment newInstance(ArrayList<ScheduleItem> param1) {
         NurseTimelineFragment fragment = new NurseTimelineFragment();

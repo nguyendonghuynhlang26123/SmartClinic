@@ -75,11 +75,20 @@ public class LoginFragment extends Fragment {
         signUpButton.setOnClickListener(v -> {
             ((LoginActivity)getActivity()).setSignUpFragment();
         });
+        TextInputEditText password = view.findViewById(R.id.input_password);
+        password.setText("0");
         loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            Intent i = new Intent(view.getContext(), HomeActivity.class);
-            startActivity(i);
+            verifyUser("", password.getText().toString());
         });
         return view;
+    }
+
+    private void verifyUser(String phone, String password){
+        Intent i;
+        if(password.equals("0")){
+            i = new Intent(getContext(), NurseHomeActivity.class);
+        } else i = new Intent(getContext(), HomeActivity.class);
+        startActivity(i);
     }
 }
