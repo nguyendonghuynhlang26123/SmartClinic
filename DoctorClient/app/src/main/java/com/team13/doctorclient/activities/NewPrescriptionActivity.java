@@ -1,8 +1,6 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.team13.doctorclient.activities.fragments.DrugAddFragment;
+import com.team13.doctorclient.R;
+import com.team13.doctorclient.activities.fragments.RescheduleFragment;
+import com.team13.doctorclient.activities.fragments.ReviewPrescriptionFragment;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.Drug;
@@ -34,7 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class NewPrescriptionActivity extends AppCompatActivity implements DrugAddFragment.AddDrugListener,
-        RescheduleFragment.RescheduleListener,ReviewPrescriptionFragment.ReviewDrugListener {
+        RescheduleFragment.RescheduleListener, ReviewPrescriptionFragment.ReviewDrugListener {
     MaterialToolbar topAppBar;
     BottomAppBar bottomAppBar;
     FloatingActionButton addDrug;

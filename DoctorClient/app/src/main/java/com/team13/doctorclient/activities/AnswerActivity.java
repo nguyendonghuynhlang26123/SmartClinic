@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.AnswerAdapter;
 import com.team13.doctorclient.models.Answer;
 import com.team13.doctorclient.models.Question;

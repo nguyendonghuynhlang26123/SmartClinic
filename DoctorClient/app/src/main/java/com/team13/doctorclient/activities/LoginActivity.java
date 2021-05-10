@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.team13.doctorclient.activities.fragments.LoginFragment;
+import com.team13.doctorclient.NetworkUtils;
+import com.team13.doctorclient.R;
+import com.team13.doctorclient.activities.fragments.SignupFragment;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

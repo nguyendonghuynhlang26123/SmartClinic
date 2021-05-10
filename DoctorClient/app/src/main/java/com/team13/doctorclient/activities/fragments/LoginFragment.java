@@ -1,5 +1,6 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,13 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.team13.doctorclient.activities.NurseHomeActivity;
+import com.team13.doctorclient.R;
+import com.team13.doctorclient.activities.HomeActivity;
+import com.team13.doctorclient.activities.LoginActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SignupFragment#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SignupFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +35,9 @@ public class SignupFragment extends Fragment {
     private String mParam2;
     TextInputEditText phoneInput;
     Button loginButton;
+    Button signUpButton;
 
-    public SignupFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +47,11 @@ public class SignupFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SignupFragment.
+     * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SignupFragment newInstance(String param1, String param2) {
-        SignupFragment fragment = new SignupFragment();
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,13 +72,27 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         phoneInput = view.findViewById(R.id.input_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        loginButton = view.findViewById(R.id.login_text_button);
+        signUpButton = view.findViewById(R.id.sign_up_text_button);
+        signUpButton.setOnClickListener(v -> {
+            ((LoginActivity)getActivity()).setSignUpFragment();
+        });
+        TextInputEditText password = view.findViewById(R.id.input_password);
+        password.setText("0");
+        loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> {
-            ((LoginActivity)getActivity()).setLoginFragment();
+            verifyUser("", password.getText().toString());
         });
         return view;
+    }
+
+    private void verifyUser(String phone, String password){
+        Intent i;
+        if(password.equals("0")){
+            i = new Intent(getContext(), NurseHomeActivity.class);
+        } else i = new Intent(getContext(), HomeActivity.class);
+        startActivity(i);
     }
 }

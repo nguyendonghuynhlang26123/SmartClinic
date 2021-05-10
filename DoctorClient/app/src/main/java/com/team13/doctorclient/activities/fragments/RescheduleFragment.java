@@ -1,4 +1,4 @@
-package com.team13.doctorclient;
+package com.team13.doctorclient.activities.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -13,13 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ServicePack;
 
