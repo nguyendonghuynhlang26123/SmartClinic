@@ -22,7 +22,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
                 android:textAllCaps="false"
-                android:text="Continue"
+                android:text="@string/continue_button"
                 android:textSize="16sp"
                 style="@style/CornerButton"
                 android:id="@+id/process_button"/>
@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reason for Appointment"
+                    android:text="@string/reason_label"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_marginTop="16dp"/>
@@ -51,13 +51,13 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="14sp"
-                    android:text="Please describe your symptoms, questions, or condition so our care providers may provide you with the appropriate care."/>
+                    android:text="@string/reason_subtitle"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/outlinedReasonField"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:hint="Type your reason here"
+                    android:hint="@string/reason_hint"
                     app:counterEnabled="true"
                     app:counterMaxLength="255"
                     app:counterTextColor="@color/purple"

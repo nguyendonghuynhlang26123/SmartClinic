@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartClinic</string>
     <string name="treatment_time">Time: %1$s</string>
@@ -16,7 +17,7 @@
     <string name="preservation_and_caution">Preservation and Caution</string>
     <string name="epatient">EPATIENT</string>
     <string name="login">Login</string>
-    <string name="signup">Signup</string>
+    <string name="signup">Sign Up</string>
     <string name="otp_hint">OTP</string>
     <string name="doctor_label">Doctor</string>
     <string name="service_label">Service</string>

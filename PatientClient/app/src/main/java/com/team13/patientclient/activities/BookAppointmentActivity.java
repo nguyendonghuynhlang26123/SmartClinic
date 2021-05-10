@@ -10,10 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.gson.Gson;
 import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
@@ -27,13 +24,8 @@ import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AppointmentService;
-
-import java.io.IOException;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BookAppointmentActivity extends AppCompatActivity implements
         SchedulePickFragment.SchedulePickFragmentListener,

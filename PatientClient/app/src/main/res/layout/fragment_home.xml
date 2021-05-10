@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.fragments.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +25,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Hi, Dang"
                     android:id="@+id/welcome_text"
                     android:textStyle="bold"
                     android:textSize="24sp"
@@ -45,21 +43,21 @@
                         android:layout_marginRight="16dp"
                         android:id="@+id/pharmacy_button"
                         android:layout_marginEnd="16dp"
-                        android:contentDescription="Pharmacy" />
+                        android:contentDescription="@string/pharmacy" />
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_location"
                         android:background="@color/transparent"
                         android:id="@+id/location_button"
-                        android:contentDescription="Location" />
+                        android:contentDescription="@string/location" />
                 </LinearLayout>
             </RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:text="welcome back!"/>
+                android:text="@string/welcome_back"/>
             <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +100,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Got a problem?"
+                android:text="@string/got_a_problem"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -120,15 +118,27 @@
                     app:layout_constraintRight_toLeftOf="@+id/blog_shortcut"
                     android:id="@+id/appointment_shortcut"
                     android:layout_marginRight="8dp"
-                    android:text="Meet our doctor"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     style="@style/OutlinedCard">
-                    <ImageView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/appointment_banner"
-                        android:scaleType="centerCrop"/>
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/appointment_banner"
+                            android:scaleType="centerCrop"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Book a meeting"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:paddingVertical="5dp"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
@@ -138,15 +148,27 @@
                     app:layout_constraintLeft_toRightOf="@+id/appointment_shortcut"
                     android:id="@+id/blog_shortcut"
                     android:layout_marginLeft="8dp"
-                    android:text="Ask our doctor"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     style="@style/OutlinedCard">
-                    <ImageView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/blog_banner"
-                        android:scaleType="centerCrop"/>
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/blog_banner"
+                            android:scaleType="centerCrop"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ask our doctors"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:paddingVertical="5dp"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

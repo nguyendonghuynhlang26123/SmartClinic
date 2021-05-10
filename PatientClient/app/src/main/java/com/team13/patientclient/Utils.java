@@ -21,6 +21,13 @@ public class Utils {
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
+    public static final int MAXIMUM_PINGS = 4;
+
+    //HOME NAVIGATIONS
+    public static final int HOME_ID = R.id.home;
+    public static final int APPOINTMENT_ID = R.id.appointment;
+    public static final int BLOG_ID = R.id.blog;
+    public static final int PROFILE_ID = R.id.profile;
 
     //CHANNELS
     public static final String NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID";
@@ -38,6 +45,7 @@ public class Utils {
     public static long dateStringToNumber(String formattedDate){
         try {
             @SuppressLint("SimpleDateFormat") Date date = new SimpleDateFormat(DATE_PATTERN).parse(formattedDate);
+            assert date != null;
             return date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -60,7 +68,7 @@ public class Utils {
         return (d2 - d1) / 10000;
     }
 
-    public static String formatingPrice(long price){
+    public static String formatPrice(long price){
         Locale locale = new Locale("vi", "VN");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
         return (fmt.format(price));

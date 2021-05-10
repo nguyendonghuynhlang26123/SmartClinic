@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_doctor_label"
-                android:text="Doctor"
+                android:text="@string/doctor_label"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_doctor_avatar"
                 android:drawablePadding="16dp"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_service_label"
-                android:text="Service"
+                android:text="@string/service_label"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_service"
                 android:drawablePadding="16dp"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_location_label"
-                android:text="Location"
+                android:text="@string/location_label"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_location"
                 android:drawablePadding="16dp"
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_location"
-                android:text="29 Street Phu Chau Tam, Phu Ward, Thu Duc city"
+                android:text="@string/address"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="48dp"
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_time_label"
-                android:text="Time"
+                android:text="@string/time_label"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_schedule_time"
                 android:drawablePadding="16dp"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="16dp" />
             <TextView
                 android:id="@+id/treatment_time"
-                android:layout_width="86dp"
+                android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/treatment_status_label"
-                android:text="Status"
+                android:text="@string/status_label"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_status"
                 android:drawablePadding="16dp"
@@ -127,23 +127,63 @@
                 android:layout_marginTop="16dp" />
             <TextView
                 android:id="@+id/treatment_status"
-                android:layout_width="86dp"
-                android:layout_height="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 android:layout_marginLeft="48dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/treatment_qrlayout"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QR Code"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/ic_qr_code"
+                    android:drawablePadding="16dp"
+                    android:gravity="bottom"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:id="@+id/treatment_failed"
+                    android:text="Loading Failed! Please try again"
+                    android:layout_marginVertical="10dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/red"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:layout_width="400px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/treatment_qrcode"
+                    android:layout_gravity="center_horizontal"/>
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:id="@+id/treatment_qr_loading"/>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:drawableLeft="@drawable/ic_prescription"
-        android:text="Prescription"
+        android:text="@string/prescription"
         android:textSize="18sp"
         android:textAllCaps="false"
         android:id="@+id/treatment_prescription"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

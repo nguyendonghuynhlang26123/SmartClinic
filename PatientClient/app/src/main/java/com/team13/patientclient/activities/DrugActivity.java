@@ -52,7 +52,7 @@ public class DrugActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.drug_brand)).setText(drug.getBrand());
                 ((TextView) findViewById(R.id.drug_from)).setText(drug.getFromCountry());
                 ((TextView) findViewById(R.id.drug_volume)).setText(drug.getVolume());
-                ((TextView) findViewById(R.id.drug_price)).setText(Utils.formatingPrice(drug.getPrice()));
+                ((TextView) findViewById(R.id.drug_price)).setText(Utils.formatPrice(drug.getPrice()));
 
                 if (!drug.getThumbnail().isEmpty()) Picasso.get().load(drug.getThumbnail()).into((ImageView) findViewById(R.id.drug_thumbnail));
                 removeFragment(fragment);

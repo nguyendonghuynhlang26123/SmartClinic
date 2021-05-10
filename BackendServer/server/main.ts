@@ -47,6 +47,10 @@ async function initServer() {
     res.send('Hello World!');
   });
 
+  app.get('/ping', (req, res) => {
+    res.status(200).json({});
+  });
+
   app.get('*', (req, res, next) => {
     next();
   });

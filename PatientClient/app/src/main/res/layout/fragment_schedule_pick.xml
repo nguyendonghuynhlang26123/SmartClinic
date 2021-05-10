@@ -22,7 +22,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
                 android:textAllCaps="false"
-                android:text="Continue"
+                android:text="@string/continue_button"
                 android:textSize="16sp"
                 style="@style/CornerButton"
                 android:id="@+id/process_button"/>
@@ -32,7 +32,7 @@
             android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="16dp"
                 android:paddingBottom="81dp">
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Choose Date and Time"
+                    android:text="@string/choose_date_and_time"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_marginTop="16dp"/>
@@ -51,14 +51,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Please select a date and time for your appointment"
+                    android:text="@string/date_and_time_subtitle"
                     android:layout_marginTop="16dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="14sp"
-                    android:text="These time slots are in Vietnam timezone (GMT+7:00)"/>
+                    android:text="@string/timezone"/>
 
 
                 <LinearLayout

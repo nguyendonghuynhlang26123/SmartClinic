@@ -6,32 +6,37 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.LoginFragment;
 import com.team13.patientclient.R;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
-import com.team13.patientclient.activities.fragments.SignupFragment;
+import com.team13.patientclient.activities.fragments.SignUpFragment;
+import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.HospitalModel;
+import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.OnSuccessResponse;
+import com.team13.patientclient.repository.RetrofitSingleton;
+import com.team13.patientclient.repository.apis.PingApi;
+import com.team13.patientclient.repository.apis.ServicePackApi;
 import com.team13.patientclient.repository.services.HospitalService;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener,
-                                                            SignupFragment.SignUpListener
-{
+public class LoginActivity extends AppCompatActivity implements LoginFragment.Listener, SignUpFragment.SignUpListener{
     TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +48,14 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment;
-                String title = tab.getText().toString();
+                String title = Objects.requireNonNull(tab.getText()).toString();
                 switch (title.toLowerCase(Locale.US)){
                     case "login":
                         fragment = new LoginFragment();
                         loadFragment(fragment);
                         break;
                     case "signup":
-                        fragment = new SignupFragment();
+                        fragment = new SignUpFragment();
                         loadFragment(fragment);
                         break;
                 }
@@ -66,8 +71,44 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
 
             }
         });
-        loadFragment(new LoginFragment());
+
+        pingServer();
     }
+
+    private void pingServer() {
+        PingApi api = RetrofitSingleton.getInstance().create(PingApi.class);
+        api.ping().enqueue(new OnResponse<Void>() {
+            @Override
+            public void onRequestSuccess(Void response) {
+                loadFragment(new LoginFragment());
+                View card = findViewById(R.id.action_card);
+                Animation slideUp = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.slide_up);
+                findViewById(R.id.app_icon).startAnimation(slideUp);
+                findViewById(R.id.welcome_label).startAnimation(slideUp);
+
+                card.setVisibility(View.VISIBLE);
+                card.startAnimation(slideUp);
+
+                findViewById(R.id.progress_bar).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                View layout = findViewById(R.id.login_view);
+                Snackbar snackbar = Snackbar
+                        .make(layout, "Cannot access to Server! Please try again.", Snackbar.LENGTH_LONG)
+                        .setAction("Try again", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                pingServer();
+                            }
+                        });
+
+                snackbar.show();
+            }
+        });
+    }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -80,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Li
         tabLayout.selectTab(tabLayout.getTabAt(0));
     }
     public void setSignUpFragment(){
-        loadFragment(new SignupFragment());
+        loadFragment(new SignUpFragment());
         tabLayout.selectTab(tabLayout.getTabAt(1));
     }
 
