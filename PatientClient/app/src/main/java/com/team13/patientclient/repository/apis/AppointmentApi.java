@@ -18,7 +18,7 @@ public interface AppointmentApi {
     @GET("/appointments/{id}")
     Call<Appointment> getAppointmentById(@Path("id") String appointmentId);
 
-    @GET("/appointments?select=time")
+    @GET("/appointments?select=time&status[0]=PENDING&status[1]=PROCESSING")
     Call<Appointment[]> getByDate(@Query("date") String date, @Query("service_id") String serviceID);
 
     @POST("/appointments")

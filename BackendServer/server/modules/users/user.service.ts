@@ -1,3 +1,4 @@
+import { Role } from './../../common/index';
 import { doctorModel } from './../../models/doctor.model';
 import { DoctorService } from './../doctors/doctor.service';
 import { UserInterface } from '../../interfaces';
@@ -44,7 +45,7 @@ export class UserService {
     let user = await await userModel.findOne({ phone: userPhone });
     if (!user) throw new Error('Not found user');
     const data = await user.toObject();
-    if (user.user_type === 'PATIENT') {
+    if (user.user_type === Role.PATIENT) {
       const patientService = new PatientService();
       const patient = await patientModel.findOne({ _id: user.user_infor });
       if (!patient) throw new Error('Not found patient information');
@@ -53,7 +54,7 @@ export class UserService {
         ...data,
         user_infor: patient,
       };
-    } else if (user.user_type == 'DOCTOR') {
+    } else if (user.user_type == Role.DOCTOR) {
       const doctor = await doctorModel.findOne({ _id: user.user_infor });
       if (!doctor) throw new Error('Not found doctor information');
 
@@ -79,7 +80,7 @@ export class UserService {
     const userData = {
       phone: data.phone,
       password: password,
-      user_type: data.user_type || 'PATIENT',
+      user_type: data.user_type || Role.PATIENT,
       user_infor: data.user_infor,
     };
     return await userModel.create(userData);
