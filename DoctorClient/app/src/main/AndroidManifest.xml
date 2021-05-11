@@ -4,18 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".MyApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorClient"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.NurseHomeActivity">
-
-        </activity>
+        <activity android:name=".activities.QRReader"></activity>
+        <activity android:name=".activities.NurseHomeActivity"></activity>
         <activity android:name=".activities.NewPrescriptionActivity" />
         <activity android:name=".activities.PrescriptionViewActivity" />
         <activity android:name=".activities.PatientDetailActivity" />

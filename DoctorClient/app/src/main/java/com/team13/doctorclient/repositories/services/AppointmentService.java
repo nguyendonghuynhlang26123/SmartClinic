@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Callback;
+import retrofit2.http.Path;
 
 public class AppointmentService {
     AppointmentApi api = RetrofitSingleton.getInstance().create(AppointmentApi.class);
@@ -30,4 +31,6 @@ public class AppointmentService {
         dataMap.put("note", data.getNote());
         api.post(dataMap).enqueue(callback);
     }
+
+    public void updateAnAppointment(String id, Map<String, String> params, Callback<Void> cb) { api.put(id, params).enqueue(cb);}
 }

@@ -16,6 +16,14 @@ public class Utils {
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
 
+    //INTENT
+    public static final int QRSCAN_RESULT_INTENT = 136;
+
+    //STATUS
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_PROCESSING = "PROCESSING";
+    public static final String STATUS_CANCELED = "CANCELED";
+
     //AUTHORIZATION
     public static final String USER_TYPE_DOCTOR = "DOCTOR";
     public static final String USER_TYPE_NURSE = "NURSE";
@@ -75,4 +83,6 @@ public class Utils {
             return null;
         }
     }
+
+
 }

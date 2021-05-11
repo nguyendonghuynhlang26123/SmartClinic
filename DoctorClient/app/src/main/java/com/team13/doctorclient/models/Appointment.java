@@ -84,4 +84,12 @@ public class Appointment implements Serializable {
     public String getStatus() {
         return status;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
