@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:text="9876543210"
+                android:text="0123456789"
                 android:id="@+id/input_phone"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_button"
-                android:text="Login as Nurse"
+                android:text="Login as Doctor"
                 android:textSize="20sp"
                 android:paddingHorizontal="54dp"
                 android:paddingVertical="12dp"

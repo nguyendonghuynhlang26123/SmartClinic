@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements DoctorLoginFragment.Listener {
+public class LoginActivity extends AppCompatActivity implements DoctorLoginFragment.Listener,  NurseLoginFragment.Listener {
     TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,11 @@ public class LoginActivity extends AppCompatActivity implements DoctorLoginFragm
                 Fragment fragment;
                 String title = tab.getText().toString();
                 switch (title.toLowerCase(Locale.US)){
-                    case "login":
+                    case "doctor":
                         fragment = new DoctorLoginFragment();
                         loadFragment(fragment);
                         break;
-                    case "signup":
+                    case "nurse":
                         fragment = new NurseLoginFragment();
                         loadFragment(fragment);
                         break;
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements DoctorLoginFragm
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -102,22 +103,20 @@ public class LoginActivity extends AppCompatActivity implements DoctorLoginFragm
         });
     }
 
-    public void setLoginFragment(){
-        loadFragment(new DoctorLoginFragment());
-        tabLayout.selectTab(tabLayout.getTabAt(0));
-    }
-    public void setSignUpFragment(){
-        loadFragment(new NurseLoginFragment());
-        tabLayout.selectTab(tabLayout.getTabAt(1));
+
+    @Override
+    public void startDoctorActivity() {
+        if (Store.get_instance().isFullyLoaded()) {
+            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override
-    public void startProgram() {
-        if (Store.get_instance().isFullyLoaded()) switchActivity();
-    }
-
-    public void switchActivity(){
-        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(i);
+    public void startNurseActivity() {
+        if (Store.get_instance().isFullyLoaded()) {
+            Intent i = new Intent(LoginActivity.this, NurseHomeActivity.class);
+            startActivity(i);
+        }
     }
 }

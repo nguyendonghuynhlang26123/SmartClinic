@@ -6,6 +6,9 @@ public class AccountModel {
     @SerializedName("phone")
     String phoneNumber;
 
+    @SerializedName("user_type")
+    String userType;
+
     @SerializedName("user_infor")
     Doctor userInfor;
 
@@ -28,5 +31,13 @@ public class AccountModel {
 
     public void setUserInfor(Doctor userInfor) {
         this.userInfor = userInfor;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

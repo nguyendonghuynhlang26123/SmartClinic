@@ -1,7 +1,6 @@
 package com.team13.doctorclient.activities.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,10 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
-import com.team13.doctorclient.activities.NurseHomeActivity;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.activities.HomeActivity;
-import com.team13.doctorclient.activities.LoginActivity;
 import com.team13.doctorclient.models.AccountModel;
 import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.repositories.OnResponse;
@@ -42,7 +38,6 @@ public class DoctorLoginFragment extends Fragment {
     TextInputEditText passwordInput;
     ProgressBar progressBar;
     Button loginButton;
-    Button signUpButton;
     Listener listener;
 
     public DoctorLoginFragment() {
@@ -89,6 +84,7 @@ public class DoctorLoginFragment extends Fragment {
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         progressBar = view.findViewById(R.id.progress);
         loginButton = view.findViewById(R.id.login_button);
+        loginButton.setText("Login as Doctor");
         loginButton.setOnClickListener(v -> {
             String phone = Utils.unFormatPhoneNumber(Objects.requireNonNull(phoneInput.getText()).toString());
             String password = Objects.requireNonNull(passwordInput.getText()).toString();
@@ -106,10 +102,17 @@ public class DoctorLoginFragment extends Fragment {
         auth.login("+84" + phone, password, new OnResponse<AccountModel>() {
             @Override
             public void onRequestSuccess(AccountModel account) {
-                Store.get_instance().setUserAccount(account);
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(getContext(), "LOGGED IN", Toast.LENGTH_LONG).show();
-                listener.startProgram();
+                if (account.getUserType().equals(Utils.USER_TYPE_DOCTOR)){
+                    Store.get_instance().setUserAccount(account);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getContext(), "LOGGED IN", Toast.LENGTH_LONG).show();
+                    listener.startDoctorActivity();
+                } else {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    TextView textError = view.findViewById(R.id.text_error);
+                    textError.setText("Invalid credentials!");
+                    textError.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -123,6 +126,6 @@ public class DoctorLoginFragment extends Fragment {
     }
 
     public interface Listener {
-        void startProgram();
+        void startDoctorActivity();
     }
 }
