@@ -61,8 +61,10 @@ export class UserService {
         ...data,
         user_infor: doctor,
       };
+    } else {
+      // nurse
+      return { ...data, user_infor: null };
     }
-    return user;
   }
 
   async populuateUserInfor(user: UserInterface) {}
