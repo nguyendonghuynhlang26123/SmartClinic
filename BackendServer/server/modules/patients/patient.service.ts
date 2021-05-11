@@ -1,25 +1,33 @@
+import { Role } from './../../common/index';
 import { AppointmentInterface, PatientInterface } from '../../interfaces';
 import {
   doctorModel,
   patientModel,
   medicalServiceModel,
   appointmentModel,
+  userModel,
 } from '../../models';
 
 export class PatientService {
   async getPatientById(patientId: string) {
-    try {
-      const patient = await patientModel
-        .findOne({ _id: patientId })
-        .populate('current_appointment');
-      if (!patient) {
-        throw new Error('Not Found Patient.');
-      }
-      return patient;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Get Patient Error.');
+    const patient = await patientModel
+      .findOne({ _id: patientId })
+      .populate('current_appointment');
+    if (!patient) {
+      throw new Error('Not Found Patient.');
     }
+    return patient;
+  }
+
+  async getByPhone(phone: string) {
+    const patient = await userModel.findOne({
+      phone: phone,
+      user_type: Role.PATIENT,
+    });
+    if (!patient) {
+      throw new Error('Not Found Patient.');
+    }
+    return patient;
   }
 
   async getAllPatient() {

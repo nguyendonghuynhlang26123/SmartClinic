@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.team13.doctorclient.ForumDetailFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.QuestionAdapter;
 import com.team13.doctorclient.models.Question;

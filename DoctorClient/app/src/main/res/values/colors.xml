@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#0000FFFF</color>
     <color name="gray">#808080</color>
+    <color name="red">#d50000</color>
     <color name="dimgray">#696969</color>
     <color name="dark_pink">#78002e</color>
     <color name="indigo">#303f9f</color>

@@ -1,28 +1,36 @@
 package com.team13.doctorclient.models;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Appointment implements Serializable {
+    @SerializedName("_id")
+    @Expose(serialize =  false)
     String id;
 
-    String patientId;
+    @SerializedName("patient")
+    PatientModel patient;
 
+    @SerializedName("service")
     ServicePack service;
 
-    Doctor doctor;
-
+    @SerializedName("date")
     String date;
 
+    @SerializedName("time")
     String time;
 
+    @SerializedName("note")
     String note;
 
+    @SerializedName("status")
     String status;
 
-    public Appointment(String patientId, ServicePack service, String note, String date, String time, String status){
-        this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
-        this.patientId = patientId;
+    public Appointment(String patientName, ServicePack service, String note, String date, String time, String status){
+        patient = new PatientModel(patientName);
         this.date = date;
         this.time = time;
         this.note = note;
@@ -34,11 +42,7 @@ public class Appointment implements Serializable {
     }
 
     public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+        return patient.getId();
     }
 
     public ServicePack getService() {
@@ -47,14 +51,6 @@ public class Appointment implements Serializable {
 
     public void setService(ServicePack service) {
         this.service = service;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
     }
 
     public String getDate() {
@@ -87,5 +83,13 @@ public class Appointment implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

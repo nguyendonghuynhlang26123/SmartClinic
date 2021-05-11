@@ -20,4 +20,9 @@ public class ScheduleItem implements Serializable {
     public Appointment getAppointment() {
         return appointment;
     }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+        isSeized = this.appointment != null;
+    }
 }

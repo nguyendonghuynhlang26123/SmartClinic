@@ -1,6 +1,7 @@
 package com.team13.doctorclient.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,9 @@ import java.util.ArrayList;
 public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppointmentAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<ScheduleItem> timeline;
-    public PendingAppointmentAdapter(Context context, ArrayList<ScheduleItem> timeline) {
-        this.timeline = timeline;
+    private Listener listener;
+    public PendingAppointmentAdapter(Context context) {
+        this.timeline = new ArrayList<>();
         this.context=context;
     }
 
@@ -57,7 +59,8 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             }
             accept.setOnClickListener(v -> {
 //                status.setText("CHECKED_IN");
-                appointment.setStatus("CHECKED_IN");
+                //appointment.setStatus("CHECKED_IN");
+                if (listener != null) listener.onAccept(appointment.getId(), appointment.getPatientId());
                 notifyItemChanged(position);
             });
 //            Button update= view.findViewById(R.id.update_status);
@@ -92,6 +95,32 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
     @Override
     public int getItemCount() {
         return timeline.size();
+    }
+
+    public void setData(ArrayList<ScheduleItem> newData) {
+        this.timeline = newData;
+        notifyDataSetChanged();;
+    }
+
+    public void updateStatus(String appointmentId, String status) {
+        for (int i = 0; i < timeline.size(); i++) {
+            ScheduleItem item = timeline.get(i);
+            if (item.isSeized && item.getAppointment().getId().equals(appointmentId)){
+                item.getAppointment().setStatus(status);
+                notifyItemChanged(i);
+                return;
+            }
+        }
+    }
+
+    public ArrayList<ScheduleItem> getData(){
+        return timeline;
+    }
+
+    public void setListener(Listener l) { this.listener = l;}
+
+    public interface Listener {
+        void onAccept(String appointmentId, String patientId);
     }
 
 

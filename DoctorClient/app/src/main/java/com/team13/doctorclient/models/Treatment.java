@@ -10,16 +10,6 @@ public class Treatment {
         this.prescription = prescription;
     }
 
-    public Treatment(String serviceName, String date,String time, String doctorId, String doctorName, String status) {
-        this.appointment = new Appointment();
-        appointment.setService(new ServicePack(serviceName, "", 0, "1"));
-        appointment.setDate(date);
-        appointment.setTime(time);
-        appointment.setDoctor(new Doctor(doctorId, doctorName));
-        appointment.setStatus(status);
-
-        this.prescription = null;
-    }
 
     public Appointment getAppointment() {
         return appointment;
@@ -36,10 +26,6 @@ public class Treatment {
 
     public String getDate() {
         return appointment.getDate();
-    }
-
-    public String getDoctorName() {
-        return appointment.getDoctor().getDoctorName();
     }
 
     public String getTime() {

@@ -4,14 +4,29 @@ import android.annotation.SuppressLint;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
-    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
+
+    //INTENT
+    public static final int QRSCAN_RESULT_INTENT = 136;
+
+    //STATUS
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_PROCESSING = "PROCESSING";
+    public static final String STATUS_CANCELED = "CANCELED";
+
+    //AUTHORIZATION
+    public static final String USER_TYPE_DOCTOR = "DOCTOR";
+    public static final String USER_TYPE_NURSE = "NURSE";
 
     public static final String NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID";
 
@@ -43,4 +58,31 @@ public class Utils {
         if (string.length()<= charLimit) return string;
         return string.substring(0,charLimit)+"...";
     }
+
+
+    @SuppressLint("NewApi")
+    public static ArrayList<String> generateTimes(String startTime, String closeTime, int gapInMinutes) {
+        try {
+            int startMin = Integer.parseInt(startTime.substring(3,5));
+            int startHour = Integer.parseInt(startTime.substring(0,2));
+            int closeMin = Integer.parseInt(closeTime.substring(3,5));
+            int closeHour = Integer.parseInt(closeTime.substring(0,2));
+
+            LocalTime currentTime = LocalTime.of(startHour, startMin);
+            LocalTime endTime = LocalTime.of(closeHour, closeMin);
+
+            ArrayList<String> result = new ArrayList<>();
+
+            while(currentTime.isBefore(endTime)){
+                result.add(currentTime.toString());
+                currentTime = currentTime.plusMinutes(gapInMinutes);
+            }
+
+            return result;
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+
 }
