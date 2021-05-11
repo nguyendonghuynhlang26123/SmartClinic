@@ -1,6 +1,7 @@
 package com.team13.doctorclient;
 
 import com.team13.doctorclient.models.AccountModel;
+import com.team13.doctorclient.models.HospitalModel;
 
 public class Store {
     //Singleton
@@ -18,6 +19,15 @@ public class Store {
     }
 
     private AccountModel userAccount;
+    private HospitalModel hospital;
+
+    public HospitalModel getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(HospitalModel hospital) {
+        this.hospital = hospital;
+    }
 
     private Store(){
     }
@@ -29,6 +39,8 @@ public class Store {
     }
 
     public String getName() {return userAccount.getUserInfor().getDoctorName();}
+
+
 
     public void setUserAccount(AccountModel userAccount) {
         this.userAccount = userAccount;

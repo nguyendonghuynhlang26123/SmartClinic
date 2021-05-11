@@ -16,8 +16,11 @@ import com.team13.doctorclient.Store;
 import com.team13.doctorclient.activities.fragments.DoctorLoginFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.activities.fragments.NurseLoginFragment;
+import com.team13.doctorclient.models.HospitalModel;
+import com.team13.doctorclient.repositories.OnSuccessResponse;
 import com.team13.doctorclient.repositories.RetrofitSingleton;
 import com.team13.doctorclient.repositories.apis.PingApi;
+import com.team13.doctorclient.repositories.services.HospitalService;
 
 import java.util.Locale;
 
@@ -103,20 +106,27 @@ public class LoginActivity extends AppCompatActivity implements DoctorLoginFragm
         });
     }
 
+    private void getDataAndStartActivity(Class<?> cls){
+        HospitalService hospitalService = new HospitalService();
+        hospitalService.getHospital("6056b843cefabf3368f043cf", new OnSuccessResponse<HospitalModel>() {
+            @Override
+            public void onSuccess(HospitalModel hospital) {
+                Store.get_instance().setHospital(hospital);
 
+                if (Store.get_instance().isFullyLoaded()) {
+                    Intent i = new Intent(LoginActivity.this, cls);
+                    startActivity(i);
+                }
+            }
+        });
+    }
     @Override
     public void startDoctorActivity() {
-        if (Store.get_instance().isFullyLoaded()) {
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(i);
-        }
+        getDataAndStartActivity(HomeActivity.class);
     }
 
     @Override
     public void startNurseActivity() {
-        if (Store.get_instance().isFullyLoaded()) {
-            Intent i = new Intent(LoginActivity.this, NurseHomeActivity.class);
-            startActivity(i);
-        }
+        getDataAndStartActivity(NurseHomeActivity.class);
     }
 }
