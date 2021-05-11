@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class AppointmentFragment extends Fragment {
+public class MedicalRecordFragment extends Fragment {
     ArrayList <Treatment> treatments = new ArrayList<>();
-    public AppointmentFragment() {
+    public MedicalRecordFragment() {
         // Required empty public constructor
     }
 
-    public static AppointmentFragment newInstance() {
-        AppointmentFragment fragment = new AppointmentFragment();
+    public static MedicalRecordFragment newInstance() {
+        MedicalRecordFragment fragment = new MedicalRecordFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -47,7 +47,7 @@ public class AppointmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_medical_record, container, false);
         TextView notify = view.findViewById(R.id.appointment_notify);
         RecyclerView treatmentList = view.findViewById(R.id.treatment_list);
         TreatmentAdapter adapter = new TreatmentAdapter(view.getContext());

@@ -14,7 +14,7 @@ import android.os.Bundle;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.fragments.AppointmentFragment;
+import com.team13.patientclient.activities.fragments.MedicalRecordFragment;
 import com.team13.patientclient.activities.fragments.ForumFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
 import com.team13.patientclient.activities.fragments.ProfileEditFragment;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
                 return true;
             case R.id.appointment:
                 if (currentId == R.id.appointment) return false;
-                loadFragment(new AppointmentFragment());
+                loadFragment(new MedicalRecordFragment());
                 currentId = R.id.appointment;
                 return true;
             case R.id.profile:
