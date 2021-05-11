@@ -8,10 +8,6 @@ export class AuthService {
     try {
       const user = await this.userService.findUserByPhone(phone);
       if (!user) return fn(new Error('Cannot find user'));
-      console.log(
-        'log ~ file: auth.service.ts ~ line 11 ~ AuthService ~ authenticate ~ user',
-        user
-      );
       if (!bcrypt.compareSync(password, user.password))
         return fn(new Error('Invalid password'));
       return fn(null, user);

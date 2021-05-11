@@ -1,3 +1,4 @@
+import { Role } from './../../common/index';
 import * as express from 'express';
 import { UserService } from './../users/user.service';
 import { AuthService } from './auth.service';
@@ -6,7 +7,7 @@ const router = express.Router();
 
 const authService: AuthService = new AuthService();
 
-router.post('/patients/login', (req, res) => {
+router.post('/login', (req, res) => {
   authService.authenticate(req.body.phone, req.body.password, (err, user) => {
     if (user) {
       req.session.regenerate(() => {
@@ -34,7 +35,7 @@ router.post('/patients/register', async (req, res) => {
     let user = (
       await userService.createUser({
         ...req.body,
-        user_type: 'PATIENT',
+        user_type: Role.PATIENT,
         user_infor: newPatient._id,
       })
     ).toObject();

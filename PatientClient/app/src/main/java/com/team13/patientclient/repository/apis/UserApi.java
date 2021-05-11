@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 public interface UserApi {
 
     @FormUrlEncoded
-    @POST("/auth/patients/login")
+    @POST("/auth/login")
     Call<AccountModel> login(@Field("phone") String phoneNumber, @Field("password") String password);
 
     @FormUrlEncoded

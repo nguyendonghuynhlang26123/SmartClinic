@@ -1,24 +1,52 @@
 package com.team13.doctorclient.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Doctor implements Serializable {
+    @SerializedName("_id")
     String id;
+
+    @SerializedName("name")
     String doctorName;
-    String about="";
-    String specialties="";
+
+    @SerializedName("avatar")
+    String avatarUrl;
+
+    @SerializedName("bio")
+    String bio;
+
+    @SerializedName("department")
+    String department;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
     public Doctor(String id, String doctorName) {
         this.id = id;
         this.doctorName = doctorName;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public void setSpecialties(String specialties) {
-        this.specialties = specialties;
     }
 
     public String getId() {
@@ -35,13 +63,5 @@ public class Doctor implements Serializable {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public String getSpecialties() {
-        return specialties;
     }
 }

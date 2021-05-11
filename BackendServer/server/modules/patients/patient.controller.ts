@@ -14,6 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/book-directly/:phone', async (req, res) => {
+  try {
+    const patients = await patientService.getAllPatient();
+    res.json(patients);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ 'message': err.message });
+  }
+});
+
 router.get('/:patient_id', async (req, res) => {
   try {
     const patient = await patientService.getPatientById(req.params.patient_id);

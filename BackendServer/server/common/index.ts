@@ -9,3 +9,9 @@ function generateOTP() {
   }
   return OTP;
 }
+
+export enum Role {
+  DOCTOR = 'DOCTOR',
+  PATIENT = 'PATIENT',
+  NURSE = 'NURSE',
+}
