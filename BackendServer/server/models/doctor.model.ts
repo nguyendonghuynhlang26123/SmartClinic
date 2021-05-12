@@ -7,6 +7,13 @@ const DoctorSchema = new Schema(
     avatar: { type: String, default: '' },
     bio: { type: String, default: '' },
     department: { type: String, required: true },
+    specialty_services: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'medical-services',
+        required: true,
+      },
+    ],
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'hospitals',

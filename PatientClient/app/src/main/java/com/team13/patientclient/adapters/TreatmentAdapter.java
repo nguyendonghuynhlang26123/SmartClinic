@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.TreatmentActivity;
 import com.team13.patientclient.models.Prescription;
@@ -43,53 +44,53 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         View view = holder.itemView;
         Treatment treatment = treatments.get(position);
         ImageButton stateIcon = view.findViewById(R.id.timeline_marker);
-        switch (treatment.getStatus()){
-            case "COMPLETE":
-                stateIcon.setImageResource(R.drawable.ic_check);
-                break;
-            case "CANCEL":
-                stateIcon.setImageResource(R.drawable.ic_cancelled);
-                break;
-            case "PENDING":
-                stateIcon.setImageResource(R.drawable.ic_pending);
-                break;
-        }
+
+        //Set icon
+        if (treatment.getPrescription() == null) stateIcon.setImageResource(R.drawable.ic_pending);
+        else stateIcon.setImageResource(R.drawable.ic_check);
+
+        //Set date view
         TextView time = view.findViewById(R.id.treatment_date);
         String[] temp = treatment.getDate().split("/");
         time.setText(String.format("%s/%s\n%s", temp[0], temp[1], temp[2]));
+        //Set service view
         TextView service = view.findViewById(R.id.treatment_service);
         service.setText(Utils.shortenString(treatment.getServicePack(),20));
+        //Set TreatmentView
         TextView treatmentTime = view.findViewById(R.id.treatment_time);
         treatmentTime.setText(context.getString(R.string.treatment_time, treatment.getTime()));
+
+
         MaterialCardView treatmentCard = view.findViewById(R.id.treatment_card);
+        treatmentCard.setStrokeWidth(0);
         treatmentCard.setOnClickListener(v->{
             Intent i = new Intent(context, TreatmentActivity.class);
             i.putExtra("prescription", treatment);
             context.startActivity(i);
         });
+        //Setup icon at right corner
         if(treatment.getPrescription()!=null){
             ImageButton prescription = view.findViewById(R.id.treatment_prescription);
             prescription.setVisibility(View.VISIBLE);
             prescription.setOnClickListener(v-> listener.onItemClick(treatment.getPrescription()));
         }
+        //Setup remove button
         ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
         removeButton.setVisibility(View.INVISIBLE);
-        treatmentCard.setStrokeWidth(0);
-        if(position == 0){
+        if(position == 0 && Store.get_instance().isHavingAnAppointment()){
             view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
-            if(treatment.getStatus().equals("PENDING")){
-                treatmentCard.setStrokeColor(view.getResources().getColor(R.color.purple_dark));
-                treatmentCard.setStrokeWidth(8);
-                time.setTextColor(view.getResources().getColor(R.color.red));
-                listener.onHasAppointment();
-                removeButton.setVisibility(View.VISIBLE);
-                removeButton.setOnClickListener(v-> listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId()));
-            } else time.setTextColor(view.getResources().getColor(R.color.black));
-        } else if (position == treatments.size() - 1){
-            view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
+            treatmentCard.setStrokeColor(view.getResources().getColor(R.color.purple_dark));
+            treatmentCard.setStrokeWidth(8);
+            time.setTextColor(view.getResources().getColor(R.color.red));
+            listener.onHasAppointment();
+            removeButton.setVisibility(View.VISIBLE);
+            removeButton.setOnClickListener(v-> listener.onAppointmentRemove(position, Store.get_instance().getCurrentAppointmentId()));
         }
-        if(treatment.getStatus().equals("CANCEL")){
-            treatmentCard.setStrokeColor(view.getResources().getColor(R.color.red));
+        else if (position == 0){
+            time.setTextColor(view.getResources().getColor(R.color.black));
+        }
+        else if (position == treatments.size() - 1){
+            view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }
     }
 
@@ -98,7 +99,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         return treatments.size();
     }
 
-    public void setData(ArrayList<Treatment> newData){
+    public void addData(ArrayList<Treatment> newData){
         this.treatments.addAll(newData);
         this.notifyDataSetChanged();
     }
@@ -127,6 +128,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             super(itemView);
         }
     }
+
     public interface TreatmentItemListener{
         void onItemClick(Prescription prescription);
         void onHasAppointment();

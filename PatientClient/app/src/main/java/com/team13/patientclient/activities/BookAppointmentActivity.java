@@ -16,6 +16,7 @@ import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.AppointmentConfirmFragment;
+import com.team13.patientclient.activities.fragments.ChooseDoctorFragment;
 import com.team13.patientclient.activities.fragments.ProgressFragment;
 import com.team13.patientclient.activities.fragments.ReasonPickFragment;
 import com.team13.patientclient.activities.fragments.SchedulePickFragment;
@@ -30,9 +31,11 @@ import java.util.Map;
 public class BookAppointmentActivity extends AppCompatActivity implements
         SchedulePickFragment.SchedulePickFragmentListener,
         ReasonPickFragment.ReasonPickFragmentListener,
-        AppointmentConfirmFragment.AppointmentConfirmListener {
+        AppointmentConfirmFragment.AppointmentConfirmListener,
+        ChooseDoctorFragment.Listener {
     String time;
     String date;
+    String doctorId;
     String serviceId;
     String serviceName;
     String reason;
@@ -42,7 +45,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appointment);
         context = this;
-        loadFragment(new SchedulePickFragment());
+        loadFragment(new ChooseDoctorFragment());
+
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v -> finish());
         Intent i = getIntent();
@@ -68,6 +72,17 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     @Override
     public String getServiceId() {
         return serviceId;
+    }
+
+    @Override
+    public String getDoctorId() {
+        return this.doctorId;
+    }
+
+    @Override
+    public void goToSchedulePick(String doctorId) {
+        this.doctorId = doctorId;
+        loadFragment(new SchedulePickFragment());
     }
 
     @Override
@@ -100,14 +115,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements
     public void handleConfirm() {
         // Handle processing when click appointment confirm button
         //*** TODO ***//
-        String patientId = Store.get_instance().getPatientId();
-        Appointment appointment = new Appointment(patientId, new ServicePack(serviceId), reason, date, time);
+        String patientId = Store.get_instance().getPatientId(); ;
         AppointmentService service = new AppointmentService();
 
-        Fragment fragment = new ProgressFragment();
-        loadFragment(fragment);
+        loadFragment(new ProgressFragment());
 
-        service.bookAnAppointment(appointment, Store.get_instance().getPatientId(), new OnResponse<Map<String, String>>() {
+        service.bookAnAppointment(patientId, doctorId, serviceId, time, date, reason, new OnResponse<Map<String, String>>() {
             @Override
             public void onRequestSuccess(Map<String, String> response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");

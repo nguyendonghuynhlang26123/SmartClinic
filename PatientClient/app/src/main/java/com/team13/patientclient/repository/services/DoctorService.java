@@ -10,4 +10,6 @@ public class DoctorService {
     DoctorApi api = RetrofitSingleton.getInstance().create(DoctorApi.class);
 
     public void getDoctorById(String doctorId, Callback<Doctor> cb) { api.getDoctorById(doctorId).enqueue(cb);}
+
+    public void getDoctorsByServices(String service, Callback<Doctor[]>cb) {api.getDoctorByService(service).enqueue(cb);}
 }

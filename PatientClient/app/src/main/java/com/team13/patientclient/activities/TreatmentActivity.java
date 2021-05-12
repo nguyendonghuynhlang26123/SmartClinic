@@ -14,6 +14,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
+import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.fragments.PrescriptionFragment;
 import com.team13.patientclient.models.Treatment;
 
@@ -32,13 +33,12 @@ public class TreatmentActivity extends AppCompatActivity {
         TextView doctor = findViewById(R.id.treatment_doctor);
         TextView service = findViewById(R.id.treatment_service);
         TextView time = findViewById(R.id.treatment_time);
-        TextView status = findViewById(R.id.treatment_status);
         ExtendedFloatingActionButton prescriptionButton = findViewById(R.id.treatment_prescription);
 
         doctor.setText(treatment.getDoctorName());
         service.setText(treatment.getServicePack());
         time.setText(String.format("%s, %s", treatment.getTime(), treatment.getDate()));
-        status.setText(treatment.getStatus());
+
         if(treatment.getPrescription()!=null){
             prescriptionButton.setOnClickListener(v->{
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());
@@ -48,11 +48,12 @@ public class TreatmentActivity extends AppCompatActivity {
             prescriptionButton.setVisibility(View.GONE);
             findViewById(R.id.treatment_qrlayout).setVisibility(View.VISIBLE);
             ImageView qrImage = findViewById(R.id.treatment_qrcode);
-            String appointmentId = treatment.getAppointment().getId();
+            String appointmentId = Store.get_instance().getCurrentAppointmentId();
+            String doctorId = treatment.getDoctorId();
             String patientId = Store.get_instance().getPatientId();
             findViewById(R.id.treatment_qr_loading).setVisibility(View.VISIBLE);
             if (appointmentId != null){
-                String url = "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + appointmentId + "-" + patientId;
+                String url = Utils.getQRGenerator(appointmentId, doctorId,patientId);
                 Picasso.get().load(url).into(qrImage, new Callback() {
                     @Override
                     public void onSuccess() {

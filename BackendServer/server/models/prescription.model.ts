@@ -15,16 +15,6 @@ const PrescriptionSchema = new Schema(
       },
       required: true,
     },
-    doctor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'doctors',
-      required: true,
-    },
-    patient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'patients',
-      required: true,
-    },
     symptoms: { type: String, required: true },
     diagnosis: { type: String, required: true },
     note: { type: String, default: null },

@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
 
     //SETTINGS
     public static final int NAME_LENGTH_LIMIT = 16;
@@ -38,6 +38,9 @@ public class Utils {
         return text.length() < NAME_LENGTH_LIMIT;
     }
 
+    public static String getQRGenerator(String appointmentId, String doctorId, String patientId){
+        return "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + appointmentId + "-" + doctorId + "-" + patientId;
+    }
     public static String unFormatPhoneNumber(String raw) {
         return raw.replaceAll("[^\\d]","");
     }

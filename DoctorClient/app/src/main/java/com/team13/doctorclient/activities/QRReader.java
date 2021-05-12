@@ -61,7 +61,7 @@ public class QRReader extends AppCompatActivity {
                 handleOnResult(result.getText());
             });
         });
-        scannerView.setOnClickListener(v -> mCodeScanner.startPreview());
+        mCodeScanner.startPreview();
     }
 
     private void handleOnResult(String text) {

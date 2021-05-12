@@ -114,25 +114,6 @@
                 android:textSize="16sp"
                 android:textStyle="italic"
                 android:layout_marginLeft="48dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/treatment_status_label"
-                android:text="@string/status_label"
-                android:textStyle="bold"
-                android:drawableLeft="@drawable/ic_status"
-                android:drawablePadding="16dp"
-                android:gravity="bottom"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
-            <TextView
-                android:id="@+id/treatment_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                android:layout_marginLeft="48dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

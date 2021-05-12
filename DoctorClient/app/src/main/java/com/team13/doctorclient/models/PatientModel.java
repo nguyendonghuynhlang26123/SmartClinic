@@ -5,11 +5,12 @@ import android.annotation.SuppressLint;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PatientModel {
+public class PatientModel implements Serializable {
     @SerializedName("_id")
     @Expose(serialize =  false)
     String id;
@@ -17,11 +18,19 @@ public class PatientModel {
     @SerializedName("patient_name")
     String name;
 
-    @SerializedName("medical_history")
-    String[] history;
+    @SerializedName("patient_avatar")
+    String avatarUrl;
 
     public PatientModel(String name) {
         this.name = name;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getId() {
@@ -40,11 +49,4 @@ public class PatientModel {
         this.name = name;
     }
 
-    public String[] getHistory() {
-        return history;
-    }
-
-    public void setHistory(String[] history) {
-        this.history = history;
-    }
 }

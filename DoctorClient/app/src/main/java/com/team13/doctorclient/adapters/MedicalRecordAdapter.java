@@ -45,7 +45,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
             i.putExtra("status","REVIEW");
             context.startActivity(i);
         });
-        ((TextView)view.findViewById(R.id.treatment_patient_name)).setText(treatment.getAppointment().getPatientId());
+        ((TextView)view.findViewById(R.id.treatment_patient_name)).setText(treatment.getPatient().getId());
         ((TextView)view.findViewById(R.id.treatment_diagnostic)).setText(treatment.getPrescription().getDiagnose());
         ((Button)view.findViewById(R.id.treatment_service)).setText(treatment.getServicePack());
     }

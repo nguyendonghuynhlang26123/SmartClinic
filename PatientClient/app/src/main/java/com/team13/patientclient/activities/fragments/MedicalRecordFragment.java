@@ -22,10 +22,10 @@ import com.team13.patientclient.repository.services.AppointmentService;
 import com.team13.patientclient.repository.services.PatientService;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class MedicalRecordFragment extends Fragment {
-    ArrayList <Treatment> treatments = new ArrayList<>();
     public MedicalRecordFragment() {
         // Required empty public constructor
     }
@@ -75,7 +75,7 @@ public class MedicalRecordFragment extends Fragment {
                     public void onSuccess(Void response) {
                         Toast.makeText(getContext(), "Appointment Canceled! #" + position, Toast.LENGTH_SHORT).show();
                         adapter.removeElement(position);
-                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointment(null);
+                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
                     }
                 }); 
             }
@@ -96,19 +96,19 @@ public class MedicalRecordFragment extends Fragment {
         PatientService service = new PatientService();
         AppointmentService appointmentService = new AppointmentService();
 
-        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointment(), new OnSuccessResponse<Appointment>() {
+        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointmentId(), new OnSuccessResponse<Appointment>() {
             @Override
             public void onSuccess(Appointment currentAppointment) {
                 adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
-                treatments.add(new Treatment(currentAppointment, null));
             }
         });
 
         service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
             @Override
             public void onSuccess(Treatment[] treatmentList) {
-                treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
-                adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
+                ArrayList<Treatment> data = (new ArrayList<>(Arrays.asList(treatmentList)));
+
+                adapter.addData(data);
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
         });

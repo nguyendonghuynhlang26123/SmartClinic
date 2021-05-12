@@ -1,30 +1,27 @@
-import { DoctorInterface } from "../../interfaces";
-import { doctorModel } from "../../models";
+import { DoctorInterface } from '../../interfaces';
+import { doctorModel } from '../../models';
 
 export class DoctorService {
   async getDoctorById(doctorId: string) {
-    try {
-      const doctor = await doctorModel
-        .findOne({ _id: doctorId })
-        .populate("hospital");
-      if (!doctor) {
-        throw new Error("Not Found Doctor.");
-      }
-      return doctor;
-    } catch (error) {
-      console.log(error);
-      throw new Error("Get Doctor Error.");
+    const doctor = await doctorModel
+      .findOne({ _id: doctorId })
+      .populate('hospital');
+    if (!doctor) {
+      throw new Error('Not Found Doctor.');
     }
+    return doctor;
   }
 
-  async getAllDoctor() {
-    try {
-      const doctors = await doctorModel.find().populate("hospital");
-      return doctors;
-    } catch (error) {
-      console.log(error);
-      throw new Error("Get All Doctor Error.");
-    }
+  async getAllDoctor(query?) {
+    let filter = {};
+    if (query?.service) filter = { specialty_services: query.service };
+
+    console.log(
+      'log ~ file: doctor.service.ts ~ line 16 ~ DoctorService ~ getAllDoctor ~ query',
+      filter
+    );
+    const doctors = await doctorModel.find(filter).populate('hospital');
+    return doctors;
   }
 
   async createDoctor(data: DoctorInterface) {
@@ -37,20 +34,15 @@ export class DoctorService {
 
   async updateDoctorById(doctorId: string, dataUpdate) {
     const doctor = await doctorModel.findOne({ _id: doctorId });
-    if (!doctor) throw new Error("Not Found Doctor.");
-    const result = await doctorModel.updateOne(
-      { _id: doctor._id },
-      dataUpdate
-    );
+    if (!doctor) throw new Error('Not Found Doctor.');
+    const result = await doctorModel.updateOne({ _id: doctor._id }, dataUpdate);
     return result;
   }
 
   async deleteDoctor(doctorId: string) {
     const doctor = await doctorModel.findOne({ _id: doctorId });
-    if (!doctor) throw new Error("Not Found Doctor.");
-    const result = await doctorModel
-      .deleteOne({ _id: doctor._id })
-      .exec();
+    if (!doctor) throw new Error('Not Found Doctor.');
+    const result = await doctorModel.deleteOne({ _id: doctor._id }).exec();
     return result;
   }
 }

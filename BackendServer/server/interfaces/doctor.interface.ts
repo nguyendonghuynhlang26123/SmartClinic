@@ -7,4 +7,5 @@ export class DoctorInterface extends BaseInterface {
   department: string;
   hospital: string;
   token: string;
+  specialty_services: string[];
 }

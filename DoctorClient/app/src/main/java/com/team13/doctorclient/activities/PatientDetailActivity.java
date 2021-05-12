@@ -6,22 +6,34 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.squareup.picasso.Picasso;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.activities.NewPrescriptionActivity;
+import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
 import com.team13.doctorclient.adapters.TreatmentTimelineAdapter;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.models.Prescription;
 import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.models.Treatment;
+import com.team13.doctorclient.repositories.OnResponse;
+import com.team13.doctorclient.repositories.OnSuccessResponse;
+import com.team13.doctorclient.repositories.services.AppointmentService;
+import com.team13.doctorclient.repositories.services.PatientService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class PatientDetailActivity extends AppCompatActivity {
     TreatmentTimelineAdapter treatmentTimelineAdapter;
@@ -30,6 +42,7 @@ public class PatientDetailActivity extends AppCompatActivity {
     Button startBtn;
     Appointment appointment;
     String status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +54,9 @@ public class PatientDetailActivity extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
 
+        Picasso.get().load(appointment.getPatient().getAvatarUrl()).into((ImageView)findViewById(R.id.patient_img));
+        ((TextView)findViewById(R.id.patient_name)).setText(appointment.getPatient().getName());
+
         if(status.equals("START")){
             loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
             findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
@@ -51,29 +67,72 @@ public class PatientDetailActivity extends AppCompatActivity {
                 this.startActivity(intent);
             });
         }
-        renderTreatmentTimeline();
+        else if(status.equals("checkin")){
+            handleCheckinMode();
+        }
 
-    }
-    ArrayList<Treatment> getTreatmentTimeline(){
-        ArrayList<Treatment> treatments = new ArrayList<>(10);
-        ServicePack servicePack = new ServicePack("Beauty Care","no", 500000, "1");
-        Appointment appointment = new Appointment("MN", servicePack, "Cough","7/04/2021","13:30","PROCESSING");
-        Prescription prescription = new Prescription();
-        treatments.add(new Treatment(appointment,prescription));
-        treatments.add(new Treatment(appointment,prescription));
-        treatments.add(new Treatment(appointment,prescription));
-        return treatments;
-    }
-    void renderTreatmentTimeline(){
-        findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        // Get data from server
+        treatmentTimelineAdapter = new TreatmentTimelineAdapter(this);
         patientTreatmentTimeline = findViewById(R.id.treatment_timeline);
-        treatmentTimelineAdapter = new TreatmentTimelineAdapter(this,getTreatmentTimeline());
         patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
-        patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
-        findViewById(R.id.progress).setVisibility(View.GONE);
+        patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
 
+        callApiAndRenderData();
     }
+
+    private void handleCheckinMode() {
+        loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
+        findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+        startBtn = findViewById(R.id.startBtn);
+        startBtn.setText("Check in");
+        startBtn.setOnClickListener(v -> {
+            //Set processing dialog
+            ProgressDialog dialog = new ProgressDialog(PatientDetailActivity.this);
+            dialog.setCancelable(false);
+            dialog.setMessage("Processing data! Please wait a minute.");
+            dialog.show();
+
+            //Setup dialog for showing result:
+            AlertDialog alertDialog = new AlertDialog.Builder(PatientDetailActivity.this).create();
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog1, which) -> {
+                dialog1.dismiss();
+                finish();
+            });
+
+            //Call APis
+            AppointmentService service = new AppointmentService();
+            HashMap<String, String > params = new HashMap<>();
+            params.put("status", Utils.STATUS_PROCESSING);
+            service.updateAnAppointment(appointment.getId(), params, new OnResponse<Void>() {
+                @Override
+                public void onRequestSuccess(Void response) {
+                    alertDialog.setMessage("Check-in succeeded!");
+                    alertDialog.show();
+                }
+
+                @Override
+                public void onRequestFailed(ErrorResponse response) {
+                    alertDialog.setMessage("Check-in failed! Please try again");
+                    alertDialog.show();
+                }
+            });
+        });
+    }
+
+    void callApiAndRenderData(){
+        findViewById(R.id.progress).setVisibility(View.VISIBLE);
+
+        // Get data from server
+        PatientService patientService = new PatientService();
+        patientService.getMedicalHistory(appointment.getPatientId(), new OnSuccessResponse<Treatment[]>() {
+            @Override
+            public void onSuccess(Treatment[] response) {
+                treatmentTimelineAdapter.setData(new ArrayList<>(Arrays.asList(response)));
+                findViewById(R.id.progress).setVisibility(View.GONE);
+            }
+        });
+    }
+
+
     private void loadFragment(int id, Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

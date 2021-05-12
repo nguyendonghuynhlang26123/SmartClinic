@@ -92,4 +92,6 @@
     <string name="home_label">Home</string>
     <string name="profile">Profile</string>
     <string name="medical_records">Medical Records</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -6,11 +6,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.team13.patientclient.Utils;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class PatientModel {
@@ -36,11 +33,8 @@ public class PatientModel {
     @SerializedName("token")
     String token;
 
-    @SerializedName("medical_history")
-    String[] history;
-
     @SerializedName("current_appointment")
-    String currentAppointment;
+    String currentAppointmentId;
 
 
     public PatientModel(String name, String avatarUrl, String gender, long dateOfBirth, double weight) {
@@ -125,19 +119,12 @@ public class PatientModel {
         this.id = id;
     }
 
-    public String[] getHistory() {
-        return history;
+
+    public String getCurrentAppointmentId() {
+        return currentAppointmentId;
     }
 
-    public void setHistory(String[] history) {
-        this.history = history;
-    }
-
-    public String getCurrentAppointment() {
-        return currentAppointment;
-    }
-
-    public void setCurrentAppointment(String currentAppointment) {
-        this.currentAppointment = currentAppointment;
+    public void setCurrentAppointmentId(String currentAppointmentId) {
+        this.currentAppointmentId = currentAppointmentId;
     }
 }
