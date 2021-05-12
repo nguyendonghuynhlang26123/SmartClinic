@@ -18,6 +18,7 @@ public class Utils {
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
+    public static final String DATETIME_PATTERN = "HH:mm dd/MM/yyyy";
 
     //INTENT
     public static final int QRSCAN_RESULT_INTENT = 136;
@@ -106,5 +107,19 @@ public class Utils {
             }
         }
         return new ArrayList<>();
+    }
+
+    //Compare if time1 is BEFORE time
+    //! IMPORTANT: time1 and time2 must be in DATETIME_PATTERN format!
+    @SuppressLint("SimpleDateFormat")
+    public static boolean compareTimes(String time1, String time2){
+        try {
+            Date dTime1 = new SimpleDateFormat(DATETIME_PATTERN).parse(time1);
+            Date dTime2 = new SimpleDateFormat(DATETIME_PATTERN).parse(time2);
+
+            return dTime1.before(dTime2);
+        } catch(Exception e) {
+            return false;
+        }
     }
 }

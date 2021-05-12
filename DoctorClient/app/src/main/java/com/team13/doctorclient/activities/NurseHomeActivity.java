@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.R;
+import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
 import com.team13.doctorclient.activities.fragments.DoctorBlogFragment;
 import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
 import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
@@ -35,8 +36,7 @@ import com.team13.doctorclient.repositories.services.AppointmentService;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NurseHomeActivity extends AppCompatActivity {
-    PendingAppointmentAdapter adapter;
+public class NurseHomeActivity extends AppCompatActivity  implements QRFragment.Listener{
     BottomNavigationView bottomNavigationView;
     int currentId;
 
@@ -82,4 +82,9 @@ public class NurseHomeActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onVerifySucceed(Appointment appointment) {
+        Fragment fragment = AppointmentDetailFragment.newInstance(appointment);
+        loadFragment(fragment);
+    }
 }
