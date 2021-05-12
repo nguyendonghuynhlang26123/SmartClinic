@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.team13.doctorclient.activities.fragments.DoctorBlogFragment;
+import com.team13.doctorclient.activities.fragments.DoctorForumFragment;
 import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
 import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
 import com.team13.doctorclient.R;
@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()){
                 case R.id.blog:
-                    fragment = new DoctorBlogFragment();
+                    fragment = new DoctorForumFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.schedule:

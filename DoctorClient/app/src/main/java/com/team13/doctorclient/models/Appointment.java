@@ -45,6 +45,8 @@ public class Appointment implements Serializable {
         return patient.getId();
     }
 
+    public String getPatientName(){return patient.getName();}
+
     public ServicePack getService() {
         return service;
     }
