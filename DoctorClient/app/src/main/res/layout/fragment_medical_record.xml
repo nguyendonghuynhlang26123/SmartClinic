@@ -40,6 +40,17 @@
                 android:id="@+id/patient_list"
                 android:layout_marginVertical="20dp"
                 />
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/progress_bar"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Load more"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/loadmore_btn"
+                android:enabled="false"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

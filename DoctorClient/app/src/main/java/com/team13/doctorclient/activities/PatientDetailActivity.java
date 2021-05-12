@@ -24,6 +24,8 @@ import com.team13.doctorclient.activities.fragments.PrescriptionDisplayFragment;
 import com.team13.doctorclient.adapters.TreatmentTimelineAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ErrorResponse;
+import com.team13.doctorclient.models.PatientModel;
+import com.team13.doctorclient.models.PatientPageModel;
 import com.team13.doctorclient.models.Prescription;
 import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.models.Treatment;
@@ -41,37 +43,20 @@ public class PatientDetailActivity extends AppCompatActivity {
     RecyclerView patientTreatmentTimeline;
     MaterialToolbar topAppBar;
     Button startBtn;
-    Appointment appointment;
     String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_detail);
-        Intent i = getIntent();
-        appointment =(Appointment) i.getSerializableExtra("appointment");
-        status = i.getStringExtra("status");
 
+        status = getIntent().getStringExtra("status");
+
+        //Setup topbar
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.setNavigationOnClickListener(v-> finish());
 
-        Picasso.get().load(appointment.getPatient().getAvatarUrl()).into((ImageView)findViewById(R.id.patient_img));
-        ((TextView)findViewById(R.id.patient_name)).setText(appointment.getPatient().getName());
-
-        if(status.equals("START")){
-            loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
-            findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
-            startBtn= findViewById(R.id.startBtn);
-            startBtn.setOnClickListener(v -> {
-                Intent intent= new Intent(this, NewPrescriptionActivity.class);
-                intent.putExtra("appointment", appointment);
-                this.startActivity(intent);
-            });
-        }
-        else if(status.equals("checkin")){
-            handleCheckinMode();
-        }
-
+        //Setup Recycle view
         treatmentTimelineAdapter = new TreatmentTimelineAdapter(this);
         treatmentTimelineAdapter.setListener(treatment -> {
             PrescriptionDisplayFragment fragment = PrescriptionDisplayFragment.newInstance(treatment.getPrescription(), treatment.getPatient());
@@ -81,10 +66,57 @@ public class PatientDetailActivity extends AppCompatActivity {
         patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
         patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
 
-        callApiAndRenderData();
+        if(status.equals("START")){
+            handleStart();
+
+        }
+        else if(status.equals("checkin")){
+            handleCheckinMode();
+        }
+        else if (status.equals("REVIEW")){
+            handleReviewMode();
+        }
+
+    }
+
+    private void handleReviewMode() {
+        PatientModel patient = (PatientModel) getIntent().getSerializableExtra("patient");
+        if (patient == null) return;
+
+        Picasso.get().load(patient.getAvatarUrl()).into((ImageView)findViewById(R.id.patient_img));
+        ((TextView)findViewById(R.id.patient_name)).setText(patient.getName());
+
+        callApiAndRenderData(patient.getId());
+    }
+
+    private void handleStart() {
+        Appointment appointment =(Appointment) getIntent().getSerializableExtra("appointment");
+        if (appointment == null) return;
+
+        //Setup image
+        Picasso.get().load(appointment.getPatient().getAvatarUrl()).into((ImageView)findViewById(R.id.patient_img));
+        ((TextView)findViewById(R.id.patient_name)).setText(appointment.getPatient().getName());
+
+        loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
+        findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+        startBtn= findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(v -> {
+            Intent intent= new Intent(this, NewPrescriptionActivity.class);
+            intent.putExtra("appointment", appointment);
+            this.startActivity(intent);
+        });
+
+        //Call api
+        callApiAndRenderData(appointment.getPatientId());
     }
 
     private void handleCheckinMode() {
+        Appointment appointment =(Appointment) getIntent().getSerializableExtra("appointment");
+        if (appointment == null) return;
+
+        Picasso.get().load(appointment.getPatient().getAvatarUrl()).into((ImageView)findViewById(R.id.patient_img));
+        ((TextView)findViewById(R.id.patient_name)).setText(appointment.getPatient().getName());
+
         loadFragment(R.id.appointment_container, AppointmentDetailFragment.newInstance(appointment));
         findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         startBtn = findViewById(R.id.startBtn);
@@ -121,14 +153,17 @@ public class PatientDetailActivity extends AppCompatActivity {
                 }
             });
         });
+
+        //Call api
+        callApiAndRenderData(appointment.getPatientId());
     }
 
-    void callApiAndRenderData(){
+    void callApiAndRenderData(String patientId){
         findViewById(R.id.progress).setVisibility(View.VISIBLE);
 
         // Get data from server
         PatientService patientService = new PatientService();
-        patientService.getMedicalHistory(appointment.getPatientId(), new OnSuccessResponse<Treatment[]>() {
+        patientService.getMedicalHistory(patientId, new OnSuccessResponse<Treatment[]>() {
             @Override
             public void onSuccess(Treatment[] response) {
                 treatmentTimelineAdapter.setData(new ArrayList<>(Arrays.asList(response)));
