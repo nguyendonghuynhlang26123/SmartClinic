@@ -40,6 +40,7 @@ public class Store {
 
     public String getName() {return userAccount.getUserInfor().getDoctorName();}
 
+    public String getId() { return userAccount.getUserInfor().getId();}
 
 
     public void setUserAccount(AccountModel userAccount) {
