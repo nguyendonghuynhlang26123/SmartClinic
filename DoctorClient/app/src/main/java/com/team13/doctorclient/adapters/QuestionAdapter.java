@@ -1,7 +1,6 @@
 package com.team13.doctorclient.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
-import com.team13.doctorclient.ForumDetailFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Question;
 
@@ -59,7 +56,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             default:
                 break;
         }
-        ImageButton detailQuestion= view.findViewById(R.id.showDetail_button);
+        ImageButton detailQuestion= view.findViewById(R.id.forum_detail_button);
         detailQuestion.setOnClickListener(v -> {
 //            Intent i= new Intent(context, AnswerActivity.class);
 //            i.putExtra("question",question);

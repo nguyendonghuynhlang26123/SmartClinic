@@ -11,19 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.team13.doctorclient.ForumDetailFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.QuestionAdapter;
 import com.team13.doctorclient.models.Question;
 
 import java.util.ArrayList;
 
-    public class DoctorBlogFragment extends Fragment {
+    public class DoctorForumFragment extends Fragment {
 
-        RecyclerView questionList;
-
-        public static DoctorBlogFragment newInstance() {
-            return new DoctorBlogFragment();
+        public static DoctorForumFragment newInstance() {
+            return new DoctorForumFragment();
         }
 
         @Override
@@ -35,8 +32,8 @@ import java.util.ArrayList;
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View view = inflater.inflate(R.layout.fragment_blog, container, false);
-            questionList = view.findViewById(R.id.question_list);
+            View view = inflater.inflate(R.layout.fragment_doctor_forum, container, false);
+            RecyclerView questionList = view.findViewById(R.id.question_list);
             QuestionAdapter questionAdapter = new QuestionAdapter(view.getContext(), getQuestion());
             questionAdapter.setListener(question -> {
                 ForumDetailFragment fragment = ForumDetailFragment.newInstance(question);
