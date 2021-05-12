@@ -96,44 +96,4 @@ export class PatientService {
       { status: 'CANCELED' }
     );
   }
-
-  async getMedicalHistory(patientId: string) {
-    if (!patientId) throw new Error('Bad Request! PatientId is undefined');
-
-    const data: any = await patientModel
-      .findOne({ _id: patientId }, 'medical_history')
-      .populate({
-        path: 'medical_history',
-        populate: [
-          {
-            path: 'appointment',
-            model: 'appointments',
-            populate: [
-              {
-                path: 'service',
-                select: 'service_name',
-              },
-              {
-                path: 'doctor',
-                select: 'name',
-              },
-            ],
-          },
-          {
-            path: 'prescription',
-            model: 'prescriptions',
-            populate: {
-              path: 'medicine_list.medicine',
-              model: 'medicines',
-              select: 'medicine_name',
-            },
-          },
-        ],
-      });
-
-    if (!data) {
-      throw new Error('Not Found Patient.');
-    }
-    return data.toObject().medical_history;
-  }
 }

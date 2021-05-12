@@ -8,8 +8,6 @@ export class PrescriptionDetails {
 
 export class PrescriptionInterface extends BaseInterface {
   medicine_list: PrescriptionDetails[];
-  doctor: string;
-  patient: string;
   symptoms: string;
   diagnosis: string;
   note: string;

@@ -1,6 +1,11 @@
 import { BaseInterface } from './base/base.interface';
 
 export class TreatmentInterface extends BaseInterface {
-  appointment: string;
+  doctor: string;
+  patient: string;
+  service: string;
+  time: string;
+  date: string;
+  note: string;
   prescription: string;
 }

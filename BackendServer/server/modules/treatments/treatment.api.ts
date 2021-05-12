@@ -10,9 +10,15 @@ router.get('/:treatment_id', async (req, res) => {
   );
   res.json(treatment);
 });
+
 router.get('/', async (req, res) => {
-  const treatments = await treatmentService.getTreatments();
-  res.json(treatments);
+  try {
+    const treatments = await treatmentService.getTreatments(req.query);
+    res.json(treatments);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
 });
 
 router.post('/', async (req, res) => {

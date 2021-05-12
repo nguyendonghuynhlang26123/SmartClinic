@@ -57,16 +57,6 @@ router.post('/cancel/:patient_id', async (req, res) => {
   }
 });
 
-router.get('/medical_history/:patient_id', async (req, res) => {
-  try {
-    const data = await patientService.getMedicalHistory(req.params.patient_id);
-    res.json(data);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ 'message': err.message });
-  }
-});
-
 router.put('/:patient_id', async (req, res) => {
   try {
     const result = await patientService.updatePatientById(
