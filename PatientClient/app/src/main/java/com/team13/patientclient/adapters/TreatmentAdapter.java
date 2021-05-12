@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.team13.patientclient.R;
+import com.team13.patientclient.Store;
 import com.team13.patientclient.Utils;
 import com.team13.patientclient.activities.TreatmentActivity;
 import com.team13.patientclient.models.Prescription;
@@ -44,7 +45,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         Treatment treatment = treatments.get(position);
         ImageButton stateIcon = view.findViewById(R.id.timeline_marker);
         switch (treatment.getStatus()){
-            case "COMPLETE":
+            case "COMPLETED":
                 stateIcon.setImageResource(R.drawable.ic_check);
                 break;
             case "CANCEL":
@@ -75,17 +76,19 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         ImageButton removeButton = view.findViewById(R.id.treatment_remove_button);
         removeButton.setVisibility(View.INVISIBLE);
         treatmentCard.setStrokeWidth(0);
-        if(position == 0){
+        if(position == 0 && Store.get_instance().isHavingAnAppointment()){
             view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
-            if(treatment.getStatus().equals("PENDING")){
-                treatmentCard.setStrokeColor(view.getResources().getColor(R.color.purple_dark));
-                treatmentCard.setStrokeWidth(8);
-                time.setTextColor(view.getResources().getColor(R.color.red));
-                listener.onHasAppointment();
-                removeButton.setVisibility(View.VISIBLE);
-                removeButton.setOnClickListener(v-> listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId()));
-            } else time.setTextColor(view.getResources().getColor(R.color.black));
-        } else if (position == treatments.size() - 1){
+            treatmentCard.setStrokeColor(view.getResources().getColor(R.color.purple_dark));
+            treatmentCard.setStrokeWidth(8);
+            time.setTextColor(view.getResources().getColor(R.color.red));
+            listener.onHasAppointment();
+            removeButton.setVisibility(View.VISIBLE);
+            removeButton.setOnClickListener(v-> listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId()));
+        }
+        else if (position == 0){
+            time.setTextColor(view.getResources().getColor(R.color.black));
+        }
+        else if (position == treatments.size() - 1){
             view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }
         if(treatment.getStatus().equals("CANCEL")){
@@ -98,7 +101,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         return treatments.size();
     }
 
-    public void setData(ArrayList<Treatment> newData){
+    public void addData(ArrayList<Treatment> newData){
         this.treatments.addAll(newData);
         this.notifyDataSetChanged();
     }

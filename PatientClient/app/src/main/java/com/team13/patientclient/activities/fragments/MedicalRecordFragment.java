@@ -26,7 +26,6 @@ import java.util.Collections;
 
 
 public class MedicalRecordFragment extends Fragment {
-    ArrayList <Treatment> treatments = new ArrayList<>();
     public MedicalRecordFragment() {
         // Required empty public constructor
     }
@@ -101,7 +100,6 @@ public class MedicalRecordFragment extends Fragment {
             @Override
             public void onSuccess(Appointment currentAppointment) {
                 adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));
-                treatments.add(new Treatment(currentAppointment, null));
             }
         });
 
@@ -110,8 +108,7 @@ public class MedicalRecordFragment extends Fragment {
             public void onSuccess(Treatment[] treatmentList) {
                 ArrayList<Treatment> data = (new ArrayList<>(Arrays.asList(treatmentList)));
                 Collections.reverse(data);
-                treatments.addAll(data);
-                adapter.setData(treatments);
+                adapter.addData(data);
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
         });
