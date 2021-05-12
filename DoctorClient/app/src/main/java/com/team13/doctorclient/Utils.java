@@ -23,6 +23,10 @@ public class Utils {
     //INTENT
     public static final int QRSCAN_RESULT_INTENT = 136;
 
+    //MODE
+    public static final int EDIT_MODE = 7003;
+    public static final int VIEW_MODE = 7016;
+
     //STATUS
     public static final String STATUS_PENDING = "PENDING";
     public static final String STATUS_PROCESSING = "PROCESSING";

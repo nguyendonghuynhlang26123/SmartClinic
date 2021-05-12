@@ -17,6 +17,10 @@ public class AppointmentService {
         api.getByDate(date).enqueue(callback);
     }
 
+    public void getAppointmentByDate(String doctorId, String date, String[] statuses, Callback<Appointment[]> callback){
+        api.getByDate(doctorId,date, statuses).enqueue(callback);
+    }
+
     public void getAppointmentById(String id, Callback<Appointment> callback){
         api.getAppointmentById(id).enqueue(callback);
     }
