@@ -116,7 +116,7 @@ public class SchedulePickFragment extends Fragment {
             layout.addView(day1);
         }else{
             ArrayList<String> finalShifts = shifts;
-            appointmentService.getAppointmentByDate(day, listener.getServiceId(), new OnSuccessResponse<Appointment[]>() {
+            appointmentService.getAppointmentByDate(day, listener.getDoctorId(), new OnSuccessResponse<Appointment[]>() {
                 @Override
                 public void onSuccess(Appointment[] appointments) {
                     Set<String> existedAppointment = new HashSet<>();
@@ -150,6 +150,7 @@ public class SchedulePickFragment extends Fragment {
     public interface SchedulePickFragmentListener{
         void gotoReasonPick(String time, String date);
         String getServiceId();
+        String getDoctorId();
     }
 
     public static float convertDpToPixel(float dp, Context context){

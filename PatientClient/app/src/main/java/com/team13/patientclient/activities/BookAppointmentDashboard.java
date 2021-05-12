@@ -42,7 +42,6 @@ public class BookAppointmentDashboard extends AppCompatActivity {
 
         //Render hospital data
         HospitalModel hospital = Store.get_instance().getHospital();
-        Log.d("LONG", new Gson().toJson(hospital));
         if (!hospital.getImgUrl().isEmpty()) Picasso.get().load(hospital.getImgUrl()).into((ImageView)findViewById(R.id.hospital_thumbnail));
 
         ((TextView) findViewById(R.id.hospital_name)).setText(hospital.getName());

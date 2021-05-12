@@ -28,14 +28,6 @@ public class Appointment implements Serializable {
     @SerializedName("status")
     String status;
 
-    public Appointment(String patientId, ServicePack service, String note, String date, String time){
-        this.doctor = new Doctor("6064131892cd230c287d5bd4", "");
-        this.date = date;
-        this.time = time;
-        this.note = note;
-        this.service = service;
-        this.status = "PENDING";
-    }
 
     public Appointment(){
     }

@@ -22,6 +22,7 @@ import com.team13.patientclient.repository.services.AppointmentService;
 import com.team13.patientclient.repository.services.PatientService;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class MedicalRecordFragment extends Fragment {
@@ -107,8 +108,10 @@ public class MedicalRecordFragment extends Fragment {
         service.getMedicalHistory(Store.get_instance().getPatientId(), new OnSuccessResponse<Treatment[]>() {
             @Override
             public void onSuccess(Treatment[] treatmentList) {
-                treatments.addAll(new ArrayList<>(Arrays.asList(treatmentList)));
-                adapter.setData(new ArrayList<>(Arrays.asList(treatmentList)));
+                ArrayList<Treatment> data = (new ArrayList<>(Arrays.asList(treatmentList)));
+                Collections.reverse(data);
+                treatments.addAll(data);
+                adapter.setData(treatments);
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
         });

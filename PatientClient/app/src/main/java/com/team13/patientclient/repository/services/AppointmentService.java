@@ -13,22 +13,22 @@ import retrofit2.Callback;
 public class AppointmentService {
     AppointmentApi api = RetrofitSingleton.getInstance().create(AppointmentApi.class);
 
-    public void getAppointmentByDate(String date, String serviceId, Callback<Appointment[]> callback){
-        api.getByDate(date, serviceId).enqueue(callback);
+    public void getAppointmentByDate(String date, String doctorId, Callback<Appointment[]> callback){
+        api.getByDate(date, doctorId).enqueue(callback);
     }
 
     public void getAppointmentById(String id, Callback<Appointment> callback){
         api.getAppointmentById(id).enqueue(callback);
     }
 
-    public void bookAnAppointment(Appointment data, String patientId, Callback<Map<String, String>> callback) {
+    public void bookAnAppointment(String patientId, String doctorId, String serviceId, String time, String date, String note, Callback<Map<String, String>> callback) {
         Map<String, String> dataMap = new HashMap<>();
-        dataMap.put("doctor", data.getDoctor().getId());
+        dataMap.put("doctor", doctorId);
         dataMap.put("patient", patientId);
-        dataMap.put("service", data.getServiceId());
-        dataMap.put("time", data.getTime());
-        dataMap.put("date", data.getDate());
-        dataMap.put("note", data.getNote());
+        dataMap.put("service", serviceId);
+        dataMap.put("time", time);
+        dataMap.put("date", date);
+        dataMap.put("note", note);
         api.post(dataMap).enqueue(callback);
     }
 }
