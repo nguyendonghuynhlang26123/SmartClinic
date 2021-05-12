@@ -8,4 +8,7 @@
     <string name="state_label">State:</string>
     <string name="no_answer">No Answer</string>
     <string name="answer_topic">Answer topic</string>
+    <string name="doctor_profile">Doctor Profile</string>
+    <string name="services_label">Services</string>
+    <string name="about_label">About</string>
 </resources>

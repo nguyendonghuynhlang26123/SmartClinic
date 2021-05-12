@@ -18,41 +18,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Doctor Profile"
+                android:text="@string/doctor_profile"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/teal_700"
 
                 android:layout_marginVertical="10dp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_notification"
-                    android:background="@color/transparent"
-                    android:id="@+id/profile_notification_button"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/profile_notification_button"
-                    android:layout_toStartOf="@+id/profile_notification_button"
-                    android:layout_marginHorizontal="16dp"
-                    android:src="@drawable/ic_setting"
-                    android:background="@color/transparent"/>
-            </RelativeLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
                 <ImageView
                     android:layout_width="81dp"
                     android:layout_height="81dp"
-                    android:src="@mipmap/ic_launcher_round"
+                    android:src="@drawable/ic_doctor"
                     android:scaleType="fitXY"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -61,7 +42,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dr.Coco"
                     android:textSize="20sp"
                     app:layout_constraintLeft_toRightOf="@+id/doctor_avatar"
                     app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="About"
+                    android:text="@string/about_label"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Specialties"
+                    android:text="@string/services_label"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
