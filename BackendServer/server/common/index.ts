@@ -15,3 +15,9 @@ export enum Role {
   PATIENT = 'PATIENT',
   NURSE = 'NURSE',
 }
+
+export enum Status {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
+}

@@ -136,11 +136,4 @@ export class PatientService {
     }
     return data.toObject().medical_history;
   }
-
-  // async getAppointmentQRCode(patientId: string) {
-  //   const data: any = (await patientModel.findOne({ _id: patientId })).toObject();
-  //   if (!data) throw new Error('Patient is not existed!');
-
-  //   return
-  // }
 }

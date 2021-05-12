@@ -12,6 +12,8 @@ const TreatmentSchema = new Schema(
       ref: 'prescriptions',
       default: null,
     },
+    created_at: { type: Number },
+    updated_at: { type: Number },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
