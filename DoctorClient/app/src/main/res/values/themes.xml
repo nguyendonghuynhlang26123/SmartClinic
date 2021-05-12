@@ -12,5 +12,6 @@
         <!-- Customize your theme here. -->
         <item name="actionMenuTextColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+        <item name="materialCardViewStyle">@style/DefaultCard</item>
     </style>
 </resources>
