@@ -20,7 +20,7 @@ import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
-import com.team13.doctorclient.activities.fragments.DoctorBlogFragment;
+
 import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
 import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
 import com.team13.doctorclient.activities.fragments.NurseScheduleFragment;

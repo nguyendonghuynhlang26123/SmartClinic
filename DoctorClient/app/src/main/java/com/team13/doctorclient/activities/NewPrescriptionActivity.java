@@ -24,6 +24,7 @@ import com.team13.doctorclient.activities.fragments.ReviewPrescriptionFragment;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.Drug;
+import com.team13.doctorclient.models.DrugDetail;
 import com.team13.doctorclient.models.Prescription;
 
 import java.text.ParseException;
@@ -39,7 +40,7 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
     FloatingActionButton addDrug;
     RecyclerView drugList;
     DrugAdapter drugAdapter;
-    ArrayList<Drug> addDrugArrayList=new ArrayList<>(5);
+    ArrayList<DrugDetail> addDrugArrayList=new ArrayList<>(5);
     DrugAddFragment drugAddFragment;
     Calendar myCalendar;
     DatePickerDialog dialog;
@@ -138,16 +139,16 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
 //        return calendar.toString();
     }
     @Override
-    public void onSaveDrug(Drug addDrug) {
+    public void onSaveDrug(DrugDetail addDrug) {
         addDrugArrayList.add(addDrug);
-        Log.w("List", addDrugArrayList.get(0).getDrugNote());
+        Log.w("List", addDrugArrayList.get(0).getNote());
         drugAdapter.setData(addDrugArrayList);
         drugAddFragment.dismiss();
     }
     @Override
-    public void onSaveListDrug(ArrayList<Drug> addDrugArrayList){
+    public void onSaveListDrug(ArrayList<DrugDetail> addDrugArrayList){
         this.addDrugArrayList.addAll(addDrugArrayList);
-        Log.w("List", addDrugArrayList.get(0).getDrugNote());
+        Log.w("List", addDrugArrayList.get(0).getNote());
         drugAdapter.setData(this.addDrugArrayList);
         reviewPrescriptionFragment.dismiss();
     }

@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
+import com.team13.doctorclient.activities.fragments.PrescriptionDisplayFragment;
 import com.team13.doctorclient.adapters.TreatmentTimelineAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ErrorResponse;
@@ -72,6 +73,10 @@ public class PatientDetailActivity extends AppCompatActivity {
         }
 
         treatmentTimelineAdapter = new TreatmentTimelineAdapter(this);
+        treatmentTimelineAdapter.setListener(treatment -> {
+            PrescriptionDisplayFragment fragment = PrescriptionDisplayFragment.newInstance(treatment.getPrescription(), treatment.getPatient());
+            fragment.show(getSupportFragmentManager(), fragment.getTag());
+        });
         patientTreatmentTimeline = findViewById(R.id.treatment_timeline);
         patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
         patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));

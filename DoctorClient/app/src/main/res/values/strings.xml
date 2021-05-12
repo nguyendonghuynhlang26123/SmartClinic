@@ -11,4 +11,13 @@
     <string name="doctor_profile">Doctor Profile</string>
     <string name="services_label">Services</string>
     <string name="about_label">About</string>
+    <string name="prescription">Prescription</string>
+    <string name="name_label">"Name: "</string>
+    <string name="diagnose_label">"Diagnose: "</string>
+    <string name="date_and_time_label">"Date and Time: "</string>
+    <string name="number">No.</string>
+    <string name="drug_label">Drug</string>
+    <string name="quality_label">Quantity</string>
+    <string name="note_label">Note</string>
+
 </resources>

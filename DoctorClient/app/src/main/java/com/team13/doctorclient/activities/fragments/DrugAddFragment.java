@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Drug;
+import com.team13.doctorclient.models.DrugDetail;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,8 +98,8 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         });
         save.setOnClickListener(v -> {
             String[] qualities={qualityMorning.getText().toString(),qualityNoon.getText().toString(),qualityEvening.getText().toString()}; 
-            Drug addDrug= new Drug("001",drugName.getText().toString(),String.valueOf(getTotalQuality(qualities)),getNote(qualities)+note.getText().toString()) ; 
-            listener.onSaveDrug(addDrug);
+//            Drug addDrug= new Drug("001",drugName.getText().toString(),String.valueOf(getTotalQuality(qualities)),getNote(qualities)+note.getText().toString()) ;
+            listener.onSaveDrug(new DrugDetail());
             //TODO
 
         });
@@ -142,7 +143,7 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         return note;
     }
     public interface AddDrugListener{
-        void onSaveDrug(Drug addDrug);
+        void onSaveDrug(DrugDetail addDrug);
     }
 
     @Override

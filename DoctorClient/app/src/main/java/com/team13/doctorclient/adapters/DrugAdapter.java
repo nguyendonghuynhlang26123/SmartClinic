@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Drug;
+import com.team13.doctorclient.models.DrugDetail;
 
 import java.util.ArrayList;
 
 public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
     private final Context context;
-    public ArrayList<Drug> drugs;
+    public ArrayList<DrugDetail> drugs;
     boolean editable = false;
 
-    public DrugAdapter(Context context, ArrayList<Drug> drugs, boolean editable) {
+    public DrugAdapter(Context context, ArrayList<DrugDetail> drugs, boolean editable) {
         this.context = context;
         this.drugs = drugs;
         this.editable = editable;
@@ -31,7 +32,7 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
         drugs= new ArrayList<>();
         this.editable = editable;
     }
-    public void setData(ArrayList<Drug> addDrugArrayList){
+    public void setData(ArrayList<DrugDetail> addDrugArrayList){
         drugs= addDrugArrayList;
         notifyDataSetChanged();
     }
@@ -63,10 +64,10 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
                     notifyDataSetChanged();
                 });
         }
-        Drug drug= drugs.get(position);
-        ((TextView)view.findViewById(R.id.drug_name)).setText(drug.getDrugName());
-        ((TextView)view.findViewById(R.id.drug_quality)).setText(drug.getDrugQuality());
-        ((TextView)view.findViewById(R.id.drug_note)).setText(drug.getDrugNote());
+        DrugDetail drug= drugs.get(position);
+        ((TextView)view.findViewById(R.id.drug_name)).setText(drug.getName());
+        ((TextView)view.findViewById(R.id.drug_quantity)).setText(String.valueOf(drug.getQuantity()));
+        ((TextView)view.findViewById(R.id.drug_note)).setText(drug.getNote());
 
     }
 
