@@ -7,10 +7,13 @@
     android:layout_marginVertical="10dp"
     android:layout_marginHorizontal="10dp"
     android:id="@+id/question_card"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/teal_primary"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp">
         <TextView
             android:layout_width="5dp"
             android:layout_height="match_parent"
@@ -22,41 +25,36 @@
             android:paddingVertical="12dp"
             android:id="@+id/lineColor"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Why am i so beautiful?"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:id="@+id/patient_question"
             app:layout_constraintLeft_toRightOf="@+id/lineColor"
+            app:layout_constraintRight_toLeftOf="@+id/forum_detail_button"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="8dp"
             />
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Treatment"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:minHeight="0dp"
-            android:backgroundTint="@color/teal_700"
-            android:textColor="@color/white"
+            android:textStyle="italic"
             android:textSize="12sp"
-            android:textAllCaps="false"
-            android:id="@+id/treatment"
-            android:layout_marginTop="5dp"
+            android:id="@+id/answer_count"
+            android:layout_marginTop="6dp"
             app:layout_constraintLeft_toRightOf="@+id/lineColor"
             app:layout_constraintTop_toBottomOf="@+id/patient_question"
             android:layout_marginLeft="8dp"/>
         <ImageButton
-            android:id="@+id/showDetail_button"
+            android:id="@+id/forum_detail_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginVertical="5dp"
             android:background="@color/transparent"
             android:contentDescription="More Detail"
-            android:src="@drawable/ic_showmore"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_chat"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

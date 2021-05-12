@@ -21,14 +21,12 @@ import com.team13.doctorclient.models.Doctor;
 
 public class EditProfileDoctorFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private Doctor doctor;
     ChipGroup chips;
     Context context;
+
     public EditProfileDoctorFragment() {
         // Required empty public constructor
     }
@@ -98,6 +96,7 @@ public class EditProfileDoctorFragment extends Fragment {
         });
         return view;
     }
+
     private void renderSpecialties(String specialties){
         String[] temp=specialties.split(",");
 
@@ -111,6 +110,7 @@ public class EditProfileDoctorFragment extends Fragment {
             chips.addView(chip);
         }
     }
+
     String saveSpecialties(){
         String result = "";
         for(int i = 0; i<chips.getChildCount(); ++i){
@@ -118,5 +118,9 @@ public class EditProfileDoctorFragment extends Fragment {
             result += chip.getText().toString()+",";
         }
         return result.substring(0,result.length()-1);
+    }
+
+    void callPutApi(Doctor doctorProfile, Doctor updateProfile){
+
     }
 }

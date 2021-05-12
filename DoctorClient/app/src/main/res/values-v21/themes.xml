@@ -13,5 +13,8 @@
         <!-- Customize your theme here. -->
         <item name="actionMenuTextColor">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+        <item name="materialCardViewStyle">@style/DefaultCard</item>
     </style>
+
 </resources>

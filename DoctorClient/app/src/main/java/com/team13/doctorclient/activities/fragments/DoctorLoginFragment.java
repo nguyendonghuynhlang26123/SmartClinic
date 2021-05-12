@@ -84,7 +84,6 @@ public class DoctorLoginFragment extends Fragment {
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         progressBar = view.findViewById(R.id.progress);
         loginButton = view.findViewById(R.id.login_button);
-        loginButton.setText("Login as Doctor");
         loginButton.setOnClickListener(v -> {
             String phone = Utils.unFormatPhoneNumber(Objects.requireNonNull(phoneInput.getText()).toString());
             String password = Objects.requireNonNull(passwordInput.getText()).toString();
