@@ -82,8 +82,8 @@ public class NurseScheduleFragment extends Fragment {
     void renderData(String date){
         //Get list of possible time
         HospitalModel hospital = Store.get_instance().getHospital();
-        ArrayList<String> timeLines = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
-
+        //final ArrayList<String> timeLines = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
+        final ArrayList<String> timeLines = Utils.getAvailableTime(Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 ));
         //Render the timeline view
         AppointmentService service = new AppointmentService();
         service.getAppointmentByDate(date, new OnSuccessResponse<Appointment[]>() {

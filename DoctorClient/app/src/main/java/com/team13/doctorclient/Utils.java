@@ -85,7 +85,7 @@ public class Utils {
 
             return result;
         } catch(Exception e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
