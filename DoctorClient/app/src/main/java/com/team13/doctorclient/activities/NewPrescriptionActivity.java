@@ -163,8 +163,4 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
         transaction.remove(fragment);
         transaction.commit();
     }
-    private Prescription getPrescription(){
-        // id??
-        return new Prescription("001",appointment.getPatientId(),addDrugArrayList,note.getText().toString(),symptom.getText().toString(),diagnostic.getText().toString(),startDay.getText().toString(),endDay.getText().toString());
-    }
 }

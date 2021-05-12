@@ -90,7 +90,7 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.apply:
-                        listener.onSaveListDrug(prescription.getDrugList());
+                        //listener.onSaveListDrug(prescription.getDrugList());
                         return true;
 
                     case R.id.next:
@@ -119,7 +119,7 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
     }
     public void getPrescription(){
         // TODO
-        prescription= new Prescription("001","MN",getDrug(),"note here","cough","cough","07/04/2021","14/04/2021");
+        //prescription= new Prescription("001","MN",getDrug(),"note here","cough","cough","07/04/2021","14/04/2021");
     }
     public interface ReviewDrugListener{
         void onSaveListDrug(ArrayList<Drug> addDrugs);

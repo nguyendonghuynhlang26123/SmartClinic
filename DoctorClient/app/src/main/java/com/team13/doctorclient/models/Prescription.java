@@ -1,36 +1,40 @@
 package com.team13.doctorclient.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Prescription{
-    String Id;
-    String patientName;
-    ArrayList<Drug> drugList;
+public class Prescription implements Serializable{
+
+    @SerializedName("_id")
+    String id;
+
+    @SerializedName("medicine_list")
+    ArrayList<DrugDetail> drugList;
+
+    @SerializedName("note")
     String note;
+
+    @SerializedName("symptoms")
     String symptom;
+
+    @SerializedName("diagnosis")
     String diagnose;
-    String dateStart, dateEnd;
 
 
-    public Prescription(String Id,String patientName,ArrayList<Drug> drugList, String note, String symptom, String diagnose,String dateStart,String dateEnd) {
-        this.Id=Id;
-        this.patientName=patientName;
+    public Prescription(ArrayList<DrugDetail> drugList, String note, String symptom, String diagnose) {
         this.drugList = drugList;
         this.note = note;
         this.symptom = symptom;
         this.diagnose = diagnose;
-        this.dateStart= dateStart;
-        this.dateEnd=dateEnd;
     }
-    public Prescription(){
 
-    }
-    public ArrayList<Drug> getDrugList() {
+    public ArrayList<DrugDetail> getDrugList() {
         return drugList;
     }
 
-    public void setDrugList(ArrayList<Drug> drugList) {
+    public void setDrugList(ArrayList<DrugDetail> drugList) {
         this.drugList = drugList;
     }
 
@@ -57,16 +61,12 @@ public class Prescription{
     public void setDiagnose(String diagnose) {
         this.diagnose = diagnose;
     }
-    public void setIdPrescription(String Id){ this.Id = Id;}
 
     public String getId() {
-        return Id;
+        return id;
     }
 
-    public void setPatientName(String patientName){this.patientName=patientName;}
-    public String getPatientName(){return patientName;}
-
-    public String getDateStart() { return dateStart; }
-
-    public String getDateEnd() { return dateEnd; }
+    public void setId(String id) {
+        this.id = id;
+    }
 }

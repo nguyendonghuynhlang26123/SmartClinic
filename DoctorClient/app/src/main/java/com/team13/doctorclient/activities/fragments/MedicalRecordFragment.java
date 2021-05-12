@@ -85,10 +85,10 @@ public class MedicalRecordFragment extends Fragment {
         ArrayList<Treatment> treatments= new ArrayList<>();
         ServicePack servicePack = new ServicePack("Beauty Care","no", 500000, "1");
         Appointment appointment = new Appointment("MN", servicePack, "Cough","7/04/2021","13:30","PROCESSING");
-        Prescription prescription = new Prescription();
-        for (int i=0;i<10;++i){
-            treatments.add(new Treatment(appointment, prescription));
-        }
+        //Prescription prescription = new Prescription();
+//        for (int i=0;i<10;++i){
+//            treatments.add(new Treatment(appointment, prescription));
+//        }
         return treatments;
     }
 }

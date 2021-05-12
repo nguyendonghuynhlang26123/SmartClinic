@@ -99,4 +99,8 @@ public class Appointment implements Serializable {
     public String getDoctorId(){
         return doctor.getId();
     }
+
+    public PatientModel getPatient() {
+        return patient;
+    }
 }

@@ -18,11 +18,19 @@ public class PatientModel implements Serializable {
     @SerializedName("patient_name")
     String name;
 
-    @SerializedName("medical_history")
-    String[] history;
+    @SerializedName("patient_avatar")
+    String avatarUrl;
 
     public PatientModel(String name) {
         this.name = name;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getId() {
@@ -41,11 +49,4 @@ public class PatientModel implements Serializable {
         this.name = name;
     }
 
-    public String[] getHistory() {
-        return history;
-    }
-
-    public void setHistory(String[] history) {
-        this.history = history;
-    }
 }
