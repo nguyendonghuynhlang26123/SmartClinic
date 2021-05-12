@@ -107,7 +107,7 @@ public class MedicalRecordFragment extends Fragment {
             @Override
             public void onSuccess(Treatment[] treatmentList) {
                 ArrayList<Treatment> data = (new ArrayList<>(Arrays.asList(treatmentList)));
-                Collections.reverse(data);
+
                 adapter.addData(data);
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
             }
