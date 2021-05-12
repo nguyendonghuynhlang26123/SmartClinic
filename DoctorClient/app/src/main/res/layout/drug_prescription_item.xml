@@ -58,7 +58,7 @@ android:shrinkColumns="*"
         android:layout_height="match_parent"
         android:layout_weight="20"
         android:gravity="center"
-        android:id="@+id/drug_quality"
+        android:id="@+id/drug_quantity"
         android:textStyle="bold"
         android:text="10 viên"/>
     <TextView

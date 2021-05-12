@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.DrugAdapter;
 import com.team13.doctorclient.models.Drug;
+import com.team13.doctorclient.models.DrugDetail;
 import com.team13.doctorclient.models.Prescription;
 
 import java.util.ArrayList;
@@ -110,11 +111,11 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
         });
         return view;
     }
-    public ArrayList<Drug> getDrug(){
-        ArrayList<Drug> drugArrayList= new ArrayList<>(10);
-        for(int i=0;i<5;++i){
-            drugArrayList.add(new Drug("001","Panadol","3","Ngày 2 lần"));
-        }
+    public ArrayList<DrugDetail> getDrug(){
+        ArrayList<DrugDetail> drugArrayList= new ArrayList<>(10);
+//        for(int i=0;i<5;++i){
+//            drugArrayList.add(new Drug("001","Panadol","3","Ngày 2 lần"));
+//        }
         return drugArrayList;
     }
     public void getPrescription(){
@@ -122,7 +123,7 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
         //prescription= new Prescription("001","MN",getDrug(),"note here","cough","cough","07/04/2021","14/04/2021");
     }
     public interface ReviewDrugListener{
-        void onSaveListDrug(ArrayList<Drug> addDrugs);
+        void onSaveListDrug(ArrayList<DrugDetail> addDrugs);
     }
 
     @Override
