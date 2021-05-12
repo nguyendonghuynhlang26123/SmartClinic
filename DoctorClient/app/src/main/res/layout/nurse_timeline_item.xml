@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/timeline_marker_container"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="16dp"
         style="@style/OutlinedCard"
         android:id="@+id/appointment_card">
@@ -38,6 +38,16 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
             android:layout_marginHorizontal="8dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/appointment_service"
+                android:textSize="14sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:minHeight="0dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,13 +57,13 @@
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"
                 android:id="@+id/appointment_patient_name"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appointment_service"
                 app:layout_constraintLeft_toLeftOf="parent"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Triệu chứng: "
+                android:text="@string/symptom_label"
                 app:layout_constraintTop_toBottomOf="@+id/appointment_patient_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:textSize="14sp"
@@ -63,66 +73,49 @@
                 android:id="@+id/symptom_label"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/appointment_patient_name"
                 app:layout_constraintLeft_toRightOf="@id/symptom_label"
-                android:id="@+id/appointment_note"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/appointment_service"
-                android:textSize="14sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:minHeight="0dp" />
+                android:id="@+id/appointment_note"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Trạng thái: "
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/symptom_label"
+                android:text="@string/state_label"
+                app:layout_constraintLeft_toLeftOf="@id/symptom_label"
+                app:layout_constraintTop_toBottomOf="@+id/appointment_note"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="8dp"
                 android:id="@+id/status_label"/>
 
             <TextView
                 android:id="@+id/status"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Chưa xác nhận "
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toRightOf="@+id/status_label"
-                app:layout_constraintTop_toBottomOf="@+id/symptom_label" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appointment_note" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Accept"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toRightOf="@id/update_status"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/status"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginVertical="8dp"
                 android:visibility="gone"
                 android:id="@+id/accept_patient"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Update"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/status"
-                android:layout_marginVertical="8dp"
-                app:layout_constraintRight_toLeftOf="@id/accept_patient"
-                android:id="@+id/update_status"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.PatientModel;
 import com.team13.doctorclient.models.ScheduleItem;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             TextView note = view.findViewById(R.id.appointment_note);
             note.setText(appointment.getNote());
             TextView patientName = view.findViewById(R.id.appointment_patient_name);
-            patientName.setText(appointment.getPatientId());
+            patientName.setText(appointment.getPatientName());
             Button treatment = view.findViewById(R.id.appointment_service);
             treatment.setText(appointment.getService().getName());
             TextView status=view.findViewById(R.id.status);
@@ -74,6 +75,11 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
 //                i.putExtra("appointment", appointment);
 //                context.startActivity(i);
 //            });
+        }
+        if (position==0){
+            view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
+        } else if(position == timeline.size()-1){
+            view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }
     }
 
