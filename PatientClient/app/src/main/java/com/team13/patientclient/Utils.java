@@ -38,6 +38,9 @@ public class Utils {
         return text.length() < NAME_LENGTH_LIMIT;
     }
 
+    public static String getQRGenerator(String appointmentId, String doctorId, String patientId){
+        return "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + appointmentId + "-" + doctorId + "-" + patientId;
+    }
     public static String unFormatPhoneNumber(String raw) {
         return raw.replaceAll("[^\\d]","");
     }
