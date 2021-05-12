@@ -10,35 +10,33 @@ public class Treatment implements Serializable{
     @SerializedName("_id")
     String id;
 
-    @SerializedName("appointment")
-    Appointment appointment;
+    @SerializedName("doctor")
+    Doctor doctor;
+
+    @SerializedName("service")
+    ServicePack servicePack;
+
+    @SerializedName("time")
+    String time;
+
+    @SerializedName("date")
+    String date;
+
+    @SerializedName("note")
+    String note;
 
     @SerializedName("prescription")
     Prescription prescription;
 
     public Treatment(Appointment appointment, Prescription prescription) {
-        this.appointment = appointment;
+        this.doctor = appointment.getDoctor();
+        this.servicePack = appointment.getService();
+        this.time = appointment.getTime();
+        this.date = appointment.getDate();
+        this.note = appointment.getNote();
         this.prescription = prescription;
     }
 
-    public Treatment(String serviceName, String date,String time, String doctorId, String doctorName, String status) {
-        this.appointment = new Appointment();
-        appointment.setService(new ServicePack(serviceName, "", "", 0));
-        appointment.setDate(date);
-        appointment.setTime(time);
-        appointment.setDoctor(new Doctor(doctorId, doctorName));
-        appointment.setStatus(status);
-
-        this.prescription = null;
-    }
-
-    public Appointment getAppointment() {
-        return appointment;
-    }
-
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
-    }
 
     public void setPrescription(Prescription prescription) {
         this.prescription = prescription;
@@ -49,26 +47,23 @@ public class Treatment implements Serializable{
     }
 
     public String getServicePack() {
-        return appointment.getServiceName();
+        return servicePack.getName();
     }
 
     public String getDate() {
-        return appointment.getDate();
+        return date;
     }
 
     public String getDoctorName() {
-        return appointment.getDoctorName();
+        return doctor.getDoctorName();
+    }
+    public String getDoctorId() {
+        return doctor.getId();
     }
 
     public String getTime() {
-        return appointment.getTime();
+        return time;
     }
-
-    public String getTreatmentId() {
-        return getTreatmentId();
-    }
-
-    public String getStatus(){return appointment.getStatus();}
 
     public String getId() {
         return id;

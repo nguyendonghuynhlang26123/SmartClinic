@@ -14,6 +14,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface PatientApi {
     @PUT("/patients/{id}")
@@ -25,6 +26,6 @@ public interface PatientApi {
     @FormUrlEncoded
     Call<Void> cancelAppointment(@Path("id") String id, @Field("appointment_id") String appointmentId);
 
-    @GET("/patients/medical_history/{id}")
-    Call<Treatment[]> getMedicalHistory(@Path("id") String id);
+    @GET("/treatments?populate=doctor+service+prescription+prescription.medicine_list.medicine")
+    Call<Treatment[]> getMedicalHistory(@Query("patient_id") String id);
 }

@@ -33,13 +33,12 @@ public class TreatmentActivity extends AppCompatActivity {
         TextView doctor = findViewById(R.id.treatment_doctor);
         TextView service = findViewById(R.id.treatment_service);
         TextView time = findViewById(R.id.treatment_time);
-        TextView status = findViewById(R.id.treatment_status);
         ExtendedFloatingActionButton prescriptionButton = findViewById(R.id.treatment_prescription);
 
         doctor.setText(treatment.getDoctorName());
         service.setText(treatment.getServicePack());
         time.setText(String.format("%s, %s", treatment.getTime(), treatment.getDate()));
-        status.setText(treatment.getStatus());
+
         if(treatment.getPrescription()!=null){
             prescriptionButton.setOnClickListener(v->{
                 PrescriptionFragment fragment = PrescriptionFragment.newInstance(treatment.getPrescription());
@@ -49,8 +48,8 @@ public class TreatmentActivity extends AppCompatActivity {
             prescriptionButton.setVisibility(View.GONE);
             findViewById(R.id.treatment_qrlayout).setVisibility(View.VISIBLE);
             ImageView qrImage = findViewById(R.id.treatment_qrcode);
-            String appointmentId = treatment.getAppointment().getId();
-            String doctorId = treatment.getAppointment().getDoctor().getId();
+            String appointmentId = Store.get_instance().getCurrentAppointmentId();
+            String doctorId = treatment.getDoctorId();
             String patientId = Store.get_instance().getPatientId();
             findViewById(R.id.treatment_qr_loading).setVisibility(View.VISIBLE);
             if (appointmentId != null){

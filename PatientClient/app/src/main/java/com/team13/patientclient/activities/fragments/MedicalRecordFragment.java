@@ -75,7 +75,7 @@ public class MedicalRecordFragment extends Fragment {
                     public void onSuccess(Void response) {
                         Toast.makeText(getContext(), "Appointment Canceled! #" + position, Toast.LENGTH_SHORT).show();
                         adapter.removeElement(position);
-                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointment(null);
+                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
                     }
                 }); 
             }
@@ -96,7 +96,7 @@ public class MedicalRecordFragment extends Fragment {
         PatientService service = new PatientService();
         AppointmentService appointmentService = new AppointmentService();
 
-        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointment(), new OnSuccessResponse<Appointment>() {
+        if (Store.get_instance().isHavingAnAppointment()) appointmentService.getAppointmentById(Store.get_instance().getCurrentAppointmentId(), new OnSuccessResponse<Appointment>() {
             @Override
             public void onSuccess(Appointment currentAppointment) {
                 adapter.insertCurrentAppointment(new Treatment(currentAppointment, null));

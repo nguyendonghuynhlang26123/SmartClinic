@@ -1,15 +1,7 @@
 package com.team13.patientclient;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.team13.patientclient.models.AccountModel;
-import com.team13.patientclient.models.Appointment;
 import com.team13.patientclient.models.HospitalModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Store {
     //Singleton
@@ -53,16 +45,16 @@ public class Store {
         this.hospital = hospital;
     }
 
-    public String getCurrentAppointment(){
-        return this.userAccount.getUserInfor().getCurrentAppointment();
+    public String getCurrentAppointmentId(){
+        return this.userAccount.getUserInfor().getCurrentAppointmentId();
     }
 
     public boolean isHavingAnAppointment(){
         //return false;
-        return this.getCurrentAppointment() != null;
+        return this.getCurrentAppointmentId() != null;
     }
 
     public void bookingAnAppointment(String appointmentId){
-        this.userAccount.getUserInfor().setCurrentAppointment(appointmentId);
+        this.userAccount.getUserInfor().setCurrentAppointmentId(appointmentId);
     }
 }
