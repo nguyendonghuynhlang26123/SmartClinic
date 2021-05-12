@@ -30,7 +30,7 @@ export class AppointmentService {
     if (query?.date) filter = { ...filter, date: query.date };
     if (query?.service_id) filter = { ...filter, service: query.service_id };
     if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
-    if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
+    if (query?.doctor_id) filter = { ...filter, doctor: query.doctor_id };
     if (query?.status)
       filter = { ...filter, status: { $in: [...query.status] } };
     if (query?.select) {
@@ -41,6 +41,10 @@ export class AppointmentService {
       } else selection = { [query.select]: 1 };
     }
 
+    console.log(
+      'log ~ file: appointment.service.ts ~ line 46 ~ AppointmentService ~ getAllAppointment ~ filter',
+      filter
+    );
     const appointments = await appointmentModel.find({ ...filter }, selection, {
       limit: Number(query?.limit),
       populate: query.populate ?? '',
