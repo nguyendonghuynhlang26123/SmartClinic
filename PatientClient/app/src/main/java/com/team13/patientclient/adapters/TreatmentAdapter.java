@@ -44,7 +44,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         Treatment treatment = treatments.get(position);
         ImageButton stateIcon = view.findViewById(R.id.timeline_marker);
         switch (treatment.getStatus()){
-            case "PROCESSING":
+            case "COMPLETE":
                 stateIcon.setImageResource(R.drawable.ic_check);
                 break;
             case "CANCEL":
@@ -83,9 +83,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
                 time.setTextColor(view.getResources().getColor(R.color.red));
                 listener.onHasAppointment();
                 removeButton.setVisibility(View.VISIBLE);
-                removeButton.setOnClickListener(v->{
-                    listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId());
-                });
+                removeButton.setOnClickListener(v-> listener.onAppointmentRemove(position, treatments.get(position).getAppointment().getId()));
             } else time.setTextColor(view.getResources().getColor(R.color.black));
         } else if (position == treatments.size() - 1){
             view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);

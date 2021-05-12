@@ -14,7 +14,7 @@ import android.os.Bundle;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.patientclient.R;
-import com.team13.patientclient.activities.fragments.AppointmentFragment;
+import com.team13.patientclient.activities.fragments.MedicalRecordFragment;
 import com.team13.patientclient.activities.fragments.ForumFragment;
 import com.team13.patientclient.activities.fragments.HomeFragment;
 import com.team13.patientclient.activities.fragments.ProfileEditFragment;
@@ -30,18 +30,19 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
         setContentView(R.layout.activity_main);
 
         currentId = -1;
-        handleInitialNavigation();
+
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+//        bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> navigationHandle(item.getItemId()));
-
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
-        badge.setVisible(true);
-        badge.setNumber(99);
+        handleInitialNavigation();
+//        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
+//        badge.setVisible(true);
+//        badge.setNumber(99);
     }
 
     private boolean navigationHandle(int itemId) {
+
         switch (itemId){
             case R.id.home:
                 if (currentId == R.id.home) return false;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
                 return true;
             case R.id.appointment:
                 if (currentId == R.id.appointment) return false;
-                loadFragment(new AppointmentFragment());
+                loadFragment(new MedicalRecordFragment());
                 currentId = R.id.appointment;
                 return true;
             case R.id.profile:
@@ -71,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
     private void handleInitialNavigation() {
         Intent intent = getIntent();
         int navId = intent.getIntExtra("navigation", R.id.home);
+        bottomNavigationView.setSelectedItemId(navId);
         navigationHandle(navId);
+
     }
 
     private void loadFragment(Fragment fragment) {

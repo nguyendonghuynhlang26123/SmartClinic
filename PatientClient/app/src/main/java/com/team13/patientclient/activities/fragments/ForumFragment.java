@@ -60,9 +60,9 @@ public class ForumFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_blog, container, false);
         forumItemAdapter = new ForumItemAdapter(view.getContext());
         forumItemAdapter.setListener(topic -> {
-//            AnswerDetailFragment fragment = AnswerDetailFragment.newInstance(question);
-//            assert getFragmentManager() != null;
-//            fragment.show(getFragmentManager(),fragment.getTag());
+            AnswerDetailFragment fragment = AnswerDetailFragment.newInstance(topic);
+            assert getFragmentManager() != null;
+            fragment.show(getFragmentManager(),fragment.getTag());
         });
         RecyclerView recyclerView = view.findViewById(R.id.blog_list);
         recyclerView.setAdapter(forumItemAdapter);
@@ -76,7 +76,7 @@ public class ForumFragment extends Fragment {
 
         view.findViewById(R.id.more_btn).setOnClickListener(this::handleMoreBtnPressed);
 
-        SearchView searchView = ((SearchView) view.findViewById(R.id.forum_search));
+        SearchView searchView = view.findViewById(R.id.forum_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
