@@ -30,14 +30,37 @@ export class PatientService {
     return patient;
   }
 
-  async getAllPatient() {
-    try {
-      const patients = await patientModel.find().populate('appointment_list');
-      return patients;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Get All Patient Error.');
+  async getAllPatient(query?) {
+    const perPage = query.per_page ?? 5;
+    const page = query.page ?? 1;
+    let queryFind = {};
+    let selection = {};
+    if (query.search)
+      queryFind = { patient_name: new RegExp(query.search, 'i') };
+    if (query?.select) {
+      if (query.select instanceof Array) {
+        for (const s of query.select) {
+          selection[s] = 1;
+        }
+      } else selection = { [query.select]: 1 };
     }
+
+    const data = await Promise.all([
+      patientModel
+        .find(queryFind, null, {
+          limit: Number(perPage),
+          skip: Number((page - 1) * perPage),
+        })
+        .sort({ patient_name: 1 }),
+      await patientModel.countDocuments(queryFind),
+    ]);
+
+    return {
+      data: data[0],
+      results: data[1],
+      page: page,
+      totalPage: Math.ceil(data[1] / perPage),
+    };
   }
 
   async createPatient({ patient_name, token }) {
@@ -46,7 +69,6 @@ export class PatientService {
       patient_avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
         patient_name
       )}&rounded=true&background=random`,
-      medical_history: [],
       token: token,
     };
     return await patientModel.create(patientData);

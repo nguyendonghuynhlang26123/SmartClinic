@@ -8,13 +8,6 @@ const PatientSchema = new Schema(
     patient_gender: { type: String, default: '' },
     patient_dob: { type: Number, default: 0 },
     patient_weight: { type: Number, default: 0 },
-    medical_history: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'treatments',
-        default: [],
-      },
-    ],
     current_appointment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'appointments',
