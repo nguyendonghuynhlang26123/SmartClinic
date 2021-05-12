@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
@@ -22,6 +22,10 @@ public class Utils {
 
     //INTENT
     public static final int QRSCAN_RESULT_INTENT = 136;
+
+    //MODE
+    public static final int EDIT_MODE = 7003;
+    public static final int VIEW_MODE = 7016;
 
     //STATUS
     public static final String STATUS_PENDING = "PENDING";

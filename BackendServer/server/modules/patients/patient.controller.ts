@@ -6,7 +6,7 @@ const patientService: PatientService = new PatientService();
 
 router.get('/', async (req, res) => {
   try {
-    const patients = await patientService.getAllPatient();
+    const patients = await patientService.getAllPatient(req.query);
     res.json(patients);
   } catch (err) {
     console.log(err);

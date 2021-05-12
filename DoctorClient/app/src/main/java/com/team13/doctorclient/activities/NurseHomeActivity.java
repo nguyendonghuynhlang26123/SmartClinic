@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.team13.doctorclient.Store;
-import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
 
@@ -25,16 +23,7 @@ import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
 import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
 import com.team13.doctorclient.activities.fragments.NurseScheduleFragment;
 import com.team13.doctorclient.activities.fragments.QRFragment;
-import com.team13.doctorclient.activities.fragments.ScheduleFragment;
-import com.team13.doctorclient.adapters.PendingAppointmentAdapter;
 import com.team13.doctorclient.models.Appointment;
-import com.team13.doctorclient.models.HospitalModel;
-import com.team13.doctorclient.models.ScheduleItem;
-import com.team13.doctorclient.repositories.OnSuccessResponse;
-import com.team13.doctorclient.repositories.services.AppointmentService;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NurseHomeActivity extends AppCompatActivity  implements QRFragment.Listener{
     BottomNavigationView bottomNavigationView;

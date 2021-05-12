@@ -78,29 +78,15 @@ public class DoctorForumFragment extends Fragment {
             ForumService service = new ForumService();
             if (nextPage == 1) forumTopicAdapter.reset();
             progressBar.setVisibility(View.VISIBLE);
-            if (!searchKey.isEmpty()){ // Is searching
-                service.search(nextPage, searchKey, new OnSuccessResponse<ForumModel>() {
-                    @Override
-                    public void onSuccess(ForumModel model) {
-                        forumTopicAdapter.appendData(new ArrayList<>(Arrays.asList(model.getTopics())));
-                        page = nextPage;
-                        totalPage = model.getTotalPage();
-                        results = model.getNumOfTopics();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            }
-            else{
-                service.get(nextPage, new OnSuccessResponse<ForumModel>() {
-                    @Override
-                    public void onSuccess(ForumModel models) {
-                        forumTopicAdapter.appendData(new ArrayList<>(Arrays.asList(models.getTopics())));
-                        page = nextPage;
-                        totalPage = models.getTotalPage();
-                        results = models.getNumOfTopics();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            }
+            service.get(nextPage, new OnSuccessResponse<ForumModel>() {
+                @Override
+                public void onSuccess(ForumModel models) {
+                    forumTopicAdapter.appendData(new ArrayList<>(Arrays.asList(models.getTopics())));
+                    page = nextPage;
+                    totalPage = models.getTotalPage();
+                    results = models.getNumOfTopics();
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
         }
     }

@@ -22,11 +22,12 @@ export class ForumService {
     let queryFind = {};
     if (query.search) queryFind = { topic: new RegExp(query.search, 'i') };
     const forums = await Promise.all([
-      forumModel.find(queryFind, null, {
-        limit: Number(perPage),
-        skip: Number((page - 1) * perPage),
-        sort: { created_at: 'asc' },
-      }),
+      forumModel
+        .find(queryFind, null, {
+          limit: Number(perPage),
+          skip: Number((page - 1) * perPage),
+        })
+        .sort({ updated_at: -1 }),
       await forumModel.countDocuments(queryFind),
     ]);
 
@@ -56,6 +57,10 @@ export class ForumService {
   }
 
   async addChatToForum(forumId: string, chatMessage: AnswerInterface) {
+    console.log(
+      'log ~ file: forum.service.ts ~ line 60 ~ ForumService ~ addChatToForum ~ chatMessage',
+      chatMessage
+    );
     const forum = await forumModel.findOne({
       _id: forumId,
     });

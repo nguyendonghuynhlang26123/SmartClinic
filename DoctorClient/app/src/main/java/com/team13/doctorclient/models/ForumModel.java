@@ -43,6 +43,9 @@ public class ForumModel {
     }
 
     public static class Topic implements Serializable {
+        @SerializedName("_id")
+        String id;
+
         @SerializedName("topic")
         String topicString;
 
@@ -51,6 +54,10 @@ public class ForumModel {
 
         @SerializedName("created_at")
         long time;
+
+        public String getId() {
+            return id;
+        }
 
         public String getTime () {
             return Utils.dateNumberToString(time);
@@ -112,4 +119,6 @@ public class ForumModel {
     public void setNumOfTopics(int numOfTopics) {
         this.numOfTopics = numOfTopics;
     }
+
+
 }

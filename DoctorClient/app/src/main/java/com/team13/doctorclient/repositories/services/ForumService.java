@@ -15,5 +15,5 @@ public class ForumService {
 
     public void createTopic(ForumModel.Topic topic, Callback<ForumModel.Topic> cb) { api.create(topic).enqueue(cb);}
 
-    public void publishAnswer(ForumModel.Answer answer , Callback<ForumModel.Answer> cb) { api.publishAnswer(answer).enqueue(cb);}
+    public void publishAnswer(String id,ForumModel.Answer answer , Callback<ForumModel.Answer> cb) { api.publishAnswer(id, answer).enqueue(cb);}
 }

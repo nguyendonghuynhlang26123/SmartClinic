@@ -104,17 +104,16 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
 
         view.findViewById(R.id.profile_edit_save_button).setOnClickListener(v ->{
             String name  = Objects.requireNonNull(nameInput.getText()).toString();
-            String avatarURI = avatarURL == null ? userProfile.getAvatarUrl() : avatarURL.toString();
             String gender = genderRadioGroup.getCheckedRadioButtonId() == -1 ? "" : (genderRadioGroup.getCheckedRadioButtonId() == R.id.profile_edit_gender_male) ? "Male" : "Female";
             long dob = Utils.dateStringToNumber(Objects.requireNonNull(editTextDate.getText()).toString());
             double weight = Double.parseDouble(Objects.requireNonNull(weightInput.getText()).toString());
 
-            saveHandle(userProfile, name, avatarURI, gender, dob, weight);
+            saveHandle(userProfile, name, gender, dob, weight);
         });
         return view;
     }
 
-    private void saveHandle(PatientModel userProfile, String name, String avatarURI, String gender, long dob, double weight) {
+    private void saveHandle(PatientModel userProfile, String name, String gender, long dob, double weight) {
         if (name.isEmpty()){
             Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
             return;
@@ -123,25 +122,30 @@ public class ProfileEditFragment extends BottomSheetDialogFragment {
             Toast.makeText(getContext(), "Name is too long! Name is no longer than " + Utils.NAME_LENGTH_LIMIT + " characters!", Toast.LENGTH_SHORT).show();
         }
         view.findViewById(R.id.profile_edit_save_button).setEnabled(false);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
-        ImageService is = new ImageService();
 
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setProgress(0);
-        //TODO: UPLOAD IMAGE TO FIREBASE then call api!
-        StorageTask task = is.uploadFile(avatarURL, this.getActivity().getContentResolver()).addOnSuccessListener(t ->{
-            t.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri ->{
-                //UPload
-                PatientModel updatedModel = new PatientModel(name, uri.toString(), gender, dob, weight);
-                callPutApi(userProfile, updatedModel);
+        if (avatarURL != null){
+            ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+            ImageService is = new ImageService();
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setProgress(0);
+            //TODO: UPLOAD IMAGE TO FIREBASE then call api!
+            StorageTask task = is.uploadFile(avatarURL, this.getActivity().getContentResolver()).addOnSuccessListener(t ->{
+                t.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri ->{
+                    //UPload
+                    PatientModel updatedModel = new PatientModel(name, uri.toString(), gender, dob, weight);
+                    callPutApi(userProfile, updatedModel);
+                });
+            }).addOnProgressListener(t->{
+                double progress = (100.0 * t.getBytesTransferred() / t.getTotalByteCount());
+                progressBar.setProgress((int) progress);
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(), "Upload Image Failed! The process is canceled", Toast.LENGTH_LONG ).show();
+                dismiss();
             });
-        }).addOnProgressListener(t->{
-            double progress = (100.0 * t.getBytesTransferred() / t.getTotalByteCount());
-            progressBar.setProgress((int) progress);
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "Upload Image Failed! The process is canceled", Toast.LENGTH_LONG ).show();
-            dismiss();
-        });
+        } else {
+            PatientModel updatedModel = new PatientModel(name, userProfile.getAvatarUrl(), gender, dob, weight);
+            callPutApi(userProfile, updatedModel);
+        }
 
     }
 

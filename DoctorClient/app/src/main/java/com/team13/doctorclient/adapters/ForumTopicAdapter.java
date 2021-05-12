@@ -31,7 +31,7 @@ public class ForumTopicAdapter extends RecyclerView.Adapter<ForumTopicAdapter.Vi
     }
 
     public ForumTopicAdapter(Context context) {
-        this.topics = new ArrayList<>(5);
+        this.topics = new ArrayList<>(10);
         this.context=context;
     }
 

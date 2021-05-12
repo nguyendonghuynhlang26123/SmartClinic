@@ -10,30 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.models.HospitalModel;
 import com.team13.doctorclient.models.ScheduleItem;
 import com.team13.doctorclient.models.ServicePack;
+import com.team13.doctorclient.repositories.OnResponse;
 import com.team13.doctorclient.repositories.services.AppointmentService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScheduleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ScheduleFragment extends Fragment {
-
     private HorizontalCalendar horizontalCalendar;
     Calendar selectedDay;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -83,15 +81,18 @@ public class ScheduleFragment extends Fragment {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 date.add(Calendar.DATE,1);
-                renderData(date);
+                //renderData(date);
             }
 
         });
 
+        String dateString = format.format(true_day.getTime());
         HospitalModel hospitalModel = Store.get_instance().getHospital();
         times = Utils.generateTimes(hospitalModel.getOpenTime(), hospitalModel.getCloseTime(), 30);
-        times = Utils.getAvailableTime(times);
-        renderData(true_day);
+        //times = Utils.getAvailableTime(times);
+
+        //renderData(dateString, Utils.EDIT_MODE);
+        renderData("12/05/2021", Utils.EDIT_MODE);
         return view;
     }
 
@@ -107,17 +108,6 @@ public class ScheduleFragment extends Fragment {
         }
     }
 
-    void getAppointmentByDay(Calendar date){
-        ServicePack servicePack = new ServicePack("Beauty Care","Face surgery",500000,"1");
-        appointments.add(new Appointment("MN",servicePack,"cough",format.format(date.getTime()),"7:30","CANCEL"));
-        appointments.add(new Appointment("MN",servicePack,"fever",format.format(date.getTime()),"9:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"headache",format.format(date.getTime()),"10:30","CANCEL"));
-        appointments.add(new Appointment("MN",servicePack,"cough",format.format(date.getTime()),"13:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"fever",format.format(date.getTime()),"16:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"headache",format.format(date.getTime()),"18:30","PROCESSING"));
-        appointments.add(new Appointment("MN",servicePack,"",format.format(date.getTime()),"20:30","PENDING"));
-
-    }
 
     ArrayList<ScheduleItem> getScheduleTimeline(){
         ArrayList<ScheduleItem> scheduleTimeline = new ArrayList<ScheduleItem>(20);
@@ -131,15 +121,36 @@ public class ScheduleFragment extends Fragment {
         }
         return scheduleTimeline;
     }
-    void renderData(Calendar date){
+
+    void renderData(String date, int mode){
         initTimeLine();
         loadFragment(R.id.timeline_display_container, new ProgressFragment());
-        getAppointmentByDay(date);
+
+        String[] queryStatus = new String[1];
+        if (mode == Utils.EDIT_MODE) queryStatus[0] = (Utils.STATUS_PROCESSING);
+        else queryStatus[0] = (Utils.STATUS_PENDING);
+
         AppointmentService service = new AppointmentService();
-        populateTimeline();
-        data = getScheduleTimeline();
-        ScheduleTimelineFragment fragment = ScheduleTimelineFragment.newInstance(data);
-        loadFragment(R.id.timeline_display_container, fragment);
+        service.getAppointmentByDate(date,Store.get_instance().getId(),queryStatus, new OnResponse<Appointment[]>() {
+            @Override
+            public void onRequestSuccess(Appointment[] response) {
+                appointments = new ArrayList<>(Arrays.asList(response));
+                populateTimeline();
+                data = getScheduleTimeline();
+                ScheduleTimelineFragment fragment = ScheduleTimelineFragment.newInstance(data);
+                loadFragment(R.id.timeline_display_container, fragment);
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                Snackbar snackbar = Snackbar
+                        .make(getView(), "Cannot access to Server! Please try again.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Try again", view -> renderData(date, mode));
+                snackbar.show();
+            }
+        });
+
+
     }
     private void loadFragment(int id, Fragment fragment) {
         // load fragment

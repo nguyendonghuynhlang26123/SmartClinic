@@ -20,6 +20,9 @@ public interface AppointmentApi {
     @GET("/appointments?populate=patient+service+doctor&status[0]=PENDING&status[1]=PROCESSING")
     Call<Appointment[]> getByDate(@Query("date") String date);
 
+    @GET("/appointments?populate=patient+service+doctor")
+    Call<Appointment[]> getByDate(@Query("date") String date, @Query("doctor_id") String doctorId, @Query("status") String[] statuses);
+
     @POST("/appointments")
     @FormUrlEncoded
     Call<Map<String, String>> post(@FieldMap Map<String, String> params);

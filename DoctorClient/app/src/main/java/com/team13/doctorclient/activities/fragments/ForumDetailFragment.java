@@ -1,5 +1,6 @@
 package com.team13.doctorclient.activities.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -12,12 +13,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Store;
+import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.models.ForumModel;
 import com.team13.doctorclient.models.Question;
+import com.team13.doctorclient.repositories.OnResponse;
+import com.team13.doctorclient.repositories.OnSuccessResponse;
+import com.team13.doctorclient.repositories.services.ForumService;
 
 import java.util.Objects;
 
@@ -90,9 +96,30 @@ public class ForumDetailFragment extends BottomSheetDialogFragment {
         layout.addView(answerView, layout.getChildCount()-1);
     }
 
-    void handleSubmit(String answer){
+    void handleSubmit(String textInput){
         InputMethodManager inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getApplicationWindowToken(),0);
-        addAnswerToLayout(Store.get_instance().getName(), answer);
+
+        ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setMessage("Publishing answer! Please wait a few moment");
+        dialog.show();
+
+        ForumService service = new ForumService();
+        ForumModel.Answer answer = new ForumModel.Answer(textInput,  Store.get_instance().getUserAccount().getUserType() + " " + Store.get_instance().getName(), Store.get_instance().getId(), Store.get_instance().getUserAccount().getUserType());
+        service.publishAnswer(topic.getId(), answer, new OnResponse<ForumModel.Answer>() {
+            @Override
+            public void onRequestSuccess(ForumModel.Answer response) {
+                addAnswerToLayout(Store.get_instance().getName(), textInput);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onRequestFailed(ErrorResponse response) {
+                Toast.makeText(getContext(),"Cannot publish your chat! Please try again later", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                dismiss();
+            }
+        });
     }
 }

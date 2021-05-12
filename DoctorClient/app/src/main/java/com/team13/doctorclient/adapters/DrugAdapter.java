@@ -54,15 +54,13 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View view= holder.itemView;
-        switch (view.getSourceLayoutResId()){
-            case R.layout.drug_prescription_item:
-                ((TextView)view.findViewById(R.id.drug_stt)).setText(String.valueOf(position+1));
-                break;
-            case R.layout.draft_prescription_item:
-                view.findViewById(R.id.drug_remove).setOnClickListener(v->{
-                    drugs.remove(position);
-                    notifyDataSetChanged();
-                });
+        if (!editable){
+            ((TextView)view.findViewById(R.id.drug_stt)).setText(String.valueOf(position+1));
+        } else {
+            view.findViewById(R.id.drug_remove).setOnClickListener(v->{
+                drugs.remove(position);
+                notifyDataSetChanged();
+            });
         }
         DrugDetail drug= drugs.get(position);
         ((TextView)view.findViewById(R.id.drug_name)).setText(drug.getName());

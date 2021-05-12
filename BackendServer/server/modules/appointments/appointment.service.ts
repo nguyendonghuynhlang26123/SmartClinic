@@ -5,7 +5,7 @@ import {
   doctorModel,
   medicalServiceModel,
 } from '../../models';
-
+let ObjectId = require('mongoose').Types.ObjectId;
 export class AppointmentService {
   async getAppointmentById(appointmentId: string) {
     try {
@@ -28,11 +28,17 @@ export class AppointmentService {
     let filter = {};
     let selection = {};
     if (query?.date) filter = { ...filter, date: query.date };
-    if (query?.service_id) filter = { ...filter, service: query.service_id };
-    if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
-    if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
-    if (query?.status)
-      filter = { ...filter, status: { $in: [...query.status] } };
+    if (query?.service_id)
+      filter = { ...filter, service: new ObjectId(query.service_id) };
+    if (query?.patient_id)
+      filter = { ...filter, patient: new ObjectId(query.patient_id) };
+    if (query?.doctor_id)
+      filter = { ...filter, doctor: new ObjectId(query.doctor_id) };
+    if (query?.status) {
+      if (query.status instanceof Array)
+        filter = { ...filter, status: { $in: [...query.status] } };
+      else filter = { ...filter, status: query.status };
+    }
     if (query?.select) {
       if (query.select instanceof Array) {
         for (const s of query.select) {
@@ -41,6 +47,10 @@ export class AppointmentService {
       } else selection = { [query.select]: 1 };
     }
 
+    console.log(
+      'log ~ file: appointment.service.ts ~ line 46 ~ AppointmentService ~ getAllAppointment ~ filter',
+      filter
+    );
     const appointments = await appointmentModel.find({ ...filter }, selection, {
       limit: Number(query?.limit),
       populate: query.populate ?? '',
