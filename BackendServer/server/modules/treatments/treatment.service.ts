@@ -3,7 +3,7 @@ import { TreatmentInterface } from '../../interfaces';
 import { treatmentModel } from '../../models';
 
 const appointmentService = new AppointmentService();
-
+let ObjectId = require('mongoose').Types.ObjectId;
 export class TreatmentService {
   async getTreatments(query?) {
     let filter = {};
@@ -14,9 +14,12 @@ export class TreatmentService {
       sortBy = { [query.sortType]: query.sortBy };
     else sortBy = { created_at: -1 };
     if (query?.date) filter = { ...filter, date: query.date };
-    if (query?.service_id) filter = { ...filter, service: query.service_id };
-    if (query?.patient_id) filter = { ...filter, patient: query.patient_id };
-    if (query?.doctor_id) filter = { ...filter, patient: query.doctor_id };
+    if (query?.service_id)
+      filter = { ...filter, service: new ObjectId(query.service_id) };
+    if (query?.patient_id)
+      filter = { ...filter, patient: new ObjectId(query.patient_id) };
+    if (query?.doctor_id)
+      filter = { ...filter, patient: new ObjectId(query.doctor_id) };
     if (query?.select) {
       if (query.select instanceof Array) {
         for (const s of query.select) {
