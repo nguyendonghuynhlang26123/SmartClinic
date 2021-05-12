@@ -14,6 +14,9 @@ public class Appointment implements Serializable {
     @SerializedName("patient")
     PatientModel patient;
 
+    @SerializedName("doctor")
+    Doctor doctor;
+
     @SerializedName("service")
     ServicePack service;
 
@@ -91,5 +94,9 @@ public class Appointment implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDoctorId(){
+        return doctor.getId();
     }
 }

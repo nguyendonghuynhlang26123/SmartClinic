@@ -5,11 +5,12 @@ import android.annotation.SuppressLint;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PatientModel {
+public class PatientModel implements Serializable {
     @SerializedName("_id")
     @Expose(serialize =  false)
     String id;

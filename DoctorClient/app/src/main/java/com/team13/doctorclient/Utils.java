@@ -1,13 +1,16 @@
 package com.team13.doctorclient;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
     //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
@@ -54,6 +57,7 @@ public class Utils {
     public static String getCurrentDateString(){
         return new SimpleDateFormat(DATE_PATTERN).format(Calendar.getInstance().getTime());
     }
+
     public static String shortenString(String string, int charLimit){
         if (string.length()<= charLimit) return string;
         return string.substring(0,charLimit)+"...";
@@ -84,5 +88,23 @@ public class Utils {
         }
     }
 
+    @SuppressLint("NewApi")
+    public static ArrayList<String> getAvailableTime(ArrayList<String> curShifts) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat(Utils.TIME_PATTERN , Locale.US);
+        String curTime = timeFormat.format(new Timestamp(System.currentTimeMillis()));
+        int curMinute = Integer.parseInt(curTime.substring(3,5));
+        int curHour = Integer.parseInt(curTime.substring(0,2));
+        LocalTime currentTime = LocalTime.of(curHour,curMinute );
 
+        for (int i = 0; i < curShifts.size(); i++) {
+            String time = curShifts.get(i);
+            int min = Integer.parseInt(time.substring(3,5));
+            int hour = Integer.parseInt(time.substring(0,2));
+
+            if (currentTime.isBefore(LocalTime.of(hour,min))) {
+                return new ArrayList<>(curShifts.subList(i, curShifts.size()));
+            }
+        }
+        return new ArrayList<>();
+    }
 }

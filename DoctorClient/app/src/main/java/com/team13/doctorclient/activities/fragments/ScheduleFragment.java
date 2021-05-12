@@ -11,9 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team13.doctorclient.R;
+import com.team13.doctorclient.Store;
+import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.HospitalModel;
 import com.team13.doctorclient.models.ScheduleItem;
 import com.team13.doctorclient.models.ServicePack;
+import com.team13.doctorclient.repositories.services.AppointmentService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,11 +47,7 @@ public class ScheduleFragment extends Fragment {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     ArrayList<Appointment> appointments = new ArrayList<>();
     ArrayList<ScheduleItem> data;
-    String[] times = {
-            "7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30", "12:00",
-            "12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30",
-            "18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"
-    };
+    ArrayList<String> times;
     HashMap<String, Integer> timeline = new HashMap<>(20);
     public ScheduleFragment() {
         // Required empty public constructor
@@ -100,7 +100,7 @@ public class ScheduleFragment extends Fragment {
         Calendar true_day = Calendar.getInstance();
         true_day.setTime(selectedDay.getTime());
         true_day.add(Calendar.DATE,1);
-        renderData(true_day);
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
@@ -110,6 +110,10 @@ public class ScheduleFragment extends Fragment {
 
         });
 
+        HospitalModel hospitalModel = Store.get_instance().getHospital();
+        times = Utils.generateTimes(hospitalModel.getOpenTime(), hospitalModel.getCloseTime(), 30);
+        times = Utils.getAvailableTime(times);
+        renderData(true_day);
         return view;
     }
 
@@ -153,6 +157,7 @@ public class ScheduleFragment extends Fragment {
         initTimeLine();
         loadFragment(R.id.timeline_display_container, new ProgressFragment());
         getAppointmentByDay(date);
+        AppointmentService service = new AppointmentService();
         populateTimeline();
         data = getScheduleTimeline();
         ScheduleTimelineFragment fragment = ScheduleTimelineFragment.newInstance(data);
