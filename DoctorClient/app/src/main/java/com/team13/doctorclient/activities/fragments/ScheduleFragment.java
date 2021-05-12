@@ -39,11 +39,12 @@ public class ScheduleFragment extends Fragment {
     ArrayList<ScheduleItem> data;
     ArrayList<String> times;
     HashMap<String, Integer> timeline = new HashMap<>(20);
+
     public ScheduleFragment() {
         // Required empty public constructor
     }
 
-    public static ScheduleFragment newInstance(String param1, String param2) {
+    public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);

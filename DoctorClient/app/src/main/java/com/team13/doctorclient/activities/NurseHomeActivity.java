@@ -18,6 +18,9 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.activities.fragments.AppointmentDetailFragment;
+
+import com.team13.doctorclient.activities.fragments.DoctorProfileFragment;
+import com.team13.doctorclient.activities.fragments.MedicalRecordFragment;
 import com.team13.doctorclient.activities.fragments.NurseScheduleFragment;
 import com.team13.doctorclient.activities.fragments.QRFragment;
 import com.team13.doctorclient.models.Appointment;

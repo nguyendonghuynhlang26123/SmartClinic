@@ -90,9 +90,11 @@ public class QRFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_q_r, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(activity, scannerView);
-        mCodeScanner.setDecodeCallback(result -> {
-           getActivity().runOnUiThread(() ->  handleQrScanned(result.getText()));
-        });
+//        mCodeScanner.setDecodeCallback(result -> {
+//           getActivity().runOnUiThread(() ->  handleQrScanned(result.getText()));
+//            getActivity().runOnUiThread(() ->  handleQrScanned("609a448a8f1d300023a64d7c-609b6c5a0b01cd3c844a6ec5-605b37eaa1ad0f21a0e756f3"));
+//        });
+        handleQrScanned("609a448a8f1d300023a64d7c-609b6c5a0b01cd3c844a6ec5-605b37eaa1ad0f21a0e756f3");
         mCodeScanner.startPreview();
         return root;
 
