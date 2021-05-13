@@ -19,5 +19,8 @@
     <string name="drug_label">Drug</string>
     <string name="quality_label">Quantity</string>
     <string name="note_label">Note</string>
+    <string name="schedule">Schedule</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="accept">Accept</string>
 
 </resources>

@@ -2,10 +2,15 @@ package com.team13.doctorclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.Doctor;
 import com.team13.doctorclient.models.PatientModel;
 import com.team13.doctorclient.models.ScheduleItem;
 
@@ -54,6 +60,7 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             treatment.setText(appointment.getService().getName());
             TextView status=view.findViewById(R.id.status);
             status.setText(appointment.getStatus());
+//            TextView chosenDoctor = view.findViewById(R.id.chosen_doctor);
             Button accept= view.findViewById(R.id.accept_patient);
             if(!appointment.getStatus().equals("CHECKED_IN")){
                 accept.setVisibility(View.VISIBLE);
@@ -64,23 +71,26 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
                 if (listener != null) listener.onAccept(appointment.getId(), appointment.getPatientId());
                 notifyItemChanged(position);
             });
-//            Button update= view.findViewById(R.id.update_status);
-//            update.setOnClickListener(v -> {
-//                setStatus("Update");//?????
-//                appointment.setStatus("Update");
-//
-//            });
-//            appointmentCard.setOnClickListener(v -> {
-//                Intent i= new Intent(context, PatientDetailActivity.class);
-//                i.putExtra("appointment", appointment);
-//                context.startActivity(i);
-//            });
+            Spinner doctorChooser = view.findViewById(R.id.doctor_chooser);
+            DoctorChooserAdapter adapter1 = new DoctorChooserAdapter(context);
+            doctorChooser.setAdapter(adapter1);
+            prepareDoctorList(adapter1);
         }
         if (position==0){
             view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
         } else if(position == timeline.size()-1){
             view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void prepareDoctorList(DoctorChooserAdapter adapter){
+        ArrayList<Doctor> doctors = new ArrayList<>(5);
+        for(int i=0;i<5;++i){
+            doctors.add(new Doctor("11","doctor"+i));
+        }
+//        chosenDoctor.setText(doctors.get(0).getDoctorName());
+        adapter.setData(doctors);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

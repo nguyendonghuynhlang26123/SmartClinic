@@ -25,7 +25,8 @@ import com.team13.doctorclient.activities.fragments.NurseScheduleFragment;
 import com.team13.doctorclient.activities.fragments.QRFragment;
 import com.team13.doctorclient.models.Appointment;
 
-public class NurseHomeActivity extends AppCompatActivity  implements QRFragment.Listener{
+public class NurseHomeActivity extends AppCompatActivity  implements QRFragment.Listener,
+        NurseScheduleFragment.NurseScheduleListener {
     BottomNavigationView bottomNavigationView;
     int currentId;
 
@@ -75,5 +76,10 @@ public class NurseHomeActivity extends AppCompatActivity  implements QRFragment.
     public void onVerifySucceed(Appointment appointment) {
         Fragment fragment = AppointmentDetailFragment.newInstance(appointment);
         loadFragment(fragment);
+    }
+
+    @Override
+    public void onLogout() {
+        finish();
     }
 }
