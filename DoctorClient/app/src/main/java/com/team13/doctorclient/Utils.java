@@ -26,6 +26,9 @@ public class Utils {
     //MODE
     public static final int EDIT_MODE = 7003;
     public static final int VIEW_MODE = 7016;
+    public static final String PATIENTDETAIL_VIEW_MODE = "VIEW";
+    public static final String PATIENTDETAIL_CREATE_MODE = "CREATE";
+    public static final String PATIENTDETAIL_CHECKIN_MODE = "CHECKIN";
 
     //STATUS
     public static final String STATUS_PENDING = "PENDING";

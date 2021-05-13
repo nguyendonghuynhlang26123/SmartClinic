@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
+import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.PatientDetailActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.PatientModel;
@@ -50,7 +51,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         MaterialCardView patientCard= view.findViewById(R.id.medical_record);
         patientCard.setOnClickListener(v -> {
             Intent i= new Intent(context, PatientDetailActivity.class);
-            i.putExtra("status","REVIEW");
+            i.putExtra("mode", Utils.PATIENTDETAIL_VIEW_MODE);
             i.putExtra("patient", patient);
             context.startActivity(i);
         });

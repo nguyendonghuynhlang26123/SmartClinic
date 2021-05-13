@@ -136,6 +136,7 @@ public class RescheduleFragment extends DialogFragment {
             ServicePack servicePack = new ServicePack("Beauty Care", "no", 500000,"1");
             Appointment appointment = new Appointment("MN",servicePack,"reschedule",date,time,"PENDING");
             listener.setReschedule(appointment);
+            dismiss();
         });
         return view;
     }

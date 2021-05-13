@@ -20,10 +20,6 @@ public class DrugDetail implements Serializable {
         this.note = note;
     }
 
-    //for test
-    public DrugDetail(){
-
-    }
 
     public DrugModel getDrugModel() {
         return drugModel;

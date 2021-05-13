@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.PatientDetailActivity;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.models.Appointment;
@@ -57,7 +58,7 @@ public class ScheduleTimelineAdapter extends RecyclerView.Adapter<ScheduleTimeli
             view.findViewById(R.id.appointment_card).setOnClickListener(v->{
                 Intent i= new Intent(context, PatientDetailActivity.class);
                 i.putExtra("appointment", appointment);
-                i.putExtra("status","START");
+                i.putExtra("mode", Utils.PATIENTDETAIL_CREATE_MODE);
                 context.startActivity(i);
             });
 

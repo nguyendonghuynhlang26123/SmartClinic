@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.DrugDetail;
 
 import java.util.ArrayList;

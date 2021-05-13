@@ -9,6 +9,9 @@ public class DrugModel implements Serializable {
     @SerializedName("medicine_name")
     String name;
 
+    @SerializedName("thumbnail")
+    String thumbnail;
+
     @SerializedName("price")
     long price;
 
@@ -44,5 +47,13 @@ public class DrugModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

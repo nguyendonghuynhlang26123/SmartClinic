@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.DrugAdapter;
-import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.PatientModel;
 import com.team13.doctorclient.models.Prescription;
 
@@ -25,7 +24,7 @@ public class PrescriptionViewActivity extends AppCompatActivity {
     Prescription prescription;
     String idPrescription;
     PatientModel patient;
-    ArrayList<Drug> drugs= new ArrayList<Drug>(10);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

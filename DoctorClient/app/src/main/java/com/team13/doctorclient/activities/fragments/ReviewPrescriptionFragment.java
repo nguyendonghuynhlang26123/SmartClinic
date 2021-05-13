@@ -19,50 +19,27 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.DrugAdapter;
-import com.team13.doctorclient.models.Drug;
 import com.team13.doctorclient.models.DrugDetail;
 import com.team13.doctorclient.models.Prescription;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ReviewPrescriptionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     ReviewDrugListener listener;
     RecyclerView drugList;
     DrugAdapter drugAdapter;
     Prescription prescription;
     MaterialToolbar topAppBar;
     TextView name,symptom,diagnostic,dateStart,dateEnd;
+
     public ReviewPrescriptionFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
 
-     * @return A new instance of fragment ReviewPrescriptionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ReviewPrescriptionFragment newInstance() {
         ReviewPrescriptionFragment fragment = new ReviewPrescriptionFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,10 +47,6 @@ public class ReviewPrescriptionFragment extends BottomSheetDialogFragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         getPrescription();
     }
 
