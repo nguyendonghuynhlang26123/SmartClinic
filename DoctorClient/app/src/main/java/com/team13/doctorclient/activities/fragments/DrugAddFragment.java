@@ -29,6 +29,11 @@ import com.team13.doctorclient.R;
 import com.team13.doctorclient.adapters.MedicineSuggestAdapter;
 import com.team13.doctorclient.models.DrugDetail;
 import com.team13.doctorclient.models.DrugModel;
+import com.team13.doctorclient.repositories.OnSuccessResponse;
+import com.team13.doctorclient.repositories.services.DrugService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,11 +47,14 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
     EditText note;
     Button discard,save;
     AddDrugListener listener;
-    MedicineSuggestAdapter adapter;
 
     final int MESSAGE_AUTOCOMPLETE_TRIGGERED = 136;
+    private static final long AUTO_COMPLETE_DELAY = 200;
+
     DrugModel selectedDrug;
     Handler handler;
+    DrugService service;
+    MedicineSuggestAdapter adapter;
 
     public DrugAddFragment() {
         // Required empty public constructor
@@ -62,6 +70,7 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        service = new DrugService();
     }
 
     @Override
@@ -106,7 +115,8 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                handler.removeMessages(MESSAGE_AUTOCOMPLETE_TRIGGERED);
+                handler.sendEmptyMessageDelayed(MESSAGE_AUTOCOMPLETE_TRIGGERED,AUTO_COMPLETE_DELAY);
             }
 
             @Override
@@ -115,23 +125,25 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
             }
         });
 
-        handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                if (msg.what == MESSAGE_AUTOCOMPLETE_TRIGGERED) {
-                    if (!TextUtils.isEmpty(autoCompleteTextView.getText())) {
-                        makeApiCall(autoCompleteTextView.getText().toString());
-                    }
+        handler = new Handler(msg -> {
+            if (msg.what == MESSAGE_AUTOCOMPLETE_TRIGGERED) {
+                if (!TextUtils.isEmpty(autoCompleteTextView.getText())) {
+                    makeApiCall(autoCompleteTextView.getText().toString());
                 }
-                return false;
             }
-
+            return false;
         });
         return view;
     }
 
 
     private void makeApiCall(String string) {
+        service.searchDrug(string, 5, new OnSuccessResponse<DrugModel[]>() {
+            @Override
+            public void onSuccess(DrugModel[] response) {
+                adapter.setData(new ArrayList<>(Arrays.asList(response)));
+            }
+        });
     }
 
     public int getTotalQuality(String[] qualities){

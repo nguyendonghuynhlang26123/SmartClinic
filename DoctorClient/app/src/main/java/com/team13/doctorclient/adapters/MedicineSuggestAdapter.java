@@ -30,6 +30,7 @@ public class MedicineSuggestAdapter extends ArrayAdapter<DrugModel> {
     public void setData(ArrayList<DrugModel> list) {
         mlistData.clear();
         mlistData.addAll(list);
+        notifyDataSetChanged();
     }
     @Override
     public int getCount() {
@@ -44,14 +45,13 @@ public class MedicineSuggestAdapter extends ArrayAdapter<DrugModel> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView != null){
+        if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_list_item, parent, false);
         }
 
         DrugModel drug = mlistData.get(position);
 
         ((TextView) convertView.findViewById(R.id.medicine_name)).setText(drug.getName());
-        ((TextView) convertView.findViewById(R.id.medicine_type)).setText( "" + drug.getPrice());
         if (!drug.getThumbnail().isEmpty())
             Picasso.get().load(drug.getThumbnail()).into((ImageView) convertView.findViewById(R.id.medicine_img));
 

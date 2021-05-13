@@ -1,5 +1,7 @@
 package com.team13.doctorclient.models;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +25,12 @@ public class DrugModel implements Serializable {
         this.name = name;
         this.price = price;
         this.id = id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getName() {
