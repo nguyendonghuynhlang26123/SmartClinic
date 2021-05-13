@@ -1,9 +1,11 @@
 package com.team13.doctorclient.activities.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +35,7 @@ import java.util.Arrays;
 public class NurseScheduleFragment extends Fragment {
     View view;
     PendingAppointmentAdapter adapter;
+    NurseScheduleListener listener;
 
     public NurseScheduleFragment() {
         // Required empty public constructor
@@ -75,7 +78,9 @@ public class NurseScheduleFragment extends Fragment {
 
         //renderData(Utils.getCurrentDateString());
         renderData("12/05/2021");
-
+        view.findViewById(R.id.logout_button).setOnClickListener(v->{
+            listener.onLogout();
+        });
         return view;
     }
 
@@ -118,6 +123,27 @@ public class NurseScheduleFragment extends Fragment {
                 adapter.updateStatus(appointmentId, Utils.STATUS_PROCESSING);
             }
         }
+    }
+
+    public interface NurseScheduleListener{
+        void onLogout();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof NurseScheduleListener) {
+            listener= (NurseScheduleListener) context;
+        }
+        else {
+//            throw new RuntimeException(context.toString());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener= null;
     }
 
 }

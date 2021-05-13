@@ -2,18 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/qrscan"
-        android:icon="@drawable/ic_qrcode"
-        android:title="Scan QR"
-        android:contentDescription="ScanQR"
-        app:showAsAction="always"
-        />
-
-    <item
         android:id="@+id/schedule"
         android:icon="@drawable/ic_schedule"
-        android:title="Schedule"
-        android:contentDescription="Schedule"
+        android:title="@string/schedule"
+        android:contentDescription="@string/schedule"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/qrscan"
+        android:icon="@drawable/ic_qrcode"
+        android:title="@string/scan_qr"
+        android:contentDescription="ScanQR"
         app:showAsAction="always"
         />
 </menu>
