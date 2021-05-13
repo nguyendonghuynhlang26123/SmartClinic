@@ -99,6 +99,7 @@ public class PatientDetailActivity extends AppCompatActivity {
         startBtn.setOnClickListener(v -> {
             Intent intent= new Intent(this, NewPrescriptionActivity.class);
             intent.putExtra("appointment", appointment);
+            intent.putExtra("treatments", treatmentTimelineAdapter.getTreatments());
             this.startActivity(intent);
         });
 
@@ -133,9 +134,7 @@ public class PatientDetailActivity extends AppCompatActivity {
 
             //Call APis
             AppointmentService service = new AppointmentService();
-            HashMap<String, String > params = new HashMap<>();
-            params.put("status", Utils.STATUS_PROCESSING);
-            service.updateAnAppointment(appointment.getId(), params, new OnResponse<Void>() {
+            service.updateAnAppointment(appointment.getId(), Utils.STATUS_PROCESSING, new OnResponse<Void>() {
                 @Override
                 public void onRequestSuccess(Void response) {
                     alertDialog.setMessage("Check-in succeeded!");

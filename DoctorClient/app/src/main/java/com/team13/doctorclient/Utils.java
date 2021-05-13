@@ -34,6 +34,7 @@ public class Utils {
     public static final String STATUS_PENDING = "PENDING";
     public static final String STATUS_PROCESSING = "PROCESSING";
     public static final String STATUS_CANCELED = "CANCELED";
+    public static final String STATUS_COMPLETED = "COMPLETED";
 
     //AUTHORIZATION
     public static final String USER_TYPE_DOCTOR = "DOCTOR";

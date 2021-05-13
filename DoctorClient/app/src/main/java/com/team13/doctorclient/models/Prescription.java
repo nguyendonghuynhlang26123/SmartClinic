@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Prescription implements Serializable{
-
     @SerializedName("_id")
     String id;
 

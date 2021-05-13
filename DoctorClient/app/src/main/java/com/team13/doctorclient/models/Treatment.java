@@ -29,6 +29,15 @@ public class Treatment implements Serializable {
     @SerializedName("prescription")
     Prescription prescription;
 
+    public Treatment(Appointment appointment, Prescription prescription){
+        this.prescription = prescription;
+        note = appointment.getNote();
+        date = appointment.getDate();
+        time = appointment.getTime();
+        servicePack = appointment.getService();
+        patient = appointment.getPatient();
+        id = null;
+    }
 
     public void setPrescription(Prescription prescription) {
         this.prescription = prescription;
@@ -40,6 +49,9 @@ public class Treatment implements Serializable {
 
     public String getServicePack() {
         return servicePack.getName();
+    }
+    public String getServicePackId() {
+        return servicePack.getId();
     }
 
     public String getDate() {

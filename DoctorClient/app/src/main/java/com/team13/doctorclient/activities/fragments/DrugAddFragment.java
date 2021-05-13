@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,8 +19,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
@@ -89,17 +88,28 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         discard= view.findViewById(R.id.drug_discardBtn);
         save= view.findViewById(R.id.drug_saveBtn);
 
-        discard.setOnClickListener(v -> {
-            drugName.setText("");
-            quantityMorning.setText("");
-            quantityEvening.setText("");
-            quantityNoon.setText("");
-            note.setText("");
-        });
+        discard.setOnClickListener(v -> handleClear());
+        save.setOnClickListener( v -> handleSave());
 
+        setupAutoComplete();
+        return view;
+    }
+
+    private void setupAutoComplete() {
+        handler = new Handler(msg -> {
+            if (msg.what == MESSAGE_AUTOCOMPLETE_TRIGGERED) {
+                if (!TextUtils.isEmpty(autoCompleteTextView.getText())) {
+                    makeApiCall(autoCompleteTextView.getText().toString());
+                }
+            }
+            return false;
+        });
+        //Adapters
         adapter = new MedicineSuggestAdapter(getContext(), R.layout.medicine_list_item);
         autoCompleteTextView.setThreshold(2);
         autoCompleteTextView.setAdapter(adapter);
+
+        //Events
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,15 +135,30 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
             }
         });
 
-        handler = new Handler(msg -> {
-            if (msg.what == MESSAGE_AUTOCOMPLETE_TRIGGERED) {
-                if (!TextUtils.isEmpty(autoCompleteTextView.getText())) {
-                    makeApiCall(autoCompleteTextView.getText().toString());
-                }
-            }
-            return false;
-        });
-        return view;
+    }
+
+    private void handleSave() {
+        if (selectedDrug == null) {
+            Toast.makeText(getContext(), "Cannot leave medicine empty", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        DrugDetail drugDetail = new DrugDetail();
+        drugDetail.setDrugModel(selectedDrug);
+        drugDetail.setQuantity(getTotalQuantity());
+        drugDetail.setNote(getNote());
+
+        if (listener != null) listener.onDrugSaved(drugDetail);
+        dismiss();
+    }
+
+    private void handleClear() {
+        drugName.setText("");
+        quantityMorning.setText("");
+        quantityEvening.setText("");
+        quantityNoon.setText("");
+        note.setText("");
+        autoCompleteTextView.setText("");
     }
 
 
@@ -146,13 +171,13 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         });
     }
 
-    public int getTotalQuality(String[] qualities){
+    public int getTotalQuantity(){
+        String[] quantities = { quantityMorning.getText().toString(), quantityNoon.getText().toString(), quantityEvening.getText().toString()};
         int total=0;
-        for (String s:qualities) {
+        for (String s: quantities) {
             Log.w("quality", s);
             try {
                 total+= Integer.parseInt(s);
-                Log.w("total", String.valueOf(total));
             }
             catch (NumberFormatException e){
 
@@ -160,27 +185,14 @@ public class DrugAddFragment extends BottomSheetDialogFragment {
         }
         return total;
     }
-    public String getNote(String[] qualities){
-        String note="";
-        for (int i = 0; i <qualities.length ; i++) {
-            if(!qualities[i].equals("")){
-                switch (i){
-                    case 0:
-                        note+="Buổi sáng: "+qualities[i]+"\n";
-                        break;
-                    case 1:
-                        note+="Buổi trưa: "+qualities[i]+"\n";
-                        break;
-                    case 2:
-                        note+="Buổi tối: "+qualities[i]+"\n";
-                        break;
-                }
-            }
-        }
-        return note;
+    public String getNote(){
+        return  "Buổi sáng: " + quantityMorning.getText().toString()+"\n"
+                + "Buổi trưa: " + quantityNoon.getText().toString()+"\n"
+                + "Buổi tối: " + quantityEvening.getText().toString()+"\n"
+                + note.getText().toString();
     }
     public interface AddDrugListener{
-        void onSaveDrug(DrugDetail addDrug);
+        void onDrugSaved(DrugDetail addDrug);
     }
 
     @Override

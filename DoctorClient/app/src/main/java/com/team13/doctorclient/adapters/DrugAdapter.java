@@ -35,6 +35,18 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
         drugs= addDrugArrayList;
         notifyDataSetChanged();
     }
+    public void appendData(DrugDetail drug){
+        drugs.add(drug);
+        notifyItemInserted(drugs.size()-1);
+    }
+
+    public ArrayList<DrugDetail> getDrugs() {
+        return drugs;
+    }
+
+    public void setDrugs(ArrayList<DrugDetail> drugs) {
+        this.drugs = drugs;
+    }
 
     @NonNull
     @Override
@@ -61,6 +73,7 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.ViewHolder> {
                 notifyDataSetChanged();
             });
         }
+
         DrugDetail drug= drugs.get(position);
         ((TextView)view.findViewById(R.id.drug_name)).setText(drug.getName());
         ((TextView)view.findViewById(R.id.drug_quantity)).setText(String.valueOf(drug.getQuantity()));

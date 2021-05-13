@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:gravity="center"
-            android:id="@+id/drug_quality"
+            android:id="@+id/drug_quantity"
             android:textStyle="bold" />
         <TextView
             android:layout_width="0dp"
