@@ -25,9 +25,6 @@ import com.team13.doctorclient.adapters.TreatmentTimelineAdapter;
 import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.models.PatientModel;
-import com.team13.doctorclient.models.PatientPageModel;
-import com.team13.doctorclient.models.Prescription;
-import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.models.Treatment;
 import com.team13.doctorclient.repositories.OnResponse;
 import com.team13.doctorclient.repositories.OnSuccessResponse;
@@ -43,14 +40,14 @@ public class PatientDetailActivity extends AppCompatActivity {
     RecyclerView patientTreatmentTimeline;
     MaterialToolbar topAppBar;
     Button startBtn;
-    String status;
+    String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_detail);
 
-        status = getIntent().getStringExtra("status");
+        mode = getIntent().getStringExtra("mode");
 
         //Setup topbar
         topAppBar = findViewById(R.id.topAppBar);
@@ -66,20 +63,19 @@ public class PatientDetailActivity extends AppCompatActivity {
         patientTreatmentTimeline.setAdapter(treatmentTimelineAdapter);
         patientTreatmentTimeline.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
 
-        if(status.equals("START")){
-            handleStart();
-
+        if(mode.equals(Utils.PATIENTDETAIL_CREATE_MODE)){
+            handleCreateMode();
         }
-        else if(status.equals("checkin")){
+        else if(mode.equals(Utils.PATIENTDETAIL_CHECKIN_MODE)){
             handleCheckinMode();
         }
-        else if (status.equals("REVIEW")){
-            handleReviewMode();
+        else if (mode.equals(Utils.PATIENTDETAIL_VIEW_MODE)){
+            handleViewMode();
         }
 
     }
 
-    private void handleReviewMode() {
+    private void handleViewMode() {
         PatientModel patient = (PatientModel) getIntent().getSerializableExtra("patient");
         if (patient == null) return;
 
@@ -89,7 +85,7 @@ public class PatientDetailActivity extends AppCompatActivity {
         callApiAndRenderData(patient.getId());
     }
 
-    private void handleStart() {
+    private void handleCreateMode() {
         Appointment appointment =(Appointment) getIntent().getSerializableExtra("appointment");
         if (appointment == null) return;
 
@@ -103,6 +99,7 @@ public class PatientDetailActivity extends AppCompatActivity {
         startBtn.setOnClickListener(v -> {
             Intent intent= new Intent(this, NewPrescriptionActivity.class);
             intent.putExtra("appointment", appointment);
+            intent.putExtra("treatments", treatmentTimelineAdapter.getTreatments());
             this.startActivity(intent);
         });
 
@@ -137,9 +134,7 @@ public class PatientDetailActivity extends AppCompatActivity {
 
             //Call APis
             AppointmentService service = new AppointmentService();
-            HashMap<String, String > params = new HashMap<>();
-            params.put("status", Utils.STATUS_PROCESSING);
-            service.updateAnAppointment(appointment.getId(), params, new OnResponse<Void>() {
+            service.updateAnAppointment(appointment.getId(), Utils.STATUS_PROCESSING, new OnResponse<Void>() {
                 @Override
                 public void onRequestSuccess(Void response) {
                     alertDialog.setMessage("Check-in succeeded!");

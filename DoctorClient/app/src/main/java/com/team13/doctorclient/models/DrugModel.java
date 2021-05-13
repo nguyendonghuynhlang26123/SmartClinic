@@ -1,5 +1,7 @@
 package com.team13.doctorclient.models;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +10,9 @@ import java.io.Serializable;
 public class DrugModel implements Serializable {
     @SerializedName("medicine_name")
     String name;
+
+    @SerializedName("thumbnail")
+    String thumbnail;
 
     @SerializedName("price")
     long price;
@@ -20,6 +25,12 @@ public class DrugModel implements Serializable {
         this.name = name;
         this.price = price;
         this.id = id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getName() {
@@ -44,5 +55,13 @@ public class DrugModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

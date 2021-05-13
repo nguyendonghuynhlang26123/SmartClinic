@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/reschedule"
-        android:iconTint="@color/white"
         android:title="Reschedule"
         android:icon="@drawable/ic_reschedule"
         app:showAsAction="always"
+        android:iconTint="@color/white"
         />
     <item android:id="@+id/finish"
         android:title="Finish"

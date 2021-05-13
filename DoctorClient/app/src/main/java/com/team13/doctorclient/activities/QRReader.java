@@ -70,9 +70,7 @@ public class QRReader extends AppCompatActivity {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("appointment", appointmentId);
             AppointmentService service = new AppointmentService();
-            Map<String, String> params = new HashMap<>();
-            params.put("status", Utils.STATUS_PROCESSING);
-            service.updateAnAppointment(appointmentId, params, new OnResponse<Void>() {
+            service.updateAnAppointment(appointmentId, Utils.STATUS_PROCESSING, new OnResponse<Void>() {
                 @Override
                 public void onRequestSuccess(Void response) {
                     setResult(Activity.RESULT_OK, returnIntent);

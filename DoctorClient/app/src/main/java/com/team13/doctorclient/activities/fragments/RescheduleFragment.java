@@ -117,12 +117,10 @@ public class RescheduleFragment extends DialogFragment {
                 else if(picker.getMinute()>15&&picker.getMinute()<45){
                     time+=":30";
                     timePicked.setText(time);
-//                        Log.w("Goto","1");
                 }
                 else if(picker.getMinute()>=45) {
                     time= String.valueOf(picker.getHour()+1)+":00";
-                    timePicked.setText(time);
-//                        Log.w("Goto","1");
+                    timePicked.setText(time); 
                 }
             });
 
@@ -136,6 +134,7 @@ public class RescheduleFragment extends DialogFragment {
             ServicePack servicePack = new ServicePack("Beauty Care", "no", 500000,"1");
             Appointment appointment = new Appointment("MN",servicePack,"reschedule",date,time,"PENDING");
             listener.setReschedule(appointment);
+            dismiss();
         });
         return view;
     }

@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-import com.team13.doctorclient.activities.PrescriptionViewActivity;
 import com.team13.doctorclient.R;
-import com.team13.doctorclient.activities.fragments.PrescriptionDisplayFragment;
 import com.team13.doctorclient.models.Prescription;
 import com.team13.doctorclient.models.Treatment;
 
@@ -45,6 +43,10 @@ public class TreatmentTimelineAdapter extends RecyclerView.Adapter<TreatmentTime
         notifyDataSetChanged();
     }
 
+    public ArrayList<Treatment> getTreatments() {
+        return treatments;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,10 +70,6 @@ public class TreatmentTimelineAdapter extends RecyclerView.Adapter<TreatmentTime
         ((Button)view.findViewById(R.id.treatment_service)).setText(treatment.getServicePack());
 
         prescriptionButton.setOnClickListener(v -> {
-//            Intent i= new Intent(context, PrescriptionViewActivity.class);
-//            i.putExtra("prescription", treatment.getPrescription());
-//            i.putExtra("patient", treatment.getPatient());
-//            context.startActivity(i);
             listener.openPrescriptionDetail(treatment);
         });
     }

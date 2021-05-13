@@ -36,5 +36,9 @@ public class AppointmentService {
         api.post(dataMap).enqueue(callback);
     }
 
-    public void updateAnAppointment(String id, Map<String, String> params, Callback<Void> cb) { api.put(id, params).enqueue(cb);}
+    public void updateAnAppointment(String id, String status, Callback<Void> cb) {
+        Map<String, String> params = new HashMap<>();
+        params.put("status", status);
+        api.put(id, params).enqueue(cb);
+    }
 }

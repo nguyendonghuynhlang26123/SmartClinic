@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
-import com.google.zxing.Result;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.PatientDetailActivity;
@@ -31,8 +28,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import okhttp3.internal.Util;
 
 public class QRFragment extends Fragment {
     private CodeScanner mCodeScanner;
@@ -129,7 +124,7 @@ public class QRFragment extends Fragment {
                 if (checkValidQRTicket(response, doctorId, patientId)){
                     Intent intent = new Intent(getContext(), PatientDetailActivity.class);
                     intent.putExtra("appointment", response);
-                    intent.putExtra("status", "checkin");
+                    intent.putExtra("mode", Utils.PATIENTDETAIL_CHECKIN_MODE);
                     startActivity(intent);
                 }
                 else {

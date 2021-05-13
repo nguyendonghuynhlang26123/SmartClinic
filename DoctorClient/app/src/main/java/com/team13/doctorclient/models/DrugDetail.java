@@ -20,9 +20,7 @@ public class DrugDetail implements Serializable {
         this.note = note;
     }
 
-    //for test
-    public DrugDetail(){
-
+    public DrugDetail() {
     }
 
     public DrugModel getDrugModel() {
@@ -38,4 +36,16 @@ public class DrugDetail implements Serializable {
     }
 
     public String getName() {return drugModel.getName();}
+
+    public void setDrugModel(DrugModel drugModel) {
+        this.drugModel = drugModel;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }
