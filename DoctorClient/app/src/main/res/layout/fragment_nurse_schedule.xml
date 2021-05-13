@@ -36,6 +36,24 @@
             android:textSize="16sp"
             android:layout_marginLeft="16dp"
             android:textStyle="italic"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/doctor_label"
+            android:text="@string/doctor"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginVertical="8dp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/doctor_chooser"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/outlined_rounded_shape"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
