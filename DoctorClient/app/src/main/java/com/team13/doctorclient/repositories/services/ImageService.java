@@ -1,4 +1,4 @@
-package com.team13.patientclient.repository.services;
+package com.team13.doctorclient.repositories.services;
 
 import android.content.ContentResolver;
 import android.content.Intent;
