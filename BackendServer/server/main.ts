@@ -58,7 +58,9 @@ async function initServer() {
   });
 
   app.use((req, res, next) => {
-    res.json({ status: 'unsuccessful', code: 404, err: 'Not found' });
+    res
+      .status(404)
+      .json({ status: 'unsuccessful', code: 404, err: 'Not found' });
   });
 
   app.listen(port, () => {

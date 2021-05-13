@@ -20,7 +20,7 @@ const TreatmentSchema = new Schema(
       ref: 'medical-services',
       required: true,
     },
-    note: { type: String, default: false },
+    note: { type: String, default: '' },
     prescription: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'prescriptions',
