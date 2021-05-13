@@ -71,26 +71,13 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
                 if (listener != null) listener.onAccept(appointment.getId(), appointment.getPatientId());
                 notifyItemChanged(position);
             });
-            Spinner doctorChooser = view.findViewById(R.id.doctor_chooser);
-            DoctorChooserAdapter adapter1 = new DoctorChooserAdapter(context);
-            doctorChooser.setAdapter(adapter1);
-            prepareDoctorList(adapter1);
+
         }
         if (position==0){
             view.findViewById(R.id.upper_line).setVisibility(View.INVISIBLE);
         } else if(position == timeline.size()-1){
             view.findViewById(R.id.lower_line).setVisibility(View.INVISIBLE);
         }
-    }
-
-    public void prepareDoctorList(DoctorChooserAdapter adapter){
-        ArrayList<Doctor> doctors = new ArrayList<>(5);
-        for(int i=0;i<5;++i){
-            doctors.add(new Doctor("11","doctor"+i));
-        }
-//        chosenDoctor.setText(doctors.get(0).getDoctorName());
-        adapter.setData(doctors);
-        adapter.notifyDataSetChanged();
     }
 
     @Override

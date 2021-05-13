@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +23,10 @@ import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.NurseHomeActivity;
 import com.team13.doctorclient.activities.QRReader;
+import com.team13.doctorclient.adapters.DoctorChooserAdapter;
 import com.team13.doctorclient.adapters.PendingAppointmentAdapter;
 import com.team13.doctorclient.models.Appointment;
+import com.team13.doctorclient.models.Doctor;
 import com.team13.doctorclient.models.HospitalModel;
 import com.team13.doctorclient.models.ScheduleItem;
 import com.team13.doctorclient.repositories.OnSuccessResponse;
@@ -81,7 +84,21 @@ public class NurseScheduleFragment extends Fragment {
         view.findViewById(R.id.logout_button).setOnClickListener(v->{
             listener.onLogout();
         });
+        Spinner doctorChooser = view.findViewById(R.id.doctor_chooser);
+        DoctorChooserAdapter adapter1 = new DoctorChooserAdapter(view.getContext());
+        doctorChooser.setAdapter(adapter1);
+        prepareDoctorList(adapter1);
         return view;
+    }
+
+    public void prepareDoctorList(DoctorChooserAdapter adapter){
+        ArrayList<Doctor> doctors = new ArrayList<>(5);
+        for(int i=0;i<5;++i){
+            doctors.add(new Doctor("11","doctor"+i));
+        }
+//        chosenDoctor.setText(doctors.get(0).getDoctorName());
+        adapter.setData(doctors);
+        adapter.notifyDataSetChanged();
     }
 
     void renderData(String date){
