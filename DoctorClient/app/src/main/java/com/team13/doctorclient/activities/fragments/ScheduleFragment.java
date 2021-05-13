@@ -1,10 +1,12 @@
 package com.team13.doctorclient.activities.fragments;
 
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import com.team13.doctorclient.models.Appointment;
 import com.team13.doctorclient.models.ErrorResponse;
 import com.team13.doctorclient.models.HospitalModel;
 import com.team13.doctorclient.models.ScheduleItem;
-import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.repositories.OnResponse;
 import com.team13.doctorclient.repositories.services.AppointmentService;
 
@@ -27,14 +28,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class ScheduleFragment extends Fragment {
-    private HorizontalCalendar horizontalCalendar;
     Calendar selectedDay;
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
     ArrayList<Appointment> appointments = new ArrayList<>();
     ArrayList<ScheduleItem> data;
     ArrayList<String> times;
@@ -69,7 +70,7 @@ public class ScheduleFragment extends Fragment {
         TextView currentDay= view.findViewById(R.id.current_day);
         currentDay.setText(format.format(selectedDay.getTime()));
         selectedDay.add(Calendar.DATE,-1);
-        horizontalCalendar = new HorizontalCalendar.Builder(view,R.id.calendarView)
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5).defaultSelectedDate(selectedDay)
                 .build();
@@ -81,7 +82,12 @@ public class ScheduleFragment extends Fragment {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 date.add(Calendar.DATE,1);
-                //renderData(date);
+                Log.d("FIND",format.format(date.getTime()));
+                if(Utils.isToday(date)) {
+                    renderData(format.format(date.getTime()), Utils.EDIT_MODE);
+//                    renderData("12/05/2021", Utils.EDIT_MODE);
+                }
+                else renderData(format.format(date.getTime()), Utils.VIEW_MODE);
             }
 
         });
@@ -134,6 +140,7 @@ public class ScheduleFragment extends Fragment {
         service.getAppointmentByDate(date,Store.get_instance().getId(),queryStatus, new OnResponse<Appointment[]>() {
             @Override
             public void onRequestSuccess(Appointment[] response) {
+                Log.d("FIND",response.length+"");
                 appointments = new ArrayList<>(Arrays.asList(response));
                 populateTimeline();
                 data = getScheduleTimeline();
