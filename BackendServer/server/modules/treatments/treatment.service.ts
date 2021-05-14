@@ -1,6 +1,17 @@
 import { AppointmentService } from './../appointments/appointment.service';
-import { TreatmentInterface } from '../../interfaces';
-import { treatmentModel } from '../../models';
+import {
+  PrescriptionInterface,
+  TreatmentRegisterDTO,
+  TreatmentInterface,
+  AppointmentInterface,
+} from '../../interfaces';
+import {
+  appointmentModel,
+  patientModel,
+  prescriptionModel,
+  treatmentModel,
+} from '../../models';
+import { Status } from '../../common';
 
 const appointmentService = new AppointmentService();
 let ObjectId = require('mongoose').Types.ObjectId;
@@ -75,6 +86,45 @@ export class TreatmentService {
     delete data.created_at;
     delete data.updated_at;
     const treatment = await treatmentModel.create(data);
+    return treatment;
+  }
+
+  async registerTreatment(data: TreatmentRegisterDTO) {
+    //Check appointment exists
+    let appointment = await appointmentModel.findOne({ _id: data.appointment });
+    if (!appointment) throw new Error('Cannot find Appointment');
+    let appointmentData: any = appointment.toObject();
+
+    const prescriptionData: PrescriptionInterface = {
+      symptoms: data.symptoms,
+      diagnosis: data.diagnosis,
+      note: data.prescription_note,
+      medicine_list: data.medicine_list,
+    };
+
+    const prescription = await prescriptionModel.create(prescriptionData);
+    if (!prescription) throw new Error('Cannot create Prescription');
+
+    const treatmentData: TreatmentInterface = {
+      doctor: data.doctor,
+      patient: appointmentData.patient,
+      service: appointmentData.service,
+      time: appointmentData.time,
+      date: appointmentData.date,
+      note: appointmentData.note,
+      prescription: prescription.id,
+    };
+    const treatment = await treatmentModel.create(treatmentData);
+
+    await patientModel.updateOne(
+      { _id: appointmentData.patient },
+      { current_appointment: null }
+    );
+    await appointmentModel.updateOne(
+      { _id: data.appointment },
+      { status: Status.COMPLETED }
+    );
+
     return treatment;
   }
 

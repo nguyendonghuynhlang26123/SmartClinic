@@ -16,11 +16,7 @@ export class DoctorService {
     let filter = {};
     if (query?.service) filter = { specialty_services: query.service };
 
-    console.log(
-      'log ~ file: doctor.service.ts ~ line 16 ~ DoctorService ~ getAllDoctor ~ query',
-      filter
-    );
-    const doctors = await doctorModel.find(filter).populate('hospital');
+    const doctors = await doctorModel.find(filter, query?.select ?? '');
     return doctors;
   }
 

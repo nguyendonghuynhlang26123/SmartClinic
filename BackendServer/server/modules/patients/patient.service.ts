@@ -1,12 +1,6 @@
-import { Role } from './../../common/index';
+import { Role, Status } from './../../common/index';
 import { AppointmentInterface, PatientInterface } from '../../interfaces';
-import {
-  doctorModel,
-  patientModel,
-  medicalServiceModel,
-  appointmentModel,
-  userModel,
-} from '../../models';
+import { appointmentModel, patientModel, userModel } from '../../models';
 
 export class PatientService {
   async getPatientById(patientId: string) {
@@ -75,10 +69,13 @@ export class PatientService {
   }
 
   async updatePatientById(patientId: string, dataUpdate) {
-    if (dataUpdate?.medical_history) delete dataUpdate.medical_history;
-
+    console.log(
+      'log ~ file: patient.service.ts ~ line 78 ~ PatientService ~ updatePatientById ~ dataUpdate',
+      dataUpdate
+    );
     const patient = await patientModel.findOne({ _id: patientId });
     if (!patient) throw new Error('Not Found Patient.');
+
     const result = await patientModel.updateOne(
       { _id: patient._id },
       dataUpdate
@@ -101,21 +98,25 @@ export class PatientService {
       await patientModel.findOne({ _id: patientId })
     ).toObject();
     if (!patient) throw new Error('Not Found Patient.');
+    if (!patient.current_appointment)
+      throw new Error('This patient does not have appointment to cancel');
     if (patient.current_appointment.toString() !== appointmentId)
       throw new Error(
         'This patient does not have appointment with category ' + appointmentId
       );
 
-    const appointment = await appointmentModel.findOne({ _id: appointmentId });
-    if (!appointment) throw new Error('Not Found Appointment.');
+    await appointmentModel.updateOne(
+      {
+        _id: appointmentId,
+      },
+      {
+        status: Status.CANCELED,
+      }
+    );
 
-    await patientModel.updateOne(
+    return await patientModel.updateOne(
       { _id: patientId },
       { current_appointment: null }
-    );
-    return await appointmentModel.updateOne(
-      { _id: patientId },
-      { status: 'CANCELED' }
     );
   }
 }
