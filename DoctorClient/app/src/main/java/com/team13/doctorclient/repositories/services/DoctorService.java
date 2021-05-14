@@ -11,4 +11,6 @@ public class DoctorService {
     DoctorApi api = RetrofitSingleton.getInstance().create(DoctorApi.class);
 
     public void getDoctors(Callback<Doctor[]> cb) { api.get().enqueue(cb);}
+
+    public void updateDoctor(String doctorId, Doctor doctorData, Callback<Doctor> cb){ api.updateData(doctorId, doctorData).enqueue(cb);}
 }

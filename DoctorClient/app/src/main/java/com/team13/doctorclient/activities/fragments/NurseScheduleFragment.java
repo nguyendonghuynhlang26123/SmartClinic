@@ -23,6 +23,7 @@ import com.team13.doctorclient.R;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
 import com.team13.doctorclient.activities.NurseHomeActivity;
+import com.team13.doctorclient.activities.PatientDetailActivity;
 import com.team13.doctorclient.activities.QRReader;
 import com.team13.doctorclient.adapters.DoctorChooserAdapter;
 import com.team13.doctorclient.adapters.PendingAppointmentAdapter;
@@ -33,9 +34,11 @@ import com.team13.doctorclient.models.ScheduleItem;
 import com.team13.doctorclient.repositories.OnSuccessResponse;
 import com.team13.doctorclient.repositories.services.AppointmentService;
 import com.team13.doctorclient.repositories.services.DoctorService;
+import com.team13.doctorclient.repositories.services.PatientService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 public class NurseScheduleFragment extends Fragment {
     View view;
@@ -71,16 +74,12 @@ public class NurseScheduleFragment extends Fragment {
         //Setup Recycle view
         RecyclerView timeline= view.findViewById(R.id.schedule);
         adapter = new PendingAppointmentAdapter(getContext());
-        adapter.setListener(new PendingAppointmentAdapter.Listener() {
-            @Override
-            public void onAccept(String appointmentId, String patientId) {
-                Toast.makeText(getContext(), appointmentId, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), QRReader.class);
-                intent.putExtra("appointment", appointmentId);
-                intent.putExtra("patient", patientId);
-                startActivityForResult(intent, Utils.QRSCAN_RESULT_INTENT);
-            }
+
+        //TODO: show a input dialog then pass phoneNumber to verifyPhoneAndProcess()
+        adapter.setListener((appointment) -> {
+            verifyPhoneAndProcess("0774022683", appointment);
         });
+
         timeline.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         timeline.setAdapter(adapter);
 
@@ -110,6 +109,25 @@ public class NurseScheduleFragment extends Fragment {
 
         prepareDoctorList(adapter1);
         return view;
+    }
+
+    private void verifyPhoneAndProcess(String phoneNumber, Appointment appointment) {
+        PatientService service = new PatientService();
+        service.getByPhone(phoneNumber, new OnSuccessResponse<Map<String, String>>() {
+            @Override
+            public void onSuccess(Map<String, String> response) {
+                String responseId = response.get("user_infor");
+                if (appointment.getPatientId().equals(responseId)){
+                    Toast.makeText(getContext(), "Info Matched" , Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), PatientDetailActivity.class);
+                    intent.putExtra("appointment", appointment);
+                    intent.putExtra("mode", Utils.PATIENTDETAIL_CHECKIN_MODE);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(getContext(), "Wrong user" , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void prepareDoctorList(DoctorChooserAdapter adapter){

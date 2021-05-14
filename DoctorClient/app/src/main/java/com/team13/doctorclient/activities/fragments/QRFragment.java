@@ -104,7 +104,7 @@ public class QRFragment extends Fragment {
         long diff = Utils.diffBetween2StringDate(time1, time2);
 
         if (diff == -1) return false;
-        //if (diff != 0) return false; //On
+        //if (diff != 0) return false; //On the same day
 
 
         if (!response.getStatus().equals(Utils.STATUS_PENDING)) return false;

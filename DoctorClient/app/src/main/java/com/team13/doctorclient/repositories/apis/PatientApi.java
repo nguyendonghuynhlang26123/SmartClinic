@@ -3,6 +3,8 @@ package com.team13.doctorclient.repositories.apis;
 import com.team13.doctorclient.models.PatientPageModel;
 import com.team13.doctorclient.models.Treatment;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,4 +28,7 @@ public interface PatientApi {
     @POST("/patients/cancel/{id}")
     @FormUrlEncoded
     Call<Void> removeCurrentAppointment(@Path("id") String id, @Field("appointment_id") String appointmentId);
+
+    @GET("/users/phone/{phone}")
+    Call<Map<String,String>> getByPhoneNum(@Path("phone") String phone);
 }

@@ -68,7 +68,7 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
             accept.setOnClickListener(v -> {
 //                status.setText("CHECKED_IN");
                 //appointment.setStatus("CHECKED_IN");
-                if (listener != null) listener.onAccept(appointment.getId(), appointment.getPatientId());
+                if (listener != null) listener.onAccept(appointment);
                 notifyItemChanged(position);
             });
 
@@ -123,7 +123,7 @@ public class PendingAppointmentAdapter extends RecyclerView.Adapter<PendingAppoi
     public void setListener(Listener l) { this.listener = l;}
 
     public interface Listener {
-        void onAccept(String appointmentId, String patientId);
+        void onAccept(Appointment appointment);
     }
 
 

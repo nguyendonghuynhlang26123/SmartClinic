@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.squareup.picasso.Picasso;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.models.AccountModel;
@@ -51,9 +53,22 @@ public class DoctorProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_doctor_profile, container, false);
         context=view.getContext();
+        ImageButton editBtn=view.findViewById(R.id.profile_edit_button);
+        editBtn.setOnClickListener(v -> {
+            Fragment fragment= EditProfileDoctorFragment.newInstance(Store.get_instance().getUserAccount().getUserInfor());
+            loadFragment(fragment);
+        });
+
         renderViewData();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        renderViewData();
+        super.onResume();
+    }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -76,13 +91,9 @@ public class DoctorProfileFragment extends Fragment {
         Doctor doctor = accountModel.getUserInfor();
         ((TextView)view.findViewById(R.id.doctor_name)).setText(doctor.getDoctorName());
         ((TextView)view.findViewById(R.id.doctor_about)).setText(doctor.getBio());
+        Picasso.get().load(doctor.getAvatarUrl()).into((ImageView) view.findViewById(R.id.doctor_avatar));
         chips=view.findViewById(R.id.chips);
         renderSpecialties(doctor.getDepartment());
-        ImageButton editBtn=view.findViewById(R.id.profile_edit_button);
-        editBtn.setOnClickListener(v -> {
-            Fragment fragment= EditProfileDoctorFragment.newInstance(doctor);
-            loadFragment(fragment);
-        });
     }
 
 }
