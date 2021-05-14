@@ -6,11 +6,13 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -24,4 +26,11 @@ public interface AppointmentApi {
     @POST("/appointments")
     @FormUrlEncoded
     Call<Map<String, String>> post(@FieldMap Map<String, String> params);
+
+    @DELETE("/appointments/{id}")
+    Call<Void> deleteAppointment(@Path("id") String appointmentId);
+
+    @PUT("/appointments/{id}")
+    @FormUrlEncoded
+    Call<Void> updateAppointment(@Path("id") String appointmentId, @FieldMap Map<String, String> data);
 }

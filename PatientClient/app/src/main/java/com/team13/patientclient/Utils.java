@@ -21,7 +21,13 @@ public class Utils {
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
-    public static final int MAXIMUM_PINGS = 4;
+    public static final String DATETIME_PATTERN = "HH:mm dd/MM/yyyy";
+
+    //Status
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_PROCESSING = "PROCESSING";
+    public static final String STATUS_CANCELED = "CANCELED";
+    public static final String STATUS_COMPLETED = "COMPLETED";
 
     //HOME NAVIGATIONS
     public static final int HOME_ID = R.id.home;
@@ -117,6 +123,18 @@ public class Utils {
             return result;
         } catch(Exception e) {
             return null;
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public static boolean compareTimes(String time1, String time2){
+        try {
+            Date dTime1 = new SimpleDateFormat(DATETIME_PATTERN).parse(time1);
+            Date dTime2 = new SimpleDateFormat(DATETIME_PATTERN).parse(time2);
+
+            return dTime1.before(dTime2);
+        } catch(Exception e) {
+            return false;
         }
     }
 }
