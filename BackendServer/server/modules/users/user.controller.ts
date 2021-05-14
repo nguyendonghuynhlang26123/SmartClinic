@@ -14,6 +14,11 @@ router.get('/:user_id', async (req, res) => {
   res.json(user);
 });
 
+router.get('/phone/:phone', async (req, res) => {
+  const user = await userService.findUserByPhone(req.params.phone, false);
+  res.json(user);
+});
+
 router.post('/', async (req, res) => {
   try {
     const user = await userService.createUser(req.body);
@@ -23,7 +28,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put("/:user_id", async (req, res) => {
+router.put('/:user_id', async (req, res) => {
   try {
     const result = await userService.updateUserById(
       req.params.user_id,
@@ -36,11 +41,9 @@ router.put("/:user_id", async (req, res) => {
   }
 });
 
-router.delete("/:user_id", async (req, res) => {
+router.delete('/:user_id', async (req, res) => {
   try {
-    const result = await userService.deleteUser(
-      req.params.user_id
-    );
+    const result = await userService.deleteUser(req.params.user_id);
     res.json(result);
   } catch (err) {
     console.log(err);

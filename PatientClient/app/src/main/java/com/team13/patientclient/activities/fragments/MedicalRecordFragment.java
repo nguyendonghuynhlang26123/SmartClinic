@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.team13.patientclient.MyDialog;
 import com.team13.patientclient.R;
 import com.team13.patientclient.Store;
 import com.team13.patientclient.activities.ServiceActivity;
@@ -26,6 +28,9 @@ import java.util.Collections;
 
 
 public class MedicalRecordFragment extends Fragment {
+    TreatmentAdapter adapter;
+    View view;
+
     public MedicalRecordFragment() {
         // Required empty public constructor
     }
@@ -47,10 +52,10 @@ public class MedicalRecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_medical_record, container, false);
+        view = inflater.inflate(R.layout.fragment_medical_record, container, false);
         TextView notify = view.findViewById(R.id.appointment_notify);
         RecyclerView treatmentList = view.findViewById(R.id.treatment_list);
-        TreatmentAdapter adapter = new TreatmentAdapter(view.getContext());
+        adapter = new TreatmentAdapter(view.getContext());
         adapter.setListener(new TreatmentAdapter.TreatmentItemListener() {
             @Override
             public void onItemClick(Prescription prescription) {
@@ -67,23 +72,10 @@ public class MedicalRecordFragment extends Fragment {
 
             @Override
             public void onAppointmentRemove(int position, String appointmentId) {
-                notify.setVisibility(View.GONE); 
-                view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE); 
-                PatientService patientService = new PatientService();
-                AppointmentService appointmentService = new AppointmentService();
-                patientService.removeCurrentAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
-                    @Override
-                    public void onSuccess(Void response) {
-                        appointmentService.deleteAppointment(appointmentId, new OnSuccessResponse<Void>() {
-                            @Override
-                            public void onSuccess(Void response) {
-                                Toast.makeText(getContext(), "Appointment Canceled!", Toast.LENGTH_SHORT).show();
-                                adapter.removeElement(position);
-                                Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
-                            }
-                        });
-                    }
-                });
+                MyDialog.showConfirmDialog(getContext(),
+                        "Do you want to cancel your appointment? This process cannot be undone. Continue to remove?",
+                        "Alert",
+                        () -> callApiToRemoveAppointment(position, appointmentId, notify) );
             }
         });
         treatmentList.setAdapter(adapter);
@@ -98,6 +90,27 @@ public class MedicalRecordFragment extends Fragment {
         callApiAndRender(adapter, view);
         return view;
     }
+
+    private void callApiToRemoveAppointment(int position, String appointmentId, TextView notify) {
+        notify.setVisibility(View.GONE);
+        view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE);
+        PatientService patientService = new PatientService();
+        AppointmentService appointmentService = new AppointmentService();
+        patientService.removeCurrentAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
+            @Override
+            public void onSuccess(Void response) {
+                appointmentService.deleteAppointment(appointmentId, new OnSuccessResponse<Void>() {
+                    @Override
+                    public void onSuccess(Void response) {
+                        Toast.makeText(getContext(), "Appointment Canceled!", Toast.LENGTH_SHORT).show();
+                        adapter.removeElement(position);
+                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
+                    }
+                });
+            }
+        });
+    }
+
     void callApiAndRender(TreatmentAdapter adapter, View view){
         PatientService service = new PatientService();
         AppointmentService appointmentService = new AppointmentService();

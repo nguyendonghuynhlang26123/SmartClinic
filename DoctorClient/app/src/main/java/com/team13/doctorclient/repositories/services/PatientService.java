@@ -4,6 +4,9 @@ import com.team13.doctorclient.models.PatientPageModel;
 import com.team13.doctorclient.models.Treatment;
 import com.team13.doctorclient.repositories.RetrofitSingleton;
 import com.team13.doctorclient.repositories.apis.PatientApi;
+
+import java.util.Map;
+
 import retrofit2.Callback;
 
 public class PatientService {
@@ -11,4 +14,5 @@ public class PatientService {
     public void getMedicalHistory(String patientId, Callback<Treatment[]> cb) { api.getMedicalHistory(patientId).enqueue(cb);}
     public void getPatientsByPage(int page, Callback<PatientPageModel> cb) { api.getPatientsByPage(page).enqueue(cb);}
     public void searchPatients(String key, int page, Callback<PatientPageModel> cb) { api.searchPatients(key,page).enqueue(cb);}
+    public void getByPhone(String phoneNum, Callback<Map<String,String>> cb) { api.getByPhoneNum("+84"+phoneNum).enqueue(cb);}
 }

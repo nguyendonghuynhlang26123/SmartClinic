@@ -41,9 +41,10 @@ export class UserService {
     return user !== null;
   }
 
-  async findUserByPhone(userPhone: string) {
+  async findUserByPhone(userPhone: string, populate = true) {
     let user = await await userModel.findOne({ phone: userPhone });
     if (!user) throw new Error('Not found user');
+    if (!populate) return user;
     const data = await user.toObject();
     if (user.user_type === Role.PATIENT) {
       const patientService = new PatientService();
