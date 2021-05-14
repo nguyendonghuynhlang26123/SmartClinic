@@ -48,8 +48,14 @@ public class ProfileFragment extends Fragment {
             assert getFragmentManager() != null;
             profileEditFragment.show(getFragmentManager(), profileEditFragment.getTag());
         });
-        view.findViewById(R.id.service_treatment).setOnClickListener(v->{
-        });
+        view.findViewById(R.id.fun_cs_trailing).setOnClickListener(v-> new MaterialAlertDialogBuilder(view.getContext())
+                .setTitle("Team 13")
+                .setItems(new String[]{"Not supported yet"},null)
+                .show());
+        view.findViewById(R.id.fun_profile_trailing).setOnClickListener(v-> new MaterialAlertDialogBuilder(view.getContext())
+                .setTitle("Team 13")
+                .setItems(new String[]{"Not supported yet"},null)
+                .show());
         view.findViewById(R.id.fun_about_trailing).setOnClickListener(v->{
             String[] students = {"18127003","18127016","18127136","18127269"};
             new MaterialAlertDialogBuilder(view.getContext())
