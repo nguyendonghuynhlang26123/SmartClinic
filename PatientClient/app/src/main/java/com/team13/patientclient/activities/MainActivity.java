@@ -115,17 +115,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
         });
     }
 
-    private void updateStatusOfAppointment(String appointmentId){
-        AppointmentService service = new AppointmentService();
-        Map<String, String> data = new HashMap<>();
-        data.put("status", Utils.STATUS_CANCELED);
-        service.updateAppointment(appointmentId, data, new OnSuccessResponse<Void>() {
-            @Override
-            public void onSuccess(Void response) {
-
-            }
-        });
-    }
 
     private boolean navigationHandle(int itemId) {
 
