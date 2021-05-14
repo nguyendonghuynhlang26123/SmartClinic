@@ -46,9 +46,6 @@ public class HomeActivity extends AppCompatActivity {
                     return false;
             }
         });
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.blog);
-        badge.setVisible(true);
-        badge.setNumber(99);
     }
     private void loadFragment(Fragment fragment) {
         // load fragment

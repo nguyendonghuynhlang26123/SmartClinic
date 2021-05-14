@@ -106,14 +106,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cancel_button"
-                android:text="Cancel"
+                android:textSize="14sp"
+                android:text="@string/cancel"
                 android:layout_marginHorizontal="10dp"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/reschedule_button"
-                android:text="Reschedule"
+                android:text="@string/reschedule"
+                android:textSize="14sp"
                 android:layout_marginHorizontal="10dp"
                 />
         </LinearLayout>

@@ -21,4 +21,6 @@
     <string name="scan_qr">Scan QR</string>
     <string name="accept">Accept</string>
     <string name="doctor">Doctor</string>
+    <string name="cancel">Cancel</string>
+    <string name="reschedule">Reschedule</string>
 </resources>
