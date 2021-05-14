@@ -59,6 +59,7 @@ public class ProfileFragment extends Fragment {
                     })
                     .show();
         });
+        view.findViewById(R.id.fun_log_out_trailing).setOnClickListener(v->getActivity().finish());
         //Render view data
         renderViewData(view);
 
