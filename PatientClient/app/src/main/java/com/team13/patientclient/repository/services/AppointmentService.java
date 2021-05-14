@@ -21,6 +21,14 @@ public class AppointmentService {
         api.getAppointmentById(id).enqueue(callback);
     }
 
+    public void deleteAppointment(String appointmentId, Callback<Void> callback){
+        api.deleteAppointment(appointmentId).enqueue(callback);
+    }
+
+    public void updateAppointment(String appointmentId, Map<String, String> data, Callback<Void> callback){
+        api.updateAppointment(appointmentId, data).enqueue(callback);
+    }
+
     public void bookAnAppointment(String patientId, String doctorId, String serviceId, String time, String date, String note, Callback<Map<String, String>> callback) {
         Map<String, String> dataMap = new HashMap<>();
         dataMap.put("doctor", doctorId);

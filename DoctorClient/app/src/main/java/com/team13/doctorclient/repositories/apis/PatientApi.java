@@ -4,7 +4,12 @@ import com.team13.doctorclient.models.PatientPageModel;
 import com.team13.doctorclient.models.Treatment;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -18,4 +23,7 @@ public interface PatientApi {
     @GET("patients?per_page=15")
     Call<PatientPageModel> searchPatients(@Query("search") String searchKey, @Query("page") int page );
 
+    @POST("/patients/cancel/{id}")
+    @FormUrlEncoded
+    Call<Void> removeCurrentAppointment(@Path("id") String id, @Field("appointment_id") String appointmentId);
 }

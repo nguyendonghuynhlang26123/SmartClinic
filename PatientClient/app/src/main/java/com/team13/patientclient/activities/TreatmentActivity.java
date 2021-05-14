@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ public class TreatmentActivity extends AppCompatActivity {
             findViewById(R.id.treatment_qr_loading).setVisibility(View.VISIBLE);
             if (appointmentId != null){
                 String url = Utils.getQRGenerator(appointmentId, doctorId,patientId);
+                Log.d("LONG", url);
                 Picasso.get().load(url).into(qrImage, new Callback() {
                     @Override
                     public void onSuccess() {

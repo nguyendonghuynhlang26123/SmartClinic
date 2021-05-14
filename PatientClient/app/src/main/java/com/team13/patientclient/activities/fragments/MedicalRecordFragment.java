@@ -69,15 +69,21 @@ public class MedicalRecordFragment extends Fragment {
             public void onAppointmentRemove(int position, String appointmentId) {
                 notify.setVisibility(View.GONE); 
                 view.findViewById(R.id.add_appointment_button).setVisibility(View.VISIBLE); 
-                PatientService service = new PatientService();
-                service.cancelAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
+                PatientService patientService = new PatientService();
+                AppointmentService appointmentService = new AppointmentService();
+                patientService.removeCurrentAppointment(Store.get_instance().getPatientId(), appointmentId, new OnSuccessResponse<Void>() {
                     @Override
                     public void onSuccess(Void response) {
-                        Toast.makeText(getContext(), "Appointment Canceled! #" + position, Toast.LENGTH_SHORT).show();
-                        adapter.removeElement(position);
-                        Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
+                        appointmentService.deleteAppointment(appointmentId, new OnSuccessResponse<Void>() {
+                            @Override
+                            public void onSuccess(Void response) {
+                                Toast.makeText(getContext(), "Appointment Canceled!", Toast.LENGTH_SHORT).show();
+                                adapter.removeElement(position);
+                                Store.get_instance().getUserAccount().getUserInfor().setCurrentAppointmentId(null);
+                            }
+                        });
                     }
-                }); 
+                });
             }
         });
         treatmentList.setAdapter(adapter);

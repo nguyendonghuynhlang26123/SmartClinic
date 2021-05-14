@@ -30,6 +30,15 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+router.post('/register', async (req, res) => {
+  try {
+    const treatment = await treatmentService.registerTreatment(req.body);
+    res.json(treatment);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
+});
 
 router.delete('/:treatment_id', async (req, res) => {
   try {

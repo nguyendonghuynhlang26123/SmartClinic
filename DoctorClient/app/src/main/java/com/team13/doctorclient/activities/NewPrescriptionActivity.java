@@ -37,6 +37,7 @@ import com.team13.doctorclient.models.ServicePack;
 import com.team13.doctorclient.models.Treatment;
 import com.team13.doctorclient.repositories.OnResponse;
 import com.team13.doctorclient.repositories.services.AppointmentService;
+import com.team13.doctorclient.repositories.services.PatientService;
 import com.team13.doctorclient.repositories.services.TreatmentService;
 
 import java.text.ParseException;
@@ -156,24 +157,12 @@ public class NewPrescriptionActivity extends AppCompatActivity implements DrugAd
         dialog.setCancelable(false);
         dialog.setMessage("Updating resources! Please wait for a few moment.");
         dialog.show();
-        service.createTreatment(Store.get_instance().getId(), data, new OnResponse<Void>() {
+        service.createTreatment(data.getDTO(Store.get_instance().getId(), appointment.getId()), new OnResponse<Void>() {
             @Override
             public void onRequestSuccess(Void response) {
-                AppointmentService appointmentService = new AppointmentService();
-                appointmentService.updateAnAppointment(appointment.getId(), Utils.STATUS_COMPLETED, new OnResponse<Void>() {
-                    @Override
-                    public void onRequestSuccess(Void response) {
-                        Toast.makeText(NewPrescriptionActivity.this, "Successfully register patient record!", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        finish();
-                    }
-
-                    @Override
-                    public void onRequestFailed(ErrorResponse response) {
-                        Toast.makeText(NewPrescriptionActivity.this, "Failed when update appointment status" + response.getMessage(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+                Toast.makeText(NewPrescriptionActivity.this, "Successfully register patient record!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                finish();
             }
 
             @Override

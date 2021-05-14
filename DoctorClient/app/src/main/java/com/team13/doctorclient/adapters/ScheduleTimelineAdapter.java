@@ -22,9 +22,12 @@ import java.util.ArrayList;
 public class ScheduleTimelineAdapter extends RecyclerView.Adapter<ScheduleTimelineAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<ScheduleItem> timeline;
-    public ScheduleTimelineAdapter(Context context, ArrayList<ScheduleItem> timeline) {
+    private final int mode;
+
+    public ScheduleTimelineAdapter(Context context, ArrayList<ScheduleItem> timeline, int mode) {
         this.timeline = timeline;
         this.context=context;
+        this.mode = mode;
     }
     @NonNull
     @Override
@@ -57,10 +60,16 @@ public class ScheduleTimelineAdapter extends RecyclerView.Adapter<ScheduleTimeli
             status.setText(appointment.getStatus());
             Button treatment = view.findViewById(R.id.appointment_service);
             treatment.setText(appointment.getService().getName());
+
             view.findViewById(R.id.appointment_card).setOnClickListener(v->{
                 Intent i= new Intent(context, PatientDetailActivity.class);
-                i.putExtra("appointment", appointment);
-                i.putExtra("mode", Utils.PATIENTDETAIL_CREATE_MODE);
+                if (mode == Utils.EDIT_MODE){
+                    i.putExtra("appointment", appointment);
+                    i.putExtra("mode", Utils.PATIENTDETAIL_CREATE_MODE);
+                } else {
+                    i.putExtra("mode", Utils.PATIENTDETAIL_VIEW_MODE);
+                    i.putExtra("patient", appointment.getPatient());
+                }
                 context.startActivity(i);
             });
 

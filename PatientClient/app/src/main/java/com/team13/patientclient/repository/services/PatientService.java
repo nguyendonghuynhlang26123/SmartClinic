@@ -12,7 +12,7 @@ public class PatientService {
 
     public void updatePatientProfile(String id, PatientModel data, Callback<Void> cb) { api.update(id, data).enqueue(cb);}
 
-    public void cancelAppointment(String patientId, String appointmentId, Callback<Void> cb) {api.cancelAppointment(patientId,appointmentId).enqueue(cb);}
+    public void removeCurrentAppointment(String patientId, String appointmentId, Callback<Void> cb) {api.cancelAppointment(patientId,appointmentId).enqueue(cb);}
 
     public void getMedicalHistory(String patientId, Callback<Treatment[]> cb) { api.getMedicalHistory(patientId).enqueue(cb);}
 }

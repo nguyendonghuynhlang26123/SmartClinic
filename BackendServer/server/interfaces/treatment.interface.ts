@@ -9,3 +9,19 @@ export class TreatmentInterface extends BaseInterface {
   note: string;
   prescription: string;
 }
+
+export class TreatmentRegisterDTO {
+  appointment: string;
+  doctor: string;
+
+  medicine_list: [
+    {
+      medicine: string;
+      quantity: number;
+      note: string;
+    }
+  ];
+  symptoms: string;
+  diagnosis: string;
+  prescription_note: string;
+}
