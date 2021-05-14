@@ -52,7 +52,9 @@ public class ScheduleTimelineAdapter extends RecyclerView.Adapter<ScheduleTimeli
             TextView note = view.findViewById(R.id.appointment_note);
             note.setText(appointment.getNote());
             TextView patientName = view.findViewById(R.id.appointment_patient_name);
-            patientName.setText(appointment.getPatientId());
+            patientName.setText(appointment.getPatientName());
+            TextView status = view.findViewById(R.id.status);
+            status.setText(appointment.getStatus());
             Button treatment = view.findViewById(R.id.appointment_service);
             treatment.setText(appointment.getService().getName());
             view.findViewById(R.id.appointment_card).setOnClickListener(v->{

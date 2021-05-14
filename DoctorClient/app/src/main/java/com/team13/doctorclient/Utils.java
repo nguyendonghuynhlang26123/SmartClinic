@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
-    //public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
@@ -72,6 +72,18 @@ public class Utils {
         return string.substring(0,charLimit)+"...";
     }
 
+    public static boolean isSameDay(Calendar cal1, Calendar cal2) {
+        if (cal1 == null || cal2 == null) {
+            throw new IllegalArgumentException("The dates must not be null");
+        }
+        return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
+                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
+    }
+
+    public static boolean isToday(Calendar cal) {
+        return isSameDay(cal, Calendar.getInstance());
+    }
 
     @SuppressLint("NewApi")
     public static ArrayList<String> generateTimes(String startTime, String closeTime, int gapInMinutes) {
