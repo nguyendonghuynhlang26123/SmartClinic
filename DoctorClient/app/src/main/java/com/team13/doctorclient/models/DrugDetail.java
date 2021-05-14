@@ -23,6 +23,10 @@ public class DrugDetail implements Serializable {
     public DrugDetail() {
     }
 
+    public TreatmentDTO.DrugDetailDTO toDTO(){
+        return new TreatmentDTO.DrugDetailDTO(drugModel.getId(), quantity, note);
+    }
+
     public DrugModel getDrugModel() {
         return drugModel;
     }

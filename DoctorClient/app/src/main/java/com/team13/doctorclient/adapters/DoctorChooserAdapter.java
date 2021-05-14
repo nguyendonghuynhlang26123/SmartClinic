@@ -27,6 +27,7 @@ public class DoctorChooserAdapter extends BaseAdapter implements SpinnerAdapter 
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
 //        View view = LayoutInflater.from(context).inflate(R.layout.doctor_dropdown_item, parent);
         TextView text = new TextView(context);
+        text.setPadding(60, 80, 60, 80);
         Doctor doctor = doctors.get(position);
 //        TextView doctorName = view.findViewById(R.id.doctor_name);
         text.setText(doctor.getDoctorName());
@@ -35,7 +36,9 @@ public class DoctorChooserAdapter extends BaseAdapter implements SpinnerAdapter 
 
     public void setData(ArrayList<Doctor> doctors){
         this.doctors = doctors;
+        this.notifyDataSetChanged();
     }
+
 
     @Override
     public int getCount() {

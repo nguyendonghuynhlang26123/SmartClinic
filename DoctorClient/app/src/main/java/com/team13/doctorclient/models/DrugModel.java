@@ -18,7 +18,6 @@ public class DrugModel implements Serializable {
     long price;
 
     @SerializedName("_id")
-    @Expose(serialize = false)
     String id;
 
     public DrugModel(String name, long price, String id) {

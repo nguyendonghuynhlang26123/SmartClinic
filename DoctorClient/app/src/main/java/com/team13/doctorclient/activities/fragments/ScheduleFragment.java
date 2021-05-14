@@ -82,23 +82,27 @@ public class ScheduleFragment extends Fragment {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 date.add(Calendar.DATE,1);
-                Log.d("FIND",format.format(date.getTime()));
+
                 if(Utils.isToday(date)) {
+                    Log.d("IS TODAY", true +"");
                     renderData(format.format(date.getTime()), Utils.EDIT_MODE);
-//                    renderData("12/05/2021", Utils.EDIT_MODE);
                 }
                 else renderData(format.format(date.getTime()), Utils.VIEW_MODE);
             }
 
         });
 
-        String dateString = format.format(true_day.getTime());
         HospitalModel hospitalModel = Store.get_instance().getHospital();
-        times = Utils.generateTimes(hospitalModel.getOpenTime(), hospitalModel.getCloseTime(), 30);
-        //times = Utils.getAvailableTime(times);
 
-        //renderData(dateString, Utils.EDIT_MODE);
-        renderData("12/05/2021", Utils.EDIT_MODE);
+        times = Utils.generateTimes(hospitalModel.getOpenTime(), hospitalModel.getCloseTime(), 30);
+        if (!Utils.DEBUG_MODE) {
+            times = Utils.getAvailableTime(times);
+            String dateString = format.format(true_day.getTime());
+            renderData(dateString, Utils.EDIT_MODE);
+        }
+        else {
+            renderData( Utils.DEBUG_DATE,Utils.EDIT_MODE);
+        }
         return view;
     }
 
@@ -137,14 +141,13 @@ public class ScheduleFragment extends Fragment {
         else queryStatus[0] = (Utils.STATUS_PENDING);
 
         AppointmentService service = new AppointmentService();
-        service.getAppointmentByDate(date,Store.get_instance().getId(),queryStatus, new OnResponse<Appointment[]>() {
+        service.getAppointmentByDate(Store.get_instance().getId(), date,queryStatus, new OnResponse<Appointment[]>() {
             @Override
             public void onRequestSuccess(Appointment[] response) {
-                Log.d("FIND",response.length+"");
                 appointments = new ArrayList<>(Arrays.asList(response));
                 populateTimeline();
                 data = getScheduleTimeline();
-                ScheduleTimelineFragment fragment = ScheduleTimelineFragment.newInstance(data);
+                ScheduleTimelineFragment fragment = ScheduleTimelineFragment.newInstance(data, mode);
                 loadFragment(R.id.timeline_display_container, fragment);
             }
 

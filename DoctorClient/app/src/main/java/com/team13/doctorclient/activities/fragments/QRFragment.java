@@ -85,11 +85,10 @@ public class QRFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_q_r, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(activity, scannerView);
-//        mCodeScanner.setDecodeCallback(result -> {
-//           getActivity().runOnUiThread(() ->  handleQrScanned(result.getText()));
-//            getActivity().runOnUiThread(() ->  handleQrScanned("609a448a8f1d300023a64d7c-609b6c5a0b01cd3c844a6ec5-605b37eaa1ad0f21a0e756f3"));
-//        });
-        handleQrScanned("609a448a8f1d300023a64d7c-609b6c5a0b01cd3c844a6ec5-605b37eaa1ad0f21a0e756f3");
+        mCodeScanner.setDecodeCallback(result -> {
+           getActivity().runOnUiThread(() ->  handleQrScanned(result.getText()));
+        });
+
         mCodeScanner.startPreview();
         return root;
 
@@ -102,7 +101,11 @@ public class QRFragment extends Fragment {
         //Check time is valid
         @SuppressLint("SimpleDateFormat") String time1 = new SimpleDateFormat(Utils.DATETIME_PATTERN).format(new Date());
         String time2 = response.getTime() + " " + response.getDate();
-        if (!Utils.compareTimes(time1, time2)) return false;
+        long diff = Utils.diffBetween2StringDate(time1, time2);
+
+        if (diff == -1) return false;
+        //if (diff != 0) return false; //On
+
 
         if (!response.getStatus().equals(Utils.STATUS_PENDING)) return false;
 

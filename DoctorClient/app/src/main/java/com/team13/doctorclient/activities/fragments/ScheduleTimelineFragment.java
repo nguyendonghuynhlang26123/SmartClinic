@@ -24,16 +24,19 @@ import java.util.ArrayList;
 public class ScheduleTimelineFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    int mode;
 
     private ArrayList<ScheduleItem> data;
     public ScheduleTimelineFragment() {
         // Required empty public constructor
     }
 
-    public static ScheduleTimelineFragment newInstance(ArrayList<ScheduleItem> param1) {
+    public static ScheduleTimelineFragment newInstance(ArrayList<ScheduleItem> param1, int param2) {
         ScheduleTimelineFragment fragment = new ScheduleTimelineFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,6 +46,7 @@ public class ScheduleTimelineFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             data = (ArrayList<ScheduleItem>) getArguments().getSerializable(ARG_PARAM1);
+            mode = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -52,7 +56,7 @@ public class ScheduleTimelineFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule_timeline, container, false);
         RecyclerView timeline= view.findViewById(R.id.doctor_timeline);
-        ScheduleTimelineAdapter adapter = new ScheduleTimelineAdapter(view.getContext(),data);
+        ScheduleTimelineAdapter adapter = new ScheduleTimelineAdapter(view.getContext(),data, mode);
         timeline.setAdapter(adapter);
         timeline.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         return view;

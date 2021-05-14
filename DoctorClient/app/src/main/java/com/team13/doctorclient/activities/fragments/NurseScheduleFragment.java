@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import com.team13.doctorclient.models.HospitalModel;
 import com.team13.doctorclient.models.ScheduleItem;
 import com.team13.doctorclient.repositories.OnSuccessResponse;
 import com.team13.doctorclient.repositories.services.AppointmentService;
+import com.team13.doctorclient.repositories.services.DoctorService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +41,9 @@ public class NurseScheduleFragment extends Fragment {
     View view;
     PendingAppointmentAdapter adapter;
     NurseScheduleListener listener;
+    Spinner doctorChooser;
+
+    String today;
 
     public NurseScheduleFragment() {
         // Required empty public constructor
@@ -79,36 +84,58 @@ public class NurseScheduleFragment extends Fragment {
         timeline.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         timeline.setAdapter(adapter);
 
-        //renderData(Utils.getCurrentDateString());
-        renderData("12/05/2021");
+        if (Utils.DEBUG_MODE){
+            today = Utils.DEBUG_DATE;
+        }
+        else today = Utils.getCurrentDateString();
+
         view.findViewById(R.id.logout_button).setOnClickListener(v->{
             listener.onLogout();
         });
-        Spinner doctorChooser = view.findViewById(R.id.doctor_chooser);
+
+        doctorChooser = view.findViewById(R.id.doctor_chooser);
         DoctorChooserAdapter adapter1 = new DoctorChooserAdapter(view.getContext());
         doctorChooser.setAdapter(adapter1);
+        doctorChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                renderData(adapter1.getItem(position).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         prepareDoctorList(adapter1);
         return view;
     }
 
     public void prepareDoctorList(DoctorChooserAdapter adapter){
-        ArrayList<Doctor> doctors = new ArrayList<>(5);
-        for(int i=0;i<5;++i){
-            doctors.add(new Doctor("11","doctor"+i));
-        }
-//        chosenDoctor.setText(doctors.get(0).getDoctorName());
-        adapter.setData(doctors);
-        adapter.notifyDataSetChanged();
+        DoctorService service = new DoctorService();
+        service.getDoctors(new OnSuccessResponse<Doctor[]>() {
+            @Override
+            public void onSuccess(Doctor[] response) {
+                adapter.setData(new ArrayList<>(Arrays.asList(response)));
+                renderData(response[0].getId());
+            }
+        });
     }
 
-    void renderData(String date){
+    void renderData(String doctorId){
         //Get list of possible time
         HospitalModel hospital = Store.get_instance().getHospital();
-        final ArrayList<String> timeLines = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
-//        final ArrayList<String> timeLines = Utils.getAvailableTime(Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 ));
+        final ArrayList<String> timeLines;
+        if (Utils.DEBUG_MODE){
+            timeLines = Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 );
+        }
+        else timeLines = Utils.getAvailableTime(Utils.generateTimes(hospital.getOpenTime(), hospital.getCloseTime(), 30 ));
+
         //Render the timeline view
         AppointmentService service = new AppointmentService();
-        service.getAppointmentByDate(date, new OnSuccessResponse<Appointment[]>() {
+        String[] statuses = {Utils.STATUS_PENDING};
+        service.getAppointmentByDate(doctorId,today, statuses, new OnSuccessResponse<Appointment[]>() {
             @Override
             public void onSuccess(Appointment[] response) {
                 ArrayList<Appointment> appointments = new ArrayList<>(Arrays.asList(response));

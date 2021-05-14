@@ -1,20 +1,31 @@
 package com.team13.doctorclient;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
-    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    //MODE
+    public static final boolean DEBUG_MODE = true;
+    public static final String DEBUG_DATE = "15/05/2021";
+
+
+//    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";
@@ -23,7 +34,7 @@ public class Utils {
     //INTENT
     public static final int QRSCAN_RESULT_INTENT = 136;
 
-    //MODE
+    //MODENur
     public static final int EDIT_MODE = 7003;
     public static final int VIEW_MODE = 7016;
     public static final String PATIENTDETAIL_VIEW_MODE = "VIEW";
@@ -81,8 +92,14 @@ public class Utils {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
     }
 
+    @SuppressLint({"NewApi", "LocalSuppress"})
     public static boolean isToday(Calendar cal) {
-        return isSameDay(cal, Calendar.getInstance());
+        if (!DEBUG_MODE)
+            return isSameDay(cal, Calendar.getInstance());
+
+        //cal.add(Calendar.DATE, 1);
+        String date = new SimpleDateFormat(DATE_PATTERN).format(cal.getTime());
+        return date.equals(DEBUG_DATE);
     }
 
     @SuppressLint("NewApi")
@@ -129,17 +146,23 @@ public class Utils {
         return new ArrayList<>();
     }
 
-    //Compare if time1 is BEFORE time
+    //Compare if time1 is BEFORE time2 => return time2 - time1 (to number of dates)
+    //Else return -1
     //! IMPORTANT: time1 and time2 must be in DATETIME_PATTERN format!
     @SuppressLint("SimpleDateFormat")
-    public static boolean compareTimes(String time1, String time2){
+    public static long diffBetween2StringDate(String time1, String time2){
         try {
             Date dTime1 = new SimpleDateFormat(DATETIME_PATTERN).parse(time1);
             Date dTime2 = new SimpleDateFormat(DATETIME_PATTERN).parse(time2);
 
-            return dTime1.before(dTime2);
+            if (dTime1.before(dTime2)){
+                long diff = dTime2.getTime() - dTime1.getTime();
+                TimeUnit time = TimeUnit.DAYS;
+                return time.convert(diff, TimeUnit.MILLISECONDS);
+            }
+            return -1; // If time2 < time 1 return -1
         } catch(Exception e) {
-            return false;
+            return -1;
         }
     }
 }

@@ -3,6 +3,7 @@ package com.team13.doctorclient.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Treatment implements Serializable {
     @SerializedName("_id")
@@ -37,6 +38,15 @@ public class Treatment implements Serializable {
         servicePack = appointment.getService();
         patient = appointment.getPatient();
         id = null;
+    }
+
+    public TreatmentDTO getDTO(String doctorId, String appointmentId){
+       ArrayList<TreatmentDTO.DrugDetailDTO> detailDTO = new ArrayList<>();
+        for (DrugDetail drugDetail :
+                prescription.getDrugList()) {
+            detailDTO.add(drugDetail.toDTO());
+        }
+        return new TreatmentDTO(doctorId,appointmentId,prescription.symptom, prescription.diagnose, prescription.note, detailDTO.toArray(new TreatmentDTO.DrugDetailDTO[0]));
     }
 
     public void setPrescription(Prescription prescription) {
