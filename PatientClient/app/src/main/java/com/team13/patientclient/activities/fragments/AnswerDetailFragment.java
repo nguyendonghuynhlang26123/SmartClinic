@@ -51,6 +51,8 @@ public class AnswerDetailFragment extends BottomSheetDialogFragment {
             answerView.setLayoutParams(params);
             TextView answerContent = answerView.findViewById(R.id.topic_answer);
             answerContent.setText(answer.content);
+            TextView answerAuthor = answerView.findViewById(R.id.topic_author);
+            answerAuthor.setText(answer.authorName);
             layout.addView(answerView);
         }
         return view;
