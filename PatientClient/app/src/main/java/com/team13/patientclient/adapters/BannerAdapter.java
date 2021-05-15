@@ -20,9 +20,17 @@ import java.util.Objects;
 public class BannerAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    public BannerAdapter(Context context){
+    BannerListener[] listeners;
+
+    public BannerAdapter(Context context, BannerListener[] listener1){
         this.context=context;
         layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        listeners = new BannerListener[3];
+        for(int i=0; i<3;++i){
+            int finalI = i;
+            listeners[i] = () -> listener1[finalI].onBannerClicked();
+        }
+
     }
     @Override
     public int getCount() {
@@ -43,19 +51,24 @@ public class BannerAdapter extends PagerAdapter {
             case 0:
                 bannerImage.setImageResource(R.drawable.banner2);
                 itemView.setOnClickListener(v->{
-                    Intent i = new Intent(context, ServiceActivity.class);
-                    context.startActivity(i);
+//                    Intent i = new Intent(context, ServiceActivity.class);
+//                    context.startActivity(i);
+                    listeners[position].onBannerClicked();
                 });
                 break;
             case 1:
                 bannerImage.setImageResource(R.drawable.banner1);
                 itemView.setOnClickListener(v->{
-                    Intent i = new Intent(context, PharmacyActivity.class);
-                    context.startActivity(i);
+//                    Intent i = new Intent(context, PharmacyActivity.class);
+//                    context.startActivity(i);
+                    listeners[position].onBannerClicked();
                 });
                 break;
             case 2:
                 bannerImage.setImageResource(R.drawable.banner3);
+                itemView.setOnClickListener(v->{
+                    listeners[position].onBannerClicked();
+                });
                 break;
         }
         Objects.requireNonNull(container).addView(itemView);
@@ -66,4 +79,8 @@ public class BannerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((LinearLayout)object);
     }
+    public interface BannerListener{
+        void onBannerClicked();
+    }
+
 }

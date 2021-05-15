@@ -68,7 +68,13 @@ public class HomeFragment extends Fragment {
             }
         });
         viewPager = view.findViewById(R.id.news_banner);
-        bannerAdapter = new BannerAdapter(view.getContext());
+        bannerAdapter = new BannerAdapter(view.getContext(),new BannerAdapter.BannerListener[]{() -> {
+            Intent i = new Intent(view.getContext(), ServiceActivity.class);
+            view.getContext().startActivity(i);
+        }, () -> {
+            Intent i = new Intent(view.getContext(), PharmacyActivity.class);
+            view.getContext().startActivity(i);
+        }, () -> listener.gotoBlog()});
         viewPager.setAdapter(bannerAdapter);
         dotsIndicator = view.findViewById(R.id.dots_indicator);
         dotsIndicator.setViewPager(viewPager);

@@ -58,7 +58,7 @@ public class DoctorProfileFragment extends Fragment {
             Fragment fragment= EditProfileDoctorFragment.newInstance(Store.get_instance().getUserAccount().getUserInfor());
             loadFragment(fragment);
         });
-
+        view.findViewById(R.id.log_out_button).setOnClickListener(v->getActivity().finish());
         renderViewData();
         return view;
     }

@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.team13.doctorclient.R;
+import com.team13.doctorclient.Store;
 import com.team13.doctorclient.adapters.ForumTopicAdapter;
 import com.team13.doctorclient.models.ForumModel;
 import com.team13.doctorclient.models.Question;
@@ -24,11 +26,10 @@ import java.util.Arrays;
 
 public class DoctorForumFragment extends Fragment {
 
-        View view;
+
         int page = 1;
         int totalPage = 1;
         int results = 1;
-        String searchKey = "";
         ForumTopicAdapter forumTopicAdapter;
         ProgressBar progressBar;
 
@@ -47,12 +48,15 @@ public class DoctorForumFragment extends Fragment {
 
             View view = inflater.inflate(R.layout.fragment_doctor_forum, container, false);
             progressBar = view.findViewById(R.id.loading_page);
+            TextView doctorName = view.findViewById(R.id.doctor_name);
+            doctorName.setText(Store.get_instance().getName());
             RecyclerView questionList = view.findViewById(R.id.question_list);
             forumTopicAdapter = new ForumTopicAdapter(view.getContext());
             forumTopicAdapter.setListener(new ForumTopicAdapter.ForumItemListener() {
                 @Override
                 public void openDetail(ForumModel.Topic topic) {
                     ForumDetailFragment fragment = ForumDetailFragment.newInstance(topic);
+                    assert getFragmentManager() != null;
                     fragment.show(getFragmentManager(), fragment.getTag());
                 }
 
