@@ -23,4 +23,8 @@
     <string name="doctor">Doctor</string>
     <string name="cancel">Cancel</string>
     <string name="reschedule">Reschedule</string>
+    <string name="medical_record_list">Medical Record List</string>
+    <string name="other">Other</string>
+    <string name="logout">Logout</string>
+    <string name="phone">Phone</string>
 </resources>

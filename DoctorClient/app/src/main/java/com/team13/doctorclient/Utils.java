@@ -20,12 +20,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Utils {
     //MODE
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = false;
     public static final String DEBUG_DATE = "15/05/2021";
 
 
-//    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
-    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
+    public static final String BACK_END_API_PATH = "https://smart-clinic-team13.herokuapp.com/";
+//    public static final String BACK_END_API_PATH = "http://192.168.100.7:3669/";
     public static final int NAME_LENGTH_LIMIT = 16;
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final String TIME_PATTERN = "HH:mm";

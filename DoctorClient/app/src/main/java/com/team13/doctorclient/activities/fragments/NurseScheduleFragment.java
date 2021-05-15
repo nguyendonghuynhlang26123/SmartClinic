@@ -1,7 +1,9 @@
 package com.team13.doctorclient.activities.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.team13.doctorclient.R;
 import com.team13.doctorclient.Store;
 import com.team13.doctorclient.Utils;
@@ -39,6 +43,7 @@ import com.team13.doctorclient.repositories.services.PatientService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 public class NurseScheduleFragment extends Fragment {
     View view;
@@ -77,7 +82,14 @@ public class NurseScheduleFragment extends Fragment {
 
         //TODO: show a input dialog then pass phoneNumber to verifyPhoneAndProcess()
         adapter.setListener((appointment) -> {
-            verifyPhoneAndProcess("0774022683", appointment);
+            AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+            alert.setTitle("Check-in");
+            View input = LayoutInflater.from(view.getContext()).inflate(R.layout.nurse_checkin_phone_input, null);
+            alert.setView(input);
+            TextInputEditText phoneInput = input.findViewById(R.id.input_phone);
+            alert.setPositiveButton("Ok", (dialog, whichButton) -> verifyPhoneAndProcess(Objects.requireNonNull(phoneInput.getText()).toString(), appointment));
+            alert.show();
+
         });
 
         timeline.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));

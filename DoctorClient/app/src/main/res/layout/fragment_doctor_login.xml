@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/outlinedPhoneField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Phone"
+            android:hint="@string/phone"
             app:startIconDrawable="@drawable/ic_phone">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
