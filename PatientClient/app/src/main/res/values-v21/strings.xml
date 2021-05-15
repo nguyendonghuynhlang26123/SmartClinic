@@ -93,4 +93,5 @@
     <string name="home_label">Home</string>
     <string name="profile">Profile</string>
     <string name="medical_records">Medical Records</string>
+    <string name="sorry">Sorry, but nothing matched your search term. Please try again!</string>
 </resources>
