@@ -45,11 +45,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class NewPrescriptionActivity extends AppCompatActivity implements DrugAddFragment.AddDrugListener,
         RescheduleFragment.RescheduleListener, ReviewPrescriptionFragment.ReviewDrugListener {
 
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
     DrugAdapter drugAdapter;
     ArrayList<DrugDetail> drugDetails = new ArrayList<>(5);
     ArrayList<Treatment> medicalHistory;

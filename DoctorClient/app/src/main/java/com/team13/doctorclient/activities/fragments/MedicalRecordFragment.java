@@ -3,6 +3,7 @@ package com.team13.doctorclient.activities.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,8 +58,8 @@ public class MedicalRecordFragment extends Fragment {
         treatmentList= view.findViewById(R.id.patient_list);
         medicalRecordAdapter= new MedicalRecordAdapter(view.getContext());
         treatmentList.setAdapter(medicalRecordAdapter);
-        treatmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false));
-
+//        treatmentList.setLayoutManager(new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false));
+        treatmentList.setLayoutManager(new GridLayoutManager(view.getContext(),2));
         view.findViewById(R.id.loadmore_btn).setOnClickListener(v-> {
             callApiAndRender(patientPage.getCurPage()+1, view, searchText);
         });

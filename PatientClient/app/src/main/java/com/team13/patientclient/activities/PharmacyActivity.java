@@ -98,7 +98,7 @@ public class PharmacyActivity extends AppCompatActivity implements DrugsDisplayF
             public void onSuccess(DrugModel[] list) {
                 searchResult.setVisibility(View.VISIBLE);
                 if (list.length != 0) searchResult.setText("Found "+list.length+" result(s) matching \"" + key +"\":");
-                else searchResult.setText("Sorry, but nothing matched your search term. Please try again!");
+                else searchResult.setText(R.string.sorry);
                 Fragment fragment = DrugListFragment.newInstance(new ArrayList<>(Arrays.asList(list)));
                 loadFragment(fragment);
             }
