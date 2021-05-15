@@ -62,7 +62,7 @@ export class PatientService {
       patient_name: patient_name,
       patient_avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
         patient_name
-      )}&rounded=true&background=random`,
+      )}&background=random`,
       token: token,
     };
     return await patientModel.create(patientData);

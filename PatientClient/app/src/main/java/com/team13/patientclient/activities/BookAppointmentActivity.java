@@ -1,15 +1,26 @@
 package com.team13.patientclient.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.team13.patientclient.NotificationHandler;
 import com.team13.patientclient.R;
@@ -25,6 +36,11 @@ import com.team13.patientclient.models.ErrorResponse;
 import com.team13.patientclient.models.ServicePack;
 import com.team13.patientclient.repository.OnResponse;
 import com.team13.patientclient.repository.services.AppointmentService;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -125,9 +141,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements
             public void onRequestSuccess(Map<String, String> response) {
                 NotificationHandler.sendNotification(BookAppointmentActivity.this, "Smart clinic", "Book successfully! Please visit and check in on time for diagnosis!");
                 Store.get_instance().bookingAnAppointment(response.get("_id"));
-                setAlarmForNotification(response.get("_id"));
-                Intent i = new Intent(context, MainActivity.class);
-                context.startActivity(i); 
+                //setAlarmForNotification(response.get("_id"));
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.CONTENT_URI);
+
+                if (ContextCompat.checkSelfPermission(BookAppointmentActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+                    ActivityCompat.requestPermissions(BookAppointmentActivity.this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, 1);
+                } else addEventToCalendar("Meeting with doctor", "HELLO", Store.get_instance().getHospital().getAddress());
+
             }
 
             @Override
@@ -137,16 +158,60 @@ public class BookAppointmentActivity extends AppCompatActivity implements
             }
         });
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            addEventToCalendar("Meeting with doctor", "HELLO", Store.get_instance().getHospital().getAddress());
+        }
+    }
 
-    private void setAlarmForNotification(String id) {
-        Intent intent = new Intent(BookAppointmentActivity.this, AlarmReceiverActivity.class);
-        intent.putExtra(Utils.BROADCAST_APPOINTMENT_ID,  id);
-        intent.putExtra(Utils.BROADCAST_PATIENT_ID,  Store.get_instance().getPatientId());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(BookAppointmentActivity.this, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long curTime = System.currentTimeMillis();
-        Log.d("LONG", "SET ALARM");
-        alarmManager.set(AlarmManager.RTC_WAKEUP, curTime + 1000*10, pendingIntent);
+    public void addEventToCalendar(String EventTitle, String EventDescription, String EventLocation) {
+        Date dateStart = null;
+        try {
+            dateStart = new SimpleDateFormat(Utils.DATETIME_PATTERN).parse(time + " " + date);
+        } catch (ParseException e) {
+            e.printStackTrace();
 
+        }
+        if (dateStart == null) return;
+        Toast.makeText(this, "Adding Event To Your Calendar...", Toast.LENGTH_SHORT).show();
+        ContentValues event = new ContentValues();
+        Calendar startcalendar = Calendar.getInstance();
+        Calendar endcalendar = Calendar.getInstance();
+        startcalendar.setTime(dateStart);
+        endcalendar.setTime(dateStart);
+        endcalendar.add(Calendar.MINUTE, 30);
+
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        //intent.putExtra(CalendarContract.Events.CALENDAR_ID, 1);
+        intent.putExtra(CalendarContract.Events.TITLE, EventTitle);
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, EventDescription);
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, EventLocation);
+        intent.putExtra(CalendarContract.Events.DTSTART, startcalendar.getTimeInMillis());
+        intent.putExtra(CalendarContract.Events.DTEND, endcalendar.getTimeInMillis());
+        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+        intent.putExtra(CalendarContract.Events.HAS_ALARM, true);
+        event.put(CalendarContract.Events.EVENT_TIMEZONE, "GMT-07:00");
+
+//        intent.setData(CalendarContract.Reminders.CONTENT_URI);
+//        //intent.putExtra(CalendarContract.Reminders.EVENT_ID, eventId);
+//        intent.putExtra(CalendarContract.Reminders.MINUTES, 10);
+//        intent.putExtra(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }else{
+            Toast.makeText(BookAppointmentActivity.this, "There is no app that support this action", Toast.LENGTH_SHORT).show();
+        }
+//        Toast.makeText(BookAppointmentActivity.this , "Event Added To Your Calendar!", Toast.LENGTH_SHORT).show();
+//        Intent i = new Intent(context, MainActivity.class);
+//        context.startActivity(i);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
